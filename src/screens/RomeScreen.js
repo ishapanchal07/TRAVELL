@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    StatusBar,
-    ImageBackground,
-    ScrollView,
-    Dimensions,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ImageBackground, ScrollView, Dimensions } from 'react-native';
 import { Image, ImageBackground as ExpoImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';

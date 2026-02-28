@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    StatusBar,
-    TextInput,
-    ScrollView,
-    Dimensions
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions } from 'react-native';
 import { ImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -60,7 +51,20 @@ export default function ExploreScreen({ navigation }) {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.horizontalScroll}
                 >
-                    {/* Card 1 */}
+                    {/* Card 1: Switzerland */}
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Switzerland')} style={styles.destinationCard}>
+                        <ImageBackground source={{ uri: SWISS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                            <View style={styles.cardOverlay}>
+                                <View style={{ flex: 1 }} />
+                                <View style={styles.cardBottomText}>
+                                    <Text style={styles.cardCity}>Swiss Alps</Text>
+                                    <Text style={styles.cardStats}>1.1k roamsters active</Text>
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
+
+                    {/* Card 2: Paris */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Paris')} style={styles.destinationCard}>
                         <ImageBackground source={{ uri: PARIS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
                             <View style={styles.cardOverlay}>
@@ -75,7 +79,7 @@ export default function ExploreScreen({ navigation }) {
                         </ImageBackground>
                     </TouchableOpacity>
 
-                    {/* Card 2 */}
+                    {/* Card 3: Rome */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Rome')} style={styles.destinationCard}>
                         <ImageBackground source={{ uri: ROME_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
                             <View style={styles.cardOverlay}>
@@ -88,7 +92,7 @@ export default function ExploreScreen({ navigation }) {
                         </ImageBackground>
                     </TouchableOpacity>
 
-                    {/* Card 3 */}
+                    {/* Card 4: Italy (Amalfi) */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Italy')} style={styles.destinationCard}>
                         <ImageBackground source={{ uri: ITALY_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
                             <View style={styles.cardOverlay}>
@@ -96,19 +100,6 @@ export default function ExploreScreen({ navigation }) {
                                 <View style={styles.cardBottomText}>
                                     <Text style={styles.cardCity}>Amalfi Coast</Text>
                                     <Text style={styles.cardStats}>950 roamsters active</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-
-                    {/* Card 4 */}
-                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Switzerland')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: SWISS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
-                            <View style={styles.cardOverlay}>
-                                <View style={{ flex: 1 }} />
-                                <View style={styles.cardBottomText}>
-                                    <Text style={styles.cardCity}>Swiss Alps</Text>
-                                    <Text style={styles.cardStats}>1.1k roamsters active</Text>
                                 </View>
                             </View>
                         </ImageBackground>

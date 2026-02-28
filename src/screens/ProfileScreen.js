@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    StatusBar,
-    ScrollView,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5, Octicons } from '@expo/vector-icons';
 

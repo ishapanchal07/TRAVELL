@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    ImageBackground,
-    SafeAreaView,
-    TouchableOpacity,
-    StatusBar,
-    Dimensions
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');

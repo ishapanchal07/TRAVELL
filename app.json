@@ -12,6 +12,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      
       "supportsTablet": true
     },
     "platforms": ["ios"],

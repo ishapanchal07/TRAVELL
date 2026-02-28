@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    StatusBar,
-    Dimensions,
-} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -531,16 +524,4 @@ const styles = StyleSheet.create({
         bottom: -20,
         zIndex: 1,
     },
-    marginBottom: 4,
-},
-    navText: {
-    fontSize: 9,
-    fontWeight: '700',
-    color: '#94A3B8',
-    marginTop: 4,
-},
-    activeNavText: {
-    color: '#2563EB',
-    marginTop: 0,
-},
 });
