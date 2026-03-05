@@ -15,6 +15,8 @@ import WardrobeScreen from './src/screens/WardrobeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import JourneysScreen from './src/screens/JourneysScreen';
 import GalleryScreen from './src/screens/GalleryScreen';
+import SwitzerlandScreen from './src/screens/SwitzerlandScreen';
+import DubaiScreen from './src/screens/DubaiScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +44,8 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Journeys" component={JourneysScreen} />
         <Stack.Screen name="Gallery" component={GalleryScreen} />
+        <Stack.Screen name="Switzerland" component={SwitzerlandScreen} />
+        <Stack.Screen name="Dubai" component={DubaiScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

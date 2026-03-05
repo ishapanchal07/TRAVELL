@@ -7,16 +7,16 @@ import BottomNav from '../components/BottomNav';
 
 const { width } = Dimensions.get('window');
 
-const PARIS_MAIN = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=800&auto=format&fit=crop';
-const EXP_1 = 'https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=400&auto=format&fit=crop';
-const EXP_2 = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=400&auto=format&fit=crop';
-const RENT_1 = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop';
-const RENT_2 = 'https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=400&auto=format&fit=crop';
-const FOOD_1 = 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?q=80&w=400&auto=format&fit=crop';
-const PHOTO_1 = 'https://images.unsplash.com/photo-1522854961559-86bc01bb2d04?q=80&w=400&auto=format&fit=crop';
-const PHOTO_2 = 'https://images.unsplash.com/photo-1590141846506-69273c38c8c7?q=80&w=400&auto=format&fit=crop';
+const DUBAI_MAIN = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop';
+const EXP_1 = 'https://images.unsplash.com/photo-1579227289569-b5f7b49cf525?q=80&w=400&auto=format&fit=crop';
+const EXP_2 = 'https://images.unsplash.com/photo-1549488349-43c2c317f226?q=80&w=400&auto=format&fit=crop';
+const RENT_1 = 'https://images.unsplash.com/photo-1502307100811-6bdc0981a85b?q=80&w=400&auto=format&fit=crop';
+const RENT_2 = 'https://images.unsplash.com/photo-1509631179647-0c37cb87a552?q=80&w=400&auto=format&fit=crop';
+const FOOD_1 = 'https://images.unsplash.com/photo-1604147706283-d7119b5b822c?q=80&w=400&auto=format&fit=crop';
+const PHOTO_1 = 'https://images.unsplash.com/photo-1582672060624-9b8842af5cd3?q=80&w=400&auto=format&fit=crop';
+const PHOTO_2 = 'https://images.unsplash.com/photo-1546412414-8035e1776c9a?q=80&w=400&auto=format&fit=crop';
 
-export default function ParisScreen({ navigation }) {
+export default function DubaiScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
@@ -42,13 +42,13 @@ export default function ParisScreen({ navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
                 {/* Hero Section */}
-                <ImageBackground source={{ uri: PARIS_MAIN }} style={styles.heroImage}>
+                <ImageBackground source={{ uri: DUBAI_MAIN }} style={styles.heroImage}>
                     <View style={styles.heroOverlay}>
                         <View style={styles.weatherPill}>
-                            <Ionicons name="cloud" size={14} color="white" />
+                            <Ionicons name="sunny" size={14} color="white" />
                             <View style={styles.weatherTextCont}>
-                                <Text style={styles.weatherCity}>Paris Today</Text>
-                                <Text style={styles.weatherTemp}>14°C, Clear Sky</Text>
+                                <Text style={styles.weatherCity}>Dubai Today</Text>
+                                <Text style={styles.weatherTemp}>35°C, Sunny</Text>
                             </View>
                         </View>
 
@@ -56,9 +56,9 @@ export default function ParisScreen({ navigation }) {
                             <View style={styles.trendingPill}>
                                 <Text style={styles.trendingText}>TRENDING DESTINATION</Text>
                             </View>
-                            <Text style={styles.heroTitle}>Paris:</Text>
-                            <Text style={styles.heroSubtitle}>The City of Light</Text>
-                            <Text style={styles.heroDesc}>Indulge in timeless romance and quintessential French elegance.</Text>
+                            <Text style={styles.heroTitle}>Dubai:</Text>
+                            <Text style={styles.heroSubtitle}>City of Gold</Text>
+                            <Text style={styles.heroDesc}>Experience the ultimate luxury oasis where traditional Arabian hospitality meets striking modern architecture.</Text>
                         </View>
                     </View>
                 </ImageBackground>
@@ -74,15 +74,15 @@ export default function ParisScreen({ navigation }) {
                         <View style={styles.expCard}>
                             <Image source={{ uri: EXP_1 }} style={styles.expImage} />
                             <View style={styles.expTextCont}>
-                                <Text style={styles.expTitle}>Montmartre <Text style={{ fontWeight: '800' }}>Art Walk</Text></Text>
-                                <Text style={styles.expSub}>3 hours • Arts & Heritage</Text>
+                                <Text style={styles.expTitle}>Desert <Text style={{ fontWeight: '800' }}>Safari</Text></Text>
+                                <Text style={styles.expSub}>6 hours • Adventure</Text>
                             </View>
                         </View>
                         <View style={styles.expCard}>
                             <Image source={{ uri: EXP_2 }} style={styles.expImage} />
                             <View style={styles.expTextCont}>
-                                <Text style={styles.expTitle}>Seine <Text style={{ fontWeight: '800' }}>River Cruise</Text></Text>
-                                <Text style={styles.expSub}>2 hours • Romance</Text>
+                                <Text style={styles.expTitle}>Burj Khalifa <Text style={{ fontWeight: '800' }}>At the Top</Text></Text>
+                                <Text style={styles.expSub}>2 hours • Sightseeing</Text>
                             </View>
                         </View>
                     </ScrollView>
@@ -97,11 +97,11 @@ export default function ParisScreen({ navigation }) {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         <View style={styles.outfitCard}>
                             <Image source={{ uri: RENT_1 }} style={styles.outfitImage} />
-                            <View style={styles.outfitColorIndicator} />
+                            <View style={[styles.outfitColorIndicator, { backgroundColor: '#FDE68A' }]} />
                             <View style={styles.outfitBotRow}>
                                 <View>
-                                    <Text style={styles.outfitTitle}>Chic Parisian</Text>
-                                    <Text style={styles.outfitPrice}>€45/day</Text>
+                                    <Text style={styles.outfitTitle}>Desert Elegance</Text>
+                                    <Text style={styles.outfitPrice}>AED 250/day</Text>
                                 </View>
                                 <TouchableOpacity style={styles.rentBtn}>
                                     <Text style={styles.rentBtnText}>RENT</Text>
@@ -110,11 +110,11 @@ export default function ParisScreen({ navigation }) {
                         </View>
                         <View style={styles.outfitCard}>
                             <Image source={{ uri: RENT_2 }} style={styles.outfitImage} />
-                            <View style={[styles.outfitColorIndicator, { backgroundColor: '#FDE68A' }]} />
+                            <View style={[styles.outfitColorIndicator, { backgroundColor: '#E2E8F0' }]} />
                             <View style={styles.outfitBotRow}>
                                 <View>
-                                    <Text style={styles.outfitTitle}>Left Bank Intellectual</Text>
-                                    <Text style={styles.outfitPrice}>€38/day</Text>
+                                    <Text style={styles.outfitTitle}>Urban Chic</Text>
+                                    <Text style={styles.outfitPrice}>AED 300/day</Text>
                                 </View>
                                 <TouchableOpacity style={styles.rentBtn}>
                                     <Text style={styles.rentBtnText}>RENT</Text>
@@ -129,8 +129,8 @@ export default function ParisScreen({ navigation }) {
                         <View style={styles.foodCard}>
                             <Image source={{ uri: FOOD_1 }} style={styles.foodImage} />
                             <View style={styles.foodTextCont}>
-                                <Text style={styles.foodTitle}>Classic Macarons</Text>
-                                <Text style={styles.foodSub}>Ladurée • 15m wait</Text>
+                                <Text style={styles.foodTitle}>Gold Leaf Steak</Text>
+                                <Text style={styles.foodSub}>Nusr-Et • High Demand</Text>
                                 <View style={styles.starsRow}>
                                     <Ionicons name="star" size={12} color="#FACC15" />
                                     <Ionicons name="star" size={12} color="#FACC15" />
@@ -150,25 +150,25 @@ export default function ParisScreen({ navigation }) {
                             <View style={styles.pinOverlay}>
                                 <Ionicons name="map" size={12} color="white" />
                             </View>
-                            <Text style={styles.photoTitle}>Trocadéro Viewpoint</Text>
+                            <Text style={styles.photoTitle}>Dubai Frame</Text>
                         </View>
                         <View style={styles.photoSpotCard}>
                             <Image source={{ uri: PHOTO_2 }} style={styles.photoImage} />
                             <View style={styles.pinOverlay}>
                                 <Ionicons name="map" size={12} color="white" />
                             </View>
-                            <Text style={styles.photoTitle}>Louvre Pyramid Night</Text>
+                            <Text style={styles.photoTitle}>Museum of Future</Text>
                         </View>
                     </ScrollView>
 
                     {/* Banner */}
                     <View style={styles.bannerContainer}>
                         <View style={styles.bannerTextContent}>
-                            <Text style={styles.bannerTitle}>Unlock Paris's</Text>
-                            <Text style={styles.bannerTitle}>Hidden Gems</Text>
-                            <Text style={styles.bannerDesc}>Exclusive influencer guides &{'\n'}priority outfit delivery.</Text>
+                            <Text style={styles.bannerTitle}>VIP Access</Text>
+                            <Text style={styles.bannerTitle}>In Dubai</Text>
+                            <Text style={styles.bannerDesc}>Skip the lines &{'\n'}priority reservations.</Text>
                             <TouchableOpacity style={styles.bannerButton} activeOpacity={0.8}>
-                                <Text style={styles.bannerButtonText}>GO PREMIUM €9.99</Text>
+                                <Text style={styles.bannerButtonText}>GO PREMIUM AED 49</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.bannerIconBox}>

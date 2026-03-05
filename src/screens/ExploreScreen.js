@@ -9,8 +9,8 @@ const { width } = Dimensions.get('window');
 
 const PARIS_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600&auto=format&fit=crop';
 const ROME_IMG = 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=600&auto=format&fit=crop';
-const ITALY_IMG = 'https://images.unsplash.com/photo-1515542622106-78b28af7815b?auto=format&fit=crop&q=80&w=600';
 const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80&w=600';
+const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop';
 const USER_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
 
 export default function ExploreScreen({ navigation }) {
@@ -28,9 +28,14 @@ export default function ExploreScreen({ navigation }) {
                         <Text style={styles.brandTitle}>Roamster</Text>
                         <Text style={styles.brandSubtitle}>Pack light, live loud.</Text>
                     </View>
-                    <TouchableOpacity style={styles.profileCircle}>
-                        <FontAwesome5 name="user-alt" size={18} color="#2563EB" />
-                    </TouchableOpacity>
+                    <View style={styles.headerRightButtons}>
+                        <TouchableOpacity style={styles.iconCircle}>
+                            <Ionicons name="camera-outline" size={22} color="#2563EB" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.iconCircle}>
+                            <Ionicons name="person-outline" size={22} color="#2563EB" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 {/* Search Bar */}
@@ -41,6 +46,28 @@ export default function ExploreScreen({ navigation }) {
                         placeholder="Where's your next photo op?"
                         placeholderTextColor="#94A3B8"
                     />
+                </View>
+
+                {/* Category Icons */}
+                <View style={styles.categoriesContainer}>
+                    <View style={styles.categoryItem}>
+                        <TouchableOpacity style={styles.categoryIconCircle}>
+                            <MaterialCommunityIcons name="silverware-fork-knife" size={24} color="#2563EB" />
+                        </TouchableOpacity>
+                        <Text style={styles.categoryLabel}>FOOD</Text>
+                    </View>
+                    <View style={styles.categoryItem}>
+                        <TouchableOpacity style={styles.categoryIconCircle}>
+                            <Ionicons name="map-outline" size={24} color="#2563EB" />
+                        </TouchableOpacity>
+                        <Text style={styles.categoryLabel}>MAP</Text>
+                    </View>
+                    <View style={styles.categoryItem}>
+                        <TouchableOpacity style={styles.categoryIconCircle}>
+                            <Ionicons name="document-text-outline" size={24} color="#2563EB" />
+                        </TouchableOpacity>
+                        <Text style={styles.categoryLabel}>GUIDE</Text>
+                    </View>
                 </View>
 
                 {/* Trending Section */}
@@ -57,8 +84,21 @@ export default function ExploreScreen({ navigation }) {
                             <View style={styles.cardOverlay}>
                                 <View style={{ flex: 1 }} />
                                 <View style={styles.cardBottomText}>
-                                    <Text style={styles.cardCity}>Swiss Alps</Text>
+                                    <Text style={styles.cardCity}>Switzerland</Text>
                                     <Text style={styles.cardStats}>1.1k roamsters active</Text>
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
+
+                    {/* Card: Dubai */}
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Dubai')} style={styles.destinationCard}>
+                        <ImageBackground source={{ uri: DUBAI_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                            <View style={styles.cardOverlay}>
+                                <View style={{ flex: 1 }} />
+                                <View style={styles.cardBottomText}>
+                                    <Text style={styles.cardCity}>Dubai</Text>
+                                    <Text style={styles.cardStats}>2.3k roamsters active</Text>
                                 </View>
                             </View>
                         </ImageBackground>
@@ -87,19 +127,6 @@ export default function ExploreScreen({ navigation }) {
                                 <View style={styles.cardBottomText}>
                                     <Text style={styles.cardCity}>Rome</Text>
                                     <Text style={styles.cardStats}>850 roamsters active</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-
-                    {/* Card 4: Italy (Amalfi) */}
-                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Italy')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: ITALY_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
-                            <View style={styles.cardOverlay}>
-                                <View style={{ flex: 1 }} />
-                                <View style={styles.cardBottomText}>
-                                    <Text style={styles.cardCity}>Amalfi Coast</Text>
-                                    <Text style={styles.cardStats}>950 roamsters active</Text>
                                 </View>
                             </View>
                         </ImageBackground>
@@ -160,13 +187,50 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontWeight: '500',
     },
-    profileCircle: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
+    headerRightButtons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    iconCircle: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
         backgroundColor: '#EFF6FF',
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 12,
+    },
+    // Categories
+    categoriesContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 35,
+        paddingHorizontal: 10,
+    },
+    categoryItem: {
+        alignItems: 'center',
+    },
+    categoryIconCircle: {
+        width: 65,
+        height: 65,
+        borderRadius: 32.5,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.08,
+        shadowRadius: 10,
+        elevation: 3,
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
+    },
+    categoryLabel: {
+        fontSize: 10,
+        fontWeight: '800',
+        color: '#94A3B8',
+        marginTop: 12,
+        letterSpacing: 1,
     },
 
     // Search
