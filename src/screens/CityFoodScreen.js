@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions, Image as RNImage } from 'react-native';
-import { Image } from 'expo-image';
+import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
+import { useAuth } from '../context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
@@ -147,6 +149,7 @@ const CITY_DATA = {
 }
 
 export default function CityFoodScreen({ route, navigation }) {
+    const { isLoggedIn } = useAuth();
     const { city = 'Paris' } = route.params || {};
     const data = CITY_DATA[city] || CITY_DATA['Paris'];
 
@@ -154,11 +157,14 @@ export default function CityFoodScreen({ route, navigation }) {
     const [vegFilter, setVegFilter] = useState('All'); // 'VEG', 'NON-VEG', 'All'
 
     // Filter logic
-    const displayedGems = data.hiddenGems.filter(item => {
+    const baseGems = isLoggedIn ? data.hiddenGems : data.hiddenGems.slice(0, 2);
+    const displayedGems = baseGems.filter(item => {
         if (vegFilter === 'VEG' && !item.isVeg) return false;
         if (vegFilter === 'NON-VEG' && item.isVeg) return false;
         return true;
     });
+
+    const displayedNearby = isLoggedIn ? data.popularNearby : data.popularNearby.slice(0, 2);
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -253,7 +259,7 @@ export default function CityFoodScreen({ route, navigation }) {
                 {/* Popular Nearby Section */}
                 <Text style={[styles.sectionTitle, { marginTop: 10, marginBottom: 15 }]}>Popular Nearby</Text>
                 <View style={styles.popularGrid}>
-                    {data.popularNearby.map((item) => (
+                    {displayedNearby.map((item) => (
                         <View key={item.id} style={styles.smallCard}>
                             <Image source={{ uri: item.image }} style={styles.smallCardImage} />
                             <View style={styles.smallCardContent}>
@@ -270,21 +276,42 @@ export default function CityFoodScreen({ route, navigation }) {
                     ))}
                 </View>
 
-                {/* Specialties Section */}
-                <Text style={[styles.sectionTitle, { marginTop: 20, marginBottom: 15 }]}>Specialties of the Area</Text>
-                <View style={styles.specialtiesContainer}>
-                    {data.specialties.map((spec) => (
-                        <View key={spec.id} style={styles.specialtyCard}>
-                            <View style={styles.specialtyIconBox}>
-                                <RNImage source={{ uri: spec.iconUrl }} style={styles.specialtyIcon} />
-                            </View>
-                            <View style={styles.specialtyContent}>
-                                <Text style={styles.specialtyTitle}>{spec.title}</Text>
-                                <Text style={styles.specialtyDesc}>{spec.desc}</Text>
-                            </View>
+                {isLoggedIn ? (
+                    <>
+                        {/* Specialties Section */}
+                        <Text style={[styles.sectionTitle, { marginTop: 20, marginBottom: 15 }]}>Specialties of the Area</Text>
+                        <View style={styles.specialtiesContainer}>
+                            {data.specialties.map((spec) => (
+                                <View key={spec.id} style={styles.specialtyCard}>
+                                    <View style={styles.specialtyIconBox}>
+                                        <RNImage source={{ uri: spec.iconUrl }} style={styles.specialtyIcon} />
+                                    </View>
+                                    <View style={styles.specialtyContent}>
+                                        <Text style={styles.specialtyTitle}>{spec.title}</Text>
+                                        <Text style={styles.specialtyDesc}>{spec.desc}</Text>
+                                    </View>
+                                </View>
+                            ))}
                         </View>
-                    ))}
-                </View>
+                    </>
+                ) : (
+                    <TouchableOpacity
+                        style={styles.unlockBanner}
+                        activeOpacity={0.9}
+                        onPress={() => navigation.navigate('Login')}
+                    >
+                        <BlurView intensity={80} tint="light" style={styles.unlockBlur}>
+                            <View style={styles.lockCircle}>
+                                <Ionicons name="lock-closed" size={24} color="#3B82F6" />
+                            </View>
+                            <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
+                            <Text style={styles.unlockDesc}>Access hidden artisan spots, full food history, and local food secrets.</Text>
+                            <View style={styles.unlockBtn}>
+                                <Text style={styles.unlockBtnText}>Unlock Now</Text>
+                            </View>
+                        </BlurView>
+                    </TouchableOpacity>
+                )}
 
             </ScrollView>
 
@@ -618,5 +645,50 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: '#94A3B8',
         lineHeight: 16,
+    },
+    unlockBanner: {
+        marginTop: 30,
+        borderRadius: 30,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+    },
+    unlockBlur: {
+        padding: 30,
+        alignItems: 'center',
+    },
+    lockCircle: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#EFF6FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+    unlockTitle: {
+        fontSize: 20,
+        fontWeight: '900',
+        color: '#0F172A',
+        textAlign: 'center',
+    },
+    unlockDesc: {
+        fontSize: 14,
+        color: '#64748B',
+        textAlign: 'center',
+        marginTop: 8,
+        lineHeight: 20,
+    },
+    unlockBtn: {
+        marginTop: 20,
+        backgroundColor: '#3B82F6',
+        paddingHorizontal: 30,
+        paddingVertical: 12,
+        borderRadius: 20,
+    },
+    unlockBtnText: {
+        color: 'white',
+        fontWeight: '800',
+        fontSize: 15,
     },
 });

@@ -5,15 +5,18 @@ import { ImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
 
+import { useAuth } from '../context/AuthContext';
+
 const { width } = Dimensions.get('window');
 
 const PARIS_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600&auto=format&fit=crop';
 const ROME_IMG = 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=600&auto=format&fit=crop';
 const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80&w=600';
 const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop';
-const USER_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
 
 export default function ExploreScreen({ navigation }) {
+    const { isLoggedIn } = useAuth();
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#f9fafc" />
@@ -29,11 +32,17 @@ export default function ExploreScreen({ navigation }) {
                         <Text style={styles.brandSubtitle}>Pack light, live loud.</Text>
                     </View>
                     <View style={styles.headerRightButtons}>
-                        <TouchableOpacity style={styles.iconCircle}>
+                        <TouchableOpacity
+                            style={styles.iconCircle}
+                            onPress={() => navigation.navigate('Camera')}
+                        >
                             <Ionicons name="camera-outline" size={22} color="#2563EB" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconCircle}>
-                            <Ionicons name="person-outline" size={22} color="#2563EB" />
+                        <TouchableOpacity
+                            style={styles.iconCircle}
+                            onPress={() => navigation.navigate('Notifications')}
+                        >
+                            <Ionicons name="notifications-outline" size={22} color="#2563EB" />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -113,51 +122,73 @@ export default function ExploreScreen({ navigation }) {
                         </ImageBackground>
                     </TouchableOpacity>
 
-                    {/* Card 2: Paris */}
-                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Paris')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: PARIS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
-                            <View style={styles.cardOverlay}>
-                                <View style={styles.pillContainer}>
-                                    <Text style={styles.pillText}>INFLUENCER PICK</Text>
-                                </View>
-                                <View style={styles.cardBottomText}>
-                                    <Text style={styles.cardCity}>Paris</Text>
-                                    <Text style={styles.cardStats}>1.2k roamsters active</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
+                    {isLoggedIn && (
+                        <>
+                            {/* Card 2: Paris */}
+                            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Paris')} style={styles.destinationCard}>
+                                <ImageBackground source={{ uri: PARIS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                                    <View style={styles.cardOverlay}>
+                                        <View style={styles.pillContainer}>
+                                            <Text style={styles.pillText}>INFLUENCER PICK</Text>
+                                        </View>
+                                        <View style={styles.cardBottomText}>
+                                            <Text style={styles.cardCity}>Paris</Text>
+                                            <Text style={styles.cardStats}>1.2k roamsters active</Text>
+                                        </View>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
 
-                    {/* Card 3: Rome */}
-                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Rome')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: ROME_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
-                            <View style={styles.cardOverlay}>
-                                <View style={{ flex: 1 }} />
-                                <View style={styles.cardBottomText}>
-                                    <Text style={styles.cardCity}>Rome</Text>
-                                    <Text style={styles.cardStats}>850 roamsters active</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-
+                            {/* Card 3: Rome */}
+                            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Rome')} style={styles.destinationCard}>
+                                <ImageBackground source={{ uri: ROME_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                                    <View style={styles.cardOverlay}>
+                                        <View style={{ flex: 1 }} />
+                                        <View style={styles.cardBottomText}>
+                                            <Text style={styles.cardCity}>Rome</Text>
+                                            <Text style={styles.cardStats}>850 roamsters active</Text>
+                                        </View>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        </>
+                    )}
                 </ScrollView>
 
                 {/* Action Banner */}
-                <View style={styles.bannerContainer}>
-                    <View style={styles.bannerTextContent}>
-                        <Text style={styles.bannerTitle}>Zero luggage,</Text>
-                        <Text style={styles.bannerTitle}>total style.</Text>
-                        <Text style={styles.bannerDesc}>Rent curated outfits based on your destination's vibe.</Text>
+                {!isLoggedIn ? (
+                    <TouchableOpacity
+                        style={[styles.bannerContainer, { backgroundColor: '#0F172A' }]}
+                        activeOpacity={0.9}
+                        onPress={() => navigation.navigate('Login')}
+                    >
+                        <View style={styles.bannerTextContent}>
+                            <Text style={styles.bannerTitle}>Unlock full access</Text>
+                            <Text style={styles.bannerDesc}>Login to unlock all places, food, clothes, and exclusive travel guides.</Text>
+                            <View style={styles.bannerButton}>
+                                <Text style={[styles.bannerButtonText, { color: '#0F172A' }]}>Login to unlock</Text>
+                            </View>
+                        </View>
+                        <View style={styles.bannerIconBox}>
+                            <Ionicons name="lock-closed" size={80} color="rgba(255,255,255,0.15)" />
+                        </View>
+                    </TouchableOpacity>
+                ) : (
+                    <View style={styles.bannerContainer}>
+                        <View style={styles.bannerTextContent}>
+                            <Text style={styles.bannerTitle}>Zero luggage,</Text>
+                            <Text style={styles.bannerTitle}>total style.</Text>
+                            <Text style={styles.bannerDesc}>Rent curated outfits based on your destination's vibe.</Text>
 
-                        <TouchableOpacity style={styles.bannerButton} activeOpacity={0.8}>
-                            <Text style={styles.bannerButtonText}>Start Style Quiz</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity style={styles.bannerButton} activeOpacity={0.8}>
+                                <Text style={styles.bannerButtonText}>Start Style Quiz</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.bannerIconBox}>
+                            <MaterialCommunityIcons name="hanger" size={80} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '15deg' }] }} />
+                        </View>
                     </View>
-                    <View style={styles.bannerIconBox}>
-                        <MaterialCommunityIcons name="hanger" size={80} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '15deg' }] }} />
-                    </View>
-                </View>
+                )}
 
             </ScrollView>
 

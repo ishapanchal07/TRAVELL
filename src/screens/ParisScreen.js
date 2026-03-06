@@ -3,27 +3,68 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
+import { useAuth } from '../context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
-const PARIS_MAIN = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=800&auto=format&fit=crop';
-const EXP_1 = 'https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=400&auto=format&fit=crop';
-const EXP_2 = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=400&auto=format&fit=crop';
-const RENT_1 = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop';
-const RENT_2 = 'https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=400&auto=format&fit=crop';
-const FOOD_1 = 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?q=80&w=400&auto=format&fit=crop';
-const PHOTO_1 = 'https://images.unsplash.com/photo-1522854961559-86bc01bb2d04?q=80&w=400&auto=format&fit=crop';
-const PHOTO_2 = 'https://images.unsplash.com/photo-1590141846506-69273c38c8c7?q=80&w=400&auto=format&fit=crop';
+const PARIS_DATA = {
+    city: 'Paris',
+    weather: { temp: '14°C', condition: 'Clear Sky', icon: 'sunny' },
+    hero: {
+        title: 'Paris:',
+        subtitle: 'The City of Light',
+        desc: 'Indulge in timeless romance and quintessential French elegance.',
+        image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=800&auto=format&fit=crop'
+    },
+    bestTime: 'April - June or September - October',
+    budget: 'High (€120 - 250 per day)',
+    transport: 'Metro, RER, and Velib (Bikes)',
+    hiddenGems: ['Rue des Thermopyles', 'Le Marais Courtyards', 'Canal Saint-Martin Wall', 'Passage des Panoramas', 'Museum of Romantic Life', 'Buttes-Chaumont Park'],
+    experiences: [
+        { id: 1, title: 'Eiffel Tower Picnic', sub: 'Champs de Mars • Scenic', img: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Louvre Art Tour', sub: '2 hours • World Heritage', img: 'https://images.unsplash.com/photo-1597923896141-d4de3119853c?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Seine River Cruise', sub: 'Montmartre • Sunset', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Arc de Triomphe Climb', sub: 'Panoramic Views • History', img: 'https://images.unsplash.com/photo-1509439581779-629c9b276001?q=80&w=400&auto=format&fit=crop' },
+        { id: 5, title: 'Sacre Coeur Basilica', sub: 'Artist Quarter • City View', img: 'https://images.unsplash.com/photo-1524338198850-8a2ff63aaceb?q=80&w=400&auto=format&fit=crop' },
+        { id: 6, title: 'Palace of Versailles', sub: 'Day Trip • Royal Gardens', img: 'https://images.unsplash.com/photo-1508248467873-9c1b9c7c645b?q=80&w=400&auto=format&fit=crop' }
+    ],
+    clothes: [
+        { id: 1, title: 'Classic Trench Coat', price: '€25/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1580752323040-f4883d6a6b7e?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Silk Scarf Style', price: '€8/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Leather Ankle Boots', price: '€18/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1542288922-39324523d45c?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Breton Striped Top', price: '€15/day', type: 'Casual', img: 'https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=400&auto=format&fit=crop' },
+        { id: 5, title: 'Red Beret Hat', price: '€5/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1549439602-43ebca2327af?q=80&w=400&auto=format&fit=crop' }
+    ],
+    food: [
+        { id: 1, title: 'Pistachio Macron', sub: 'Ladurée • 15m wait', img: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Cheese Soufflé', sub: 'Le Soufflé • Iconic', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Warm Baguette', sub: 'Poilâne • Artisan', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Duck Confit', sub: 'Brasserie • Classic', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=400&auto=format&fit=crop' },
+        { id: 5, title: 'Tarte Tatin', sub: 'Pastry Shop • Delight', img: 'https://images.unsplash.com/photo-1519915028121-7d3463d20b13?q=80&w=400&auto=format&fit=crop' }
+    ],
+    photoSpots: [
+        { id: 1, title: 'Troca-déro Stairs', img: 'https://images.unsplash.com/photo-1509439581779-629c9b276001?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Pink House (Maison Rose)', img: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Pont Alexandre III', img: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Shakespeare and Co.', img: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=400&auto=format&fit=crop' }
+    ]
+};
 
 export default function ParisScreen({ navigation }) {
+    const { isLoggedIn } = useAuth();
+    const data = PARIS_DATA;
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
-            {/* Top White Header */}
             <View style={styles.topHeader}>
                 <View style={styles.logoRow}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: 10 }}>
+                        <Ionicons name="chevron-back" size={24} color="#0F172A" />
+                    </TouchableOpacity>
                     <View style={styles.logoIconCircle}>
                         <Ionicons name="compass" size={16} color="white" />
                     </View>
@@ -33,22 +74,19 @@ export default function ParisScreen({ navigation }) {
                     <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Paris' })}>
                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconCircle}>
-                        <Feather name="search" size={18} color="#0EA5E9" />
-                    </TouchableOpacity>
                 </View>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
                 {/* Hero Section */}
-                <ImageBackground source={{ uri: PARIS_MAIN }} style={styles.heroImage}>
+                <ImageBackground source={{ uri: data.hero.image }} style={styles.heroImage}>
                     <View style={styles.heroOverlay}>
                         <View style={styles.weatherPill}>
-                            <Ionicons name="cloud" size={14} color="white" />
-                            <View style={styles.weatherTextCont}>
-                                <Text style={styles.weatherCity}>Paris Today</Text>
-                                <Text style={styles.weatherTemp}>14°C, Clear Sky</Text>
+                            <Ionicons name={data.weather.icon} size={14} color="white" />
+                            <View style={weatherStyles.weatherTextCont}>
+                                <Text style={weatherStyles.weatherCity}>{data.city} Today</Text>
+                                <Text style={weatherStyles.weatherTemp}>{data.weather.temp}, {data.weather.condition}</Text>
                             </View>
                         </View>
 
@@ -56,128 +94,127 @@ export default function ParisScreen({ navigation }) {
                             <View style={styles.trendingPill}>
                                 <Text style={styles.trendingText}>TRENDING DESTINATION</Text>
                             </View>
-                            <Text style={styles.heroTitle}>Paris:</Text>
-                            <Text style={styles.heroSubtitle}>The City of Light</Text>
-                            <Text style={styles.heroDesc}>Indulge in timeless romance and quintessential French elegance.</Text>
+                            <Text style={styles.heroTitle}>{data.hero.title}</Text>
+                            <Text style={styles.heroSubtitle}>{data.hero.subtitle}</Text>
+                            <Text style={styles.heroDesc}>{data.hero.desc}</Text>
                         </View>
                     </View>
                 </ImageBackground>
 
                 <View style={styles.contentPadding}>
 
+                    {/* Destination Facts */}
+                    <View style={styles.factsGrid}>
+                        <FactItem icon="calendar" label="Best Time" value={data.bestTime} />
+                        <FactItem icon="wallet" label="Daily Budget" value={data.budget} />
+                        <FactItem icon="bus" label="Transport" value={data.transport} />
+                    </View>
+
                     {/* Experience Plan */}
                     <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>Experience Plan</Text>
-                        <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>
+                        <Text style={styles.sectionTitle}>Top Experiences</Text>
+                        {isLoggedIn && <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>}
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-                        <View style={styles.expCard}>
-                            <Image source={{ uri: EXP_1 }} style={styles.expImage} />
-                            <View style={styles.expTextCont}>
-                                <Text style={styles.expTitle}>Montmartre <Text style={{ fontWeight: '800' }}>Art Walk</Text></Text>
-                                <Text style={styles.expSub}>3 hours • Arts & Heritage</Text>
+                        {(isLoggedIn ? data.experiences : data.experiences.slice(0, 3)).map(exp => (
+                            <View key={exp.id} style={styles.expCard}>
+                                <Image source={{ uri: exp.img }} style={styles.expImage} />
+                                <View style={styles.expTextCont}>
+                                    <Text style={styles.expTitle}>{exp.title}</Text>
+                                    <Text style={styles.expSub}>{exp.sub}</Text>
+                                </View>
                             </View>
-                        </View>
-                        <View style={styles.expCard}>
-                            <Image source={{ uri: EXP_2 }} style={styles.expImage} />
-                            <View style={styles.expTextCont}>
-                                <Text style={styles.expTitle}>Seine <Text style={{ fontWeight: '800' }}>River Cruise</Text></Text>
-                                <Text style={styles.expSub}>2 hours • Romance</Text>
-                            </View>
-                        </View>
+                        ))}
                     </ScrollView>
 
-                    {/* Rent Your Look */}
-                    <View style={[styles.sectionHeader, { marginTop: 20 }]}>
-                        <Text style={styles.sectionTitle}>Rent Your Look</Text>
+                    {/* Clothing Recommendations - Based on Weather */}
+                    <View style={[styles.sectionHeader, { marginTop: 25 }]}>
+                        <View>
+                            <Text style={styles.sectionTitle}>Spring Collection</Text>
+                            <Text style={styles.sectionSub}>Based on current {data.weather.condition} weather</Text>
+                        </View>
                         <View style={styles.luggagePill}>
-                            <Text style={styles.luggageText}>LUGGAGE-LESS</Text>
+                            <Text style={styles.luggageText}>RENTAL</Text>
                         </View>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-                        <View style={styles.outfitCard}>
-                            <Image source={{ uri: RENT_1 }} style={styles.outfitImage} />
-                            <View style={styles.outfitColorIndicator} />
-                            <View style={styles.outfitBotRow}>
-                                <View>
-                                    <Text style={styles.outfitTitle}>Chic Parisian</Text>
-                                    <Text style={styles.outfitPrice}>€45/day</Text>
+                        {(isLoggedIn ? data.clothes : data.clothes.slice(0, 2)).map(item => (
+                            <View key={item.id} style={styles.outfitCard}>
+                                <Image source={{ uri: item.img }} style={styles.outfitImage} />
+                                <View style={styles.outfitBotRow}>
+                                    <View>
+                                        <Text style={styles.outfitTitle}>{item.title}</Text>
+                                        <Text style={styles.outfitPrice}>{item.price}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.rentBtn}>
+                                        <Text style={styles.rentBtnText}>RENT</Text>
+                                    </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity style={styles.rentBtn}>
-                                    <Text style={styles.rentBtnText}>RENT</Text>
-                                </TouchableOpacity>
                             </View>
-                        </View>
-                        <View style={styles.outfitCard}>
-                            <Image source={{ uri: RENT_2 }} style={styles.outfitImage} />
-                            <View style={[styles.outfitColorIndicator, { backgroundColor: '#FDE68A' }]} />
-                            <View style={styles.outfitBotRow}>
-                                <View>
-                                    <Text style={styles.outfitTitle}>Left Bank Intellectual</Text>
-                                    <Text style={styles.outfitPrice}>€38/day</Text>
-                                </View>
-                                <TouchableOpacity style={styles.rentBtn}>
-                                    <Text style={styles.rentBtnText}>RENT</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        ))}
                     </ScrollView>
 
-                    {/* Trending Food */}
-                    <View style={[styles.sectionHeader, { marginTop: 20 }]}>
-                        <Text style={styles.sectionTitle}>Trending Food</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('CityFood', { city: 'Paris' })}><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>
+                    {/* Local Food */}
+                    <View style={[styles.sectionHeader, { marginTop: 25 }]}>
+                        <Text style={styles.sectionTitle}>Parisian Cuisine</Text>
+                        {isLoggedIn && <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>}
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-                        <View style={styles.foodCard}>
-                            <Image source={{ uri: FOOD_1 }} style={styles.foodImage} />
-                            <View style={styles.foodTextCont}>
-                                <Text style={styles.foodTitle}>Classic Macarons</Text>
-                                <Text style={styles.foodSub}>Ladurée • 15m wait</Text>
-                                <View style={styles.starsRow}>
-                                    <Ionicons name="star" size={12} color="#FACC15" />
-                                    <Ionicons name="star" size={12} color="#FACC15" />
-                                    <Ionicons name="star" size={12} color="#FACC15" />
-                                    <Ionicons name="star" size={12} color="#FACC15" />
-                                    <Ionicons name="star-half" size={12} color="#FACC15" />
+                        {(isLoggedIn ? data.food : data.food.slice(0, 2)).map(f => (
+                            <View key={f.id} style={styles.foodCard}>
+                                <Image source={{ uri: f.img }} style={styles.foodImage} />
+                                <View style={styles.foodTextCont}>
+                                    <Text style={styles.foodTitle}>{f.title}</Text>
+                                    <Text style={styles.foodSub}>{f.sub}</Text>
                                 </View>
                             </View>
-                        </View>
+                        ))}
                     </ScrollView>
 
-                    {/* Photo Spots */}
-                    <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Photo Spots</Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-                        <View style={styles.photoSpotCard}>
-                            <Image source={{ uri: PHOTO_1 }} style={styles.photoImage} />
-                            <View style={styles.pinOverlay}>
-                                <Ionicons name="map" size={12} color="white" />
+                    {isLoggedIn && (
+                        <>
+                            {/* Hidden Gems Section */}
+                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
+                            <View style={styles.gemsList}>
+                                {data.hiddenGems.map((gem, index) => (
+                                    <View key={index} style={styles.gemItem}>
+                                        <Ionicons name="sparkles" size={16} color="#0EA5E9" />
+                                        <Text style={styles.gemText}>{gem}</Text>
+                                    </View>
+                                ))}
                             </View>
-                            <Text style={styles.photoTitle}>Trocadéro Viewpoint</Text>
-                        </View>
-                        <View style={styles.photoSpotCard}>
-                            <Image source={{ uri: PHOTO_2 }} style={styles.photoImage} />
-                            <View style={styles.pinOverlay}>
-                                <Ionicons name="map" size={12} color="white" />
-                            </View>
-                            <Text style={styles.photoTitle}>Louvre Pyramid Night</Text>
-                        </View>
-                    </ScrollView>
 
-                    {/* Banner */}
-                    <View style={styles.bannerContainer}>
-                        <View style={styles.bannerTextContent}>
-                            <Text style={styles.bannerTitle}>Unlock Paris's</Text>
-                            <Text style={styles.bannerTitle}>Hidden Gems</Text>
-                            <Text style={styles.bannerDesc}>Exclusive influencer guides &{'\n'}priority outfit delivery.</Text>
-                            <TouchableOpacity style={styles.bannerButton} activeOpacity={0.8}>
-                                <Text style={styles.bannerButtonText}>GO PREMIUM €9.99</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.bannerIconBox}>
-                            <Ionicons name="star" size={180} color="rgba(255,255,255,0.2)" />
-                        </View>
-                    </View>
+                            {/* Photo Spots */}
+                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Perfect Snap Spots</Text>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
+                                {data.photoSpots.map(spot => (
+                                    <View key={spot.id} style={styles.photoSpotCard}>
+                                        <Image source={{ uri: spot.img }} style={styles.photoImage} />
+                                        <Text style={styles.photoTitle}>{spot.title}</Text>
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </>
+                    )}
+
+                    {!isLoggedIn && (
+                        <TouchableOpacity
+                            style={styles.unlockBanner}
+                            activeOpacity={0.9}
+                            onPress={() => navigation.navigate('Login')}
+                        >
+                            <BlurView intensity={80} tint="light" style={styles.unlockBlur}>
+                                <View style={styles.lockCircle}>
+                                    <Ionicons name="lock-closed" size={24} color="#3B82F6" />
+                                </View>
+                                <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
+                                <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
+                                <View style={styles.unlockBtn}>
+                                    <Text style={styles.unlockBtnText}>Unlock Now</Text>
+                                </View>
+                            </BlurView>
+                        </TouchableOpacity>
+                    )}
 
                 </View>
             </ScrollView>
@@ -187,6 +224,34 @@ export default function ParisScreen({ navigation }) {
         </SafeAreaView>
     );
 }
+
+function FactItem({ icon, label, value }) {
+    return (
+        <View style={styles.factItem}>
+            <View style={styles.factIconBox}>
+                <Ionicons name={icon} size={20} color="#3B82F6" />
+            </View>
+            <Text style={styles.factLabel}>{label}</Text>
+            <Text style={styles.factValue}>{value}</Text>
+        </View>
+    );
+}
+
+const weatherStyles = StyleSheet.create({
+    weatherTextCont: {
+        marginLeft: 6,
+    },
+    weatherCity: {
+        color: 'rgba(255,255,255,0.8)',
+        fontSize: 9,
+        fontWeight: '600',
+    },
+    weatherTemp: {
+        color: 'white',
+        fontSize: 11,
+        fontWeight: '700',
+    },
+});
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -255,19 +320,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10,
     },
-    weatherTextCont: {
-        marginLeft: 6,
-    },
-    weatherCity: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 9,
-        fontWeight: '600',
-    },
-    weatherTemp: {
-        color: 'white',
-        fontSize: 11,
-        fontWeight: '700',
-    },
     heroBottom: {
         marginBottom: 20,
     },
@@ -307,6 +359,42 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 20,
     },
+    factsGrid: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 25,
+    },
+    factItem: {
+        width: (width - 60) / 3,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 12,
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
+    },
+    factIconBox: {
+        width: 36,
+        height: 36,
+        borderRadius: 10,
+        backgroundColor: '#EFF6FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    factLabel: {
+        fontSize: 9,
+        fontWeight: '900',
+        color: '#94A3B8',
+        textTransform: 'uppercase',
+    },
+    factValue: {
+        fontSize: 10,
+        fontWeight: '700',
+        color: '#0F172A',
+        marginTop: 4,
+        textAlign: 'center',
+    },
     sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -317,6 +405,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '800',
         color: '#0F172A',
+    },
+    sectionSub: {
+        fontSize: 12,
+        color: '#64748B',
+        marginTop: 2,
     },
     viewAllText: {
         color: '#3B82F6',
@@ -349,7 +442,7 @@ const styles = StyleSheet.create({
     expTitle: {
         fontSize: 14,
         color: '#0F172A',
-        fontWeight: '500',
+        fontWeight: '700',
     },
     expSub: {
         fontSize: 11,
@@ -384,17 +477,6 @@ const styles = StyleSheet.create({
         height: 180,
         borderRadius: 16,
     },
-    outfitColorIndicator: {
-        position: 'absolute',
-        top: 15,
-        right: 15,
-        width: 20,
-        height: 20,
-        borderRadius: 10,
-        backgroundColor: '#E2E8F0',
-        borderWidth: 2,
-        borderColor: 'white',
-    },
     outfitBotRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -415,7 +497,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     rentBtn: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#3B82F6',
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 8,
@@ -427,109 +509,110 @@ const styles = StyleSheet.create({
     },
     foodCard: {
         flexDirection: 'row',
-        backgroundColor: '#F0F9FF',
-        borderRadius: 16,
-        padding: 10,
-        width: 260,
+        backgroundColor: '#F8FAFC',
+        borderRadius: 20,
+        padding: 12,
+        width: 280,
         marginRight: 15,
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
     },
     foodImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 12,
+        width: 70,
+        height: 70,
+        borderRadius: 15,
     },
     foodTextCont: {
-        marginLeft: 12,
+        marginLeft: 15,
         flex: 1,
     },
     foodTitle: {
-        fontSize: 14,
-        fontWeight: '700',
+        fontSize: 15,
+        fontWeight: '800',
         color: '#0F172A',
     },
     foodSub: {
-        fontSize: 11,
+        fontSize: 12,
         color: '#64748B',
-        marginTop: 2,
-        marginBottom: 4,
+        marginTop: 4,
     },
-    starsRow: {
+    gemsList: {
+        backgroundColor: '#F0F9FF',
+        borderRadius: 20,
+        padding: 20,
+        marginTop: 10,
+    },
+    gemItem: {
         flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    gemText: {
+        marginLeft: 10,
+        fontSize: 14,
+        color: '#1E293B',
+        fontWeight: '600',
     },
     photoSpotCard: {
-        width: 150,
+        width: 180,
         marginRight: 15,
-        alignItems: 'center',
     },
     photoImage: {
         width: '100%',
-        height: 110,
-        borderRadius: 16,
-    },
-    pinOverlay: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
+        height: 120,
+        borderRadius: 18,
     },
     photoTitle: {
         marginTop: 8,
         fontSize: 12,
-        fontWeight: '600',
+        fontWeight: '700',
         color: '#0F172A',
         textAlign: 'center',
     },
-    bannerContainer: {
+    unlockBanner: {
         marginTop: 30,
-        backgroundColor: '#38BDF8',
-        borderRadius: 24,
-        padding: 24,
-        flexDirection: 'row',
-        alignItems: 'center',
+        borderRadius: 30,
         overflow: 'hidden',
-        position: 'relative',
-        marginBottom: 20,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
     },
-    bannerTextContent: {
-        flex: 1,
-        zIndex: 2,
+    unlockBlur: {
+        padding: 30,
+        alignItems: 'center',
     },
-    bannerTitle: {
-        color: 'white',
-        fontSize: 24,
-        fontWeight: '800',
-        letterSpacing: -0.5,
+    lockCircle: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#EFF6FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
     },
-    bannerDesc: {
-        color: 'rgba(255,255,255,0.9)',
-        fontSize: 13,
-        marginTop: 10,
-        marginBottom: 20,
-        lineHeight: 18,
-        paddingRight: 10,
+    unlockTitle: {
+        fontSize: 20,
+        fontWeight: '900',
+        color: '#0F172A',
+        textAlign: 'center',
     },
-    bannerButton: {
-        backgroundColor: 'white',
-        alignSelf: 'flex-start',
-        paddingHorizontal: 16,
-        paddingVertical: 10,
+    unlockDesc: {
+        fontSize: 14,
+        color: '#64748B',
+        textAlign: 'center',
+        marginTop: 8,
+        lineHeight: 20,
+    },
+    unlockBtn: {
+        marginTop: 20,
+        backgroundColor: '#3B82F6',
+        paddingHorizontal: 30,
+        paddingVertical: 12,
         borderRadius: 20,
     },
-    bannerButtonText: {
-        color: '#38BDF8',
+    unlockBtnText: {
+        color: 'white',
         fontWeight: '800',
-        fontSize: 12,
-    },
-    bannerIconBox: {
-        position: 'absolute',
-        right: -40,
-        bottom: -30,
-        zIndex: 1,
+        fontSize: 15,
     },
 });
