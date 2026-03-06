@@ -220,7 +220,11 @@ export default function CityFoodScreen({ route, navigation }) {
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                     {displayedGems.map((gem) => (
-                        <View key={gem.id} style={styles.largeCard}>
+                        <TouchableOpacity
+                            key={gem.id}
+                            style={styles.largeCard}
+                            onPress={() => navigation.navigate('FoodDetail', { item: gem })}
+                        >
                             <View style={styles.largeCardImageContainer}>
                                 <Image source={{ uri: gem.image }} style={styles.largeCardImage} />
                                 <View style={styles.badgeTopLeft}>
@@ -238,11 +242,11 @@ export default function CityFoodScreen({ route, navigation }) {
                                     <Text style={styles.largeCardPrice}>{gem.price}</Text>
                                 </View>
                                 <Text style={styles.largeCardDesc} numberOfLines={1}>{gem.desc}</Text>
-                                <TouchableOpacity style={styles.quickOrderBtn} activeOpacity={0.8}>
+                                <View style={styles.quickOrderBtn}>
                                     <Text style={styles.quickOrderBtnText}>Quick Order</Text>
-                                </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </ScrollView>
 

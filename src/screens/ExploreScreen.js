@@ -51,19 +51,28 @@ export default function ExploreScreen({ navigation }) {
                 {/* Category Icons */}
                 <View style={styles.categoriesContainer}>
                     <View style={styles.categoryItem}>
-                        <TouchableOpacity style={styles.categoryIconCircle}>
+                        <TouchableOpacity
+                            style={styles.categoryIconCircle}
+                            onPress={() => navigation.navigate('CityFood', { city: 'Paris' })}
+                        >
                             <MaterialCommunityIcons name="silverware-fork-knife" size={24} color="#2563EB" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>FOOD</Text>
                     </View>
                     <View style={styles.categoryItem}>
-                        <TouchableOpacity style={styles.categoryIconCircle}>
+                        <TouchableOpacity
+                            style={styles.categoryIconCircle}
+                            onPress={() => navigation.navigate('Map', { city: 'Paris' })}
+                        >
                             <Ionicons name="map-outline" size={24} color="#2563EB" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>MAP</Text>
                     </View>
                     <View style={styles.categoryItem}>
-                        <TouchableOpacity style={styles.categoryIconCircle}>
+                        <TouchableOpacity
+                            style={styles.categoryIconCircle}
+                            onPress={() => navigation.navigate('Guide', { city: 'Paris' })}
+                        >
                             <Ionicons name="document-text-outline" size={24} color="#2563EB" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>GUIDE</Text>

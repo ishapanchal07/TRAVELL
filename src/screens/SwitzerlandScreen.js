@@ -30,7 +30,7 @@ export default function SwitzerlandScreen({ navigation }) {
                     <Text style={styles.logoText}>Roamster</Text>
                 </View>
                 <View style={styles.headerIcons}>
-                    <TouchableOpacity style={styles.iconCircle}>
+                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Switzerland' })}>
                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconCircle}>
@@ -124,7 +124,10 @@ export default function SwitzerlandScreen({ navigation }) {
                     </ScrollView>
 
                     {/* Trending Food */}
-                    <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Trending Food</Text>
+                    <View style={[styles.sectionHeader, { marginTop: 20 }]}>
+                        <Text style={styles.sectionTitle}>Trending Food</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('CityFood', { city: 'Switzerland' })}><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>
+                    </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         <View style={styles.foodCard}>
                             <Image source={{ uri: FOOD_1 }} style={styles.foodImage} />

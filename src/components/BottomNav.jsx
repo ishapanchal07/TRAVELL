@@ -49,15 +49,15 @@ export default function BottomNav({ activeRoute }) {
 
                 <TouchableOpacity
                     style={styles.navItem}
-                    onPress={() => navigation.navigate('SocialVibes')}
+                    onPress={() => navigation.navigate('Transactions')}
                 >
                     <Ionicons
-                        name="people"
-                        size={26}
-                        color={activeRoute === 'Social' ? '#3B82F6' : '#94A3B8'}
+                        name="wallet-outline"
+                        size={24}
+                        color={activeRoute === 'Transactions' ? '#3B82F6' : '#94A3B8'}
                     />
-                    <Text style={activeRoute === 'Social' ? styles.navTextActive : styles.navText}>
-                        SOCIAL
+                    <Text style={activeRoute === 'Transactions' ? styles.navTextActive : styles.navText}>
+                        TRANSACTIONS
                     </Text>
                 </TouchableOpacity>
 
