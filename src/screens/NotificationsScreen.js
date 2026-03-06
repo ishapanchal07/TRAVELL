@@ -46,7 +46,7 @@ const NOTIFICATIONS = [
         desc: 'Sunset starts in 30 mins. Head to Trocadéro for the best shot!',
         time: '3h ago',
         isNew: false,
-        icon: 'sunny',
+        icon: 'weather-sunny',
         iconColor: '#0EA5E9',
         bgColor: '#F0F9FF',
     },

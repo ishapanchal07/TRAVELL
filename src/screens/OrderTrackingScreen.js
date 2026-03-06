@@ -108,7 +108,7 @@ export default function OrderTrackingScreen({ navigation }) {
                     <TimelineItem
                         title="Near You"
                         status="pending"
-                        icon="paper-plane"
+                        icon="send"
                     />
                     <TimelineItem
                         title="Delivered"

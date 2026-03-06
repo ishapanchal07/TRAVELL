@@ -89,7 +89,12 @@ export default function ExploreScreen({ navigation }) {
                 </View>
 
                 {/* Trending Section */}
-                <Text style={styles.sectionTitle}>Trending Hotspots</Text>
+                <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Trending Hotspots</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('AllDestinations')}>
+                        <Text style={styles.seeAllText}>View All</Text>
+                    </TouchableOpacity>
+                </View>
 
                 <ScrollView
                     horizontal
@@ -122,37 +127,33 @@ export default function ExploreScreen({ navigation }) {
                         </ImageBackground>
                     </TouchableOpacity>
 
-                    {isLoggedIn && (
-                        <>
-                            {/* Card 2: Paris */}
-                            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Paris')} style={styles.destinationCard}>
-                                <ImageBackground source={{ uri: PARIS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
-                                    <View style={styles.cardOverlay}>
-                                        <View style={styles.pillContainer}>
-                                            <Text style={styles.pillText}>INFLUENCER PICK</Text>
-                                        </View>
-                                        <View style={styles.cardBottomText}>
-                                            <Text style={styles.cardCity}>Paris</Text>
-                                            <Text style={styles.cardStats}>1.2k roamsters active</Text>
-                                        </View>
-                                    </View>
-                                </ImageBackground>
-                            </TouchableOpacity>
+                    {/* Card 2: Paris */}
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Paris')} style={styles.destinationCard}>
+                        <ImageBackground source={{ uri: PARIS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                            <View style={styles.cardOverlay}>
+                                <View style={styles.pillContainer}>
+                                    <Text style={styles.pillText}>INFLUENCER PICK</Text>
+                                </View>
+                                <View style={styles.cardBottomText}>
+                                    <Text style={styles.cardCity}>Paris</Text>
+                                    <Text style={styles.cardStats}>1.2k roamsters active</Text>
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
 
-                            {/* Card 3: Rome */}
-                            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Rome')} style={styles.destinationCard}>
-                                <ImageBackground source={{ uri: ROME_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
-                                    <View style={styles.cardOverlay}>
-                                        <View style={{ flex: 1 }} />
-                                        <View style={styles.cardBottomText}>
-                                            <Text style={styles.cardCity}>Rome</Text>
-                                            <Text style={styles.cardStats}>850 roamsters active</Text>
-                                        </View>
-                                    </View>
-                                </ImageBackground>
-                            </TouchableOpacity>
-                        </>
-                    )}
+                    {/* Card 3: Rome */}
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Rome')} style={styles.destinationCard}>
+                        <ImageBackground source={{ uri: ROME_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                            <View style={styles.cardOverlay}>
+                                <View style={{ flex: 1 }} />
+                                <View style={styles.cardBottomText}>
+                                    <Text style={styles.cardCity}>Rome</Text>
+                                    <Text style={styles.cardStats}>850 roamsters active</Text>
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
                 </ScrollView>
 
                 {/* Action Banner */}
@@ -308,6 +309,17 @@ const styles = StyleSheet.create({
     },
     horizontalScroll: {
         paddingBottom: 10,
+    },
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+    seeAllText: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: '#3B82F6',
     },
     destinationCard: {
         width: width * 0.6,

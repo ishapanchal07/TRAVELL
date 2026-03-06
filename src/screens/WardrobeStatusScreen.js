@@ -55,7 +55,7 @@ export default function WardrobeStatusScreen({ navigation }) {
 
                     <View style={styles.stepsRow}>
                         <TrackerStep label="Packed" status="completed" icon="checkmark" />
-                        <TrackerStep label="Transit" status="active" icon="moped" />
+                        <TrackerStep label="Transit" status="active" icon="bicycle" />
                         <TrackerStep label="Received" status="pending" />
                         <TrackerStep label="Return Due" status="pending" isLast />
                     </View>

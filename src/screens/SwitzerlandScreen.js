@@ -113,7 +113,9 @@ export default function SwitzerlandScreen({ navigation }) {
                     {/* Experience Plan */}
                     <View style={styles.sectionHeader}>
                         <Text style={styles.sectionTitle}>Top Experiences</Text>
-                        {isLoggedIn && <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>}
+                        <TouchableOpacity onPress={() => navigation.navigate('AllPlaces', { title: 'Experiences in Switzerland', items: data.experiences })}>
+                            <Text style={styles.viewAllText}>View all</Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.experiences : data.experiences.slice(0, 3)).map(exp => (
@@ -133,9 +135,9 @@ export default function SwitzerlandScreen({ navigation }) {
                             <Text style={styles.sectionTitle}>Winter Essentials</Text>
                             <Text style={styles.sectionSub}>Based on current {data.weather.condition} weather</Text>
                         </View>
-                        <View style={styles.luggagePill}>
-                            <Text style={styles.luggageText}>RENTAL</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('AllClothes', { city: 'Switzerland', items: data.clothes })}>
+                            <Text style={styles.viewAllText}>View all</Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.clothes : data.clothes.slice(0, 2)).map(item => (
@@ -157,7 +159,9 @@ export default function SwitzerlandScreen({ navigation }) {
                     {/* Local Food */}
                     <View style={[styles.sectionHeader, { marginTop: 25 }]}>
                         <Text style={styles.sectionTitle}>Local Food Gems</Text>
-                        {isLoggedIn && <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>}
+                        <TouchableOpacity onPress={() => navigation.navigate('CityFood', { city: 'Switzerland' })}>
+                            <Text style={styles.viewAllText}>View all</Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.food : data.food.slice(0, 2)).map(f => (

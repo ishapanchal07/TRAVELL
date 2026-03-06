@@ -221,7 +221,7 @@ export default function CityFoodScreen({ route, navigation }) {
                 {/* Locals' Hidden Gems Section */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Locals' Hidden Gems</Text>
-                    <TouchableOpacity><Text style={styles.seeAllText}>See All</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('FoodDetail', { item: data.hiddenGems[0] })}><Text style={styles.seeAllText}>See All</Text></TouchableOpacity>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>

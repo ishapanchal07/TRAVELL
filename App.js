@@ -29,6 +29,10 @@ import WardrobeStatusScreen from './src/screens/WardrobeStatusScreen';
 import NotificationsScreen from './src/screens/NotificationsScreen';
 import CameraScreen from './src/screens/CameraScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import AllDestinationsScreen from './src/screens/AllDestinationsScreen';
+import AllPlacesScreen from './src/screens/AllPlacesScreen';
+import AllClothesScreen from './src/screens/AllClothesScreen';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +74,9 @@ export default function App() {
           <Stack.Screen name="WardrobeStatus" component={WardrobeStatusScreen} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Camera" component={CameraScreen} />
+          <Stack.Screen name="AllDestinations" component={AllDestinationsScreen} />
+          <Stack.Screen name="AllPlaces" component={AllPlacesScreen} />
+          <Stack.Screen name="AllClothes" component={AllClothesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

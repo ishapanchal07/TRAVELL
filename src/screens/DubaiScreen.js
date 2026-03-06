@@ -113,7 +113,9 @@ export default function DubaiScreen({ navigation }) {
                     {/* Experience Plan */}
                     <View style={styles.sectionHeader}>
                         <Text style={styles.sectionTitle}>Top Experiences</Text>
-                        {isLoggedIn && <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>}
+                        <TouchableOpacity onPress={() => navigation.navigate('AllPlaces', { title: 'Experiences in Dubai', items: data.experiences })}>
+                            <Text style={styles.viewAllText}>View all</Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.experiences : data.experiences.slice(0, 3)).map(exp => (
@@ -133,9 +135,9 @@ export default function DubaiScreen({ navigation }) {
                             <Text style={styles.sectionTitle}>Summer Oasis Look</Text>
                             <Text style={styles.sectionSub}>Based on current {data.weather.condition} weather</Text>
                         </View>
-                        <View style={styles.luggagePill}>
-                            <Text style={styles.luggageText}>RENTAL</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('AllClothes', { city: 'Dubai', items: data.clothes })}>
+                            <Text style={styles.viewAllText}>View all</Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.clothes : data.clothes.slice(0, 2)).map(item => (
@@ -157,7 +159,9 @@ export default function DubaiScreen({ navigation }) {
                     {/* Local Food */}
                     <View style={[styles.sectionHeader, { marginTop: 25 }]}>
                         <Text style={styles.sectionTitle}>Arabian Flavors</Text>
-                        {isLoggedIn && <TouchableOpacity><Text style={styles.viewAllText}>View all</Text></TouchableOpacity>}
+                        <TouchableOpacity onPress={() => navigation.navigate('CityFood', { city: 'Dubai' })}>
+                            <Text style={styles.viewAllText}>View all</Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.food : data.food.slice(0, 2)).map(f => (
