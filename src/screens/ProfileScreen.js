@@ -82,7 +82,11 @@ export default function ProfileScreen({ navigation }) {
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        activeOpacity={0.7}
+                        onPress={() => navigation.navigate('Transactions')}
+                    >
                         <View style={styles.menuIconContainer}>
                             <Ionicons name="receipt-outline" size={20} color="#3B82F6" />
                         </View>
