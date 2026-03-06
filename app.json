@@ -12,12 +12,16 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      
       "supportsTablet": true
     },
-    "platforms": ["ios"],
+    "platforms": [
+      "ios"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-image"
+    ]
   }
 }

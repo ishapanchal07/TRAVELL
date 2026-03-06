@@ -23,6 +23,8 @@ import GuideScreen from './src/screens/GuideScreen';
 import TransactionsScreen from './src/screens/TransactionsScreen';
 import FoodDetailScreen from './src/screens/FoodDetailScreen';
 import OrderTrackingScreen from './src/screens/OrderTrackingScreen';
+import WardrobeCheckoutScreen from './src/screens/WardrobeCheckoutScreen';
+import WardrobeStatusScreen from './src/screens/WardrobeStatusScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +60,8 @@ export default function App() {
         <Stack.Screen name="Transactions" component={TransactionsScreen} />
         <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
         <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
+        <Stack.Screen name="WardrobeCheckout" component={WardrobeCheckoutScreen} />
+        <Stack.Screen name="WardrobeStatus" component={WardrobeStatusScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

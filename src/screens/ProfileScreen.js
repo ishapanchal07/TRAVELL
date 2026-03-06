@@ -85,6 +85,18 @@ export default function ProfileScreen({ navigation }) {
                     <TouchableOpacity
                         style={styles.menuItem}
                         activeOpacity={0.7}
+                        onPress={() => navigation.navigate('SocialVibes')}
+                    >
+                        <View style={styles.menuIconContainer}>
+                            <Ionicons name="people" size={20} color="#3B82F6" />
+                        </View>
+                        <Text style={styles.menuText}>My Social</Text>
+                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        activeOpacity={0.7}
                         onPress={() => navigation.navigate('Transactions')}
                     >
                         <View style={styles.menuIconContainer}>

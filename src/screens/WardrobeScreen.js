@@ -128,7 +128,11 @@ export default function WardrobeScreen({ navigation }) {
 
             {/* Quick Rent Button */}
             <View style={styles.actionBtnWrapper}>
-                <TouchableOpacity style={styles.actionBtn} activeOpacity={0.9}>
+                <TouchableOpacity
+                    style={styles.actionBtn}
+                    activeOpacity={0.9}
+                    onPress={() => navigation.navigate('WardrobeCheckout')}
+                >
                     <Ionicons name="flash" size={16} color="white" />
                     <Text style={styles.actionBtnText}>QUICK-RENT SELECTED LOOK</Text>
                 </TouchableOpacity>
