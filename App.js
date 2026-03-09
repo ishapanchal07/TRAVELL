@@ -32,6 +32,10 @@ import LoginScreen from './src/screens/LoginScreen';
 import AllDestinationsScreen from './src/screens/AllDestinationsScreen';
 import AllPlacesScreen from './src/screens/AllPlacesScreen';
 import AllClothesScreen from './src/screens/AllClothesScreen';
+import ApparelDetailScreen from './src/screens/ApparelDetailScreen';
+import RentFlowScreen from './src/screens/RentFlowScreen';
+import PurchaseFlowScreen from './src/screens/PurchaseFlowScreen';
+import FiltersPreferencesScreen from './src/screens/FiltersPreferencesScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -77,6 +81,10 @@ export default function App() {
           <Stack.Screen name="AllDestinations" component={AllDestinationsScreen} />
           <Stack.Screen name="AllPlaces" component={AllPlacesScreen} />
           <Stack.Screen name="AllClothes" component={AllClothesScreen} />
+          <Stack.Screen name="ApparelDetail" component={ApparelDetailScreen} />
+          <Stack.Screen name="RentFlow" component={RentFlowScreen} />
+          <Stack.Screen name="PurchaseFlow" component={PurchaseFlowScreen} />
+          <Stack.Screen name="FiltersPreferences" component={FiltersPreferencesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

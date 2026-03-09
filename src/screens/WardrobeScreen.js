@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
@@ -48,6 +48,56 @@ const ITEMS = [
 ];
 
 export default function WardrobeScreen({ navigation }) {
+    const [travelGroup, setTravelGroup] = useState('Solo'); // Options: Solo, Couple, Family, Elderly
+    const [gender, setGender] = useState('Female');
+    const [weather, setWeather] = useState({ temp: '12°C', season: 'Autumn', condition: 'Sunny' });
+    const [destination, setDestination] = useState('PARIS, FRANCE');
+
+    // Trip Duration Logic
+    const currentYear = new Date().getFullYear();
+    const [startDate, setStartDate] = useState(new Date(currentYear, 8, 12)); // Sept 12
+    const [endDate, setEndDate] = useState(new Date(currentYear, 8, 18)); // Sept 18
+
+    const calculateDuration = () => {
+        const diffTime = Math.abs(endDate - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    };
+
+    const duration = calculateDuration();
+
+    // Recommendation Logic Helpers
+    const getRecommendationWarnings = (item) => {
+        const warnings = [];
+
+        // Cultural Check
+        if (destination.includes('DUBAI') && item.title.toLowerCase().includes('short')) {
+            warnings.push({ text: 'Cultural Notice: Modest clothing recommended for public areas.', type: 'alert' });
+        }
+
+        // Weather Check
+        if (weather.season === 'Winter' && !['jacket', 'coat', 'sweater', 'morning'].some(kw => item.title.toLowerCase().includes(kw))) {
+            warnings.push({ text: 'Weather Alert: This might not be warm enough for 0°C.', type: 'weather' });
+        }
+
+        // Safety/Comfort Check
+        if ((travelGroup === 'Family' || travelGroup === 'Elderly') && item.title.toLowerCase().includes('chic')) {
+            warnings.push({ text: 'Comfort Priority: Consider more breathable fabrics for active days.', type: 'safety' });
+        }
+
+        return warnings;
+    };
+
+    const isRecommended = (item) => {
+        if (travelGroup === 'Solo' || travelGroup === 'Couple') {
+            return item.match; // Keep existing high match
+        }
+        // Lower match for fashion-only items if priorities are comfort
+        if (item.title.toLowerCase().includes('chic') && (travelGroup === 'Family' || travelGroup === 'Elderly')) {
+            return (parseInt(item.match) - 10) + '%';
+        }
+        return item.match;
+    };
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
@@ -55,17 +105,23 @@ export default function WardrobeScreen({ navigation }) {
             <View style={styles.headerRow}>
                 <View style={styles.locationPill}>
                     <Ionicons name="location" size={12} color="#3B82F6" />
-                    <Text style={styles.locationText}>PARIS, FRANCE</Text>
+                    <Text style={styles.locationText}>{destination}</Text>
                 </View>
                 <View style={styles.weatherPill}>
-                    <Ionicons name="sunny" size={14} color="#F59E0B" />
-                    <Text style={styles.weatherText}>12°C</Text>
+                    <Ionicons name={weather.condition === 'Sunny' ? "sunny" : "cloud"} size={14} color="#F59E0B" />
+                    <Text style={styles.weatherText}>{weather.temp}</Text>
                 </View>
             </View>
 
             <View style={styles.titleRow}>
-                <Text style={styles.mainTitle}>Apparel Selection</Text>
-                <TouchableOpacity style={styles.filterBtn}>
+                <View>
+                    <Text style={styles.mainTitle}>Apparel Selection</Text>
+                    <Text style={styles.durationText}>{duration} Day Trip • {currentYear}</Text>
+                </View>
+                <TouchableOpacity
+                    style={styles.filterBtn}
+                    onPress={() => navigation.navigate('FiltersPreferences')}
+                >
                     <Feather name="sliders" size={18} color="#0F172A" />
                 </TouchableOpacity>
             </View>
@@ -92,8 +148,15 @@ export default function WardrobeScreen({ navigation }) {
 
                 <View style={styles.gridContainer}>
                     {ITEMS.map((item, index) => {
+                        const modifiedMatch = isRecommended(item);
+                        const warnings = getRecommendationWarnings(item);
+
                         return (
-                            <View key={item.id} style={styles.itemCard}>
+                            <TouchableOpacity
+                                key={item.id}
+                                style={styles.itemCard}
+                                onPress={() => navigation.navigate('ApparelDetail', { item: { ...item, match: modifiedMatch } })}
+                            >
                                 <View style={styles.imageContainer}>
                                     {item.isSmallImage ? (
                                         <View style={styles.smallImageWrap}>
@@ -103,24 +166,42 @@ export default function WardrobeScreen({ navigation }) {
                                         <Image source={{ uri: item.image }} style={styles.itemImage} contentFit="cover" />
                                     )}
                                     <View style={styles.matchBadge}>
-                                        <Text style={styles.matchText}>{item.match} MATCH</Text>
+                                        <Text style={styles.matchText}>{modifiedMatch} MATCH</Text>
                                     </View>
                                 </View>
 
                                 <View style={styles.itemInfo}>
                                     <Text style={styles.itemTitle}>{item.title}</Text>
+
+                                    {warnings.map((w, i) => (
+                                        <View key={i} style={styles.warningBox}>
+                                            <Ionicons
+                                                name={w.type === 'alert' ? "alert-circle" : "information-circle"}
+                                                size={10}
+                                                color={w.type === 'alert' ? "#EF4444" : "#3B82F6"}
+                                            />
+                                            <Text style={[styles.warningText, { color: w.type === 'alert' ? "#EF4444" : "#3B82F6" }]}>{w.text}</Text>
+                                        </View>
+                                    ))}
+
                                     <View style={styles.priceRow}>
-                                        <View>
+                                        <TouchableOpacity
+                                            onPress={() => navigation.navigate('RentFlow', { item })}
+                                            style={styles.priceCell}
+                                        >
                                             <Text style={styles.priceLabel}>RENT</Text>
                                             <Text style={styles.priceValueBlue}>{item.rent}<Text style={styles.priceUnit}>/d</Text></Text>
-                                        </View>
-                                        <View style={{ alignItems: 'flex-end' }}>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => navigation.navigate('PurchaseFlow', { item })}
+                                            style={[styles.priceCell, { alignItems: 'flex-end' }]}
+                                        >
                                             <Text style={styles.priceLabel}>BUY</Text>
                                             <Text style={styles.priceValueDark}>{item.buy}</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         );
                     })}
                 </View>
@@ -199,6 +280,12 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: '900',
         color: '#0F172A',
+    },
+    durationText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#64748B',
+        marginTop: 2,
     },
     filterBtn: {
         width: 36,
@@ -321,12 +408,30 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '800',
         color: '#0F172A',
-        marginBottom: 15,
+        marginBottom: 8,
+    },
+    warningBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+        backgroundColor: '#F8FAFC',
+        padding: 4,
+        borderRadius: 4,
+    },
+    warningText: {
+        fontSize: 8,
+        fontWeight: '700',
+        marginLeft: 4,
+        flex: 1,
     },
     priceRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline',
+        marginTop: 4,
+    },
+    priceCell: {
+        paddingVertical: 4,
     },
     priceLabel: {
         fontSize: 8,
