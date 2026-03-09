@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
-import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { useAuth } from '../context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
@@ -12,46 +13,61 @@ const AUTUMN_IMG = 'https://images.unsplash.com/photo-1605763240000-7e93b172d754
 const SEINE_IMG = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400';
 
 const ITEMS = [
-    {
-        id: '1',
-        title: 'Louvre Morning',
-        rent: '$24',
-        buy: '$185',
-        match: '98%',
-        image: LOUVRE_IMG
-    },
-    {
-        id: '2',
-        title: 'Marais Chic',
-        rent: '$32',
-        buy: '$240',
-        match: '85%',
-        image: MARAIS_IMG
-    },
-    {
-        id: '3',
-        title: 'Autumn Beret',
-        rent: '$12', // Added mock prices since cut off in image
-        buy: '$45',
-        match: '92%',
-        image: AUTUMN_IMG,
-        isSmallImage: true // In the design, this image doesn't fill the card fully, it has a white border box
-    },
-    {
-        id: '4',
-        title: 'Seine Stroll',
-        rent: '$35', // Added mock prices
-        buy: '$210',
-        match: '76%',
-        image: SEINE_IMG
-    }
+    // Winter Collection
+    { id: 'w1', title: 'Alpine Puffer', rent: '$45', buy: '$320', match: '98%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400', category: 'Jackets', season: 'winter' },
+    { id: 'w2', title: 'Wool Trench Coat', rent: '$55', buy: '$450', match: '95%', image: 'https://images.unsplash.com/photo-1539533377285-521f1831c19b?w=400', category: 'Jackets', season: 'winter' },
+    { id: 'w3', title: 'Thermal Leggings', rent: '$15', buy: '$85', match: '92%', image: 'https://images.unsplash.com/photo-1552062754-c8d8a03643fc?w=400', category: 'Pants', season: 'winter' },
+    { id: 'w4', title: 'Cashmere Scarf', rent: '$12', buy: '$95', match: '99%', image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400', category: 'Accessories', season: 'winter' },
+    { id: 'w5', title: 'Snow Boots', rent: '$30', buy: '$210', match: '90%', image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400', category: 'Shoes', season: 'winter' },
+    { id: 'w6', title: 'Fleece Beanie', rent: '$8', buy: '$35', match: '96%', image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400', category: 'Accessories', season: 'winter' },
+
+    // Summer Collection
+    { id: 's1', title: 'Linen Breeze Shirt', rent: '$20', buy: '$120', match: '98%', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400', category: 'Shirts', season: 'summer' },
+    { id: 's2', title: 'Floral Maxi Dress', rent: '$35', buy: '$245', match: '94%', image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400', category: 'Dresses', season: 'summer' },
+    { id: 's3', title: 'Denim Shorts', rent: '$15', buy: '$75', match: '91%', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400', category: 'Pants', season: 'summer' },
+    { id: 's4', title: 'Aviator Sunglasses', rent: '$10', buy: '$160', match: '97%', image: 'https://images.unsplash.com/photo-1511499767010-a588a5120716?w=400', category: 'Accessories', season: 'summer' },
+    { id: 's5', title: 'Leather Sandals', rent: '$18', buy: '$130', match: '89%', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', category: 'Shoes', season: 'summer' },
+    { id: 's6', title: 'Sun Straw Hat', rent: '$12', buy: '$65', match: '93%', image: 'https://images.unsplash.com/photo-1533444841536-41e9795bc25e?w=400', category: 'Accessories', season: 'summer' },
+
+    // Monsoon Collection
+    { id: 'm1', title: 'Lite-Rain Mac', rent: '$28', buy: '$195', match: '97%', image: 'https://images.unsplash.com/photo-1544923246-77307dd654ca?w=400', category: 'Jackets', season: 'monsoon' },
+    { id: 'm2', title: 'Quick-Dry Trousers', rent: '$22', buy: '$140', match: '93%', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400', category: 'Pants', season: 'monsoon' },
+    { id: 'm3', title: 'Waterproof Tote', rent: '$15', buy: '$95', match: '95%', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=400', category: 'Accessories', season: 'monsoon' },
+    { id: 'm4', title: 'Gore-Tex Sneakers', rent: '$35', buy: '$260', match: '91%', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400', category: 'Shoes', season: 'monsoon' },
+    { id: 'm5', title: 'Compact Umbrella', rent: '$5', buy: '$25', match: '99%', image: 'https://images.unsplash.com/photo-1542153200-84dc248d6db3?w=400', category: 'Accessories', season: 'monsoon' },
+
+    // Autumn / Mixed (existing logic support)
+    { id: 'a1', title: 'Louvre Morning', rent: '$24', buy: '$185', match: '98%', image: LOUVRE_IMG, category: 'Jackets', season: 'autumn' },
+    { id: 'a2', title: 'Marais Chic', rent: '$32', buy: '$240', match: '85%', image: MARAIS_IMG, category: 'Dresses', season: 'autumn' },
+    { id: 'a3', title: 'Autumn Beret', rent: '$12', buy: '$45', match: '92%', image: AUTUMN_IMG, category: 'Accessories', season: 'autumn', isSmallImage: true },
+    { id: 'a4', title: 'Seine Stroll', rent: '$35', buy: '$210', match: '76%', image: SEINE_IMG, category: 'Dresses', season: 'autumn' },
+
+    // Additional items to reach ~35
+    { id: 'x1', title: 'Cotton Polo', rent: '$14', buy: '$65', match: '88%', image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400', category: 'Shirts', season: 'summer' },
+    { id: 'x2', title: 'Chino Pants', rent: '$18', buy: '$95', match: '85%', image: 'https://images.unsplash.com/photo-1473966968600-fa804b86900a?w=400', category: 'Pants', season: 'summer' },
+    { id: 'x3', title: 'Silk Scarf', rent: '$10', buy: '$75', match: '93%', image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=400', category: 'Accessories', season: 'autumn' },
+    { id: 'x4', title: 'Classic Blazer', rent: '$40', buy: '$280', match: '96%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400', category: 'Jackets', season: 'autumn' },
+    { id: 'x5', title: 'V-Neck Sweater', rent: '$22', buy: '$120', match: '94%', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a4bb4?w=400', category: 'Shirts', season: 'autumn' },
+    { id: 'x6', title: 'Cargo Joggers', rent: '$16', buy: '$85', match: '87%', image: 'https://images.unsplash.com/photo-1517406322961-d70b7774d0a8?w=400', category: 'Pants', season: 'monsoon' },
+    { id: 'x7', title: 'Oxford Shoes', rent: '$25', buy: '$190', match: '92%', image: 'https://images.unsplash.com/photo-1549493527-73bd10565258?w=400', category: 'Shoes', season: 'autumn' },
+    { id: 'x8', title: 'Canvas Tote', rent: '$8', buy: '$40', match: '90%', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=400', category: 'Accessories', season: 'summer' },
+    { id: 'x9', title: 'Bucket Hat', rent: '$12', buy: '$55', match: '86%', image: 'https://images.unsplash.com/photo-1575424909138-46b05e5919ec?w=400', category: 'Accessories', season: 'summer' },
+    { id: 'x10', title: 'Knit Cardigan', rent: '$20', buy: '$110', match: '95%', image: 'https://images.unsplash.com/photo-1583846783204-d4635955365e?w=400', category: 'Shirts', season: 'winter' },
+    { id: 'x11', title: 'Velvet Evening Dress', rent: '$60', buy: '$520', match: '97%', image: 'https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?w=400', category: 'Dresses', season: 'autumn' },
+    { id: 'x12', title: 'Active Windbreaker', rent: '$24', buy: '$165', match: '93%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400', category: 'Jackets', season: 'monsoon' },
+    { id: 'x13', title: 'Platform Loafers', rent: '$22', buy: '$175', match: '89%', image: 'https://images.unsplash.com/photo-1549493527-73bd10565258?w=400', category: 'Shoes', season: 'winter' },
+    { id: 'x14', title: 'Graphic Tee', rent: '$10', buy: '$45', match: '82%', image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400', category: 'Shirts', season: 'summer' },
+    { id: 'x15', title: 'Stretch Skinny Jeans', rent: '$18', buy: '$95', match: '91%', image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400', category: 'Pants', season: 'autumn' }
 ];
 
 export default function WardrobeScreen({ navigation }) {
+    const { isLoggedIn } = useAuth();
     const [travelGroup, setTravelGroup] = useState('Solo'); // Options: Solo, Couple, Family, Elderly
     const [gender, setGender] = useState('Female');
     const [weather, setWeather] = useState({ temp: '12°C', season: 'Autumn', condition: 'Sunny' });
     const [destination, setDestination] = useState('PARIS, FRANCE');
+    const [activeStyle, setActiveStyle] = useState('All Styles');
+    const [selectedIds, setSelectedIds] = useState([]);
 
     // Trip Duration Logic
     const currentYear = new Date().getFullYear();
@@ -60,44 +76,62 @@ export default function WardrobeScreen({ navigation }) {
 
     const calculateDuration = () => {
         const diffTime = Math.abs(endDate - startDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays;
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     };
 
     const duration = calculateDuration();
 
+    // Catalog filtering
+    const displayItems = isLoggedIn ? ITEMS : ITEMS.slice(0, 4);
+
+    const filteredItems = displayItems.filter(item => {
+        // Tag filter logic (mock style mapping)
+        if (activeStyle !== 'All Styles' && item.category !== activeStyle && item.season.toLowerCase() !== activeStyle.toLowerCase()) {
+            if (activeStyle === 'Chic' && !item.title.toLowerCase().includes('chic') && item.category !== 'Dresses') return false;
+            if (activeStyle === 'Evening' && !item.title.toLowerCase().includes('evening') && item.category !== 'Dresses') return false;
+            if (activeStyle === 'Streetwear' && !['Jackets', 'Pants', 'Shoes'].includes(item.category)) return false;
+        }
+
+        // Seasonal filter
+        if (weather.season && item.season !== 'autumn') {
+            if (weather.season.toLowerCase() === 'winter' && item.season !== 'winter') return false;
+            if (weather.season.toLowerCase() === 'summer' && item.season !== 'summer') return false;
+            if (weather.season.toLowerCase() === 'monsoon' && item.season !== 'monsoon') return false;
+        }
+        return true;
+    });
+
+    const toggleSelection = (id) => {
+        setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+    };
+
+    const getSelectedItems = () => ITEMS.filter(item => selectedIds.includes(item.id));
+
     // Recommendation Logic Helpers
     const getRecommendationWarnings = (item) => {
         const warnings = [];
-
-        // Cultural Check
         if (destination.includes('DUBAI') && item.title.toLowerCase().includes('short')) {
             warnings.push({ text: 'Cultural Notice: Modest clothing recommended for public areas.', type: 'alert' });
         }
-
-        // Weather Check
-        if (weather.season === 'Winter' && !['jacket', 'coat', 'sweater', 'morning'].some(kw => item.title.toLowerCase().includes(kw))) {
+        if (weather.season === 'Winter' && !['jacket', 'coat', 'sweater', 'winter'].some(kw => item.title.toLowerCase().includes(kw))) {
             warnings.push({ text: 'Weather Alert: This might not be warm enough for 0°C.', type: 'weather' });
         }
-
-        // Safety/Comfort Check
         if ((travelGroup === 'Family' || travelGroup === 'Elderly') && item.title.toLowerCase().includes('chic')) {
             warnings.push({ text: 'Comfort Priority: Consider more breathable fabrics for active days.', type: 'safety' });
         }
-
         return warnings;
     };
 
     const isRecommended = (item) => {
         if (travelGroup === 'Solo' || travelGroup === 'Couple') {
-            return item.match; // Keep existing high match
+            return item.match;
         }
-        // Lower match for fashion-only items if priorities are comfort
         if (item.title.toLowerCase().includes('chic') && (travelGroup === 'Family' || travelGroup === 'Elderly')) {
             return (parseInt(item.match) - 10) + '%';
         }
         return item.match;
     };
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
@@ -129,33 +163,38 @@ export default function WardrobeScreen({ navigation }) {
             {/* Tags Scroll */}
             <View style={styles.tagsWrapper}>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tagsScroll}>
-                    <TouchableOpacity style={[styles.tag, styles.tagActive]}>
-                        <Text style={[styles.tagText, styles.tagTextActive]}>All Styles</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tag}>
-                        <Text style={styles.tagText}>Chic</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tag}>
-                        <Text style={styles.tagText}>Evening</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tag}>
-                        <Text style={styles.tagText}>Streetwear</Text>
-                    </TouchableOpacity>
+                    {['All Styles', 'Chic', 'Evening', 'Streetwear'].map(tag => (
+                        <TouchableOpacity
+                            key={tag}
+                            style={[styles.tag, activeStyle === tag && styles.tagActive]}
+                            onPress={() => setActiveStyle(tag)}
+                        >
+                            <Text style={[styles.tagText, activeStyle === tag && styles.tagTextActive]}>{tag}</Text>
+                        </TouchableOpacity>
+                    ))}
                 </ScrollView>
             </View>
 
-            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+            {!isLoggedIn && (
+                <View style={styles.loginHint}>
+                    <Ionicons name="lock-closed" size={14} color="#64748B" />
+                    <Text style={styles.loginHintText}>Sign in to unlock 35+ premium pieces</Text>
+                </View>
+            )}
 
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                 <View style={styles.gridContainer}>
-                    {ITEMS.map((item, index) => {
+                    {filteredItems.map((item) => {
                         const modifiedMatch = isRecommended(item);
                         const warnings = getRecommendationWarnings(item);
+                        const isSelected = selectedIds.includes(item.id);
 
                         return (
                             <TouchableOpacity
                                 key={item.id}
-                                style={styles.itemCard}
-                                onPress={() => navigation.navigate('ApparelDetail', { item: { ...item, match: modifiedMatch } })}
+                                activeOpacity={0.9}
+                                style={[styles.itemCard, isSelected && styles.itemCardSelected]}
+                                onPress={() => toggleSelection(item.id)}
                             >
                                 <View style={styles.imageContainer}>
                                     {item.isSmallImage ? (
@@ -168,10 +207,20 @@ export default function WardrobeScreen({ navigation }) {
                                     <View style={styles.matchBadge}>
                                         <Text style={styles.matchText}>{modifiedMatch} MATCH</Text>
                                     </View>
+                                    {isSelected && (
+                                        <View style={styles.selectedOverlay}>
+                                            <Ionicons name="checkmark-circle" size={24} color="#3B82F6" />
+                                        </View>
+                                    )}
                                 </View>
 
                                 <View style={styles.itemInfo}>
-                                    <Text style={styles.itemTitle}>{item.title}</Text>
+                                    <View style={styles.titlePriceRow}>
+                                        <Text style={styles.itemTitle}>{item.title}</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('ApparelDetail', { item: { ...item, match: modifiedMatch } })}>
+                                            <Ionicons name="information-circle-outline" size={18} color="#94A3B8" />
+                                        </TouchableOpacity>
+                                    </View>
 
                                     {warnings.map((w, i) => (
                                         <View key={i} style={styles.warningBox}>
@@ -185,20 +234,14 @@ export default function WardrobeScreen({ navigation }) {
                                     ))}
 
                                     <View style={styles.priceRow}>
-                                        <TouchableOpacity
-                                            onPress={() => navigation.navigate('RentFlow', { item })}
-                                            style={styles.priceCell}
-                                        >
+                                        <View style={styles.priceCell}>
                                             <Text style={styles.priceLabel}>RENT</Text>
                                             <Text style={styles.priceValueBlue}>{item.rent}<Text style={styles.priceUnit}>/d</Text></Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress={() => navigation.navigate('PurchaseFlow', { item })}
-                                            style={[styles.priceCell, { alignItems: 'flex-end' }]}
-                                        >
+                                        </View>
+                                        <View style={[styles.priceCell, { alignItems: 'flex-end' }]}>
                                             <Text style={styles.priceLabel}>BUY</Text>
                                             <Text style={styles.priceValueDark}>{item.buy}</Text>
-                                        </TouchableOpacity>
+                                        </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -210,12 +253,15 @@ export default function WardrobeScreen({ navigation }) {
             {/* Quick Rent Button */}
             <View style={styles.actionBtnWrapper}>
                 <TouchableOpacity
-                    style={styles.actionBtn}
+                    style={[styles.actionBtn, selectedIds.length === 0 && styles.actionBtnDisabled]}
                     activeOpacity={0.9}
-                    onPress={() => navigation.navigate('WardrobeCheckout')}
+                    disabled={selectedIds.length === 0}
+                    onPress={() => navigation.navigate('WardrobeCheckout', { selectedItems: getSelectedItems() })}
                 >
                     <Ionicons name="flash" size={16} color="white" />
-                    <Text style={styles.actionBtnText}>QUICK-RENT SELECTED LOOK</Text>
+                    <Text style={styles.actionBtnText}>
+                        QUICK-RENT SELECTED LOOK {selectedIds.length > 0 ? `(${selectedIds.length} ITEMS)` : ''}
+                    </Text>
                 </TouchableOpacity>
             </View>
 
@@ -352,6 +398,13 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 2,
         overflow: 'hidden',
+        borderWidth: 2,
+        borderColor: 'transparent',
+    },
+    itemCardSelected: {
+        borderColor: '#3B82F6',
+        shadowColor: '#3B82F6',
+        shadowOpacity: 0.1,
     },
     imageContainer: {
         width: '100%',
@@ -387,6 +440,13 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         contentFit: 'cover',
     },
+    selectedOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 24,
+    },
     matchBadge: {
         position: 'absolute',
         top: 12,
@@ -402,13 +462,19 @@ const styles = StyleSheet.create({
         fontWeight: '800',
     },
     itemInfo: {
-        padding: 15,
+        padding: 12,
+    },
+    titlePriceRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
     },
     itemTitle: {
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '800',
         color: '#0F172A',
-        marginBottom: 8,
+        flex: 1,
     },
     warningBox: {
         flexDirection: 'row',
@@ -476,11 +542,30 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 6,
     },
+    actionBtnDisabled: {
+        backgroundColor: '#94A3B8',
+        shadowOpacity: 0,
+        elevation: 0,
+    },
     actionBtnText: {
         color: 'white',
         fontSize: 12,
         fontWeight: '800',
         marginLeft: 8,
         letterSpacing: 0.5,
+    },
+    loginHint: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F1F5F9',
+        paddingVertical: 6,
+        marginBottom: 10,
+    },
+    loginHintText: {
+        fontSize: 10,
+        color: '#64748B',
+        fontWeight: '700',
+        marginLeft: 6,
     },
 });

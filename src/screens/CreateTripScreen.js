@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollV
 import { Image } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
+import { useTrip } from '../context/TripContext';
+import AnalyticsService from '../services/AnalyticsService';
 
 const { width } = Dimensions.get('window');
 
@@ -20,6 +22,7 @@ const DESTINATIONS = [
 ];
 
 export default function CreateTripScreen({ navigation }) {
+    const { createTrip } = useTrip();
     const [selectedDest, setSelectedDest] = useState('1');
     const [gender, setGender] = useState('Female');
     const [clothingSize, setClothingSize] = useState('EU 38 (M)');
@@ -216,7 +219,20 @@ export default function CreateTripScreen({ navigation }) {
                         placeholderTextColor="#CBD5E1"
                     />
 
-                    <TouchableOpacity style={styles.saveBtn} activeOpacity={0.8} onPress={() => navigation.navigate('TailorTrip')}>
+                    <TouchableOpacity
+                        style={styles.saveBtn}
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            const destName = DESTINATIONS.find(d => d.id === selectedDest)?.name || 'PARIS';
+                            createTrip({
+                                destination: destName,
+                                dates: selectedDates,
+                                preferences: { gender, clothingSize, diet }
+                            });
+                            AnalyticsService.logEvent('trip_created', { destination: destName });
+                            navigation.navigate('TailorTrip');
+                        }}
+                    >
                         <Text style={styles.saveBtnText}>Save & Next</Text>
                         <Feather name="arrow-right" size={20} color="white" style={{ marginLeft: 8 }} />
                     </TouchableOpacity>

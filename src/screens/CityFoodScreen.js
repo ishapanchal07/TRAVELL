@@ -6,6 +6,8 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
+import { useTrip } from '../context/TripContext';
+import AnalyticsService from '../services/AnalyticsService';
 
 const { width } = Dimensions.get('window');
 

@@ -6,6 +6,8 @@ import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/v
 import BottomNav from '../components/BottomNav';
 
 import { useAuth } from '../context/AuthContext';
+import { useTrip } from '../context/TripContext';
+import AnalyticsService from '../services/AnalyticsService';
 
 const { width } = Dimensions.get('window');
 
@@ -39,6 +41,7 @@ const GLOBAL_FOODS = [
 
 export default function ExploreScreen({ navigation }) {
     const { isLoggedIn } = useAuth();
+    const { activeTrip } = useTrip();
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -218,6 +221,20 @@ export default function ExploreScreen({ navigation }) {
                 <View style={[styles.sectionHeader, { marginTop: 30 }]}>
                     <Text style={styles.sectionTitle}>Global Food Cravings</Text>
                 </View>
+
+                {!activeTrip && (
+                    <TouchableOpacity
+                        style={styles.nudgeBanner}
+                        onPress={() => navigation.navigate('CreateTrip')}
+                    >
+                        <Ionicons name="airplane" size={24} color="white" />
+                        <View style={styles.nudgeContent}>
+                            <Text style={styles.nudgeTitle}>Plan Your First Roam</Text>
+                            <Text style={styles.nudgeDesc}>Tell us where you're going for personalized vibes.</Text>
+                        </View>
+                        <Ionicons name="chevron-forward" size={20} color="white" />
+                    </TouchableOpacity>
+                )}
 
                 <ScrollView
                     horizontal
@@ -540,6 +557,30 @@ const styles = StyleSheet.create({
         color: '#38BDF8',
         fontSize: 14,
         fontWeight: '700',
+        marginTop: 2,
+    },
+    // Nudge Banner
+    nudgeBanner: {
+        backgroundColor: '#3B82F6',
+        borderRadius: 20,
+        padding: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 20,
+    },
+    nudgeContent: {
+        flex: 1,
+        marginLeft: 15,
+    },
+    nudgeTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '800',
+    },
+    nudgeDesc: {
+        color: 'rgba(255,255,255,0.8)',
+        fontSize: 12,
         marginTop: 2,
     },
 });

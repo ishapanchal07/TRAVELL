@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthProvider } from './src/context/AuthContext';
+import { TripProvider } from './src/context/TripContext';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import FeaturesScreen from './src/screens/FeaturesScreen';
 import FamilySafetyScreen from './src/screens/FamilySafetyScreen';
@@ -36,6 +37,7 @@ import ApparelDetailScreen from './src/screens/ApparelDetailScreen';
 import RentFlowScreen from './src/screens/RentFlowScreen';
 import PurchaseFlowScreen from './src/screens/PurchaseFlowScreen';
 import FiltersPreferencesScreen from './src/screens/FiltersPreferencesScreen';
+import AdminScreen from './src/screens/AdminScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -43,50 +45,53 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Welcome"
-          screenOptions={{
-            headerShown: false,
-            animation: 'slide_from_right'
-          }}
-        >
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Features" component={FeaturesScreen} />
-          <Stack.Screen name="FamilySafety" component={FamilySafetyScreen} />
-          <Stack.Screen name="Explore" component={ExploreScreen} />
-          <Stack.Screen name="Paris" component={ParisScreen} />
-          <Stack.Screen name="Rome" component={RomeScreen} />
-          <Stack.Screen name="CreateTrip" component={CreateTripScreen} />
-          <Stack.Screen name="TailorTrip" component={TailorTripScreen} />
-          <Stack.Screen name="SocialVibes" component={SocialVibesScreen} />
-          <Stack.Screen name="PhotoGuide" component={PhotoGuideScreen} />
-          <Stack.Screen name="Wardrobe" component={WardrobeScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Journeys" component={JourneysScreen} />
-          <Stack.Screen name="Gallery" component={GalleryScreen} />
-          <Stack.Screen name="Switzerland" component={SwitzerlandScreen} />
-          <Stack.Screen name="Dubai" component={DubaiScreen} />
-          <Stack.Screen name="Map" component={MapScreen} />
-          <Stack.Screen name="CityFood" component={CityFoodScreen} />
-          <Stack.Screen name="Guide" component={GuideScreen} />
-          <Stack.Screen name="Transactions" component={TransactionsScreen} />
-          <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
-          <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
-          <Stack.Screen name="WardrobeCheckout" component={WardrobeCheckoutScreen} />
-          <Stack.Screen name="WardrobeStatus" component={WardrobeStatusScreen} />
-          <Stack.Screen name="Notifications" component={NotificationsScreen} />
-          <Stack.Screen name="Camera" component={CameraScreen} />
-          <Stack.Screen name="AllDestinations" component={AllDestinationsScreen} />
-          <Stack.Screen name="AllPlaces" component={AllPlacesScreen} />
-          <Stack.Screen name="AllClothes" component={AllClothesScreen} />
-          <Stack.Screen name="ApparelDetail" component={ApparelDetailScreen} />
-          <Stack.Screen name="RentFlow" component={RentFlowScreen} />
-          <Stack.Screen name="PurchaseFlow" component={PurchaseFlowScreen} />
-          <Stack.Screen name="FiltersPreferences" component={FiltersPreferencesScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <TripProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Welcome"
+            screenOptions={{
+              headerShown: false,
+              animation: 'slide_from_right'
+            }}
+          >
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Features" component={FeaturesScreen} />
+            <Stack.Screen name="FamilySafety" component={FamilySafetyScreen} />
+            <Stack.Screen name="Explore" component={ExploreScreen} />
+            <Stack.Screen name="Paris" component={ParisScreen} />
+            <Stack.Screen name="Rome" component={RomeScreen} />
+            <Stack.Screen name="CreateTrip" component={CreateTripScreen} />
+            <Stack.Screen name="TailorTrip" component={TailorTripScreen} />
+            <Stack.Screen name="SocialVibes" component={SocialVibesScreen} />
+            <Stack.Screen name="PhotoGuide" component={PhotoGuideScreen} />
+            <Stack.Screen name="Wardrobe" component={WardrobeScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Journeys" component={JourneysScreen} />
+            <Stack.Screen name="Gallery" component={GalleryScreen} />
+            <Stack.Screen name="Switzerland" component={SwitzerlandScreen} />
+            <Stack.Screen name="Dubai" component={DubaiScreen} />
+            <Stack.Screen name="Map" component={MapScreen} />
+            <Stack.Screen name="CityFood" component={CityFoodScreen} />
+            <Stack.Screen name="Guide" component={GuideScreen} />
+            <Stack.Screen name="Transactions" component={TransactionsScreen} />
+            <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
+            <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
+            <Stack.Screen name="WardrobeCheckout" component={WardrobeCheckoutScreen} />
+            <Stack.Screen name="WardrobeStatus" component={WardrobeStatusScreen} />
+            <Stack.Screen name="Notifications" component={NotificationsScreen} />
+            <Stack.Screen name="Camera" component={CameraScreen} />
+            <Stack.Screen name="AllDestinations" component={AllDestinationsScreen} />
+            <Stack.Screen name="AllPlaces" component={AllPlacesScreen} />
+            <Stack.Screen name="AllClothes" component={AllClothesScreen} />
+            <Stack.Screen name="ApparelDetail" component={ApparelDetailScreen} />
+            <Stack.Screen name="RentFlow" component={RentFlowScreen} />
+            <Stack.Screen name="PurchaseFlow" component={PurchaseFlowScreen} />
+            <Stack.Screen name="FiltersPreferences" component={FiltersPreferencesScreen} />
+            <Stack.Screen name="Admin" component={AdminScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </TripProvider>
     </AuthProvider>
   );
 }

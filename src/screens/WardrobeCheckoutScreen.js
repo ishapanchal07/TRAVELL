@@ -10,7 +10,30 @@ const LOOK_IMG_1 = 'https://images.unsplash.com/photo-1540574163026-643ea20ade25
 const LOOK_IMG_2 = 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=300';
 const LOOK_IMG_3 = 'https://images.unsplash.com/photo-1549493527-73bd10565258?auto=format&fit=crop&q=80&w=300';
 
-export default function WardrobeCheckoutScreen({ navigation }) {
+export default function WardrobeCheckoutScreen({ route, navigation }) {
+    const { selectedItems = [] } = route.params || {};
+
+    // Fallback static items if none passed (for direct navigation testing)
+    const itemsToShow = selectedItems.length > 0 ? selectedItems : [
+        { id: '1', title: 'Louvre Morning', rent: '$24', buy: '$185', image: LOOK_IMG_1 },
+        { id: '2', title: 'Marais Chic', rent: '$32', buy: '$240', image: LOOK_IMG_2 },
+        { id: '3', title: 'Autumn Beret', rent: '$12', buy: '$45', image: LOOK_IMG_3 }
+    ];
+
+    const itemCount = itemsToShow.length;
+
+    // Calculate totals
+    const subtotal = itemsToShow.reduce((acc, item) => {
+        const priceStr = item.rent || '$0';
+        const price = parseInt(priceStr.replace('$', '')) || 0;
+        return acc + price;
+    }, 0);
+
+    const serviceFee = 12.00;
+    const total = subtotal + serviceFee;
+
+    const currentYear = new Date().getFullYear();
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
@@ -29,25 +52,21 @@ export default function WardrobeCheckoutScreen({ navigation }) {
                 {/* CO2 Savings Badge */}
                 <View style={styles.co2Badge}>
                     <Ionicons name="leaf" size={14} color="#3B82F6" />
-                    <Text style={styles.co2Text}>YOU SAVED 12.4KG OF CO2</Text>
+                    <Text style={styles.co2Text}>YOU SAVED {(itemCount * 4.1).toFixed(1)}KG OF CO2</Text>
                 </View>
 
                 {/* Section: Your Curated Look */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Your Curated Look</Text>
-                    <Text style={styles.itemsCount}>3 Items Selected</Text>
+                    <Text style={styles.itemsCount}>{itemCount} Item{itemCount !== 1 ? 's' : ''} Selected</Text>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.curatedScroll}>
-                    <View style={styles.lookCard}>
-                        <Image source={{ uri: LOOK_IMG_1 }} style={styles.lookImg} />
-                    </View>
-                    <View style={styles.lookCard}>
-                        <Image source={{ uri: LOOK_IMG_2 }} style={styles.lookImg} />
-                    </View>
-                    <View style={styles.lookCard}>
-                        <Image source={{ uri: LOOK_IMG_3 }} style={styles.lookImg} />
-                    </View>
+                    {itemsToShow.map((item, idx) => (
+                        <View key={item.id + idx} style={styles.lookCard}>
+                            <Image source={{ uri: item.image }} style={styles.lookImg} />
+                        </View>
+                    ))}
                 </ScrollView>
 
                 {/* Section: Trip Duration */}
@@ -55,16 +74,16 @@ export default function WardrobeCheckoutScreen({ navigation }) {
                 <View style={styles.tripCard}>
                     <View style={styles.tripCol}>
                         <Text style={styles.tripLabel}>START TRIP</Text>
-                        <Text style={styles.tripDate}>Oct 12,</Text>
-                        <Text style={styles.tripDate}>2023</Text>
+                        <Text style={styles.tripDate}>Sep 12,</Text>
+                        <Text style={styles.tripDate}>{currentYear}</Text>
                     </View>
                     <View style={styles.planeIconBox}>
                         <Ionicons name="airplane" size={20} color="#3B82F6" />
                     </View>
                     <View style={styles.tripCol}>
                         <Text style={styles.tripLabelEnd}>END TRIP</Text>
-                        <Text style={styles.tripDateEnd}>Oct 16,</Text>
-                        <Text style={styles.tripDateEnd}>2023</Text>
+                        <Text style={styles.tripDateEnd}>Sep 18,</Text>
+                        <Text style={styles.tripDateEnd}>{currentYear}</Text>
                     </View>
                 </View>
 
@@ -73,7 +92,7 @@ export default function WardrobeCheckoutScreen({ navigation }) {
                 <View style={styles.locationCard}>
                     <View style={styles.hotelPill}>
                         <Ionicons name="bed" size={20} color="#3B82F6" />
-                        <Text style={styles.hotelName}>The Edition, Times Square</Text>
+                        <Text style={styles.hotelName}>Hôtel Lutetia, Paris</Text>
                     </View>
 
                     <View style={styles.miniMap}>
@@ -94,14 +113,14 @@ export default function WardrobeCheckoutScreen({ navigation }) {
                     <ScheduleItem
                         icon="cube"
                         title="Delivery to Hotel"
-                        subtitle="Oct 12 • Arrival by 2:00 PM"
+                        subtitle={`Sep 12 • Arrival by 2:00 PM`}
                         note="Ready at the concierge"
                         isFirst
                     />
                     <ScheduleItem
                         icon="moped"
                         title="Scheduled Pickup"
-                        subtitle="Oct 16 • Before 11:00 AM"
+                        subtitle={`Sep 18 • Before 11:00 AM`}
                         note="Leave at the front desk"
                         isLast
                     />
@@ -111,11 +130,11 @@ export default function WardrobeCheckoutScreen({ navigation }) {
                 <View style={styles.priceCard}>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabelSmall}>Rental Subtotal</Text>
-                        <Text style={styles.priceValueSmall}>$145.00</Text>
+                        <Text style={styles.priceValueSmall}>${subtotal.toFixed(2)}</Text>
                     </View>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabelSmall}>Service Fee</Text>
-                        <Text style={styles.priceValueSmall}>$12.00</Text>
+                        <Text style={styles.priceValueSmall}>${serviceFee.toFixed(2)}</Text>
                     </View>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabelSmall}>Delivery & Return</Text>
@@ -127,11 +146,11 @@ export default function WardrobeCheckoutScreen({ navigation }) {
                     <View style={styles.totalRow}>
                         <View>
                             <Text style={styles.totalLabel}>TOTAL PRICE</Text>
-                            <Text style={styles.totalPrice}>$157.00</Text>
+                            <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
                         </View>
                         <View style={styles.roamPointsBadge}>
                             <MaterialCommunityIcons name="star-circle" size={16} color="#3B82F6" />
-                            <Text style={styles.roamPointsText}>+157 ROAM POINTS</Text>
+                            <Text style={styles.roamPointsText}>+{Math.floor(total)} ROAM POINTS</Text>
                         </View>
                     </View>
 

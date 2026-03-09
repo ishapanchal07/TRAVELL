@@ -7,6 +7,10 @@ import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5, Octicons } fro
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function ProfileScreen({ navigation }) {
+    React.useEffect(() => {
+        AnalyticsService.logEvent('profile_view');
+    }, []);
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
