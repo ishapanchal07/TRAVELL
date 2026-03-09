@@ -10,7 +10,10 @@ const { width } = Dimensions.get('window');
 const PIERRE_AVATAR = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200';
 const LADUREE_ICON = 'https://images.unsplash.com/photo-1626804561081-377b2207936a?auto=format&fit=crop&q=80&w=100';
 
-export default function OrderTrackingScreen({ navigation }) {
+export default function OrderTrackingScreen({ route, navigation }) {
+    const { orderItem = {} } = route.params || {};
+    const { name = 'Macarons', image = LADUREE_ICON } = orderItem;
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
@@ -30,7 +33,7 @@ export default function OrderTrackingScreen({ navigation }) {
                 <View style={styles.statusCard}>
                     <View style={styles.statusContent}>
                         <Text style={styles.onItsWay}>ON ITS WAY</Text>
-                        <Text style={styles.statusMain}>Your Macarons are arriving!</Text>
+                        <Text style={styles.statusMain}>Your {name} are arriving!</Text>
                         <View style={styles.timeBadge}>
                             <Ionicons name="time-outline" size={16} color="white" />
                             <Text style={styles.timeText}>Estimated: 8 mins</Text>
@@ -61,9 +64,9 @@ export default function OrderTrackingScreen({ navigation }) {
                     {/* Restaurant Marker */}
                     <View style={[styles.marker, { top: '25%', left: '30%' }]}>
                         <View style={styles.restaurantMarker}>
-                            <Image source={{ uri: LADUREE_ICON }} style={styles.restaurantImg} />
+                            <Image source={{ uri: image }} style={styles.restaurantImg} />
                         </View>
-                        <Text style={styles.markerLabel}>Ladurée</Text>
+                        <Text style={styles.markerLabel}>Restaurant</Text>
                     </View>
 
                     {/* Destination Marker */}
@@ -122,7 +125,7 @@ export default function OrderTrackingScreen({ navigation }) {
                 <View style={styles.summaryCard}>
                     <Text style={styles.summaryTitle}>Order Summary</Text>
                     <View style={styles.summaryRow}>
-                        <Text style={styles.summaryLabel}>6x Mixed Macarons</Text>
+                        <Text style={styles.summaryLabel}>1x {name}</Text>
                         <Text style={styles.summaryValue}>€24.00</Text>
                     </View>
                     <View style={styles.summaryRow}>
@@ -138,7 +141,7 @@ export default function OrderTrackingScreen({ navigation }) {
             </ScrollView>
 
             <BottomNav activeRoute="Explore" />
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 

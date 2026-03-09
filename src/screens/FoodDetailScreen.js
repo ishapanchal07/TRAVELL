@@ -11,6 +11,17 @@ const FOOD_HERO_IMG = 'https://images.unsplash.com/photo-1534939561126-855b8675e
 
 export default function FoodDetailScreen({ route, navigation }) {
     const { item = {} } = route.params || {};
+
+    // Default values if item is empty
+    const {
+        name = 'Classic Beef Bourguignon',
+        image = FOOD_HERO_IMG,
+        price = '$28.00',
+        rating = '4.9',
+        description = 'Traditional Parisian beef stew slow-cooked in red wine with pearl onions and mushrooms.',
+        subtitle = 'Traditional Parisian Bistro • 45 min'
+    } = item;
+
     const [dietary, setDietary] = useState('Non-Veg');
     const [addons, setAddons] = useState({ baguette: false, salad: true });
     const [deliveryLoc, setDeliveryLoc] = useState('Hotel');
@@ -22,7 +33,7 @@ export default function FoodDetailScreen({ route, navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* Hero section */}
                 <View style={styles.heroContainer}>
-                    <Image source={{ uri: FOOD_HERO_IMG }} style={styles.heroImage} />
+                    <Image source={{ uri: image }} style={styles.heroImage} />
                     <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={24} color="white" />
                     </TouchableOpacity>
@@ -34,14 +45,14 @@ export default function FoodDetailScreen({ route, navigation }) {
                             </View>
                             <View style={styles.ratingBox}>
                                 <Ionicons name="star" size={14} color="#FACC15" />
-                                <Text style={styles.ratingText}>4.9 (120+ Reviews)</Text>
+                                <Text style={styles.ratingText}>{rating} (120+ Reviews)</Text>
                             </View>
                         </View>
 
                         <View style={styles.titleRow}>
                             <View style={{ flex: 1 }}>
-                                <Text style={styles.foodTitle}>Classic Beef Bourguignon</Text>
-                                <Text style={styles.foodSubtitle}>Traditional Parisian Bistro • 45 min</Text>
+                                <Text style={styles.foodTitle}>{name}</Text>
+                                <Text style={styles.foodSubtitle}>{subtitle}</Text>
                             </View>
                             <View style={styles.bestForDinnerBox}>
                                 <MaterialCommunityIcons name="silverware-fork-knife" size={18} color="white" />
@@ -58,7 +69,7 @@ export default function FoodDetailScreen({ route, navigation }) {
                     </View>
                     <View style={styles.tipContent}>
                         <Text style={styles.tipTitle}>LOCAL GUIDE TIP</Text>
-                        <Text style={styles.tipText}>"In Paris, this is a quintessential dinner staple. Pairs perfectly with a Bordeaux wine."</Text>
+                        <Text style={styles.tipText}>"{description || "In Paris, this is a quintessential dinner staple. Pairs perfectly with a Bordeaux wine."}"</Text>
                     </View>
                 </View>
 
@@ -143,7 +154,7 @@ export default function FoodDetailScreen({ route, navigation }) {
                 <View style={styles.billSection}>
                     <View style={styles.billRow}>
                         <Text style={styles.billLabel}>Subtotal</Text>
-                        <Text style={styles.billValue}>$28.00</Text>
+                        <Text style={styles.billValue}>{price}</Text>
                     </View>
                     <View style={styles.billRow}>
                         <Text style={styles.billLabel}>Add-ons (Salad)</Text>
@@ -168,7 +179,7 @@ export default function FoodDetailScreen({ route, navigation }) {
                 <TouchableOpacity
                     style={styles.placeOrderBtn}
                     activeOpacity={0.8}
-                    onPress={() => navigation.navigate('OrderTracking')}
+                    onPress={() => navigation.navigate('OrderTracking', { orderItem: { name, image } })}
                 >
                     <Text style={styles.placeOrderText}>PLACE ORDER • $34.00</Text>
                 </TouchableOpacity>
