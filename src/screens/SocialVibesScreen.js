@@ -3,16 +3,40 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAuth } from '../context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
-const EIFFEL_IMG = 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&q=80&w=800';
-const MONTMARTRE_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
-const MARAIS_IMG = 'https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?auto=format&fit=crop&q=80&w=800';
-const SEINE_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=800';
+const EIFFEL_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=1200';
+const PARIS_STREET_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
+const GEM1_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=800';
+const GEM2_IMG = 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&q=80&w=800';
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
 const AVATAR_IMG = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
 
+const GEMS = [
+    { id: 'g1', title: 'Montmartre Backstreets', image: PARIS_STREET_IMG, rating: '4.7', vibe: 'QUIET VIBE' },
+    { id: 'g2', title: 'Hidden Gems 1', image: GEM1_IMG, rating: '4.8', vibe: 'ARTISTIC' },
+    { id: 'g3', title: 'Hidden Gems 2', image: GEM2_IMG, rating: '4.9', vibe: 'LOCAL' },
+    { id: 'g4', title: 'Rue Crémieux', image: FALLBACK_IMG, rating: '4.8', vibe: 'COLORFUL' },
+    { id: 'g5', title: 'Palais Royal Columns', image: PARIS_STREET_IMG, rating: '4.9', vibe: 'MINIMAL' }
+];
+
 export default function SocialVibesScreen({ navigation }) {
+    const { isLoggedIn } = useAuth();
+
+    const displayGems = isLoggedIn ? GEMS : GEMS.slice(0, 2);
+
+    const handleExploreMore = () => {
+        if (!isLoggedIn) {
+            navigation.navigate('Login');
+        } else {
+            navigation.navigate('AllPlaces', {
+                title: 'Hidden Gems',
+                items: GEMS.map(g => ({ ...g, img: g.image, sub: g.vibe }))
+            });
+        }
+    };
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
@@ -49,7 +73,13 @@ export default function SocialVibesScreen({ navigation }) {
                 </View>
 
                 <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('PhotoGuide')}>
-                    <ImageBackground source={{ uri: EIFFEL_IMG }} style={styles.mainCard} imageStyle={{ borderRadius: 28 }} transition={300}>
+                    <ImageBackground
+                        source={{ uri: EIFFEL_IMG }}
+                        style={styles.mainCard}
+                        imageStyle={{ borderRadius: 28 }}
+                        transition={300}
+                        contentFit="cover"
+                    >
                         <View style={styles.mainCardOverlay}>
                             <View style={styles.cardPill}>
                                 <View style={styles.pillDot} />
@@ -84,49 +114,39 @@ export default function SocialVibesScreen({ navigation }) {
                 {/* Hidden Gems */}
                 <View style={[styles.sectionHeader, { marginTop: 25 }]}>
                     <Text style={styles.sectionTitle}>Hidden Gems</Text>
-                    <TouchableOpacity><Text style={styles.seeAllText}>Explore More</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={handleExploreMore}>
+                        <Text style={styles.seeAllText}>Explore More</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
-                    {/* Item 1 */}
-                    <TouchableOpacity activeOpacity={0.9} style={styles.smallCard}>
-                        <ImageBackground source={{ uri: MONTMARTRE_IMG }} style={styles.smallCardImage} imageStyle={{ borderRadius: 20 }} transition={300}>
-                            <View style={styles.smallCardOverlay}>
-                                <View style={styles.heartButton}>
-                                    <Feather name="heart" size={16} color="white" />
-                                </View>
-                                <View style={styles.smallCardBottom}>
-                                    <View style={styles.smallPill}>
-                                        <Text style={styles.smallPillText}>QUIET VIBE</Text>
+                    {displayGems.map((gem) => (
+                        <TouchableOpacity key={gem.id} activeOpacity={0.9} style={styles.smallCard}>
+                            <ImageBackground
+                                source={{ uri: gem.image }}
+                                style={styles.smallCardImage}
+                                imageStyle={{ borderRadius: 20 }}
+                                transition={300}
+                                contentFit="cover"
+                            >
+                                <View style={styles.smallCardOverlay}>
+                                    <View style={styles.heartButton}>
+                                        <Feather name="heart" size={16} color="white" />
                                     </View>
-                                    <Text style={styles.smallCardTitle}>Montmartre Backstreets</Text>
-                                    <View style={styles.smallRatingRow}>
-                                        <Ionicons name="star" size={10} color="#38BDF8" />
-                                        <Text style={styles.smallRatingText}>4.7 Vibe Rating</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-
-                    {/* Item 2 */}
-                    <TouchableOpacity activeOpacity={0.9} style={styles.smallCard}>
-                        <ImageBackground source={{ uri: MARAIS_IMG }} style={styles.smallCardImage} imageStyle={{ borderRadius: 20 }} transition={300}>
-                            <View style={styles.smallCardOverlay}>
-                                <View style={{ flex: 1 }} />
-                                <View style={styles.smallCardBottom}>
-                                    <View style={styles.smallPill}>
-                                        <Text style={styles.smallPillText}>ARTISTIC</Text>
-                                    </View>
-                                    <Text style={styles.smallCardTitle}>Le Marais Courts</Text>
-                                    <View style={styles.smallRatingRow}>
-                                        <Ionicons name="star" size={10} color="#38BDF8" />
-                                        <Text style={styles.smallRatingText}>4.8 Vibe Rating</Text>
+                                    <View style={styles.smallCardBottom}>
+                                        <View style={styles.smallPill}>
+                                            <Text style={styles.smallPillText}>{gem.vibe}</Text>
+                                        </View>
+                                        <Text style={styles.smallCardTitle}>{gem.title}</Text>
+                                        <View style={styles.smallRatingRow}>
+                                            <Ionicons name="star" size={10} color="#38BDF8" />
+                                            <Text style={styles.smallRatingText}>{gem.rating} Vibe Rating</Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    ))}
                 </ScrollView>
 
                 {/* Seine River Banks */}
@@ -135,7 +155,13 @@ export default function SocialVibesScreen({ navigation }) {
                 </View>
 
                 <View style={styles.videoCardCont}>
-                    <ImageBackground source={{ uri: SEINE_IMG }} style={styles.videoImg} imageStyle={{ borderRadius: 24 }} transition={300}>
+                    <ImageBackground
+                        source={{ uri: GEM1_IMG }}
+                        style={styles.videoImg}
+                        imageStyle={{ borderRadius: 24 }}
+                        transition={300}
+                        contentFit="cover"
+                    >
                         <View style={styles.videoOverlay}>
                             <TouchableOpacity style={styles.playButton} activeOpacity={0.8}>
                                 <Ionicons name="play" size={24} color="white" style={{ marginLeft: 4 }} />
