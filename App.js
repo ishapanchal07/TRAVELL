@@ -3,7 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthProvider } from './src/context/AuthContext';
 import { TripProvider } from './src/context/TripContext';
+
+// Screen Imports
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import LoginScreen from './src/screens/LoginScreen';
 import FeaturesScreen from './src/screens/FeaturesScreen';
 import FamilySafetyScreen from './src/screens/FamilySafetyScreen';
 import ExploreScreen from './src/screens/ExploreScreen';
@@ -29,7 +32,6 @@ import WardrobeCheckoutScreen from './src/screens/WardrobeCheckoutScreen';
 import WardrobeStatusScreen from './src/screens/WardrobeStatusScreen';
 import NotificationsScreen from './src/screens/NotificationsScreen';
 import CameraScreen from './src/screens/CameraScreen';
-import LoginScreen from './src/screens/LoginScreen';
 import AllDestinationsScreen from './src/screens/AllDestinationsScreen';
 import AllPlacesScreen from './src/screens/AllPlacesScreen';
 import AllClothesScreen from './src/screens/AllClothesScreen';
@@ -38,7 +40,6 @@ import RentFlowScreen from './src/screens/RentFlowScreen';
 import PurchaseFlowScreen from './src/screens/PurchaseFlowScreen';
 import FiltersPreferencesScreen from './src/screens/FiltersPreferencesScreen';
 import AdminScreen from './src/screens/AdminScreen';
-
 
 const Stack = createNativeStackNavigator();
 

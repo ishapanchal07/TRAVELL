@@ -62,6 +62,14 @@ export default function ApparelDetailScreen({ route, navigation }) {
                             <Text style={styles.recommendationText}>Matches your "Paris Chic" preference. Perfect for morning visits to the Louvre.</Text>
                         </View>
                     </View>
+
+                    <TouchableOpacity
+                        style={styles.buyNowSectionBtn}
+                        onPress={() => navigation.navigate('PurchaseFlow', { item })}
+                    >
+                        <Text style={styles.buyNowSectionBtnText}>BUY NOW • {item.buy || '$185'}</Text>
+                        <Ionicons name="arrow-forward" size={18} color="white" />
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
 
@@ -249,5 +257,26 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: '800',
+    },
+    buyNowSectionBtn: {
+        flexDirection: 'row',
+        backgroundColor: '#0F172A',
+        height: 56,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 24,
+        paddingHorizontal: 20,
+        shadowColor: '#0F172A',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    buyNowSectionBtnText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '900',
+        marginRight: 10,
     },
 });

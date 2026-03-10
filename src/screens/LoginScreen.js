@@ -5,6 +5,7 @@ import { Image, ImageBackground } from 'expo-image';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { useAuth } from '../context/AuthContext';
+import AnalyticsService from '../services/AnalyticsService';
 
 const { width, height } = Dimensions.get('window');
 
@@ -34,7 +35,7 @@ export default function LoginScreen({ navigation }) {
 
     const handleLogin = () => {
         login();
-        // The App.js structure will likely handle navigation or we can manually navigate
+        AnalyticsService.logEvent('login_success');
         navigation.navigate('Explore');
     };
 

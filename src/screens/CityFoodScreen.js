@@ -152,21 +152,36 @@ const CITY_DATA = {
 
 export default function CityFoodScreen({ route, navigation }) {
     const { isLoggedIn } = useAuth();
+    const { preferences } = useTrip();
     const { city = 'Paris' } = route.params || {};
-    const data = CITY_DATA[city] || CITY_DATA['Paris'];
+    const cityData = CITY_DATA[city] || CITY_DATA['Paris'];
 
     const [activeFilter, setActiveFilter] = useState('All');
     const [vegFilter, setVegFilter] = useState('All'); // 'VEG', 'NON-VEG', 'All'
+    const [activeTab, setActiveTab] = useState('Hidden Gems');
+
+    const handleItemPress = (item) => {
+        AnalyticsService.logEvent('food_item_view', { id: item.id, name: item.title });
+        navigation.navigate('FoodDetail', { item });
+    };
 
     // Filter logic
-    const baseGems = isLoggedIn ? data.hiddenGems : data.hiddenGems.slice(0, 2);
-    const displayedGems = baseGems.filter(item => {
+    const gemsToFilter = isLoggedIn ? cityData.hiddenGems : cityData.hiddenGems.slice(0, 2);
+
+    const displayedGems = gemsToFilter.filter(item => {
+        // Apply user preference from context
+        if (preferences.diet && (preferences.diet.includes('Veg') || preferences.diet.includes('Vegan'))) {
+            if (!item.isVeg) return false;
+        }
+
+        // Apply local screen filters
         if (vegFilter === 'VEG' && !item.isVeg) return false;
         if (vegFilter === 'NON-VEG' && item.isVeg) return false;
+
         return true;
     });
 
-    const displayedNearby = isLoggedIn ? data.popularNearby : data.popularNearby.slice(0, 2);
+    const displayedNearby = isLoggedIn ? cityData.popularNearby : cityData.popularNearby.slice(0, 2);
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -185,10 +200,10 @@ export default function CityFoodScreen({ route, navigation }) {
                 </View>
 
                 {/* Title and Location */}
-                <Text style={styles.mainTitle}>{data.title}</Text>
+                <Text style={styles.mainTitle}>{cityData.title}</Text>
                 <View style={styles.locationPill}>
                     <Ionicons name="location" size={12} color="#38BDF8" style={{ marginRight: 4 }} />
-                    <Text style={styles.locationText}>{data.location}</Text>
+                    <Text style={styles.locationText}>{cityData.location}</Text>
                 </View>
 
                 {/* Filters */}
@@ -223,7 +238,7 @@ export default function CityFoodScreen({ route, navigation }) {
                 {/* Locals' Hidden Gems Section */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Locals' Hidden Gems</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('FoodDetail', { item: data.hiddenGems[0] })}><Text style={styles.seeAllText}>See All</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('FoodDetail', { item: cityData.hiddenGems[0] })}><Text style={styles.seeAllText}>See All</Text></TouchableOpacity>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
@@ -283,7 +298,7 @@ export default function CityFoodScreen({ route, navigation }) {
                         {/* Specialties Section */}
                         <Text style={[styles.sectionTitle, { marginTop: 20, marginBottom: 15 }]}>Specialties of the Area</Text>
                         <View style={styles.specialtiesContainer}>
-                            {data.specialties.map((spec) => (
+                            {cityData.specialties.map((spec) => (
                                 <View key={spec.id} style={styles.specialtyCard}>
                                     <View style={styles.specialtyIconBox}>
                                         <RNImage source={{ uri: spec.iconUrl }} style={styles.specialtyIcon} />

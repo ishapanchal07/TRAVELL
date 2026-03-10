@@ -221,7 +221,6 @@ export default function ExploreScreen({ navigation }) {
                 <View style={[styles.sectionHeader, { marginTop: 30 }]}>
                     <Text style={styles.sectionTitle}>Global Food Cravings</Text>
                 </View>
-
                 {!activeTrip && (
                     <TouchableOpacity
                         style={styles.nudgeBanner}

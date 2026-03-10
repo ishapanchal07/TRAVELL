@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTrip } from '../context/TripContext';
 
 const { width } = Dimensions.get('window');
 
@@ -14,6 +15,7 @@ const WHO_OPTIONS = [
 ];
 
 export default function TailorTripScreen({ navigation }) {
+    const { activeTrip } = useTrip();
     const [selectedWho, setSelectedWho] = useState('2');
     const [safetySens, setSafetySens] = useState(0.8); // 0 to 1
     const [activityInt, setActivityInt] = useState(0.4); // 0 to 1
@@ -28,7 +30,7 @@ export default function TailorTripScreen({ navigation }) {
                     <Feather name="chevron-left" size={24} color="#64748B" />
                 </TouchableOpacity>
                 <View style={styles.tripPill}>
-                    <Text style={styles.tripPillText}>TRIP: PARIS '24</Text>
+                    <Text style={styles.tripPillText}>TRIP: {activeTrip?.destination || 'PARIS'} '24</Text>
                 </View>
                 <View style={{ width: 40 }} /> {/* Spacer */}
             </View>
@@ -135,8 +137,7 @@ export default function TailorTripScreen({ navigation }) {
             {/* Bottom Button */}
             <View style={styles.bottomFixedContainer}>
                 <TouchableOpacity style={styles.primaryBtn} activeOpacity={0.8} onPress={() => navigation.navigate('Explore')}>
-                    <Text style={styles.primaryBtnText}>Initialize My Trip</Text>
-                    <Feather name="arrow-right" size={20} color="white" style={{ marginLeft: 8 }} />
+                    <Text style={styles.primaryBtnText}>Initialize My Trip</Text><Feather name="arrow-right" size={20} color="white" style={{ marginLeft: 8 }} />
                 </TouchableOpacity>
             </View>
 

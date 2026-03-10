@@ -109,6 +109,18 @@ export default function ProfileScreen({ navigation }) {
                         <Text style={styles.menuText}>My Transactions</Text>
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
                     </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        activeOpacity={0.7}
+                        onPress={() => navigation.navigate('Admin')}
+                    >
+                        <View style={styles.menuIconContainer}>
+                            <Ionicons name="construct-outline" size={20} color="#3B82F6" />
+                        </View>
+                        <Text style={styles.menuText}>Admin Panel</Text>
+                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                    </TouchableOpacity>
                 </View>
 
                 {/* Eco Card */}
