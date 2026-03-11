@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Animated, Share, TextInput } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -15,6 +15,111 @@ const IMG_HAT = 'https://images.unsplash.com/photo-1521369909029-2afed882228c?q=
 const IMG_POSTER = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=400';
 
 export default function GalleryScreen({ navigation }) {
+    const [photos, setPhotos] = useState({
+        rentedMain: IMG_DRESS,
+        portrait: IMG_PORTRAIT,
+        hat: IMG_HAT,
+        poster: IMG_POSTER,
+    });
+    
+    const [deletedPhoto, setDeletedPhoto] = useState(null);
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const hideTimeout = useRef(null);
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearchActive, setIsSearchActive] = useState(false);
+    const [activeDestination, setActiveDestination] = useState('All Travels');
+    const [activePose, setActivePose] = useState(null); // default to null to show all
+
+    const photoMetadata = {
+        rentedMain: { dest: "Paris '24", pose: 'OOTD', text: 'dress outfit red rented fashion' },
+        portrait: { dest: 'Tokyo City', pose: 'Portraits', text: 'portrait person face' },
+        hat: { dest: "Paris '24", pose: 'OOTD', text: 'hat accessory outfit' },
+        poster: { dest: "Paris '24", pose: 'Landscapes', text: 'landscape eiffel tower paris architecture urbiminal' },
+    };
+
+    const isVisible = (key) => {
+        if (!photos[key]) return false;
+
+        const meta = photoMetadata[key];
+        
+        if (activeDestination !== 'All Travels' && meta.dest !== activeDestination) {
+            return false;
+        }
+
+        if (activePose && meta.pose !== activePose) {
+            return false;
+        }
+
+        if (searchQuery.trim().length > 0) {
+            const query = searchQuery.toLowerCase();
+            if (!meta.dest.toLowerCase().includes(query) && 
+                !meta.pose.toLowerCase().includes(query) && 
+                !meta.text.includes(query)) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    const handleDelete = (key, uri) => {
+        setDeletedPhoto({ key, uri });
+        setPhotos(prev => ({ ...prev, [key]: null }));
+        showSnackbar();
+    };
+
+    const handleUndo = () => {
+        if (deletedPhoto) {
+            setPhotos(prev => ({ ...prev, [deletedPhoto.key]: deletedPhoto.uri }));
+            setDeletedPhoto(null);
+            hideSnackbar();
+        }
+    };
+
+    const showSnackbar = () => {
+        setSnackbarVisible(true);
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true,
+        }).start();
+
+        if (hideTimeout.current) clearTimeout(hideTimeout.current);
+        hideTimeout.current = setTimeout(() => {
+            hideSnackbar();
+        }, 3000); // reduced timeout to a few seconds
+    };
+
+    const hideSnackbar = () => {
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+        }).start(() => {
+            setSnackbarVisible(false);
+            setDeletedPhoto(null);
+        });
+    };
+
+    useEffect(() => {
+        return () => {
+            if (hideTimeout.current) clearTimeout(hideTimeout.current);
+        };
+    }, []);
+
+    const handleShare = async (uri, message = 'Check out this awesome photo from my trip!') => {
+        try {
+            await Share.share({
+                message: message + '\n' + uri, 
+                url: uri, // works nicely on iOS
+            });
+        } catch (error) {
+            console.error('Error sharing:', error);
+        }
+    };
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
@@ -23,11 +128,30 @@ export default function GalleryScreen({ navigation }) {
 
                 {/* Header Row */}
                 <View style={styles.headerRow}>
-                    <Text style={styles.headerTitle}>My Gallery</Text>
+                    {!isSearchActive ? (
+                        <Text style={styles.headerTitle}>My Gallery</Text>
+                    ) : (
+                        <View style={styles.searchContainer}>
+                            <Feather name="search" size={18} color="#94A3B8" style={{marginRight: 8}} />
+                            <TextInput 
+                                style={styles.searchInput}
+                                placeholder="Search by tag, destination..."
+                                placeholderTextColor="#94A3B8"
+                                value={searchQuery}
+                                onChangeText={setSearchQuery}
+                                autoFocus
+                            />
+                            <TouchableOpacity onPress={() => { setIsSearchActive(false); setSearchQuery(''); }}>
+                                <Feather name="x" size={18} color="#0F172A" />
+                            </TouchableOpacity>
+                        </View>
+                    )}
                     <View style={styles.headerIcons}>
-                        <TouchableOpacity style={styles.iconCircle}>
-                            <Feather name="search" size={18} color="#0F172A" />
-                        </TouchableOpacity>
+                        {!isSearchActive && (
+                            <TouchableOpacity style={styles.iconCircle} onPress={() => setIsSearchActive(true)}>
+                                <Feather name="search" size={18} color="#0F172A" />
+                            </TouchableOpacity>
+                        )}
                         <TouchableOpacity style={styles.avatarCircle} onPress={() => navigation.navigate('Profile')}>
                             <Image source={{ uri: USER_AVATAR }} style={styles.avatarImage} />
                         </TouchableOpacity>
@@ -76,32 +200,37 @@ export default function GalleryScreen({ navigation }) {
                 {/* Destinations Filter */}
                 <Text style={styles.filterTitle}>DESTINATIONS</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
-                    <TouchableOpacity style={[styles.filterPill, styles.filterPillActive]}>
-                        <Text style={styles.filterTextActive}>All Travels</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.filterPill}>
-                        <Text style={styles.filterText}>Paris '24</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.filterPill}>
-                        <Text style={styles.filterText}>Tokyo City</Text>
-                    </TouchableOpacity>
+                    {['All Travels', "Paris '24", 'Tokyo City'].map(dest => (
+                        <TouchableOpacity 
+                            key={dest} 
+                            style={[styles.filterPill, activeDestination === dest && styles.filterPillActive]}
+                            onPress={() => setActiveDestination(dest)}
+                        >
+                            <Text style={activeDestination === dest ? styles.filterTextActive : styles.filterText}>{dest}</Text>
+                        </TouchableOpacity>
+                    ))}
                 </ScrollView>
 
                 {/* Pose Type Filter */}
                 <Text style={styles.filterTitle}>POSE TYPE</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
-                    <TouchableOpacity style={styles.filterPillWithIcon}>
-                        <MaterialCommunityIcons name="face-man-profile" size={16} color="#475569" style={styles.filterIcon} />
-                        <Text style={styles.filterText}>Portraits</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.filterPillWithIcon, styles.filterPillActive]}>
-                        <Ionicons name="checkmark-circle" size={16} color="white" style={styles.filterIcon} />
-                        <Text style={styles.filterTextActive}>OOTD</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.filterPillWithIcon}>
-                        <MaterialCommunityIcons name="image-filter-hdr" size={16} color="#475569" style={styles.filterIcon} />
-                        <Text style={styles.filterText}>Landscapes</Text>
-                    </TouchableOpacity>
+                    {[
+                        { name: 'Portraits', getIcon: (active) => <MaterialCommunityIcons name="face-man-profile" size={16} color={active ? 'white' : '#475569'} style={styles.filterIcon} /> },
+                        { name: 'OOTD', getIcon: (active) => <MaterialCommunityIcons name="hanger" size={16} color={active ? 'white' : '#475569'} style={styles.filterIcon} /> },
+                        { name: 'Landscapes', getIcon: (active) => <MaterialCommunityIcons name="image-filter-hdr" size={16} color={active ? 'white' : '#475569'} style={styles.filterIcon} /> }
+                    ].map(pose => {
+                        const isActive = activePose === pose.name;
+                        return (
+                            <TouchableOpacity 
+                                key={pose.name}
+                                style={[styles.filterPillWithIcon, isActive && styles.filterPillActive]}
+                                onPress={() => setActivePose(isActive ? null : pose.name)}
+                            >
+                                {pose.getIcon(isActive)}
+                                <Text style={isActive ? styles.filterTextActive : styles.filterText}>{pose.name}</Text>
+                            </TouchableOpacity>
+                        );
+                    })}
                 </ScrollView>
 
                 {/* Masonry Grid Simulation */}
@@ -110,33 +239,67 @@ export default function GalleryScreen({ navigation }) {
                     <View style={styles.masonryCol}>
 
                         {/* Rented Outfit Block */}
-                        <View style={styles.rentedBlock}>
-                            <View style={styles.rentedTopRow}>
-                                <View style={styles.hangerIconBg}>
-                                    <MaterialCommunityIcons name="shopping" size={14} color="#475569" />
+                        {isVisible('rentedMain') && (
+                            <View style={styles.rentedBlock}>
+                                <View style={styles.rentedTopRow}>
+                                    <View style={styles.hangerIconBg}>
+                                        <MaterialCommunityIcons name="shopping" size={14} color="#475569" />
+                                    </View>
+                                    <View style={styles.rentedBluePill}>
+                                        <Text style={styles.rentedPillText}>RENTED</Text>
+                                    </View>
                                 </View>
-                                <View style={styles.rentedBluePill}>
-                                    <Text style={styles.rentedPillText}>RENTED</Text>
+
+                                <View style={styles.imgContainer}>
+                                    <Image source={{ uri: photos.rentedMain }} style={styles.rentedMainImg} />
+                                    <View style={styles.cardActions}>
+                                        <TouchableOpacity style={styles.actionIconBg} onPress={() => handleShare(photos.rentedMain)}>
+                                            <Ionicons name="share-social" size={12} color="white" />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.actionIconBg} onPress={() => handleDelete('rentedMain', photos.rentedMain)}>
+                                            <Ionicons name="trash" size={12} color="white" />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+
+                                <View style={styles.rentedBottomRow}>
+                                    <View style={styles.rentedSubBg}>
+                                        <Image source={{ uri: IMG_BOOTS }} style={styles.rentedSubImg} />
+                                    </View>
+                                    <View style={styles.rentedSubBg}>
+                                        <Image source={{ uri: IMG_BAG }} style={styles.rentedSubImg} />
+                                    </View>
                                 </View>
                             </View>
+                        )}
 
-                            <Image source={{ uri: IMG_DRESS }} style={styles.rentedMainImg} />
-
-                            <View style={styles.rentedBottomRow}>
-                                <View style={styles.rentedSubBg}>
-                                    <Image source={{ uri: IMG_BOOTS }} style={styles.rentedSubImg} />
-                                </View>
-                                <View style={styles.rentedSubBg}>
-                                    <Image source={{ uri: IMG_BAG }} style={styles.rentedSubImg} />
+                        {isVisible('portrait') && (
+                            <View style={styles.imgContainer}>
+                                <Image source={{ uri: photos.portrait }} style={styles.portraitImg} />
+                                <View style={[styles.cardActions, { top: 10, right: 10 }]}>
+                                    <TouchableOpacity style={styles.actionIconBgDim} onPress={() => handleShare(photos.portrait)}>
+                                        <Ionicons name="share-social" size={14} color="white" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.actionIconBgDim} onPress={() => handleDelete('portrait', photos.portrait)}>
+                                        <Ionicons name="trash" size={14} color="white" />
+                                    </TouchableOpacity>
                                 </View>
                             </View>
-                        </View>
+                        )}
 
-                        <Image source={{ uri: IMG_PORTRAIT }} style={styles.portraitImg} />
-
-                        <View style={styles.hatBgBlock}>
-                            <Image source={{ uri: IMG_HAT }} style={styles.hatImg} />
-                        </View>
+                        {isVisible('hat') && (
+                            <View style={styles.hatBgBlock}>
+                                <View style={[styles.cardActions, { top: 10, right: 10, zIndex: 10 }]}>
+                                    <TouchableOpacity style={styles.actionIconBgLight} onPress={() => handleShare(photos.hat)}>
+                                        <Ionicons name="share-social" size={14} color="#475569" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.actionIconBgLight} onPress={() => handleDelete('hat', photos.hat)}>
+                                        <Ionicons name="trash" size={14} color="#EF4444" />
+                                    </TouchableOpacity>
+                                </View>
+                                <Image source={{ uri: photos.hat }} style={styles.hatImg} />
+                            </View>
+                        )}
 
                     </View>
 
@@ -144,32 +307,50 @@ export default function GalleryScreen({ navigation }) {
                     <View style={styles.masonryCol}>
 
                         {/* Poster Block */}
-                        <ImageBackground source={{ uri: IMG_POSTER }} style={styles.posterBg} imageStyle={{ borderRadius: 24 }}>
-                            <View style={styles.posterOverlay}>
-                                {/* Top Share Icon */}
-                                <View style={styles.shareIconBg}>
-                                    <Ionicons name="share-social" size={14} color="white" />
-                                </View>
+                        {isVisible('poster') && (
+                            <ImageBackground source={{ uri: photos.poster }} style={styles.posterBg} imageStyle={{ borderRadius: 24 }}>
+                                <View style={styles.posterOverlay}>
+                                    {/* Top Icons */}
+                                    <View style={[styles.cardActions, { width: '100%', justifyContent: 'space-between' }]}>
+                                        <TouchableOpacity style={styles.shareIconBg} onPress={() => handleShare(photos.poster)}>
+                                            <Ionicons name="share-social" size={14} color="white" />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={[styles.shareIconBg, { backgroundColor: 'rgba(239, 68, 68, 0.6)' }]} onPress={() => handleDelete('poster', photos.poster)}>
+                                            <Ionicons name="trash" size={14} color="white" />
+                                        </TouchableOpacity>
+                                    </View>
 
-                                {/* Center Text */}
-                                <View style={styles.posterCenterText}>
-                                    <Text style={styles.posterSub}>URBIMINAL</Text>
-                                    <Text style={styles.posterTitle}>PARIS</Text>
-                                    <Text style={styles.posterTitle}>WORK</Text>
-                                </View>
+                                    {/* Center Text */}
+                                    <View style={styles.posterCenterText}>
+                                        <Text style={styles.posterSub}>URBIMINAL</Text>
+                                        <Text style={styles.posterTitle}>PARIS</Text>
+                                        <Text style={styles.posterTitle}>WORK</Text>
+                                    </View>
 
-                                <View style={styles.posterBottomArea}>
-                                    <View style={styles.aiPill}>
-                                        <Text style={styles.aiText}>AI ENHANCED</Text>
+                                    <View style={styles.posterBottomArea}>
+                                        <View style={styles.aiPill}>
+                                            <Text style={styles.aiText}>AI ENHANCED</Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </ImageBackground>
+                            </ImageBackground>
+                        )}
 
                     </View>
                 </View>
 
             </ScrollView>
+
+            {/* Snackbar */}
+            {snackbarVisible && (
+                <Animated.View style={[styles.snackbar, { opacity: fadeAnim }]}>
+                    <Text style={styles.snackText}>Photo deleted</Text>
+                    <TouchableOpacity onPress={handleUndo} style={styles.undoBtn}>
+                        <Text style={styles.undoText}>Undo</Text>
+                    </TouchableOpacity>
+                </Animated.View>
+            )}
+
         </SafeAreaView>
     );
 }
@@ -195,6 +376,23 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         color: '#0F172A',
         letterSpacing: -0.5,
+    },
+    searchContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#F1F5F9',
+        borderRadius: 20,
+        paddingHorizontal: 15,
+        height: 40,
+        marginRight: 10,
+    },
+    searchInput: {
+        flex: 1,
+        fontSize: 14,
+        fontWeight: '500',
+        color: '#0F172A',
+        padding: 0,
     },
     headerIcons: {
         flexDirection: 'row',
@@ -390,7 +588,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 120,
         borderRadius: 16,
-        marginBottom: 10,
     },
     rentedBottomRow: {
         flexDirection: 'row',
@@ -434,6 +631,43 @@ const styles = StyleSheet.create({
     hatImg: {
         width: '90%',
         height: '90%',
+    },
+    imgContainer: {
+        position: 'relative',
+        marginBottom: 15,
+    },
+    cardActions: {
+        position: 'absolute',
+        top: 8,
+        right: 8,
+        flexDirection: 'row',
+    },
+    actionIconBg: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 6,
+    },
+    actionIconBgDim: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 8,
+    },
+    actionIconBgLight: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        backgroundColor: '#F8FAFC',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 8,
     },
     posterBg: {
         width: '100%',
@@ -487,5 +721,38 @@ const styles = StyleSheet.create({
         fontSize: 9,
         fontWeight: '800',
         letterSpacing: 0.5,
+    },
+    snackbar: {
+        position: 'absolute',
+        bottom: 30,
+        left: 20,
+        right: 20,
+        backgroundColor: '#1E293B',
+        borderRadius: 12,
+        padding: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
+        elevation: 6,
+    },
+    snackText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    undoBtn: {
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderRadius: 8,
+    },
+    undoText: {
+        color: '#60A5FA',
+        fontSize: 13,
+        fontWeight: '800',
     }
 });

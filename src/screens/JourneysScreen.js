@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
-const PARIS_NIGHT = 'https://images.unsplash.com/photo-1502602881462-8c9713b194fb?q=80&w=800&auto=format&fit=crop';
+const PARIS_NIGHT = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=800&auto=format&fit=crop';
 const SEOUL_IMG = 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?q=80&w=400';
 const BALI_IMG = 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=400';
 const USER_AVATAR = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200';
 const SMALL_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50';
 
 export default function JourneysScreen({ navigation }) {
+    const [activeTab, setActiveTab] = useState('current');
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
@@ -35,17 +36,26 @@ export default function JourneysScreen({ navigation }) {
 
                 {/* Tabs */}
                 <View style={styles.tabContainer}>
-                    <View style={styles.tabActive}>
-                        <Text style={styles.tabTextActive}>Current</Text>
-                    </View>
-                    <TouchableOpacity style={styles.tabInactive}>
-                        <Text style={styles.tabTextInactive}>Past</Text>
+                    <TouchableOpacity 
+                        style={activeTab === 'current' ? styles.tabActive : styles.tabInactive}
+                        onPress={() => setActiveTab('current')}
+                        activeOpacity={0.8}
+                    >
+                        <Text style={activeTab === 'current' ? styles.tabTextActive : styles.tabTextInactive}>Current</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={activeTab === 'past' ? styles.tabActive : styles.tabInactive}
+                        onPress={() => setActiveTab('past')}
+                        activeOpacity={0.8}
+                    >
+                        <Text style={activeTab === 'past' ? styles.tabTextActive : styles.tabTextInactive}>Past</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Hero Card */}
+                {activeTab === 'current' && (
                 <View style={styles.heroCardContainer}>
-                    <ImageBackground source={{ uri: PARIS_NIGHT }} style={styles.heroBackground} imageStyle={{ borderRadius: 32 }} transition={300}>
+                    <ImageBackground source={{ uri: PARIS_NIGHT }} style={styles.heroBackground} imageStyle={{ borderRadius: 32 }} transition={300} contentFit="cover">
                         <View style={styles.heroOverlay}>
 
                             <View>
@@ -82,8 +92,11 @@ export default function JourneysScreen({ navigation }) {
                         </View>
                     </ImageBackground>
                 </View>
+                )}
 
                 {/* Past Adventures Header */}
+                {activeTab === 'past' && (
+                <>
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Past Adventures</Text>
                     <TouchableOpacity>
@@ -124,6 +137,8 @@ export default function JourneysScreen({ navigation }) {
                     </View>
                     <Feather name="chevron-right" size={20} color="#CBD5E1" />
                 </TouchableOpacity>
+                </>
+                )}
 
             </ScrollView>
         </SafeAreaView>

@@ -71,7 +71,7 @@ export default function ParisScreen({ navigation }) {
                     <Text style={styles.logoText}>Roamster</Text>
                 </View>
                 <View style={styles.headerIcons}>
-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Paris' })}>
+                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}>
                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
                     </TouchableOpacity>
                 </View>

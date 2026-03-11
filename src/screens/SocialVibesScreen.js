@@ -11,15 +11,16 @@ const EIFFEL_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f
 const PARIS_STREET_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
 const GEM1_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=800';
 const GEM2_IMG = 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&q=80&w=800';
-const FALLBACK_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
+const CREMIEUX_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800';
+const PALAIS_ROYAL_IMG = 'https://images.unsplash.com/photo-1549144365-51fb80ee2c21?auto=format&fit=crop&q=80&w=800';
 const AVATAR_IMG = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
 
 const GEMS = [
     { id: 'g1', title: 'Montmartre Backstreets', image: PARIS_STREET_IMG, rating: '4.7', vibe: 'QUIET VIBE' },
     { id: 'g2', title: 'Hidden Gems 1', image: GEM1_IMG, rating: '4.8', vibe: 'ARTISTIC' },
     { id: 'g3', title: 'Hidden Gems 2', image: GEM2_IMG, rating: '4.9', vibe: 'LOCAL' },
-    { id: 'g4', title: 'Rue Crémieux', image: FALLBACK_IMG, rating: '4.8', vibe: 'COLORFUL' },
-    { id: 'g5', title: 'Palais Royal Columns', image: PARIS_STREET_IMG, rating: '4.9', vibe: 'MINIMAL' }
+    { id: 'g4', title: 'Rue Crémieux', image: CREMIEUX_IMG, rating: '4.8', vibe: 'COLORFUL' },
+    { id: 'g5', title: 'Palais Royal Columns', image: PALAIS_ROYAL_IMG, rating: '4.9', vibe: 'MINIMAL' }
 ];
 
 export default function SocialVibesScreen({ navigation }) {
@@ -155,19 +156,20 @@ export default function SocialVibesScreen({ navigation }) {
                 </View>
 
                 <View style={styles.videoCardCont}>
-                    <ImageBackground
-                        source={{ uri: GEM1_IMG }}
-                        style={styles.videoImg}
-                        imageStyle={{ borderRadius: 24 }}
-                        transition={300}
-                        contentFit="cover"
-                    >
-                        <View style={styles.videoOverlay}>
-                            <TouchableOpacity style={styles.playButton} activeOpacity={0.8}>
-                                <Ionicons name="play" size={24} color="white" style={{ marginLeft: 4 }} />
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground>
+                    <TouchableOpacity activeOpacity={0.9} style={styles.videoImg}>
+                        <ImageBackground
+                            source={{ uri: GEM1_IMG }}
+                            style={StyleSheet.absoluteFill}
+                            imageStyle={{ borderRadius: 24 }}
+                            contentFit="cover"
+                        >
+                            <View style={styles.videoOverlay}>
+                                <View style={styles.playButton}>
+                                    <Ionicons name="play" size={24} color="white" style={{ marginLeft: 4 }} />
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
 
                     <View style={styles.videoInfoRow}>
                         <Text style={styles.videoTitle}>Seine River Banks</Text>
@@ -476,6 +478,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 160,
         marginBottom: 15,
+        borderRadius: 24,
+        overflow: 'hidden',
     },
     videoOverlay: {
         flex: 1,

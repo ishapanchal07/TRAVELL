@@ -15,29 +15,6 @@ const PARIS_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?
 const ROME_IMG = 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=600&auto=format&fit=crop';
 const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80&w=600';
 const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop';
-const FOOD_BOURGUIGNON = 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&q=80&w=600';
-const FOOD_MACARONS = 'https://images.unsplash.com/photo-1626804561081-377b2207936a?auto=format&fit=crop&q=80&w=400';
-
-const GLOBAL_FOODS = [
-    {
-        id: 'gf1',
-        name: 'Classic Beef Bourguignon',
-        image: FOOD_BOURGUIGNON,
-        price: '$28.00',
-        rating: '4.9',
-        description: 'Traditional Parisian beef stew slow-cooked in red wine with pearl onions and mushrooms. A quintessential French bistro staple.',
-        subtitle: 'Traditional Parisian Bistro • 45 min'
-    },
-    {
-        id: 'gf2',
-        name: 'Artisan Macarons Box',
-        image: FOOD_MACARONS,
-        price: '$18.00',
-        rating: '4.8',
-        description: 'A curated selection of 6 hand-crafted Parisian macarons, including pistachio, salted caramel, and raspberry.',
-        subtitle: 'Ladurée Paris • Sweet Treat'
-    }
-];
 
 export default function ExploreScreen({ navigation }) {
     const { isLoggedIn } = useAuth();
@@ -97,7 +74,7 @@ export default function ExploreScreen({ navigation }) {
                     <View style={styles.categoryItem}>
                         <TouchableOpacity
                             style={styles.categoryIconCircle}
-                            onPress={() => navigation.navigate('Map', { city: 'Paris' })}
+                            onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}
                         >
                             <Ionicons name="map-outline" size={24} color="#2563EB" />
                         </TouchableOpacity>
@@ -216,52 +193,6 @@ export default function ExploreScreen({ navigation }) {
                         </View>
                     </View>
                 )}
-
-                {/* Global Food Cravings Section */}
-                <View style={[styles.sectionHeader, { marginTop: 30 }]}>
-                    <Text style={styles.sectionTitle}>Global Food Cravings</Text>
-                </View>
-                {!activeTrip && (
-                    <TouchableOpacity
-                        style={styles.nudgeBanner}
-                        onPress={() => navigation.navigate('CreateTrip')}
-                    >
-                        <Ionicons name="airplane" size={24} color="white" />
-                        <View style={styles.nudgeContent}>
-                            <Text style={styles.nudgeTitle}>Plan Your First Roam</Text>
-                            <Text style={styles.nudgeDesc}>Tell us where you're going for personalized vibes.</Text>
-                        </View>
-                        <Ionicons name="chevron-forward" size={20} color="white" />
-                    </TouchableOpacity>
-                )}
-
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.horizontalScroll}
-                >
-                    {GLOBAL_FOODS.map((item) => (
-                        <TouchableOpacity
-                            key={item.id}
-                            activeOpacity={0.9}
-                            onPress={() => navigation.navigate('FoodDetail', { item })}
-                            style={styles.foodItemCard}
-                        >
-                            <ImageBackground source={{ uri: item.image }} style={styles.foodCardImage} imageStyle={{ borderRadius: 20 }}>
-                                <View style={styles.foodCardOverlay}>
-                                    <View style={styles.foodBadge}>
-                                        <Ionicons name="star" size={10} color="#FACC15" />
-                                        <Text style={styles.foodRatingText}>{item.rating}</Text>
-                                    </View>
-                                    <View style={styles.foodCardBottom}>
-                                        <Text style={styles.foodCardName}>{item.name}</Text>
-                                        <Text style={styles.foodCardPrice}>{item.price}</Text>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
 
             </ScrollView>
 
@@ -504,82 +435,5 @@ const styles = StyleSheet.create({
     activeNavText: {
         color: '#2563EB',
         marginTop: 0,
-    },
-    // Food Cards
-    foodItemCard: {
-        width: 240,
-        height: 180,
-        marginRight: 15,
-        borderRadius: 20,
-        backgroundColor: '#FFF',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        elevation: 4,
-    },
-    foodCardImage: {
-        width: '100%',
-        height: '100%',
-    },
-    foodCardOverlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.25)',
-        borderRadius: 20,
-        padding: 12,
-        justifyContent: 'space-between',
-    },
-    foodBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        alignSelf: 'flex-start',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 10,
-    },
-    foodRatingText: {
-        fontSize: 10,
-        fontWeight: '800',
-        color: '#0F172A',
-        marginLeft: 4,
-    },
-    foodCardBottom: {
-        marginTop: 'auto',
-    },
-    foodCardName: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '800',
-    },
-    foodCardPrice: {
-        color: '#38BDF8',
-        fontSize: 14,
-        fontWeight: '700',
-        marginTop: 2,
-    },
-    // Nudge Banner
-    nudgeBanner: {
-        backgroundColor: '#3B82F6',
-        borderRadius: 20,
-        padding: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 20,
-    },
-    nudgeContent: {
-        flex: 1,
-        marginLeft: 15,
-    },
-    nudgeTitle: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '800',
-    },
-    nudgeDesc: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 12,
-        marginTop: 2,
     },
 });

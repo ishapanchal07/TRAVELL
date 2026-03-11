@@ -71,7 +71,7 @@ export default function RomeScreen({ navigation }) {
                     <Text style={styles.logoText}>Roamster</Text>
                 </View>
                 <View style={styles.headerIcons}>
-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Rome' })}>
+                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Rome', location: 'Colosseum, Rome' })}>
                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
                     </TouchableOpacity>
                 </View>

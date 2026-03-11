@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { WebView } from 'react-native-webview';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -15,8 +15,11 @@ const CITY_COORDS = {
 };
 
 export default function MapScreen({ route, navigation }) {
-    const { city = 'Paris' } = route.params || {};
-    const initialRegion = CITY_COORDS[city] || CITY_COORDS['Paris'];
+    const { city = 'Paris', location } = route.params || {};
+    
+    // Use a specific location if provided, otherwise fallback to city name
+    const searchQuery = location ? encodeURIComponent(location) : encodeURIComponent(city);
+    const mapUrl = `https://www.google.com/maps?q=${searchQuery}&output=embed`;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -29,21 +32,14 @@ export default function MapScreen({ route, navigation }) {
             </View>
 
             <View style={styles.mapContainer}>
-                <MapView
+                <WebView
+                    source={{ uri: mapUrl }}
                     style={styles.map}
-                    initialRegion={initialRegion}
-                    showsUserLocation={true}
-                    showsMyLocationButton={true}
-                >
-                    <Marker
-                        coordinate={{
-                            latitude: initialRegion.latitude,
-                            longitude: initialRegion.longitude,
-                        }}
-                        title={city}
-                        description={`Explore ${city}`}
-                    />
-                </MapView>
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    startInLoadingState={true}
+                    allowsFullscreenVideo={false}
+                />
             </View>
         </SafeAreaView>
     );

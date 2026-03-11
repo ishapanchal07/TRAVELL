@@ -22,6 +22,9 @@
     },
     "plugins": [
       "expo-image"
-    ]
+    ],
+    "android": {
+      "package": "com.anonymous.roamster"
+    }
   }
 }

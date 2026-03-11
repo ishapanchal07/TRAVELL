@@ -71,7 +71,7 @@ export default function SwitzerlandScreen({ navigation }) {
                     <Text style={styles.logoText}>Roamster</Text>
                 </View>
                 <View style={styles.headerIcons}>
-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Switzerland' })}>
+                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Switzerland', location: 'Jungfraujoch, Switzerland' })}>
                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
                     </TouchableOpacity>
                 </View>

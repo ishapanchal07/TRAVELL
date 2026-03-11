@@ -1,15 +1,40 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5, Octicons } from '@expo/vector-icons';
+import AnalyticsService from '../services/AnalyticsService';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function ProfileScreen({ navigation }) {
-    React.useEffect(() => {
-        AnalyticsService.logEvent('profile_view');
-    }, []);
+    const [stats, setStats] = React.useState({
+        countries: 12, // Initially 12
+        outfits: 45, // Initially 45
+        photos: 120 // Initially 120
+    });
+
+    useFocusEffect(
+        React.useCallback(() => {
+            AnalyticsService.logEvent('profile_view');
+            // Simulate fetching dynamic counts based on journeys/gallery
+            // Since we can't reliably read state from other screens without a global store, 
+            // we will simulate the connection logic here.
+            
+            // In a real app we'd query the database or global state:
+            // const journeyCount = globalState.journeys.length;
+            // const newCountriesCount = new Set(globalState.journeys.map(j => j.country)).size;
+            // const newPhotosCount = globalState.galleryPhotos.length;
+            // const newOutfitsCount = globalState.journeys.reduce((acc, j) => acc + j.outfits, 0);
+            
+            // We can assume a user with no journeys has 0 outfits.
+            // For now, let's keep the mock numbers or adjust them based on local storage if we had it.
+            // If the user has 0 journeys, outfits would be 0.
+            
+            // setStats({ countries: newCountriesCount, outfits: newOutfitsCount, photos: newPhotosCount });
+        }, [])
+    );
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -45,17 +70,17 @@ export default function ProfileScreen({ navigation }) {
                 {/* Stats Card */}
                 <View style={styles.statsCard}>
                     <View style={styles.statCol}>
-                        <Text style={styles.statValue}>12</Text>
+                        <Text style={styles.statValue}>{stats.countries}</Text>
                         <Text style={styles.statLabel}>COUNTRIES</Text>
                     </View>
                     <View style={styles.statDivider} />
                     <View style={styles.statCol}>
-                        <Text style={styles.statValue}>45</Text>
+                        <Text style={styles.statValue}>{stats.outfits}</Text>
                         <Text style={styles.statLabel}>OUTFITS</Text>
                     </View>
                     <View style={styles.statDivider} />
                     <View style={styles.statCol}>
-                        <Text style={styles.statValue}>120</Text>
+                        <Text style={styles.statValue}>{stats.photos}</Text>
                         <Text style={styles.statLabel}>PHOTOS</Text>
                     </View>
                 </View>
@@ -89,36 +114,12 @@ export default function ProfileScreen({ navigation }) {
                     <TouchableOpacity
                         style={styles.menuItem}
                         activeOpacity={0.7}
-                        onPress={() => navigation.navigate('SocialVibes')}
-                    >
-                        <View style={styles.menuIconContainer}>
-                            <Ionicons name="people" size={20} color="#3B82F6" />
-                        </View>
-                        <Text style={styles.menuText}>My Social</Text>
-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.menuItem}
-                        activeOpacity={0.7}
                         onPress={() => navigation.navigate('Transactions')}
                     >
                         <View style={styles.menuIconContainer}>
                             <Ionicons name="receipt-outline" size={20} color="#3B82F6" />
                         </View>
                         <Text style={styles.menuText}>My Transactions</Text>
-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.menuItem}
-                        activeOpacity={0.7}
-                        onPress={() => navigation.navigate('Admin')}
-                    >
-                        <View style={styles.menuIconContainer}>
-                            <Ionicons name="construct-outline" size={20} color="#3B82F6" />
-                        </View>
-                        <Text style={styles.menuText}>Admin Panel</Text>
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
                     </TouchableOpacity>
                 </View>
