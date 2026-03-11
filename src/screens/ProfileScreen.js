@@ -56,7 +56,12 @@ export default function ProfileScreen({ navigation }) {
                 {/* Avatar Section */}
                 <View style={styles.avatarContainer}>
                     <View style={styles.avatarRing}>
-                        <Image source={{ uri: AVATAR_URL }} style={styles.avatarImage} />
+                        <Image 
+                            source={{ uri: AVATAR_URL }} 
+                            style={styles.avatarImage} 
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                        />
                     </View>
                     <View style={styles.badgeContainer}>
                         <Octicons name="check-circle-fill" size={10} color="white" />

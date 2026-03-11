@@ -64,7 +64,13 @@ export default function OrderTrackingScreen({ route, navigation }) {
                     {/* Restaurant Marker */}
                     <View style={[styles.marker, { top: '25%', left: '30%' }]}>
                         <View style={styles.restaurantMarker}>
-                            <Image source={{ uri: image }} style={styles.restaurantImg} />
+                            <Image 
+                                source={{ uri: image }} 
+                                style={styles.restaurantImg} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                                contentFit="cover"
+                            />
                         </View>
                         <Text style={styles.markerLabel}>Restaurant</Text>
                     </View>
@@ -80,7 +86,13 @@ export default function OrderTrackingScreen({ route, navigation }) {
 
                 {/* Delivery Person Card */}
                 <View style={styles.personCard}>
-                    <Image source={{ uri: PIERRE_AVATAR }} style={styles.personImg} />
+                    <Image 
+                        source={{ uri: PIERRE_AVATAR }} 
+                        style={styles.personImg} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                        contentFit="cover"
+                    />
                     <View style={styles.personInfo}>
                         <Text style={styles.personName}>Pierre</Text>
                         <View style={styles.personRating}>

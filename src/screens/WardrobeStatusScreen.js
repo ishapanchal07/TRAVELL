@@ -21,7 +21,12 @@ export default function WardrobeStatusScreen({ navigation }) {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerLeft}>
-                    <Image source={{ uri: USER_AVATAR }} style={styles.headerAvatar} />
+                    <Image 
+                        source={{ uri: USER_AVATAR }} 
+                        style={styles.headerAvatar} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                    />
                     <View style={styles.headerInfo}>
                         <Text style={styles.headerTitle}>Your Wardrobe</Text>
                         <Text style={styles.headerSubtitle}>PARIS FASHION WEEK</Text>
@@ -95,7 +100,13 @@ export default function WardrobeStatusScreen({ navigation }) {
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.stylingScroll}>
                     <View style={styles.styleCard}>
-                        <Image source={{ uri: TRENCH_IMG }} style={styles.styleImg} />
+                        <Image 
+                            source={{ uri: TRENCH_IMG }} 
+                            style={styles.styleImg} 
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                            contentFit="cover"
+                        />
                         <View style={styles.watchBadge}>
                             <Ionicons name="play" size={10} color="white" />
                             <Text style={styles.watchText}>WATCH</Text>
@@ -103,14 +114,25 @@ export default function WardrobeStatusScreen({ navigation }) {
                         <View style={styles.styleInfo}>
                             <Text style={styles.styleTitle}>How @ChloeP wears the Trench</Text>
                             <View style={styles.styleAuthor}>
-                                <Image source={{ uri: STYLIST_IMG }} style={styles.authorImg} />
+                                <Image 
+                                    source={{ uri: STYLIST_IMG }} 
+                                    style={styles.authorImg} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <Text style={styles.authorName}>Expert Stylist</Text>
                             </View>
                         </View>
                     </View>
 
                     <View style={styles.styleCard}>
-                        <Image source={{ uri: LOOK_IMG_3 }} style={styles.styleImg} />
+                        <Image 
+                            source={{ uri: LOOK_IMG_3 }} 
+                            style={styles.styleImg} 
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                            contentFit="cover"
+                        />
                         <View style={styles.articleBadge}>
                             <MaterialCommunityIcons name="file-document-outline" size={12} color="white" />
                             <Text style={styles.watchText}>ARTICLE</Text>
@@ -118,7 +140,12 @@ export default function WardrobeStatusScreen({ navigation }) {
                         <View style={styles.styleInfo}>
                             <Text style={styles.styleTitle}>Accessorizing for Nights</Text>
                             <View style={styles.styleAuthor}>
-                                <Image source={{ uri: LEO_IMG }} style={styles.authorImg} />
+                                <Image 
+                                    source={{ uri: LEO_IMG }} 
+                                    style={styles.authorImg} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <Text style={styles.authorName}>Curated by Leo</Text>
                             </View>
                         </View>
@@ -199,7 +226,13 @@ function TrackerStep({ label, status, icon, isLast }) {
 function WardrobeItem({ image, day, title, tags }) {
     return (
         <View style={styles.wardrobeItem}>
-            <Image source={{ uri: image }} style={styles.wardrobeImg} />
+            <Image 
+                source={{ uri: image }} 
+                style={styles.wardrobeImg} 
+                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                transition={300}
+                contentFit="cover"
+            />
             <View style={styles.wardrobeInfo}>
                 <Text style={styles.wardrobeDay}>{day}</Text>
                 <Text style={styles.wardrobeTitle}>{title}</Text>

@@ -44,7 +44,14 @@ export default function PhotoGuideScreen({ navigation }) {
 
                 {/* Card 1: Trocadero */}
                 <View style={styles.cardContainer}>
-                    <ImageBackground source={{ uri: TROCADERO_IMG }} style={styles.cardFrame} imageStyle={{ borderRadius: 28 }} transition={300}>
+                    <ImageBackground 
+                        source={{ uri: TROCADERO_IMG }} 
+                        style={styles.cardFrame} 
+                        imageStyle={{ borderRadius: 28 }} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                        contentFit="cover"
+                    >
                         <View style={styles.cardOverlay}>
                             {/* Top Tag */}
                             <View style={styles.darkTag}>
@@ -93,7 +100,14 @@ export default function PhotoGuideScreen({ navigation }) {
 
                 {/* Card 2: Rue de l'Universite */}
                 <View style={[styles.cardContainer, { marginTop: 10 }]}>
-                    <ImageBackground source={{ uri: RUE_IMG }} style={styles.cardFrame} imageStyle={{ borderRadius: 28 }} transition={300}>
+                    <ImageBackground 
+                        source={{ uri: RUE_IMG }} 
+                        style={styles.cardFrame} 
+                        imageStyle={{ borderRadius: 28 }} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                        contentFit="cover"
+                    >
                         <View style={styles.cardOverlay}>
                             <View style={styles.blueTag}>
                                 <Text style={styles.blueTagText}>VIRAL SPOT</Text>
@@ -128,7 +142,14 @@ export default function PhotoGuideScreen({ navigation }) {
 
                 {/* Card 3: Seine Reflection */}
                 <View style={styles.cardContainer}>
-                    <ImageBackground source={{ uri: RIVER_REFLECT_IMG }} style={styles.cardFrame} imageStyle={{ borderRadius: 28 }} transition={300}>
+                    <ImageBackground 
+                        source={{ uri: RIVER_REFLECT_IMG }} 
+                        style={styles.cardFrame} 
+                        imageStyle={{ borderRadius: 28 }} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                        contentFit="cover"
+                    >
                         <View style={styles.cardOverlayAlt}>
                             {/* Top Pose Tag */}
                             <View style={styles.poseTopTag}>

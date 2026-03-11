@@ -21,7 +21,13 @@ export default function RentFlowScreen({ route, navigation }) {
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.itemCard}>
-                    <Image source={{ uri: item.image }} style={styles.itemImage} />
+                    <Image 
+                        source={{ uri: item.image }} 
+                        style={styles.itemImage} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                        contentFit="cover"
+                    />
                     <View style={styles.itemDetails}>
                         <Text style={styles.itemTitle}>{item.title || 'Apparel Item'}</Text>
                         <Text style={styles.itemRent}>{item.rent || '$24'}/day</Text>

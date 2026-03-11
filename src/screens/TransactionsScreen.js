@@ -80,7 +80,12 @@ export default function TransactionsScreen({ navigation }) {
                 {/* Header */}
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Transactions</Text>
-                    <Image source={{ uri: USER_AVATAR }} style={styles.avatar} />
+                    <Image 
+                        source={{ uri: USER_AVATAR }} 
+                        style={styles.avatar} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                    />
                 </View>
 
                 {/* Search Bar */}

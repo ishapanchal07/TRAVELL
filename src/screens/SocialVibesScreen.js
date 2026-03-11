@@ -51,7 +51,12 @@ export default function SocialVibesScreen({ navigation }) {
                         <Text style={styles.subTitleBlue}>PARIS, FRANCE</Text>
                     </View>
                     <View style={styles.avatarContainer}>
-                        <Image source={{ uri: AVATAR_IMG }} style={styles.avatar} />
+                        <Image 
+                            source={{ uri: AVATAR_IMG }} 
+                            style={styles.avatar} 
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                        />
                         <View style={styles.avatarBadge} />
                     </View>
                 </View>
@@ -80,6 +85,7 @@ export default function SocialVibesScreen({ navigation }) {
                         imageStyle={{ borderRadius: 28 }}
                         transition={300}
                         contentFit="cover"
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                     >
                         <View style={styles.mainCardOverlay}>
                             <View style={styles.cardPill}>
@@ -129,6 +135,7 @@ export default function SocialVibesScreen({ navigation }) {
                                 imageStyle={{ borderRadius: 20 }}
                                 transition={300}
                                 contentFit="cover"
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                             >
                                 <View style={styles.smallCardOverlay}>
                                     <View style={styles.heartButton}>
@@ -162,6 +169,8 @@ export default function SocialVibesScreen({ navigation }) {
                             style={StyleSheet.absoluteFill}
                             imageStyle={{ borderRadius: 24 }}
                             contentFit="cover"
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
                         >
                             <View style={styles.videoOverlay}>
                                 <View style={styles.playButton}>

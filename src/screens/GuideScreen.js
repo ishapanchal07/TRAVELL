@@ -85,7 +85,13 @@ export default function GuideScreen({ route, navigation }) {
                         return (
                             <View key={guide.id} style={styles.card}>
                                 <View style={styles.imageContainer}>
-                                    <Image source={{ uri: guide.image }} style={styles.cardImage} />
+                                    <Image 
+                                        source={{ uri: guide.image }} 
+                                        style={styles.cardImage} 
+                                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                        transition={300}
+                                        contentFit="cover"
+                                    />
                                     <View style={styles.verifiedBadge}>
                                         <MaterialIcons name="verified" size={20} color="#3B82F6" style={{ backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' }} />
                                     </View>

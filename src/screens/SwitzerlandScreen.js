@@ -80,7 +80,13 @@ export default function SwitzerlandScreen({ navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
                 {/* Hero Section */}
-                <ImageBackground source={{ uri: data.hero.image }} style={styles.heroImage}>
+                <ImageBackground 
+                    source={{ uri: data.hero.image }} 
+                    style={styles.heroImage}
+                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                    transition={300}
+                    contentFit="cover"
+                >
                     <View style={styles.heroOverlay}>
                         <View style={styles.weatherPill}>
                             <Ionicons name={data.weather.icon} size={14} color="white" />
@@ -120,7 +126,13 @@ export default function SwitzerlandScreen({ navigation }) {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.experiences : data.experiences.slice(0, 3)).map(exp => (
                             <View key={exp.id} style={styles.expCard}>
-                                <Image source={{ uri: exp.img }} style={styles.expImage} />
+                                <Image 
+                                    source={{ uri: exp.img }} 
+                                    style={styles.expImage} 
+                                    contentFit="cover"
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <View style={styles.expTextCont}>
                                     <Text style={styles.expTitle}>{exp.title}</Text>
                                     <Text style={styles.expSub}>{exp.sub}</Text>
@@ -142,7 +154,13 @@ export default function SwitzerlandScreen({ navigation }) {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.clothes : data.clothes.slice(0, 2)).map(item => (
                             <View key={item.id} style={styles.outfitCard}>
-                                <Image source={{ uri: item.img }} style={styles.outfitImage} />
+                                <Image 
+                                    source={{ uri: item.img }} 
+                                    style={styles.outfitImage} 
+                                    contentFit="cover"
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <View style={styles.outfitBotRow}>
                                     <View>
                                         <Text style={styles.outfitTitle}>{item.title}</Text>
@@ -166,7 +184,13 @@ export default function SwitzerlandScreen({ navigation }) {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.food : data.food.slice(0, 2)).map(f => (
                             <View key={f.id} style={styles.foodCard}>
-                                <Image source={{ uri: f.img }} style={styles.foodImage} />
+                                <Image 
+                                    source={{ uri: f.img }} 
+                                    style={styles.foodImage} 
+                                    contentFit="cover"
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <View style={styles.foodTextCont}>
                                     <Text style={styles.foodTitle}>{f.title}</Text>
                                     <Text style={styles.foodSub}>{f.sub}</Text>
@@ -193,7 +217,13 @@ export default function SwitzerlandScreen({ navigation }) {
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                                 {data.photoSpots.map(spot => (
                                     <View key={spot.id} style={styles.photoSpotCard}>
-                                        <Image source={{ uri: spot.img }} style={styles.photoImage} />
+                                        <Image 
+                                            source={{ uri: spot.img }} 
+                                            style={styles.photoImage} 
+                                            contentFit="cover"
+                                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                            transition={300}
+                                        />
                                         <Text style={styles.photoTitle}>{spot.title}</Text>
                                     </View>
                                 ))}

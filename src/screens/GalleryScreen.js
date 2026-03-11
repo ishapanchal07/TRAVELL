@@ -153,7 +153,12 @@ export default function GalleryScreen({ navigation }) {
                             </TouchableOpacity>
                         )}
                         <TouchableOpacity style={styles.avatarCircle} onPress={() => navigation.navigate('Profile')}>
-                            <Image source={{ uri: USER_AVATAR }} style={styles.avatarImage} />
+                            <Image 
+                                source={{ uri: USER_AVATAR }} 
+                                style={styles.avatarImage} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                            />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -169,7 +174,14 @@ export default function GalleryScreen({ navigation }) {
                 {/* Reels Scroll */}
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.reelsScroll}>
                     <TouchableOpacity style={styles.reelCard} activeOpacity={0.9}>
-                        <ImageBackground source={{ uri: REEL_PARIS }} style={styles.reelImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                        <ImageBackground 
+                            source={{ uri: REEL_PARIS }} 
+                            style={styles.reelImage} 
+                            imageStyle={{ borderRadius: 24 }} 
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                            contentFit="cover"
+                        >
                             <View style={styles.reelOverlay}>
                                 <View style={styles.playBtnWrap}>
                                     <Ionicons name="play" size={16} color="white" style={{ marginLeft: 2 }} />
@@ -183,7 +195,14 @@ export default function GalleryScreen({ navigation }) {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.reelCard} activeOpacity={0.9}>
-                        <ImageBackground source={{ uri: REEL_TOKYO }} style={styles.reelImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                        <ImageBackground 
+                            source={{ uri: REEL_TOKYO }} 
+                            style={styles.reelImage} 
+                            imageStyle={{ borderRadius: 24 }} 
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                            contentFit="cover"
+                        >
                             <View style={styles.reelOverlay}>
                                 <View style={styles.playBtnWrap}>
                                     <Ionicons name="play" size={16} color="white" style={{ marginLeft: 2 }} />
@@ -251,7 +270,13 @@ export default function GalleryScreen({ navigation }) {
                                 </View>
 
                                 <View style={styles.imgContainer}>
-                                    <Image source={{ uri: photos.rentedMain }} style={styles.rentedMainImg} />
+                                    <Image 
+                                        source={{ uri: photos.rentedMain }} 
+                                        style={styles.rentedMainImg} 
+                                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                        transition={300}
+                                        contentFit="cover"
+                                    />
                                     <View style={styles.cardActions}>
                                         <TouchableOpacity style={styles.actionIconBg} onPress={() => handleShare(photos.rentedMain)}>
                                             <Ionicons name="share-social" size={12} color="white" />
@@ -264,10 +289,22 @@ export default function GalleryScreen({ navigation }) {
 
                                 <View style={styles.rentedBottomRow}>
                                     <View style={styles.rentedSubBg}>
-                                        <Image source={{ uri: IMG_BOOTS }} style={styles.rentedSubImg} />
+                                        <Image 
+                                            source={{ uri: IMG_BOOTS }} 
+                                            style={styles.rentedSubImg} 
+                                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                            transition={300}
+                                            contentFit="cover"
+                                        />
                                     </View>
                                     <View style={styles.rentedSubBg}>
-                                        <Image source={{ uri: IMG_BAG }} style={styles.rentedSubImg} />
+                                        <Image 
+                                            source={{ uri: IMG_BAG }} 
+                                            style={styles.rentedSubImg} 
+                                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                            transition={300}
+                                            contentFit="cover"
+                                        />
                                     </View>
                                 </View>
                             </View>
@@ -275,7 +312,13 @@ export default function GalleryScreen({ navigation }) {
 
                         {isVisible('portrait') && (
                             <View style={styles.imgContainer}>
-                                <Image source={{ uri: photos.portrait }} style={styles.portraitImg} />
+                                <Image 
+                                    source={{ uri: photos.portrait }} 
+                                    style={styles.portraitImg} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                    contentFit="cover"
+                                />
                                 <View style={[styles.cardActions, { top: 10, right: 10 }]}>
                                     <TouchableOpacity style={styles.actionIconBgDim} onPress={() => handleShare(photos.portrait)}>
                                         <Ionicons name="share-social" size={14} color="white" />
@@ -297,7 +340,13 @@ export default function GalleryScreen({ navigation }) {
                                         <Ionicons name="trash" size={14} color="#EF4444" />
                                     </TouchableOpacity>
                                 </View>
-                                <Image source={{ uri: photos.hat }} style={styles.hatImg} />
+                                <Image 
+                                    source={{ uri: photos.hat }} 
+                                    style={styles.hatImg} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                    contentFit="contain"
+                                />
                             </View>
                         )}
 
@@ -308,7 +357,14 @@ export default function GalleryScreen({ navigation }) {
 
                         {/* Poster Block */}
                         {isVisible('poster') && (
-                            <ImageBackground source={{ uri: photos.poster }} style={styles.posterBg} imageStyle={{ borderRadius: 24 }}>
+                            <ImageBackground 
+                                source={{ uri: photos.poster }} 
+                                style={styles.posterBg} 
+                                imageStyle={{ borderRadius: 24 }}
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                                contentFit="cover"
+                            >
                                 <View style={styles.posterOverlay}>
                                     {/* Top Icons */}
                                     <View style={[styles.cardActions, { width: '100%', justifyContent: 'space-between' }]}>

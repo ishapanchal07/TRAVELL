@@ -59,7 +59,14 @@ export default function AllDestinationsScreen({ navigation }) {
                         activeOpacity={0.9}
                         onPress={() => navigation.navigate(dest.route)}
                     >
-                        <ImageBackground source={{ uri: dest.image }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }}>
+                        <ImageBackground 
+                            source={{ uri: dest.image }} 
+                            style={styles.cardImage} 
+                            imageStyle={{ borderRadius: 24 }}
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                            contentFit="cover"
+                        >
                             <View style={styles.overlay}>
                                 {dest.badge && (
                                     <View style={styles.pillContainer}>

@@ -20,6 +20,8 @@ export default function LocationDetailsScreen({ navigation }) {
                 style={styles.bgImage}
                 blurRadius={10}
                 contentFit="cover"
+                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                transition={300}
             >
                 <SafeAreaView style={styles.safeArea}>
 
@@ -34,7 +36,12 @@ export default function LocationDetailsScreen({ navigation }) {
                             />
                         </View>
                         <TouchableOpacity style={styles.avatarWrap}>
-                            <Image source={{ uri: AVATAR_IMG }} style={styles.avatar} />
+                            <Image 
+                                source={{ uri: AVATAR_IMG }} 
+                                style={styles.avatar} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                            />
                         </TouchableOpacity>
                     </View>
 
@@ -101,7 +108,13 @@ export default function LocationDetailsScreen({ navigation }) {
 
                             <View style={styles.lookItemRow}>
                                 <View style={styles.lookItemImgBg}>
-                                    <Image source={{ uri: DRESS_IMG }} style={styles.lookItemImg} />
+                                    <Image 
+                                        source={{ uri: DRESS_IMG }} 
+                                        style={styles.lookItemImg} 
+                                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                        transition={300}
+                                        contentFit="cover"
+                                    />
                                 </View>
                                 <View style={styles.lookItemInfo}>
                                     <Text style={styles.lookItemName}>"Midnight in Paris" Set</Text>

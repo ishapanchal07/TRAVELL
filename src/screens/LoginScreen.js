@@ -42,7 +42,13 @@ export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" translucent />
-            <ImageBackground source={{ uri: LOGIN_BG }} style={styles.background} contentFit="cover">
+            <ImageBackground 
+                source={{ uri: LOGIN_BG }} 
+                style={styles.background} 
+                contentFit="cover"
+                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                transition={1000}
+            >
                 <View style={styles.overlay} />
 
                 <SafeAreaView style={styles.safeArea}>

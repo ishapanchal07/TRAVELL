@@ -35,7 +35,13 @@ export default function AllPlacesScreen({ route, navigation }) {
                             onPress={() => isLocked ? navigation.navigate('Login') : null}
                         >
                             <View style={styles.imageContainer}>
-                                <Image source={{ uri: item.img }} style={styles.itemImage} contentFit="cover" />
+                                <Image 
+                                    source={{ uri: item.img }} 
+                                    style={styles.itemImage} 
+                                    contentFit="cover" 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 {isLocked && (
                                     <View style={styles.lockOverlay}>
                                         <Ionicons name="lock-closed" size={30} color="white" />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
+import { Image } from 'expo-image';
 import { Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
@@ -47,7 +48,9 @@ export default function FamilySafetyScreen({ navigation }) {
                     <Image
                         source={{ uri: FAMILY_ILLUSTRATION }}
                         style={styles.illustration}
-                        resizeMode="cover"
+                        contentFit="cover"
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
                     />
                 </View>
 

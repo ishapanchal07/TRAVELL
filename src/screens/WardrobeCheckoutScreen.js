@@ -64,7 +64,13 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.curatedScroll}>
                     {itemsToShow.map((item, idx) => (
                         <View key={item.id + idx} style={styles.lookCard}>
-                            <Image source={{ uri: item.image }} style={styles.lookImg} />
+                            <Image 
+                                source={{ uri: item.image }} 
+                                style={styles.lookImg} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                                contentFit="cover"
+                            />
                         </View>
                     ))}
                 </ScrollView>
@@ -99,6 +105,9 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                         <Image
                             source={{ uri: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=400' }}
                             style={styles.mapImg}
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            transition={300}
+                            contentFit="cover"
                         />
                         <View style={styles.mapOverlay} />
                         <View style={styles.mapPin}>

@@ -106,7 +106,14 @@ export default function ExploreScreen({ navigation }) {
                 >
                     {/* Card 1: Switzerland */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Switzerland')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: SWISS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                        <ImageBackground 
+                            source={{ uri: SWISS_IMG }} 
+                            style={styles.cardImage} 
+                            imageStyle={{ borderRadius: 24 }} 
+                            transition={300}
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            contentFit="cover"
+                        >
                             <View style={styles.cardOverlay}>
                                 <View style={{ flex: 1 }} />
                                 <View style={styles.cardBottomText}>
@@ -119,7 +126,14 @@ export default function ExploreScreen({ navigation }) {
 
                     {/* Card: Dubai */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Dubai')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: DUBAI_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                        <ImageBackground 
+                            source={{ uri: DUBAI_IMG }} 
+                            style={styles.cardImage} 
+                            imageStyle={{ borderRadius: 24 }} 
+                            transition={300}
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            contentFit="cover"
+                        >
                             <View style={styles.cardOverlay}>
                                 <View style={{ flex: 1 }} />
                                 <View style={styles.cardBottomText}>
@@ -132,7 +146,14 @@ export default function ExploreScreen({ navigation }) {
 
                     {/* Card 2: Paris */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Paris')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: PARIS_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                        <ImageBackground 
+                            source={{ uri: PARIS_IMG }} 
+                            style={styles.cardImage} 
+                            imageStyle={{ borderRadius: 24 }} 
+                            transition={300}
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            contentFit="cover"
+                        >
                             <View style={styles.cardOverlay}>
                                 <View style={styles.pillContainer}>
                                     <Text style={styles.pillText}>INFLUENCER PICK</Text>
@@ -147,7 +168,14 @@ export default function ExploreScreen({ navigation }) {
 
                     {/* Card 3: Rome */}
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('Rome')} style={styles.destinationCard}>
-                        <ImageBackground source={{ uri: ROME_IMG }} style={styles.cardImage} imageStyle={{ borderRadius: 24 }} transition={300}>
+                        <ImageBackground 
+                            source={{ uri: ROME_IMG }} 
+                            style={styles.cardImage} 
+                            imageStyle={{ borderRadius: 24 }} 
+                            transition={300}
+                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                            contentFit="cover"
+                        >
                             <View style={styles.cardOverlay}>
                                 <View style={{ flex: 1 }} />
                                 <View style={styles.cardBottomText}>

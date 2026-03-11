@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
+import { Image, ImageBackground } from 'expo-image';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
@@ -15,7 +16,9 @@ export default function WelcomeScreen({ navigation }) {
             <ImageBackground
                 source={{ uri: BACKGROUND_IMAGE_URL }}
                 style={styles.backgroundImage}
-                resizeMode="cover"
+                contentFit="cover"
+                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                transition={1000}
             >
                 <View style={styles.overlay}>
                     <SafeAreaView style={styles.safeArea}>

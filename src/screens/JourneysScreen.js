@@ -29,7 +29,12 @@ export default function JourneysScreen({ navigation }) {
                             <Ionicons name="notifications-outline" size={18} color="#0F172A" />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.avatarCircle} onPress={() => navigation.navigate('Profile')}>
-                            <Image source={{ uri: USER_AVATAR }} style={styles.avatarImage} />
+                            <Image 
+                                source={{ uri: USER_AVATAR }} 
+                                style={styles.avatarImage} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                            />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -55,7 +60,14 @@ export default function JourneysScreen({ navigation }) {
                 {/* Hero Card */}
                 {activeTab === 'current' && (
                 <View style={styles.heroCardContainer}>
-                    <ImageBackground source={{ uri: PARIS_NIGHT }} style={styles.heroBackground} imageStyle={{ borderRadius: 32 }} transition={300} contentFit="cover">
+                    <ImageBackground 
+                        source={{ uri: PARIS_NIGHT }} 
+                        style={styles.heroBackground} 
+                        imageStyle={{ borderRadius: 32 }} 
+                        transition={300} 
+                        contentFit="cover"
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                    >
                         <View style={styles.heroOverlay}>
 
                             <View>
@@ -106,13 +118,24 @@ export default function JourneysScreen({ navigation }) {
 
                 {/* Past Adventure List */}
                 <TouchableOpacity style={styles.pastCard} activeOpacity={0.8}>
-                    <Image source={{ uri: SEOUL_IMG }} style={styles.pastCardImage} />
+                    <Image 
+                        source={{ uri: SEOUL_IMG }} 
+                        style={styles.pastCardImage} 
+                        contentFit="cover"
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                    />
                     <View style={styles.pastCardContent}>
                         <Text style={styles.pastCardTitle}>Seoul, South Korea</Text>
                         <Text style={styles.pastCardDate}>May 15 – May 22, 2023</Text>
                         <View style={styles.memoriesRow}>
                             <View style={styles.miniAvatarWrap}>
-                                <Image source={{ uri: SMALL_AVATAR }} style={styles.miniAvatar} />
+                                <Image 
+                                    source={{ uri: SMALL_AVATAR }} 
+                                    style={styles.miniAvatar} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                             </View>
                             <View style={styles.plusWrap}>
                                 <Text style={styles.plusText}>+2</Text>
@@ -124,13 +147,24 @@ export default function JourneysScreen({ navigation }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.pastCard} activeOpacity={0.8}>
-                    <Image source={{ uri: BALI_IMG }} style={styles.pastCardImage} />
+                    <Image 
+                        source={{ uri: BALI_IMG }} 
+                        style={styles.pastCardImage} 
+                        contentFit="cover"
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                    />
                     <View style={styles.pastCardContent}>
                         <Text style={styles.pastCardTitle}>Bali, Indonesia</Text>
                         <Text style={styles.pastCardDate}>Jan 02 – Jan 14, 2023</Text>
                         <View style={styles.memoriesRow}>
                             <View style={styles.miniAvatarWrap}>
-                                <Image source={{ uri: SMALL_AVATAR }} style={styles.miniAvatar} />
+                                <Image 
+                                    source={{ uri: SMALL_AVATAR }} 
+                                    style={styles.miniAvatar} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                             </View>
                             <Text style={styles.memoriesText}>86 MEMORIES</Text>
                         </View>

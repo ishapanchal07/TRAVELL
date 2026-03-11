@@ -33,7 +33,13 @@ export default function FoodDetailScreen({ route, navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* Hero section */}
                 <View style={styles.heroContainer}>
-                    <Image source={{ uri: image }} style={styles.heroImage} />
+                    <Image 
+                        source={{ uri: image }} 
+                        style={styles.heroImage} 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                        contentFit="cover"
+                    />
                     <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={24} color="white" />
                     </TouchableOpacity>

@@ -249,7 +249,13 @@ export default function CityFoodScreen({ route, navigation }) {
                             onPress={() => navigation.navigate('FoodDetail', { item: gem })}
                         >
                             <View style={styles.largeCardImageContainer}>
-                                <Image source={{ uri: gem.image }} style={styles.largeCardImage} />
+                                <Image 
+                                    source={{ uri: gem.image }} 
+                                    style={styles.largeCardImage} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                    contentFit="cover"
+                                />
                                 <View style={styles.badgeTopLeft}>
                                     <Text style={styles.badgeText}>{gem.badge}</Text>
                                 </View>
@@ -278,7 +284,13 @@ export default function CityFoodScreen({ route, navigation }) {
                 <View style={styles.popularGrid}>
                     {displayedNearby.map((item) => (
                         <View key={item.id} style={styles.smallCard}>
-                            <Image source={{ uri: item.image }} style={styles.smallCardImage} />
+                            <Image 
+                                source={{ uri: item.image }} 
+                                style={styles.smallCardImage} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                                contentFit="cover"
+                            />
                             <View style={styles.smallCardContent}>
                                 <Text style={styles.smallCardTitle}>{item.title}</Text>
                                 <Text style={styles.smallCardSub}>{item.subtitle}</Text>

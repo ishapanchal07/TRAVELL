@@ -21,9 +21,9 @@ export default function PurchaseFlowScreen({ route, navigation }) {
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.itemCard}>
-                    <Image 
-                        source={{ uri: item.image }} 
-                        style={styles.itemImage} 
+                    <Image
+                        source={{ uri: item.image }}
+                        style={styles.itemImage}
                         contentFit="cover"
                         placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                         transition={300}
