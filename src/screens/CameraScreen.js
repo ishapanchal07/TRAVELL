@@ -17,7 +17,13 @@ export default function CameraScreen({ navigation }) {
             <StatusBar barStyle="light-content" translucent />
 
             {/* Camera View (Background) */}
-            <ImageBackground source={{ uri: EIFFEL_BG }} style={styles.cameraView} contentFit="cover">
+            <ImageBackground 
+                source={{ uri: EIFFEL_BG }} 
+                style={styles.cameraView} 
+                contentFit="cover"
+                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                transition={300}
+            >
                 {/* Silhouette Overlay */}
                 <View style={styles.silhouetteContainer}>
                     <View style={styles.headCircle} />
@@ -51,6 +57,9 @@ export default function CameraScreen({ navigation }) {
                             <Image
                                 source={{ uri: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100' }}
                                 style={styles.poseThumbnail}
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                                contentFit="cover"
                             />
                             <View style={styles.activeIndicator} />
                         </TouchableOpacity>
@@ -104,7 +113,13 @@ export default function CameraScreen({ navigation }) {
                     {/* Shutter Bar */}
                     <View style={styles.shutterBar}>
                         <TouchableOpacity style={styles.galleryPreview}>
-                            <Image source={{ uri: GALLERY_PREVIEW }} style={styles.galleryImg} />
+                            <Image 
+                                source={{ uri: GALLERY_PREVIEW }} 
+                                style={styles.galleryImg} 
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                                contentFit="cover"
+                            />
                         </TouchableOpacity>
 
                         <View style={styles.shutterOuter}>
