@@ -23,7 +23,13 @@ export default function ApparelDetailScreen({ route, navigation }) {
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <View style={styles.imageContainer}>
-                    <Image source={{ uri: item.image }} style={styles.mainImage} contentFit="cover" />
+                    <Image 
+                        source={{ uri: item.image }} 
+                        style={styles.mainImage} 
+                        contentFit="cover" 
+                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                        transition={300}
+                    />
                     <View style={styles.matchBadge}>
                         <Text style={styles.matchText}>{item.match || '95%'} MATCH</Text>
                     </View>

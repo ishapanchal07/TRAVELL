@@ -11,9 +11,9 @@ import AnalyticsService from '../services/AnalyticsService';
 
 const { width } = Dimensions.get('window');
 
-const PARIS_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600&auto=format&fit=crop';
+const PARIS_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=600&auto=format&fit=crop';
 const ROME_IMG = 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=600&auto=format&fit=crop';
-const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80&w=600';
+const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=600&auto=format&fit=crop';
 const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop';
 
 export default function ExploreScreen({ navigation }) {

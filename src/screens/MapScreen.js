@@ -19,7 +19,8 @@ export default function MapScreen({ route, navigation }) {
     
     // Use a specific location if provided, otherwise fallback to city name
     const searchQuery = location ? encodeURIComponent(location) : encodeURIComponent(city);
-    const mapUrl = `https://www.google.com/maps?q=${searchQuery}&output=embed`;
+    // Standard map URL works better in WebView without API key than the embed output
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
 
     return (
         <SafeAreaView style={styles.container}>

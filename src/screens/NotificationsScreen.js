@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -64,6 +64,19 @@ const NOTIFICATIONS = [
 ];
 
 export default function NotificationsScreen({ navigation }) {
+    const [activeTab, setActiveTab] = useState('All');
+
+    const filteredNotifs = NOTIFICATIONS.filter(item => {
+        if (activeTab === 'All') return true;
+        if (activeTab === 'Trips' && item.type === 'trip') return true;
+        if (activeTab === 'Social' && item.type === 'social') return true;
+        if (activeTab === 'Offers' && item.type === 'offer') return true;
+        return false;
+    });
+
+    const newNotifs = filteredNotifs.filter(n => n.isNew);
+    const earlierNotifs = filteredNotifs.filter(n => !n.isNew);
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
@@ -81,33 +94,41 @@ export default function NotificationsScreen({ navigation }) {
 
             <View style={styles.filterRow}>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
-                    <FilterChip label="All" active />
-                    <FilterChip label="Trips" />
-                    <FilterChip label="Social" />
-                    <FilterChip label="Offers" />
+                    <FilterChip label="All" active={activeTab === 'All'} onPress={() => setActiveTab('All')} />
+                    <FilterChip label="Trips" active={activeTab === 'Trips'} onPress={() => setActiveTab('Trips')} />
+                    <FilterChip label="Social" active={activeTab === 'Social'} onPress={() => setActiveTab('Social')} />
+                    <FilterChip label="Offers" active={activeTab === 'Offers'} onPress={() => setActiveTab('Offers')} />
                 </ScrollView>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
 
-                <Text style={styles.sectionTitle}>NEW</Text>
-                {NOTIFICATIONS.filter(n => n.isNew).map(item => (
-                    <NotificationItem key={item.id} item={item} />
-                ))}
+                {newNotifs.length > 0 && (
+                    <>
+                        <Text style={styles.sectionTitle}>NEW</Text>
+                        {newNotifs.map(item => (
+                            <NotificationItem key={item.id} item={item} />
+                        ))}
+                    </>
+                )}
 
-                <Text style={[styles.sectionTitle, { marginTop: 30 }]}>EARLIER</Text>
-                {NOTIFICATIONS.filter(n => !n.isNew).map(item => (
-                    <NotificationItem key={item.id} item={item} />
-                ))}
+                {earlierNotifs.length > 0 && (
+                    <>
+                        <Text style={[styles.sectionTitle, { marginTop: newNotifs.length > 0 ? 30 : 0 }]}>EARLIER</Text>
+                        {earlierNotifs.map(item => (
+                            <NotificationItem key={item.id} item={item} />
+                        ))}
+                    </>
+                )}
 
             </ScrollView>
         </SafeAreaView>
     );
 }
 
-function FilterChip({ label, active }) {
+function FilterChip({ label, active, onPress }) {
     return (
-        <TouchableOpacity style={[styles.chip, active && styles.chipActive]}>
+        <TouchableOpacity style={[styles.chip, active && styles.chipActive]} onPress={onPress}>
             <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
         </TouchableOpacity>
     );
@@ -115,7 +136,7 @@ function FilterChip({ label, active }) {
 
 function NotificationItem({ item }) {
     return (
-        <TouchableOpacity style={styles.notifItem} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.notifItem} activeOpacity={0.7} onPress={() => console.log('Clicked:', item.title)}>
             <View style={[styles.iconBox, { backgroundColor: item.bgColor }]}>
                 <MaterialCommunityIcons name={item.icon} size={22} color={item.iconColor} />
             </View>

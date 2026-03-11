@@ -15,15 +15,15 @@ const SEINE_IMG = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?aut
 const ITEMS = [
     // Winter Collection
     { id: 'w1', title: 'Alpine Puffer', rent: '$45', buy: '$320', match: '98%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400', category: 'Jackets', season: 'winter' },
-    { id: 'w2', title: 'Wool Trench Coat', rent: '$55', buy: '$450', match: '95%', image: 'https://images.unsplash.com/photo-1539533377285-521f1831c19b?w=400', category: 'Jackets', season: 'winter' },
-    { id: 'w3', title: 'Thermal Leggings', rent: '$15', buy: '$85', match: '92%', image: 'https://images.unsplash.com/photo-1552062754-c8d8a03643fc?w=400', category: 'Pants', season: 'winter' },
+    { id: 'w2', title: 'Wool Trench Coat', rent: '$55', buy: '$450', match: '95%', image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400', category: 'Jackets', season: 'winter' },
+    { id: 'w3', title: 'Thermal Leggings', rent: '$15', buy: '$85', match: '92%', image: 'https://images.unsplash.com/photo-1552308995-2ac3c5d97490?w=400', category: 'Pants', season: 'winter' },
     { id: 'w4', title: 'Cashmere Scarf', rent: '$12', buy: '$95', match: '99%', image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400', category: 'Accessories', season: 'winter' },
     { id: 'w5', title: 'Snow Boots', rent: '$30', buy: '$210', match: '90%', image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400', category: 'Shoes', season: 'winter' },
     { id: 'w6', title: 'Fleece Beanie', rent: '$8', buy: '$35', match: '96%', image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400', category: 'Accessories', season: 'winter' },
 
     // Summer Collection
     { id: 's1', title: 'Linen Breeze Shirt', rent: '$20', buy: '$120', match: '98%', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400', category: 'Shirts', season: 'summer' },
-    { id: 's2', title: 'Floral Maxi Dress', rent: '$35', buy: '$245', match: '94%', image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400', category: 'Dresses', season: 'summer' },
+    { id: 's2', title: 'Floral Maxi Dress', rent: '$35', buy: '$245', match: '94%', image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400', category: 'Dresses', season: 'summer' },
     { id: 's3', title: 'Denim Shorts', rent: '$15', buy: '$75', match: '91%', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400', category: 'Pants', season: 'summer' },
     { id: 's4', title: 'Aviator Sunglasses', rent: '$10', buy: '$160', match: '97%', image: 'https://images.unsplash.com/photo-1511499767010-a588a5120716?w=400', category: 'Accessories', season: 'summer' },
     { id: 's5', title: 'Leather Sandals', rent: '$18', buy: '$130', match: '89%', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', category: 'Shoes', season: 'summer' },
@@ -199,10 +199,22 @@ export default function WardrobeScreen({ navigation }) {
                                 <View style={styles.imageContainer}>
                                     {item.isSmallImage ? (
                                         <View style={styles.smallImageWrap}>
-                                            <Image source={{ uri: item.image }} style={styles.itemImageSmall} />
+                                            <Image 
+                                                source={{ uri: item.image }} 
+                                                style={styles.itemImageSmall} 
+                                                contentFit="cover"
+                                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                                transition={300}
+                                            />
                                         </View>
                                     ) : (
-                                        <Image source={{ uri: item.image }} style={styles.itemImage} contentFit="cover" />
+                                        <Image 
+                                            source={{ uri: item.image }} 
+                                            style={styles.itemImage} 
+                                            contentFit="cover" 
+                                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                            transition={300}
+                                        />
                                     )}
                                     <View style={styles.matchBadge}>
                                         <Text style={styles.matchText}>{modifiedMatch} MATCH</Text>
@@ -238,10 +250,13 @@ export default function WardrobeScreen({ navigation }) {
                                             <Text style={styles.priceLabel}>RENT</Text>
                                             <Text style={styles.priceValueBlue}>{item.rent}<Text style={styles.priceUnit}>/d</Text></Text>
                                         </View>
-                                        <View style={[styles.priceCell, { alignItems: 'flex-end' }]}>
+                                        <TouchableOpacity 
+                                            style={[styles.priceCell, { alignItems: 'flex-end' }]}
+                                            onPress={() => navigation.navigate('PurchaseFlow', { item })}
+                                        >
                                             <Text style={styles.priceLabel}>BUY</Text>
                                             <Text style={styles.priceValueDark}>{item.buy}</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </TouchableOpacity>

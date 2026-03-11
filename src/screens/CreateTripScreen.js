@@ -9,7 +9,7 @@ import AnalyticsService from '../services/AnalyticsService';
 
 const { width } = Dimensions.get('window');
 
-const DEST_ITALY = 'https://images.unsplash.com/photo-1516483638261-f40af5ebcf89?q=80&w=200&auto=format&fit=crop';
+const DEST_ITALY = 'https://images.unsplash.com/photo-1533091090875-1ff401ce1bea?q=80&w=200&auto=format&fit=crop';
 const DEST_ROME = 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=200&auto=format&fit=crop';
 const DEST_PARIS = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=200&auto=format&fit=crop';
 const DEST_LONDON = 'https://images.unsplash.com/photo-1513635269975-59693a0ee76d?q=80&w=200&auto=format&fit=crop';
@@ -114,7 +114,13 @@ export default function CreateTripScreen({ navigation }) {
                             activeOpacity={0.8}
                         >
                             <View style={[styles.destImageRing, selectedDest === dest.id && styles.destImageRingActive]}>
-                                <Image source={{ uri: dest.image }} style={styles.destImage} />
+                                <Image 
+                                    source={{ uri: dest.image }} 
+                                    style={styles.destImage}
+                                    contentFit="cover"
+                                    placeholder="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200&auto=format&fit=crop"
+                                    transition={200}
+                                />
                             </View>
                             <Text style={[styles.destName, selectedDest === dest.id && styles.destNameActive]}>{dest.name}</Text>
                         </TouchableOpacity>
@@ -146,7 +152,7 @@ export default function CreateTripScreen({ navigation }) {
                 </View>
 
                 {/* Personal Details */}
-                <View style={styles.cardContainer}>
+                <View style={[styles.cardContainer, { zIndex: 10 }]}>
                     <View style={styles.cardTitleRow}>
                         <View style={styles.iconBox}>
                             <FontAwesome5 name="user-alt" size={14} color="#3B82F6" />
@@ -197,7 +203,7 @@ export default function CreateTripScreen({ navigation }) {
                     </View>
 
                     <View style={styles.dietTagsCont}>
-                        {['Veg', 'Non-Veg', 'Vegan', 'Halal'].map((pref) => {
+                        {['Veg', 'Non-Veg', 'Vegan'].map((pref) => {
                             const isSelected = diet.includes(pref);
                             return (
                                 <TouchableOpacity
@@ -211,13 +217,6 @@ export default function CreateTripScreen({ navigation }) {
                             )
                         })}
                     </View>
-
-                    <Text style={styles.inputLabel}>ALLERGIES</Text>
-                    <TextInput
-                        style={styles.textInputFull}
-                        placeholder="e.g. Peanuts, Shellfish"
-                        placeholderTextColor="#CBD5E1"
-                    />
 
                     <TouchableOpacity
                         style={styles.saveBtn}

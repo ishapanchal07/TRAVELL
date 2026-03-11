@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 import { useTrip } from '../context/TripContext';
 
 const { width } = Dimensions.get('window');
@@ -32,7 +33,7 @@ export default function TailorTripScreen({ navigation }) {
                 <View style={styles.tripPill}>
                     <Text style={styles.tripPillText}>TRIP: {activeTrip?.destination || 'PARIS'} '24</Text>
                 </View>
-                <View style={{ width: 40 }} /> {/* Spacer */}
+                <View style={{ width: 40 }} />
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
@@ -75,32 +76,44 @@ export default function TailorTripScreen({ navigation }) {
                         <Text style={styles.cardTitle}>SENSITIVITY & PACE</Text>
                     </View>
 
-                    {/* Safety Slider Mock */}
+                    {/* Safety Slider */}
                     <View style={styles.sliderSection}>
                         <View style={styles.sliderTopRow}>
                             <Text style={styles.sliderLabel}>Safety Sensitivity</Text>
-                            <Text style={styles.sliderValueText}>HIGH</Text>
+                            <Text style={styles.sliderValueText}>{safetySens > 0.6 ? 'HIGH' : safetySens > 0.3 ? 'MODERATE' : 'NORMAL'}</Text>
                         </View>
-                        <View style={styles.sliderTrack}>
-                            <View style={[styles.sliderFill, { width: `${safetySens * 100}%` }]} />
-                            <View style={[styles.sliderThumb, { left: `${safetySens * 100}%` }]} />
-                        </View>
+                        <Slider
+                            style={{width: '100%', height: 40}}
+                            minimumValue={0}
+                            maximumValue={1}
+                            value={safetySens}
+                            onValueChange={setSafetySens}
+                            minimumTrackTintColor="#38BDF8"
+                            maximumTrackTintColor="#F1F5F9"
+                            thumbTintColor="#38BDF8"
+                        />
                         <View style={styles.sliderBottomRow}>
                             <Text style={styles.sliderEndpoint}>NORMAL</Text>
                             <Text style={styles.sliderEndpoint}>ENHANCED</Text>
                         </View>
                     </View>
 
-                    {/* Activity Slider Mock */}
-                    <View style={[styles.sliderSection, { marginTop: 30 }]}>
+                    {/* Activity Slider */}
+                    <View style={[styles.sliderSection, { marginTop: 15 }]}>
                         <View style={styles.sliderTopRow}>
                             <Text style={styles.sliderLabel}>Activity Intensity</Text>
-                            <Text style={styles.sliderValueText}>MODERATE</Text>
+                            <Text style={styles.sliderValueText}>{activityInt > 0.6 ? 'EXTREME' : activityInt > 0.3 ? 'MODERATE' : 'CHILL'}</Text>
                         </View>
-                        <View style={styles.sliderTrack}>
-                            <View style={[styles.sliderFill, { width: `${activityInt * 100}%` }]} />
-                            <View style={[styles.sliderThumb, { left: `${activityInt * 100}%` }]} />
-                        </View>
+                        <Slider
+                            style={{width: '100%', height: 40}}
+                            minimumValue={0}
+                            maximumValue={1}
+                            value={activityInt}
+                            onValueChange={setActivityInt}
+                            minimumTrackTintColor="#38BDF8"
+                            maximumTrackTintColor="#F1F5F9"
+                            thumbTintColor="#38BDF8"
+                        />
                         <View style={styles.sliderBottomRow}>
                             <Text style={styles.sliderEndpoint}>CHILL</Text>
                             <Text style={styles.sliderEndpoint}>EXTREME</Text>
@@ -152,7 +165,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         paddingHorizontal: 20,
-        paddingBottom: 20,
+        paddingBottom: 130, // Increased to avoid bottom button overlap
     },
     headerRow: {
         flexDirection: 'row',
