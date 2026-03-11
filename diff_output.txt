@@ -1,0 +1,1581 @@
+diff --git a/app.json b/app.json
+index 55f0f76..e3bf0dc 100644
+--- a/app.json
++++ b/app.json
+@@ -22,6 +22,9 @@
+     },
+     "plugins": [
+       "expo-image"
+-    ]
++    ],
++    "android": {
++      "package": "com.anonymous.roamster"
++    }
+   }
+ }
+diff --git a/package-lock.json b/package-lock.json
+index 89f9076..2901660 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -19,7 +19,8 @@
+         "react-native-calendars": "^1.1314.0",
+         "react-native-maps": "1.26.20",
+         "react-native-safe-area-context": "~5.6.2",
+-        "react-native-screens": "~4.23.0"
++        "react-native-screens": "~4.23.0",
++        "react-native-webview": "13.16.0"
+       }
+     },
+     "node_modules/@babel/code-frame": {
+@@ -194,9 +195,9 @@
+       }
+     },
+     "node_modules/@babel/helper-define-polyfill-provider": {
+-      "version": "0.6.6",
+-      "resolved": "https://registry.npmjs.org/@babel/helper-define-polyfill-provider/-/helper-define-polyfill-provider-0.6.6.tgz",
+-      "integrity": "sha512-mOAsxeeKkUKayvZR3HeTYD/fICpCPLJrU5ZjelT/PA6WHtNDBOE436YiaEUvHN454bRM3CebhDsIpieCc4texA==",
++      "version": "0.6.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-define-polyfill-provider/-/helper-define-polyfill-provider-0.6.7.tgz",
++      "integrity": "sha512-6Fqi8MtQ/PweQ9xvux65emkLQ83uB+qAVtfHkC9UodyHMIZdxNI01HjLCLUtybElp2KY2XNE0nOgyP1E1vXw9w==",
+       "license": "MIT",
+       "dependencies": {
+         "@babel/helper-compilation-targets": "^7.28.6",
+@@ -2203,9 +2204,9 @@
+       "license": "MIT"
+     },
+     "node_modules/@react-navigation/core": {
+-      "version": "7.15.1",
+-      "resolved": "https://registry.npmjs.org/@react-navigation/core/-/core-7.15.1.tgz",
+-      "integrity": "sha512-Fqr6qxfZJIC4ewho7LtTa9zz6hcOzohX7D1lcDfrkGaYkS5xBwEZViGNxCJK/czUc74ua8NThyrObQFjB6Q/RQ==",
++      "version": "7.16.1",
++      "resolved": "https://registry.npmjs.org/@react-navigation/core/-/core-7.16.1.tgz",
++      "integrity": "sha512-xhquoyhKdqDfiL7LuupbwYnmauUGfVFGDEJO34m26k8zSN1eDjQ2stBZcHN8ILOI1PrG9885nf8ZmfaQxPS0ww==",
+       "license": "MIT",
+       "dependencies": {
+         "@react-navigation/routers": "^7.5.3",
+@@ -2221,16 +2222,10 @@
+         "react": ">= 18.2.0"
+       }
+     },
+-    "node_modules/@react-navigation/core/node_modules/react-is": {
+-      "version": "19.2.4",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-19.2.4.tgz",
+-      "integrity": "sha512-W+EWGn2v0ApPKgKKCy/7s7WHXkboGcsrXE+2joLyVxkbyVQfO3MUEaUQDHoSmb8TFFrSKYa9mw64WZHNHSDzYA==",
+-      "license": "MIT"
+-    },
+     "node_modules/@react-navigation/elements": {
+-      "version": "2.9.8",
+-      "resolved": "https://registry.npmjs.org/@react-navigation/elements/-/elements-2.9.8.tgz",
+-      "integrity": "sha512-3gpwUmVnDJYvK9nFmAA/YXw0hmT/C/lZx8RkRMK+ux9l1T+32EWnQFnn34Wa1BMDX8HN2r64yrlW93DIzKI7Uw==",
++      "version": "2.9.10",
++      "resolved": "https://registry.npmjs.org/@react-navigation/elements/-/elements-2.9.10.tgz",
++      "integrity": "sha512-N8tuBekzTRb0pkMHFJGvmC6Q5OisSbt6gzvw7RHMnp4NDo5auVllT12sWFaTXf8mTduaLKNSrD/NZNaOqThCBg==",
+       "license": "MIT",
+       "dependencies": {
+         "color": "^4.2.3",
+@@ -2239,7 +2234,7 @@
+       },
+       "peerDependencies": {
+         "@react-native-masked-view/masked-view": ">= 0.2.0",
+-        "@react-navigation/native": "^7.1.31",
++        "@react-navigation/native": "^7.1.33",
+         "react": ">= 18.2.0",
+         "react-native": "*",
+         "react-native-safe-area-context": ">= 4.0.0"
+@@ -2251,12 +2246,12 @@
+       }
+     },
+     "node_modules/@react-navigation/native": {
+-      "version": "7.1.31",
+-      "resolved": "https://registry.npmjs.org/@react-navigation/native/-/native-7.1.31.tgz",
+-      "integrity": "sha512-+YCUwtfDgsux59Q0LDHc3Zid9ih93ecUCFWZOH6/+eNoUGnWx77wjS6ZfvBO/7E+EiIup11IVShDzCHR4of8hw==",
++      "version": "7.1.33",
++      "resolved": "https://registry.npmjs.org/@react-navigation/native/-/native-7.1.33.tgz",
++      "integrity": "sha512-DpFdWGcgLajKZ1TuIvDNQsblN2QaUFWpTQaB8v7WRP9Mix8H/6TFoIrZd93pbymI2hybd6UYrD+lI408eWVcfw==",
+       "license": "MIT",
+       "dependencies": {
+-        "@react-navigation/core": "^7.15.1",
++        "@react-navigation/core": "^7.16.1",
+         "escape-string-regexp": "^4.0.0",
+         "fast-deep-equal": "^3.1.3",
+         "nanoid": "^3.3.11",
+@@ -2268,18 +2263,18 @@
+       }
+     },
+     "node_modules/@react-navigation/native-stack": {
+-      "version": "7.14.2",
+-      "resolved": "https://registry.npmjs.org/@react-navigation/native-stack/-/native-stack-7.14.2.tgz",
+-      "integrity": "sha512-/nKxFAFSUSGV+NSXrXXcWEcGAHdyp8RyWjoGMDzVPdBhjCLblVSgHWx5y4mm+k0de9V1pkjsftUaroP7rQckzw==",
++      "version": "7.14.4",
++      "resolved": "https://registry.npmjs.org/@react-navigation/native-stack/-/native-stack-7.14.4.tgz",
++      "integrity": "sha512-HFEnM5Q7JY3FmmiolD/zvgY+9sxZAyVGPZJoz7BdTvJmi1VHOdplf24YiH45mqeitlGnaOlvNT55rH4abHJ5eA==",
+       "license": "MIT",
+       "dependencies": {
+-        "@react-navigation/elements": "^2.9.8",
++        "@react-navigation/elements": "^2.9.10",
+         "color": "^4.2.3",
+         "sf-symbols-typescript": "^2.1.0",
+         "warn-once": "^0.1.1"
+       },
+       "peerDependencies": {
+-        "@react-navigation/native": "^7.1.31",
++        "@react-navigation/native": "^7.1.33",
+         "react": ">= 18.2.0",
+         "react-native": "*",
+         "react-native-safe-area-context": ">= 4.0.0",
+@@ -2400,9 +2395,9 @@
+       }
+     },
+     "node_modules/@types/node": {
+-      "version": "25.3.2",
+-      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.3.2.tgz",
+-      "integrity": "sha512-RpV6r/ij22zRRdyBPcxDeKAzH43phWVKEjL2iksqo1Vz3CuBUrgmPpPhALKiRfU7OMCmeeO9vECBMsV0hMTG8Q==",
++      "version": "25.4.0",
++      "resolved": "https://registry.npmjs.org/@types/node/-/node-25.4.0.tgz",
++      "integrity": "sha512-9wLpoeWuBlcbBpOY3XmzSTG3oscB6xjBEEtn+pYXTfhyXhIxC5FsBer2KTopBlvKEiW9l13po9fq+SJY/5lkhw==",
+       "license": "MIT",
+       "dependencies": {
+         "undici-types": "~7.18.0"
+@@ -2634,13 +2629,13 @@
+       }
+     },
+     "node_modules/babel-plugin-polyfill-corejs2": {
+-      "version": "0.4.15",
+-      "resolved": "https://registry.npmjs.org/babel-plugin-polyfill-corejs2/-/babel-plugin-polyfill-corejs2-0.4.15.tgz",
+-      "integrity": "sha512-hR3GwrRwHUfYwGfrisXPIDP3JcYfBrW7wKE7+Au6wDYl7fm/ka1NEII6kORzxNU556JjfidZeBsO10kYvtV1aw==",
++      "version": "0.4.16",
++      "resolved": "https://registry.npmjs.org/babel-plugin-polyfill-corejs2/-/babel-plugin-polyfill-corejs2-0.4.16.tgz",
++      "integrity": "sha512-xaVwwSfebXf0ooE11BJovZYKhFjIvQo7TsyVpETuIeH2JHv0k/T6Y5j22pPTvqYqmpkxdlPAJlyJ0tfOJAoMxw==",
+       "license": "MIT",
+       "dependencies": {
+         "@babel/compat-data": "^7.28.6",
+-        "@babel/helper-define-polyfill-provider": "^0.6.6",
++        "@babel/helper-define-polyfill-provider": "^0.6.7",
+         "semver": "^6.3.1"
+       },
+       "peerDependencies": {
+@@ -2670,12 +2665,12 @@
+       }
+     },
+     "node_modules/babel-plugin-polyfill-regenerator": {
+-      "version": "0.6.6",
+-      "resolved": "https://registry.npmjs.org/babel-plugin-polyfill-regenerator/-/babel-plugin-polyfill-regenerator-0.6.6.tgz",
+-      "integrity": "sha512-hYm+XLYRMvupxiQzrvXUj7YyvFFVfv5gI0R71AJzudg1g2AI2vyCPPIFEBjk162/wFzti3inBHo7isWFuEVS/A==",
++      "version": "0.6.7",
++      "resolved": "https://registry.npmjs.org/babel-plugin-polyfill-regenerator/-/babel-plugin-polyfill-regenerator-0.6.7.tgz",
++      "integrity": "sha512-OTYbUlSwXhNgr4g6efMZgsO8//jA61P7ZbRX3iTT53VON8l+WQS8IAUEVo4a4cWknrg2W8Cj4gQhRYNCJ8GkAA==",
+       "license": "MIT",
+       "dependencies": {
+-        "@babel/helper-define-polyfill-provider": "^0.6.6"
++        "@babel/helper-define-polyfill-provider": "^0.6.7"
+       },
+       "peerDependencies": {
+         "@babel/core": "^7.4.0 || ^8.0.0-0 <8.0.0"
+@@ -2950,9 +2945,9 @@
+       }
+     },
+     "node_modules/caniuse-lite": {
+-      "version": "1.0.30001774",
+-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001774.tgz",
+-      "integrity": "sha512-DDdwPGz99nmIEv216hKSgLD+D4ikHQHjBC/seF98N9CPqRX4M5mSxT9eTV6oyisnJcuzxtZy4n17yKKQYmYQOA==",
++      "version": "1.0.30001777",
++      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001777.tgz",
++      "integrity": "sha512-tmN+fJxroPndC74efCdp12j+0rk0RHwV5Jwa1zWaFVyw2ZxAuPeG8ZgWC3Wz7uSjT3qMRQ5XHZ4COgQmsCMJAQ==",
+       "funding": [
+         {
+           "type": "opencollective",
+@@ -3340,9 +3335,9 @@
+       "license": "MIT"
+     },
+     "node_modules/electron-to-chromium": {
+-      "version": "1.5.302",
+-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.302.tgz",
+-      "integrity": "sha512-sM6HAN2LyK82IyPBpznDRqlTQAtuSaO+ShzFiWTvoMJLHyZ+Y39r8VMfHzwbU8MVBzQ4Wdn85+wlZl2TLGIlwg==",
++      "version": "1.5.307",
++      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.307.tgz",
++      "integrity": "sha512-5z3uFKBWjiNR44nFcYdkcXjKMbg5KXNdciu7mhTPo9tB7NbqSNP2sSnGR+fqknZSCwKkBN+oxiiajWs4dT6ORg==",
+       "license": "ISC"
+     },
+     "node_modules/emoji-regex": {
+@@ -3428,13 +3423,13 @@
+       }
+     },
+     "node_modules/expo": {
+-      "version": "55.0.4",
+-      "resolved": "https://registry.npmjs.org/expo/-/expo-55.0.4.tgz",
+-      "integrity": "sha512-cbQBPYwmH6FRvh942KR8mSdEcrVdsIMkjdHthtf59zlpzgrk28FabhOdL/Pc9WuS+CsIP3EIQbZqmLkTjv6qPg==",
++      "version": "55.0.5",
++      "resolved": "https://registry.npmjs.org/expo/-/expo-55.0.5.tgz",
++      "integrity": "sha512-toVYbRU0gH50QSlIyrAswXD87RKi2pcJcHZpBDuqU3mIQZzJkTcWgRLWN/2R/wnd3kuJTtW5xlr5ndVG6xEWxQ==",
+       "license": "MIT",
+       "dependencies": {
+         "@babel/runtime": "^7.20.0",
+-        "@expo/cli": "55.0.14",
++        "@expo/cli": "55.0.15",
+         "@expo/config": "~55.0.8",
+         "@expo/config-plugins": "~55.0.6",
+         "@expo/devtools": "55.0.2",
+@@ -3452,7 +3447,7 @@
+         "expo-font": "~55.0.4",
+         "expo-keep-awake": "~55.0.4",
+         "expo-modules-autolinking": "55.0.8",
+-        "expo-modules-core": "55.0.13",
++        "expo-modules-core": "55.0.14",
+         "pretty-format": "^29.7.0",
+         "react-refresh": "^0.14.2",
+         "whatwg-url-minimum": "^0.1.1"
+@@ -3528,9 +3523,9 @@
+       }
+     },
+     "node_modules/expo-modules-core": {
+-      "version": "55.0.13",
+-      "resolved": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-55.0.13.tgz",
+-      "integrity": "sha512-DYLQTOJAR7jD3M9S0sH9myZaPEtShdicHrPiWcupIXMeMkQxFzErx+adUI8gZPy4AU45BgeGgtaogRfT25iLfw==",
++      "version": "55.0.14",
++      "resolved": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-55.0.14.tgz",
++      "integrity": "sha512-eAerOnnhbZitUAKbY7B61kIudiabAz/m/oMGINms2+GeY1DRhdvrm5aAkhkHHmykPrg58PPryXtmF14YAYWViw==",
+       "license": "MIT",
+       "dependencies": {
+         "invariant": "^2.2.4"
+@@ -3563,9 +3558,9 @@
+       }
+     },
+     "node_modules/expo/node_modules/@expo/cli": {
+-      "version": "55.0.14",
+-      "resolved": "https://registry.npmjs.org/@expo/cli/-/cli-55.0.14.tgz",
+-      "integrity": "sha512-glXPSjjLCIz+KX/ezqLTGIF9eTE1lexiCxunvB3loRZNnGeBDGW3eF++cuPKudW26jeC6bqZkcqBG7Lp0Sp9qg==",
++      "version": "55.0.15",
++      "resolved": "https://registry.npmjs.org/@expo/cli/-/cli-55.0.15.tgz",
++      "integrity": "sha512-Qd4aF2+wT9LtdV7G/gULbx/t8FJ/OVtwuNkLcZt1XlosQ5XX/C/3ywZXYl+/bYcHUmuO1TBD3Fg05bNlmL6vrw==",
+       "license": "MIT",
+       "dependencies": {
+         "@expo/code-signing-certificates": "^0.0.6",
+@@ -3971,9 +3966,9 @@
+       }
+     },
+     "node_modules/fetch-nodeshim": {
+-      "version": "0.4.8",
+-      "resolved": "https://registry.npmjs.org/fetch-nodeshim/-/fetch-nodeshim-0.4.8.tgz",
+-      "integrity": "sha512-YW5vG33rabBq6JpYosLNoXoaMN69/WH26MeeX2hkDVjN6UlvRGq3Wkazl9H0kisH95aMu/HtHL64JUvv/+Nv/g==",
++      "version": "0.4.9",
++      "resolved": "https://registry.npmjs.org/fetch-nodeshim/-/fetch-nodeshim-0.4.9.tgz",
++      "integrity": "sha512-XIQWlB2A4RZ7NebXWGxS0uDMdvRHkiUDTghBVJKFg9yEOd45w/PP8cZANuPf2H08W6Cor3+2n7Q6TTZgAS3Fkw==",
+       "license": "MIT"
+     },
+     "node_modules/fill-range": {
+@@ -4715,9 +4710,9 @@
+       "license": "MIT"
+     },
+     "node_modules/lightningcss": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss/-/lightningcss-1.31.1.tgz",
+-      "integrity": "sha512-l51N2r93WmGUye3WuFoN5k10zyvrVs0qfKBhyC5ogUQ6Ew6JUSswh78mbSO+IU3nTWsyOArqPCcShdQSadghBQ==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss/-/lightningcss-1.32.0.tgz",
++      "integrity": "sha512-NXYBzinNrblfraPGyrbPoD19C1h9lfI/1mzgWYvXUTe414Gz/X1FD2XBZSZM7rRTrMA8JL3OtAaGifrIKhQ5yQ==",
+       "license": "MPL-2.0",
+       "dependencies": {
+         "detect-libc": "^2.0.3"
+@@ -4730,23 +4725,23 @@
+         "url": "https://opencollective.com/parcel"
+       },
+       "optionalDependencies": {
+-        "lightningcss-android-arm64": "1.31.1",
+-        "lightningcss-darwin-arm64": "1.31.1",
+-        "lightningcss-darwin-x64": "1.31.1",
+-        "lightningcss-freebsd-x64": "1.31.1",
+-        "lightningcss-linux-arm-gnueabihf": "1.31.1",
+-        "lightningcss-linux-arm64-gnu": "1.31.1",
+-        "lightningcss-linux-arm64-musl": "1.31.1",
+-        "lightningcss-linux-x64-gnu": "1.31.1",
+-        "lightningcss-linux-x64-musl": "1.31.1",
+-        "lightningcss-win32-arm64-msvc": "1.31.1",
+-        "lightningcss-win32-x64-msvc": "1.31.1"
++        "lightningcss-android-arm64": "1.32.0",
++        "lightningcss-darwin-arm64": "1.32.0",
++        "lightningcss-darwin-x64": "1.32.0",
++        "lightningcss-freebsd-x64": "1.32.0",
++        "lightningcss-linux-arm-gnueabihf": "1.32.0",
++        "lightningcss-linux-arm64-gnu": "1.32.0",
++        "lightningcss-linux-arm64-musl": "1.32.0",
++        "lightningcss-linux-x64-gnu": "1.32.0",
++        "lightningcss-linux-x64-musl": "1.32.0",
++        "lightningcss-win32-arm64-msvc": "1.32.0",
++        "lightningcss-win32-x64-msvc": "1.32.0"
+       }
+     },
+     "node_modules/lightningcss-android-arm64": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-android-arm64/-/lightningcss-android-arm64-1.31.1.tgz",
+-      "integrity": "sha512-HXJF3x8w9nQ4jbXRiNppBCqeZPIAfUo8zE/kOEGbW5NZvGc/K7nMxbhIr+YlFlHW5mpbg/YFPdbnCh1wAXCKFg==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-android-arm64/-/lightningcss-android-arm64-1.32.0.tgz",
++      "integrity": "sha512-YK7/ClTt4kAK0vo6w3X+Pnm0D2cf2vPHbhOXdoNti1Ga0al1P4TBZhwjATvjNwLEBCnKvjJc2jQgHXH0NEwlAg==",
+       "cpu": [
+         "arm64"
+       ],
+@@ -4764,9 +4759,9 @@
+       }
+     },
+     "node_modules/lightningcss-darwin-arm64": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.31.1.tgz",
+-      "integrity": "sha512-02uTEqf3vIfNMq3h/z2cJfcOXnQ0GRwQrkmPafhueLb2h7mqEidiCzkE4gBMEH65abHRiQvhdcQ+aP0D0g67sg==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.32.0.tgz",
++      "integrity": "sha512-RzeG9Ju5bag2Bv1/lwlVJvBE3q6TtXskdZLLCyfg5pt+HLz9BqlICO7LZM7VHNTTn/5PRhHFBSjk5lc4cmscPQ==",
+       "cpu": [
+         "arm64"
+       ],
+@@ -4784,9 +4779,9 @@
+       }
+     },
+     "node_modules/lightningcss-darwin-x64": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.31.1.tgz",
+-      "integrity": "sha512-1ObhyoCY+tGxtsz1lSx5NXCj3nirk0Y0kB/g8B8DT+sSx4G9djitg9ejFnjb3gJNWo7qXH4DIy2SUHvpoFwfTA==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.32.0.tgz",
++      "integrity": "sha512-U+QsBp2m/s2wqpUYT/6wnlagdZbtZdndSmut/NJqlCcMLTWp5muCrID+K5UJ6jqD2BFshejCYXniPDbNh73V8w==",
+       "cpu": [
+         "x64"
+       ],
+@@ -4804,9 +4799,9 @@
+       }
+     },
+     "node_modules/lightningcss-freebsd-x64": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.31.1.tgz",
+-      "integrity": "sha512-1RINmQKAItO6ISxYgPwszQE1BrsVU5aB45ho6O42mu96UiZBxEXsuQ7cJW4zs4CEodPUioj/QrXW1r9pLUM74A==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.32.0.tgz",
++      "integrity": "sha512-JCTigedEksZk3tHTTthnMdVfGf61Fky8Ji2E4YjUTEQX14xiy/lTzXnu1vwiZe3bYe0q+SpsSH/CTeDXK6WHig==",
+       "cpu": [
+         "x64"
+       ],
+@@ -4824,9 +4819,9 @@
+       }
+     },
+     "node_modules/lightningcss-linux-arm-gnueabihf": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.31.1.tgz",
+-      "integrity": "sha512-OOCm2//MZJ87CdDK62rZIu+aw9gBv4azMJuA8/KB74wmfS3lnC4yoPHm0uXZ/dvNNHmnZnB8XLAZzObeG0nS1g==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.32.0.tgz",
++      "integrity": "sha512-x6rnnpRa2GL0zQOkt6rts3YDPzduLpWvwAF6EMhXFVZXD4tPrBkEFqzGowzCsIWsPjqSK+tyNEODUBXeeVHSkw==",
+       "cpu": [
+         "arm"
+       ],
+@@ -4844,9 +4839,9 @@
+       }
+     },
+     "node_modules/lightningcss-linux-arm64-gnu": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.31.1.tgz",
+-      "integrity": "sha512-WKyLWztD71rTnou4xAD5kQT+982wvca7E6QoLpoawZ1gP9JM0GJj4Tp5jMUh9B3AitHbRZ2/H3W5xQmdEOUlLg==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.32.0.tgz",
++      "integrity": "sha512-0nnMyoyOLRJXfbMOilaSRcLH3Jw5z9HDNGfT/gwCPgaDjnx0i8w7vBzFLFR1f6CMLKF8gVbebmkUN3fa/kQJpQ==",
+       "cpu": [
+         "arm64"
+       ],
+@@ -4864,9 +4859,9 @@
+       }
+     },
+     "node_modules/lightningcss-linux-arm64-musl": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.31.1.tgz",
+-      "integrity": "sha512-mVZ7Pg2zIbe3XlNbZJdjs86YViQFoJSpc41CbVmKBPiGmC4YrfeOyz65ms2qpAobVd7WQsbW4PdsSJEMymyIMg==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.32.0.tgz",
++      "integrity": "sha512-UpQkoenr4UJEzgVIYpI80lDFvRmPVg6oqboNHfoH4CQIfNA+HOrZ7Mo7KZP02dC6LjghPQJeBsvXhJod/wnIBg==",
+       "cpu": [
+         "arm64"
+       ],
+@@ -4884,9 +4879,9 @@
+       }
+     },
+     "node_modules/lightningcss-linux-x64-gnu": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.31.1.tgz",
+-      "integrity": "sha512-xGlFWRMl+0KvUhgySdIaReQdB4FNudfUTARn7q0hh/V67PVGCs3ADFjw+6++kG1RNd0zdGRlEKa+T13/tQjPMA==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.32.0.tgz",
++      "integrity": "sha512-V7Qr52IhZmdKPVr+Vtw8o+WLsQJYCTd8loIfpDaMRWGUZfBOYEJeyJIkqGIDMZPwPx24pUMfwSxxI8phr/MbOA==",
+       "cpu": [
+         "x64"
+       ],
+@@ -4904,9 +4899,9 @@
+       }
+     },
+     "node_modules/lightningcss-linux-x64-musl": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.31.1.tgz",
+-      "integrity": "sha512-eowF8PrKHw9LpoZii5tdZwnBcYDxRw2rRCyvAXLi34iyeYfqCQNA9rmUM0ce62NlPhCvof1+9ivRaTY6pSKDaA==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.32.0.tgz",
++      "integrity": "sha512-bYcLp+Vb0awsiXg/80uCRezCYHNg1/l3mt0gzHnWV9XP1W5sKa5/TCdGWaR/zBM2PeF/HbsQv/j2URNOiVuxWg==",
+       "cpu": [
+         "x64"
+       ],
+@@ -4924,9 +4919,9 @@
+       }
+     },
+     "node_modules/lightningcss-win32-arm64-msvc": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.31.1.tgz",
+-      "integrity": "sha512-aJReEbSEQzx1uBlQizAOBSjcmr9dCdL3XuC/6HLXAxmtErsj2ICo5yYggg1qOODQMtnjNQv2UHb9NpOuFtYe4w==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.32.0.tgz",
++      "integrity": "sha512-8SbC8BR40pS6baCM8sbtYDSwEVQd4JlFTOlaD3gWGHfThTcABnNDBda6eTZeqbofalIJhFx0qKzgHJmcPTnGdw==",
+       "cpu": [
+         "arm64"
+       ],
+@@ -4944,9 +4939,9 @@
+       }
+     },
+     "node_modules/lightningcss-win32-x64-msvc": {
+-      "version": "1.31.1",
+-      "resolved": "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.31.1.tgz",
+-      "integrity": "sha512-I9aiFrbd7oYHwlnQDqr1Roz+fTz61oDDJX7n9tYF9FJymH1cIN1DtKw3iYt6b8WZgEjoNwVSncwF4wx/ZedMhw==",
++      "version": "1.32.0",
++      "resolved": "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.32.0.tgz",
++      "integrity": "sha512-Amq9B/SoZYdDi1kFrojnoqPLxYhQ4Wo5XiL8EVJrVsB8ARoC1PWW6VGtT0WKCemjy8aC+louJnjS7U18x3b06Q==",
+       "cpu": [
+         "x64"
+       ],
+@@ -5549,9 +5544,9 @@
+       "license": "MIT"
+     },
+     "node_modules/node-releases": {
+-      "version": "2.0.27",
+-      "resolved": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.27.tgz",
+-      "integrity": "sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==",
++      "version": "2.0.36",
++      "resolved": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.36.tgz",
++      "integrity": "sha512-TdC8FSgHz8Mwtw9g5L4gR/Sh9XhSP/0DEkQxfEFXOpiul5IiHgHan2VhYYb6agDSfp4KuvltmGApc8HMgUrIkA==",
+       "license": "MIT"
+     },
+     "node_modules/normalize-path": {
+@@ -5991,6 +5986,12 @@
+         "url": "https://github.com/chalk/ansi-styles?sponsor=1"
+       }
+     },
++    "node_modules/pretty-format/node_modules/react-is": {
++      "version": "18.3.1",
++      "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
++      "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==",
++      "license": "MIT"
++    },
+     "node_modules/proc-log": {
+       "version": "4.2.0",
+       "resolved": "https://registry.npmjs.org/proc-log/-/proc-log-4.2.0.tgz",
+@@ -6116,9 +6117,9 @@
+       }
+     },
+     "node_modules/react-is": {
+-      "version": "18.3.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz",
+-      "integrity": "sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==",
++      "version": "19.2.4",
++      "resolved": "https://registry.npmjs.org/react-is/-/react-is-19.2.4.tgz",
++      "integrity": "sha512-W+EWGn2v0ApPKgKKCy/7s7WHXkboGcsrXE+2joLyVxkbyVQfO3MUEaUQDHoSmb8TFFrSKYa9mw64WZHNHSDzYA==",
+       "license": "MIT"
+     },
+     "node_modules/react-native": {
+@@ -6201,9 +6202,9 @@
+       }
+     },
+     "node_modules/react-native-is-edge-to-edge": {
+-      "version": "1.2.1",
+-      "resolved": "https://registry.npmjs.org/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.2.1.tgz",
+-      "integrity": "sha512-FLbPWl/MyYQWz+KwqOZsSyj2JmLKglHatd3xLZWskXOpRaio4LfEDEz8E/A6uD8QoTHW6Aobw1jbEwK7KMgR7Q==",
++      "version": "1.3.1",
++      "resolved": "https://registry.npmjs.org/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.3.1.tgz",
++      "integrity": "sha512-NIXU/iT5+ORyCc7p0z2nnlkouYKX425vuU1OEm6bMMtWWR9yvb+Xg5AZmImTKoF9abxCPqrKC3rOZsKzUYgYZA==",
+       "license": "MIT",
+       "peerDependencies": {
+         "react": "*",
+@@ -6262,6 +6263,20 @@
+       "integrity": "sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==",
+       "license": "MIT"
+     },
++    "node_modules/react-native-webview": {
++      "version": "13.16.0",
++      "resolved": "https://registry.npmjs.org/react-native-webview/-/react-native-webview-13.16.0.tgz",
++      "integrity": "sha512-Nh13xKZWW35C0dbOskD7OX01nQQavOzHbCw9XoZmar4eXCo7AvrYJ0jlUfRVVIJzqINxHlpECYLdmAdFsl9xDA==",
++      "license": "MIT",
++      "dependencies": {
++        "escape-string-regexp": "^4.0.0",
++        "invariant": "2.2.4"
++      },
++      "peerDependencies": {
++        "react": "*",
++        "react-native": "*"
++      }
++    },
+     "node_modules/react-native/node_modules/@react-native/virtualized-lists": {
+       "version": "0.83.2",
+       "resolved": "https://registry.npmjs.org/@react-native/virtualized-lists/-/virtualized-lists-0.83.2.tgz",
+@@ -6569,9 +6584,9 @@
+       "license": "MIT"
+     },
+     "node_modules/sax": {
+-      "version": "1.4.4",
+-      "resolved": "https://registry.npmjs.org/sax/-/sax-1.4.4.tgz",
+-      "integrity": "sha512-1n3r/tGXO6b6VXMdFT54SHzT9ytu9yr7TaELowdYpMqY/Ao7EnlQGmAQ1+RatX7Tkkdm6hONI2owqNx2aZj5Sw==",
++      "version": "1.5.0",
++      "resolved": "https://registry.npmjs.org/sax/-/sax-1.5.0.tgz",
++      "integrity": "sha512-21IYA3Q5cQf089Z6tgaUTr7lDAyzoTPx5HRtbhsME8Udispad8dC/+sziTNugOEx54ilvatQ9YCzl4KQLPcRHA==",
+       "license": "BlueOak-1.0.0",
+       "engines": {
+         "node": ">=11.0.0"
+diff --git a/package.json b/package.json
+index 9c095aa..df14d3d 100644
+--- a/package.json
++++ b/package.json
+@@ -20,7 +20,8 @@
+     "react-native-calendars": "^1.1314.0",
+     "react-native-maps": "1.26.20",
+     "react-native-safe-area-context": "~5.6.2",
+-    "react-native-screens": "~4.23.0"
++    "react-native-screens": "~4.23.0",
++    "react-native-webview": "13.16.0"
+   },
+   "private": true
+ }
+diff --git a/src/screens/DubaiScreen.js b/src/screens/DubaiScreen.js
+index 99fc55c..5176362 100644
+--- a/src/screens/DubaiScreen.js
++++ b/src/screens/DubaiScreen.js
+@@ -71,7 +71,7 @@ export default function DubaiScreen({ navigation }) {
+                     <Text style={styles.logoText}>Roamster</Text>
+                 </View>
+                 <View style={styles.headerIcons}>
+-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Dubai' })}>
++                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Dubai', location: 'Burj Khalifa, Dubai' })}>
+                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
+                     </TouchableOpacity>
+                 </View>
+diff --git a/src/screens/ExploreScreen.js b/src/screens/ExploreScreen.js
+index 8161195..54ba5fe 100644
+--- a/src/screens/ExploreScreen.js
++++ b/src/screens/ExploreScreen.js
+@@ -15,29 +15,6 @@ const PARIS_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?
+ const ROME_IMG = 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=600&auto=format&fit=crop';
+ const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80&w=600';
+ const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop';
+-const FOOD_BOURGUIGNON = 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&q=80&w=600';
+-const FOOD_MACARONS = 'https://images.unsplash.com/photo-1626804561081-377b2207936a?auto=format&fit=crop&q=80&w=400';
+-
+-const GLOBAL_FOODS = [
+-    {
+-        id: 'gf1',
+-        name: 'Classic Beef Bourguignon',
+-        image: FOOD_BOURGUIGNON,
+-        price: '$28.00',
+-        rating: '4.9',
+-        description: 'Traditional Parisian beef stew slow-cooked in red wine with pearl onions and mushrooms. A quintessential French bistro staple.',
+-        subtitle: 'Traditional Parisian Bistro • 45 min'
+-    },
+-    {
+-        id: 'gf2',
+-        name: 'Artisan Macarons Box',
+-        image: FOOD_MACARONS,
+-        price: '$18.00',
+-        rating: '4.8',
+-        description: 'A curated selection of 6 hand-crafted Parisian macarons, including pistachio, salted caramel, and raspberry.',
+-        subtitle: 'Ladurée Paris • Sweet Treat'
+-    }
+-];
+ 
+ export default function ExploreScreen({ navigation }) {
+     const { isLoggedIn } = useAuth();
+@@ -97,7 +74,7 @@ export default function ExploreScreen({ navigation }) {
+                     <View style={styles.categoryItem}>
+                         <TouchableOpacity
+                             style={styles.categoryIconCircle}
+-                            onPress={() => navigation.navigate('Map', { city: 'Paris' })}
++                            onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}
+                         >
+                             <Ionicons name="map-outline" size={24} color="#2563EB" />
+                         </TouchableOpacity>
+@@ -217,52 +194,6 @@ export default function ExploreScreen({ navigation }) {
+                     </View>
+                 )}
+ 
+-                {/* Global Food Cravings Section */}
+-                <View style={[styles.sectionHeader, { marginTop: 30 }]}>
+-                    <Text style={styles.sectionTitle}>Global Food Cravings</Text>
+-                </View>
+-                {!activeTrip && (
+-                    <TouchableOpacity
+-                        style={styles.nudgeBanner}
+-                        onPress={() => navigation.navigate('CreateTrip')}
+-                    >
+-                        <Ionicons name="airplane" size={24} color="white" />
+-                        <View style={styles.nudgeContent}>
+-                            <Text style={styles.nudgeTitle}>Plan Your First Roam</Text>
+-                            <Text style={styles.nudgeDesc}>Tell us where you're going for personalized vibes.</Text>
+-                        </View>
+-                        <Ionicons name="chevron-forward" size={20} color="white" />
+-                    </TouchableOpacity>
+-                )}
+-
+-                <ScrollView
+-                    horizontal
+-                    showsHorizontalScrollIndicator={false}
+-                    contentContainerStyle={styles.horizontalScroll}
+-                >
+-                    {GLOBAL_FOODS.map((item) => (
+-                        <TouchableOpacity
+-                            key={item.id}
+-                            activeOpacity={0.9}
+-                            onPress={() => navigation.navigate('FoodDetail', { item })}
+-                            style={styles.foodItemCard}
+-                        >
+-                            <ImageBackground source={{ uri: item.image }} style={styles.foodCardImage} imageStyle={{ borderRadius: 20 }}>
+-                                <View style={styles.foodCardOverlay}>
+-                                    <View style={styles.foodBadge}>
+-                                        <Ionicons name="star" size={10} color="#FACC15" />
+-                                        <Text style={styles.foodRatingText}>{item.rating}</Text>
+-                                    </View>
+-                                    <View style={styles.foodCardBottom}>
+-                                        <Text style={styles.foodCardName}>{item.name}</Text>
+-                                        <Text style={styles.foodCardPrice}>{item.price}</Text>
+-                                    </View>
+-                                </View>
+-                            </ImageBackground>
+-                        </TouchableOpacity>
+-                    ))}
+-                </ScrollView>
+-
+             </ScrollView>
+ 
+             <BottomNav activeRoute="Explore" />
+@@ -505,81 +436,4 @@ const styles = StyleSheet.create({
+         color: '#2563EB',
+         marginTop: 0,
+     },
+-    // Food Cards
+-    foodItemCard: {
+-        width: 240,
+-        height: 180,
+-        marginRight: 15,
+-        borderRadius: 20,
+-        backgroundColor: '#FFF',
+-        shadowColor: '#000',
+-        shadowOffset: { width: 0, height: 4 },
+-        shadowOpacity: 0.08,
+-        shadowRadius: 8,
+-        elevation: 4,
+-    },
+-    foodCardImage: {
+-        width: '100%',
+-        height: '100%',
+-    },
+-    foodCardOverlay: {
+-        flex: 1,
+-        backgroundColor: 'rgba(0,0,0,0.25)',
+-        borderRadius: 20,
+-        padding: 12,
+-        justifyContent: 'space-between',
+-    },
+-    foodBadge: {
+-        flexDirection: 'row',
+-        alignItems: 'center',
+-        backgroundColor: 'white',
+-        alignSelf: 'flex-start',
+-        paddingHorizontal: 8,
+-        paddingVertical: 4,
+-        borderRadius: 10,
+-    },
+-    foodRatingText: {
+-        fontSize: 10,
+-        fontWeight: '800',
+-        color: '#0F172A',
+-        marginLeft: 4,
+-    },
+-    foodCardBottom: {
+-        marginTop: 'auto',
+-    },
+-    foodCardName: {
+-        color: 'white',
+-        fontSize: 16,
+-        fontWeight: '800',
+-    },
+-    foodCardPrice: {
+-        color: '#38BDF8',
+-        fontSize: 14,
+-        fontWeight: '700',
+-        marginTop: 2,
+-    },
+-    // Nudge Banner
+-    nudgeBanner: {
+-        backgroundColor: '#3B82F6',
+-        borderRadius: 20,
+-        padding: 20,
+-        flexDirection: 'row',
+-        alignItems: 'center',
+-        marginTop: 10,
+-        marginBottom: 20,
+-    },
+-    nudgeContent: {
+-        flex: 1,
+-        marginLeft: 15,
+-    },
+-    nudgeTitle: {
+-        color: 'white',
+-        fontSize: 16,
+-        fontWeight: '800',
+-    },
+-    nudgeDesc: {
+-        color: 'rgba(255,255,255,0.8)',
+-        fontSize: 12,
+-        marginTop: 2,
+-    },
+ });
+diff --git a/src/screens/GalleryScreen.js b/src/screens/GalleryScreen.js
+index 1fcf7d0..a033481 100644
+--- a/src/screens/GalleryScreen.js
++++ b/src/screens/GalleryScreen.js
+@@ -1,6 +1,6 @@
+-import React from 'react';
++import React, { useState, useRef, useEffect } from 'react';
+ import { SafeAreaView } from 'react-native-safe-area-context';
+-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
++import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Animated, Share, TextInput } from 'react-native';
+ import { Image, ImageBackground } from 'expo-image';
+ import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+ 
+@@ -15,6 +15,111 @@ const IMG_HAT = 'https://images.unsplash.com/photo-1521369909029-2afed882228c?q=
+ const IMG_POSTER = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=400';
+ 
+ export default function GalleryScreen({ navigation }) {
++    const [photos, setPhotos] = useState({
++        rentedMain: IMG_DRESS,
++        portrait: IMG_PORTRAIT,
++        hat: IMG_HAT,
++        poster: IMG_POSTER,
++    });
++    
++    const [deletedPhoto, setDeletedPhoto] = useState(null);
++    const [snackbarVisible, setSnackbarVisible] = useState(false);
++    const fadeAnim = useRef(new Animated.Value(0)).current;
++    const hideTimeout = useRef(null);
++
++    const [searchQuery, setSearchQuery] = useState('');
++    const [isSearchActive, setIsSearchActive] = useState(false);
++    const [activeDestination, setActiveDestination] = useState('All Travels');
++    const [activePose, setActivePose] = useState(null); // default to null to show all
++
++    const photoMetadata = {
++        rentedMain: { dest: "Paris '24", pose: 'OOTD', text: 'dress outfit red rented fashion' },
++        portrait: { dest: 'Tokyo City', pose: 'Portraits', text: 'portrait person face' },
++        hat: { dest: "Paris '24", pose: 'OOTD', text: 'hat accessory outfit' },
++        poster: { dest: "Paris '24", pose: 'Landscapes', text: 'landscape eiffel tower paris architecture urbiminal' },
++    };
++
++    const isVisible = (key) => {
++        if (!photos[key]) return false;
++
++        const meta = photoMetadata[key];
++        
++        if (activeDestination !== 'All Travels' && meta.dest !== activeDestination) {
++            return false;
++        }
++
++        if (activePose && meta.pose !== activePose) {
++            return false;
++        }
++
++        if (searchQuery.trim().length > 0) {
++            const query = searchQuery.toLowerCase();
++            if (!meta.dest.toLowerCase().includes(query) && 
++                !meta.pose.toLowerCase().includes(query) && 
++                !meta.text.includes(query)) {
++                return false;
++            }
++        }
++
++        return true;
++    };
++
++    const handleDelete = (key, uri) => {
++        setDeletedPhoto({ key, uri });
++        setPhotos(prev => ({ ...prev, [key]: null }));
++        showSnackbar();
++    };
++
++    const handleUndo = () => {
++        if (deletedPhoto) {
++            setPhotos(prev => ({ ...prev, [deletedPhoto.key]: deletedPhoto.uri }));
++            setDeletedPhoto(null);
++            hideSnackbar();
++        }
++    };
++
++    const showSnackbar = () => {
++        setSnackbarVisible(true);
++        Animated.timing(fadeAnim, {
++            toValue: 1,
++            duration: 300,
++            useNativeDriver: true,
++        }).start();
++
++        if (hideTimeout.current) clearTimeout(hideTimeout.current);
++        hideTimeout.current = setTimeout(() => {
++            hideSnackbar();
++        }, 3000); // reduced timeout to a few seconds
++    };
++
++    const hideSnackbar = () => {
++        Animated.timing(fadeAnim, {
++            toValue: 0,
++            duration: 300,
++            useNativeDriver: true,
++        }).start(() => {
++            setSnackbarVisible(false);
++            setDeletedPhoto(null);
++        });
++    };
++
++    useEffect(() => {
++        return () => {
++            if (hideTimeout.current) clearTimeout(hideTimeout.current);
++        };
++    }, []);
++
++    const handleShare = async (uri, message = 'Check out this awesome photo from my trip!') => {
++        try {
++            await Share.share({
++                message: message + '\n' + uri, 
++                url: uri, // works nicely on iOS
++            });
++        } catch (error) {
++            console.error('Error sharing:', error);
++        }
++    };
++
+     return (
+         <SafeAreaView style={styles.safeArea}>
+             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
+@@ -23,11 +128,30 @@ export default function GalleryScreen({ navigation }) {
+ 
+                 {/* Header Row */}
+                 <View style={styles.headerRow}>
+-                    <Text style={styles.headerTitle}>My Gallery</Text>
++                    {!isSearchActive ? (
++                        <Text style={styles.headerTitle}>My Gallery</Text>
++                    ) : (
++                        <View style={styles.searchContainer}>
++                            <Feather name="search" size={18} color="#94A3B8" style={{marginRight: 8}} />
++                            <TextInput 
++                                style={styles.searchInput}
++                                placeholder="Search by tag, destination..."
++                                placeholderTextColor="#94A3B8"
++                                value={searchQuery}
++                                onChangeText={setSearchQuery}
++                                autoFocus
++                            />
++                            <TouchableOpacity onPress={() => { setIsSearchActive(false); setSearchQuery(''); }}>
++                                <Feather name="x" size={18} color="#0F172A" />
++                            </TouchableOpacity>
++                        </View>
++                    )}
+                     <View style={styles.headerIcons}>
+-                        <TouchableOpacity style={styles.iconCircle}>
+-                            <Feather name="search" size={18} color="#0F172A" />
+-                        </TouchableOpacity>
++                        {!isSearchActive && (
++                            <TouchableOpacity style={styles.iconCircle} onPress={() => setIsSearchActive(true)}>
++                                <Feather name="search" size={18} color="#0F172A" />
++                            </TouchableOpacity>
++                        )}
+                         <TouchableOpacity style={styles.avatarCircle} onPress={() => navigation.navigate('Profile')}>
+                             <Image source={{ uri: USER_AVATAR }} style={styles.avatarImage} />
+                         </TouchableOpacity>
+@@ -76,32 +200,37 @@ export default function GalleryScreen({ navigation }) {
+                 {/* Destinations Filter */}
+                 <Text style={styles.filterTitle}>DESTINATIONS</Text>
+                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
+-                    <TouchableOpacity style={[styles.filterPill, styles.filterPillActive]}>
+-                        <Text style={styles.filterTextActive}>All Travels</Text>
+-                    </TouchableOpacity>
+-                    <TouchableOpacity style={styles.filterPill}>
+-                        <Text style={styles.filterText}>Paris '24</Text>
+-                    </TouchableOpacity>
+-                    <TouchableOpacity style={styles.filterPill}>
+-                        <Text style={styles.filterText}>Tokyo City</Text>
+-                    </TouchableOpacity>
++                    {['All Travels', "Paris '24", 'Tokyo City'].map(dest => (
++                        <TouchableOpacity 
++                            key={dest} 
++                            style={[styles.filterPill, activeDestination === dest && styles.filterPillActive]}
++                            onPress={() => setActiveDestination(dest)}
++                        >
++                            <Text style={activeDestination === dest ? styles.filterTextActive : styles.filterText}>{dest}</Text>
++                        </TouchableOpacity>
++                    ))}
+                 </ScrollView>
+ 
+                 {/* Pose Type Filter */}
+                 <Text style={styles.filterTitle}>POSE TYPE</Text>
+                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
+-                    <TouchableOpacity style={styles.filterPillWithIcon}>
+-                        <MaterialCommunityIcons name="face-man-profile" size={16} color="#475569" style={styles.filterIcon} />
+-                        <Text style={styles.filterText}>Portraits</Text>
+-                    </TouchableOpacity>
+-                    <TouchableOpacity style={[styles.filterPillWithIcon, styles.filterPillActive]}>
+-                        <Ionicons name="checkmark-circle" size={16} color="white" style={styles.filterIcon} />
+-                        <Text style={styles.filterTextActive}>OOTD</Text>
+-                    </TouchableOpacity>
+-                    <TouchableOpacity style={styles.filterPillWithIcon}>
+-                        <MaterialCommunityIcons name="image-filter-hdr" size={16} color="#475569" style={styles.filterIcon} />
+-                        <Text style={styles.filterText}>Landscapes</Text>
+-                    </TouchableOpacity>
++                    {[
++                        { name: 'Portraits', getIcon: (active) => <MaterialCommunityIcons name="face-man-profile" size={16} color={active ? 'white' : '#475569'} style={styles.filterIcon} /> },
++                        { name: 'OOTD', getIcon: (active) => <MaterialCommunityIcons name="hanger" size={16} color={active ? 'white' : '#475569'} style={styles.filterIcon} /> },
++                        { name: 'Landscapes', getIcon: (active) => <MaterialCommunityIcons name="image-filter-hdr" size={16} color={active ? 'white' : '#475569'} style={styles.filterIcon} /> }
++                    ].map(pose => {
++                        const isActive = activePose === pose.name;
++                        return (
++                            <TouchableOpacity 
++                                key={pose.name}
++                                style={[styles.filterPillWithIcon, isActive && styles.filterPillActive]}
++                                onPress={() => setActivePose(isActive ? null : pose.name)}
++                            >
++                                {pose.getIcon(isActive)}
++                                <Text style={isActive ? styles.filterTextActive : styles.filterText}>{pose.name}</Text>
++                            </TouchableOpacity>
++                        );
++                    })}
+                 </ScrollView>
+ 
+                 {/* Masonry Grid Simulation */}
+@@ -110,33 +239,67 @@ export default function GalleryScreen({ navigation }) {
+                     <View style={styles.masonryCol}>
+ 
+                         {/* Rented Outfit Block */}
+-                        <View style={styles.rentedBlock}>
+-                            <View style={styles.rentedTopRow}>
+-                                <View style={styles.hangerIconBg}>
+-                                    <MaterialCommunityIcons name="shopping" size={14} color="#475569" />
+-                                </View>
+-                                <View style={styles.rentedBluePill}>
+-                                    <Text style={styles.rentedPillText}>RENTED</Text>
++                        {isVisible('rentedMain') && (
++                            <View style={styles.rentedBlock}>
++                                <View style={styles.rentedTopRow}>
++                                    <View style={styles.hangerIconBg}>
++                                        <MaterialCommunityIcons name="shopping" size={14} color="#475569" />
++                                    </View>
++                                    <View style={styles.rentedBluePill}>
++                                        <Text style={styles.rentedPillText}>RENTED</Text>
++                                    </View>
+                                 </View>
+-                            </View>
+-
+-                            <Image source={{ uri: IMG_DRESS }} style={styles.rentedMainImg} />
+ 
+-                            <View style={styles.rentedBottomRow}>
+-                                <View style={styles.rentedSubBg}>
+-                                    <Image source={{ uri: IMG_BOOTS }} style={styles.rentedSubImg} />
++                                <View style={styles.imgContainer}>
++                                    <Image source={{ uri: photos.rentedMain }} style={styles.rentedMainImg} />
++                                    <View style={styles.cardActions}>
++                                        <TouchableOpacity style={styles.actionIconBg} onPress={() => handleShare(photos.rentedMain)}>
++                                            <Ionicons name="share-social" size={12} color="white" />
++                                        </TouchableOpacity>
++                                        <TouchableOpacity style={styles.actionIconBg} onPress={() => handleDelete('rentedMain', photos.rentedMain)}>
++                                            <Ionicons name="trash" size={12} color="white" />
++                                        </TouchableOpacity>
++                                    </View>
+                                 </View>
+-                                <View style={styles.rentedSubBg}>
+-                                    <Image source={{ uri: IMG_BAG }} style={styles.rentedSubImg} />
++
++                                <View style={styles.rentedBottomRow}>
++                                    <View style={styles.rentedSubBg}>
++                                        <Image source={{ uri: IMG_BOOTS }} style={styles.rentedSubImg} />
++                                    </View>
++                                    <View style={styles.rentedSubBg}>
++                                        <Image source={{ uri: IMG_BAG }} style={styles.rentedSubImg} />
++                                    </View>
+                                 </View>
+                             </View>
+-                        </View>
++                        )}
+ 
+-                        <Image source={{ uri: IMG_PORTRAIT }} style={styles.portraitImg} />
++                        {isVisible('portrait') && (
++                            <View style={styles.imgContainer}>
++                                <Image source={{ uri: photos.portrait }} style={styles.portraitImg} />
++                                <View style={[styles.cardActions, { top: 10, right: 10 }]}>
++                                    <TouchableOpacity style={styles.actionIconBgDim} onPress={() => handleShare(photos.portrait)}>
++                                        <Ionicons name="share-social" size={14} color="white" />
++                                    </TouchableOpacity>
++                                    <TouchableOpacity style={styles.actionIconBgDim} onPress={() => handleDelete('portrait', photos.portrait)}>
++                                        <Ionicons name="trash" size={14} color="white" />
++                                    </TouchableOpacity>
++                                </View>
++                            </View>
++                        )}
+ 
+-                        <View style={styles.hatBgBlock}>
+-                            <Image source={{ uri: IMG_HAT }} style={styles.hatImg} />
+-                        </View>
++                        {isVisible('hat') && (
++                            <View style={styles.hatBgBlock}>
++                                <View style={[styles.cardActions, { top: 10, right: 10, zIndex: 10 }]}>
++                                    <TouchableOpacity style={styles.actionIconBgLight} onPress={() => handleShare(photos.hat)}>
++                                        <Ionicons name="share-social" size={14} color="#475569" />
++                                    </TouchableOpacity>
++                                    <TouchableOpacity style={styles.actionIconBgLight} onPress={() => handleDelete('hat', photos.hat)}>
++                                        <Ionicons name="trash" size={14} color="#EF4444" />
++                                    </TouchableOpacity>
++                                </View>
++                                <Image source={{ uri: photos.hat }} style={styles.hatImg} />
++                            </View>
++                        )}
+ 
+                     </View>
+ 
+@@ -144,32 +307,50 @@ export default function GalleryScreen({ navigation }) {
+                     <View style={styles.masonryCol}>
+ 
+                         {/* Poster Block */}
+-                        <ImageBackground source={{ uri: IMG_POSTER }} style={styles.posterBg} imageStyle={{ borderRadius: 24 }}>
+-                            <View style={styles.posterOverlay}>
+-                                {/* Top Share Icon */}
+-                                <View style={styles.shareIconBg}>
+-                                    <Ionicons name="share-social" size={14} color="white" />
+-                                </View>
++                        {isVisible('poster') && (
++                            <ImageBackground source={{ uri: photos.poster }} style={styles.posterBg} imageStyle={{ borderRadius: 24 }}>
++                                <View style={styles.posterOverlay}>
++                                    {/* Top Icons */}
++                                    <View style={[styles.cardActions, { width: '100%', justifyContent: 'space-between' }]}>
++                                        <TouchableOpacity style={styles.shareIconBg} onPress={() => handleShare(photos.poster)}>
++                                            <Ionicons name="share-social" size={14} color="white" />
++                                        </TouchableOpacity>
++                                        <TouchableOpacity style={[styles.shareIconBg, { backgroundColor: 'rgba(239, 68, 68, 0.6)' }]} onPress={() => handleDelete('poster', photos.poster)}>
++                                            <Ionicons name="trash" size={14} color="white" />
++                                        </TouchableOpacity>
++                                    </View>
+ 
+-                                {/* Center Text */}
+-                                <View style={styles.posterCenterText}>
+-                                    <Text style={styles.posterSub}>URBIMINAL</Text>
+-                                    <Text style={styles.posterTitle}>PARIS</Text>
+-                                    <Text style={styles.posterTitle}>WORK</Text>
+-                                </View>
++                                    {/* Center Text */}
++                                    <View style={styles.posterCenterText}>
++                                        <Text style={styles.posterSub}>URBIMINAL</Text>
++                                        <Text style={styles.posterTitle}>PARIS</Text>
++                                        <Text style={styles.posterTitle}>WORK</Text>
++                                    </View>
+ 
+-                                <View style={styles.posterBottomArea}>
+-                                    <View style={styles.aiPill}>
+-                                        <Text style={styles.aiText}>AI ENHANCED</Text>
++                                    <View style={styles.posterBottomArea}>
++                                        <View style={styles.aiPill}>
++                                            <Text style={styles.aiText}>AI ENHANCED</Text>
++                                        </View>
+                                     </View>
+                                 </View>
+-                            </View>
+-                        </ImageBackground>
++                            </ImageBackground>
++                        )}
+ 
+                     </View>
+                 </View>
+ 
+             </ScrollView>
++
++            {/* Snackbar */}
++            {snackbarVisible && (
++                <Animated.View style={[styles.snackbar, { opacity: fadeAnim }]}>
++                    <Text style={styles.snackText}>Photo deleted</Text>
++                    <TouchableOpacity onPress={handleUndo} style={styles.undoBtn}>
++                        <Text style={styles.undoText}>Undo</Text>
++                    </TouchableOpacity>
++                </Animated.View>
++            )}
++
+         </SafeAreaView>
+     );
+ }
+@@ -196,6 +377,23 @@ const styles = StyleSheet.create({
+         color: '#0F172A',
+         letterSpacing: -0.5,
+     },
++    searchContainer: {
++        flex: 1,
++        flexDirection: 'row',
++        alignItems: 'center',
++        backgroundColor: '#F1F5F9',
++        borderRadius: 20,
++        paddingHorizontal: 15,
++        height: 40,
++        marginRight: 10,
++    },
++    searchInput: {
++        flex: 1,
++        fontSize: 14,
++        fontWeight: '500',
++        color: '#0F172A',
++        padding: 0,
++    },
+     headerIcons: {
+         flexDirection: 'row',
+         alignItems: 'center',
+@@ -390,7 +588,6 @@ const styles = StyleSheet.create({
+         width: '100%',
+         height: 120,
+         borderRadius: 16,
+-        marginBottom: 10,
+     },
+     rentedBottomRow: {
+         flexDirection: 'row',
+@@ -435,6 +632,43 @@ const styles = StyleSheet.create({
+         width: '90%',
+         height: '90%',
+     },
++    imgContainer: {
++        position: 'relative',
++        marginBottom: 15,
++    },
++    cardActions: {
++        position: 'absolute',
++        top: 8,
++        right: 8,
++        flexDirection: 'row',
++    },
++    actionIconBg: {
++        width: 24,
++        height: 24,
++        borderRadius: 12,
++        backgroundColor: 'rgba(0,0,0,0.5)',
++        justifyContent: 'center',
++        alignItems: 'center',
++        marginLeft: 6,
++    },
++    actionIconBgDim: {
++        width: 30,
++        height: 30,
++        borderRadius: 15,
++        backgroundColor: 'rgba(0,0,0,0.4)',
++        justifyContent: 'center',
++        alignItems: 'center',
++        marginLeft: 8,
++    },
++    actionIconBgLight: {
++        width: 30,
++        height: 30,
++        borderRadius: 15,
++        backgroundColor: '#F8FAFC',
++        justifyContent: 'center',
++        alignItems: 'center',
++        marginLeft: 8,
++    },
+     posterBg: {
+         width: '100%',
+         height: 400,
+@@ -487,5 +721,38 @@ const styles = StyleSheet.create({
+         fontSize: 9,
+         fontWeight: '800',
+         letterSpacing: 0.5,
++    },
++    snackbar: {
++        position: 'absolute',
++        bottom: 30,
++        left: 20,
++        right: 20,
++        backgroundColor: '#1E293B',
++        borderRadius: 12,
++        padding: 15,
++        flexDirection: 'row',
++        justifyContent: 'space-between',
++        alignItems: 'center',
++        shadowColor: '#000',
++        shadowOffset: { width: 0, height: 4 },
++        shadowOpacity: 0.15,
++        shadowRadius: 10,
++        elevation: 6,
++    },
++    snackText: {
++        color: 'white',
++        fontSize: 14,
++        fontWeight: '600',
++    },
++    undoBtn: {
++        paddingHorizontal: 12,
++        paddingVertical: 6,
++        backgroundColor: 'rgba(255,255,255,0.15)',
++        borderRadius: 8,
++    },
++    undoText: {
++        color: '#60A5FA',
++        fontSize: 13,
++        fontWeight: '800',
+     }
+ });
+diff --git a/src/screens/JourneysScreen.js b/src/screens/JourneysScreen.js
+index 54e07e4..dcc6db5 100644
+--- a/src/screens/JourneysScreen.js
++++ b/src/screens/JourneysScreen.js
+@@ -1,16 +1,17 @@
+-import React from 'react';
++import React, { useState } from 'react';
+ import { SafeAreaView } from 'react-native-safe-area-context';
+ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+ import { Image, ImageBackground } from 'expo-image';
+ import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+ 
+-const PARIS_NIGHT = 'https://images.unsplash.com/photo-1502602881462-8c9713b194fb?q=80&w=800&auto=format&fit=crop';
++const PARIS_NIGHT = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=800&auto=format&fit=crop';
+ const SEOUL_IMG = 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?q=80&w=400';
+ const BALI_IMG = 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=400';
+ const USER_AVATAR = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200';
+ const SMALL_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50';
+ 
+ export default function JourneysScreen({ navigation }) {
++    const [activeTab, setActiveTab] = useState('current');
+     return (
+         <SafeAreaView style={styles.safeArea}>
+             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
+@@ -35,17 +36,26 @@ export default function JourneysScreen({ navigation }) {
+ 
+                 {/* Tabs */}
+                 <View style={styles.tabContainer}>
+-                    <View style={styles.tabActive}>
+-                        <Text style={styles.tabTextActive}>Current</Text>
+-                    </View>
+-                    <TouchableOpacity style={styles.tabInactive}>
+-                        <Text style={styles.tabTextInactive}>Past</Text>
++                    <TouchableOpacity 
++                        style={activeTab === 'current' ? styles.tabActive : styles.tabInactive}
++                        onPress={() => setActiveTab('current')}
++                        activeOpacity={0.8}
++                    >
++                        <Text style={activeTab === 'current' ? styles.tabTextActive : styles.tabTextInactive}>Current</Text>
++                    </TouchableOpacity>
++                    <TouchableOpacity 
++                        style={activeTab === 'past' ? styles.tabActive : styles.tabInactive}
++                        onPress={() => setActiveTab('past')}
++                        activeOpacity={0.8}
++                    >
++                        <Text style={activeTab === 'past' ? styles.tabTextActive : styles.tabTextInactive}>Past</Text>
+                     </TouchableOpacity>
+                 </View>
+ 
+                 {/* Hero Card */}
++                {activeTab === 'current' && (
+                 <View style={styles.heroCardContainer}>
+-                    <ImageBackground source={{ uri: PARIS_NIGHT }} style={styles.heroBackground} imageStyle={{ borderRadius: 32 }} transition={300}>
++                    <ImageBackground source={{ uri: PARIS_NIGHT }} style={styles.heroBackground} imageStyle={{ borderRadius: 32 }} transition={300} contentFit="cover">
+                         <View style={styles.heroOverlay}>
+ 
+                             <View>
+@@ -82,8 +92,11 @@ export default function JourneysScreen({ navigation }) {
+                         </View>
+                     </ImageBackground>
+                 </View>
++                )}
+ 
+                 {/* Past Adventures Header */}
++                {activeTab === 'past' && (
++                <>
+                 <View style={styles.sectionHeader}>
+                     <Text style={styles.sectionTitle}>Past Adventures</Text>
+                     <TouchableOpacity>
+@@ -124,6 +137,8 @@ export default function JourneysScreen({ navigation }) {
+                     </View>
+                     <Feather name="chevron-right" size={20} color="#CBD5E1" />
+                 </TouchableOpacity>
++                </>
++                )}
+ 
+             </ScrollView>
+         </SafeAreaView>
+diff --git a/src/screens/MapScreen.js b/src/screens/MapScreen.js
+index 9ac590e..4b9094d 100644
+--- a/src/screens/MapScreen.js
++++ b/src/screens/MapScreen.js
+@@ -1,6 +1,6 @@
+-import React, { useState, useEffect } from 'react';
++import React from 'react';
+ import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
+-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
++import { WebView } from 'react-native-webview';
+ import { Ionicons } from '@expo/vector-icons';
+ import { SafeAreaView } from 'react-native-safe-area-context';
+ 
+@@ -15,8 +15,11 @@ const CITY_COORDS = {
+ };
+ 
+ export default function MapScreen({ route, navigation }) {
+-    const { city = 'Paris' } = route.params || {};
+-    const initialRegion = CITY_COORDS[city] || CITY_COORDS['Paris'];
++    const { city = 'Paris', location } = route.params || {};
++    
++    // Use a specific location if provided, otherwise fallback to city name
++    const searchQuery = location ? encodeURIComponent(location) : encodeURIComponent(city);
++    const mapUrl = `https://www.google.com/maps?q=${searchQuery}&output=embed`;
+ 
+     return (
+         <SafeAreaView style={styles.container}>
+@@ -29,21 +32,14 @@ export default function MapScreen({ route, navigation }) {
+             </View>
+ 
+             <View style={styles.mapContainer}>
+-                <MapView
++                <WebView
++                    source={{ uri: mapUrl }}
+                     style={styles.map}
+-                    initialRegion={initialRegion}
+-                    showsUserLocation={true}
+-                    showsMyLocationButton={true}
+-                >
+-                    <Marker
+-                        coordinate={{
+-                            latitude: initialRegion.latitude,
+-                            longitude: initialRegion.longitude,
+-                        }}
+-                        title={city}
+-                        description={`Explore ${city}`}
+-                    />
+-                </MapView>
++                    javaScriptEnabled={true}
++                    domStorageEnabled={true}
++                    startInLoadingState={true}
++                    allowsFullscreenVideo={false}
++                />
+             </View>
+         </SafeAreaView>
+     );
+diff --git a/src/screens/ParisScreen.js b/src/screens/ParisScreen.js
+index 7a091e5..f504c7d 100644
+--- a/src/screens/ParisScreen.js
++++ b/src/screens/ParisScreen.js
+@@ -71,7 +71,7 @@ export default function ParisScreen({ navigation }) {
+                     <Text style={styles.logoText}>Roamster</Text>
+                 </View>
+                 <View style={styles.headerIcons}>
+-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Paris' })}>
++                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}>
+                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
+                     </TouchableOpacity>
+                 </View>
+diff --git a/src/screens/ProfileScreen.js b/src/screens/ProfileScreen.js
+index 66d47e3..8401a82 100644
+--- a/src/screens/ProfileScreen.js
++++ b/src/screens/ProfileScreen.js
+@@ -1,15 +1,40 @@
+ import React from 'react';
+ import { SafeAreaView } from 'react-native-safe-area-context';
+ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
++import { useFocusEffect } from '@react-navigation/native';
+ import { Image } from 'expo-image';
+ import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5, Octicons } from '@expo/vector-icons';
++import AnalyticsService from '../services/AnalyticsService';
+ 
+ const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
+ 
+ export default function ProfileScreen({ navigation }) {
+-    React.useEffect(() => {
+-        AnalyticsService.logEvent('profile_view');
+-    }, []);
++    const [stats, setStats] = React.useState({
++        countries: 12, // Initially 12
++        outfits: 45, // Initially 45
++        photos: 120 // Initially 120
++    });
++
++    useFocusEffect(
++        React.useCallback(() => {
++            AnalyticsService.logEvent('profile_view');
++            // Simulate fetching dynamic counts based on journeys/gallery
++            // Since we can't reliably read state from other screens without a global store, 
++            // we will simulate the connection logic here.
++            
++            // In a real app we'd query the database or global state:
++            // const journeyCount = globalState.journeys.length;
++            // const newCountriesCount = new Set(globalState.journeys.map(j => j.country)).size;
++            // const newPhotosCount = globalState.galleryPhotos.length;
++            // const newOutfitsCount = globalState.journeys.reduce((acc, j) => acc + j.outfits, 0);
++            
++            // We can assume a user with no journeys has 0 outfits.
++            // For now, let's keep the mock numbers or adjust them based on local storage if we had it.
++            // If the user has 0 journeys, outfits would be 0.
++            
++            // setStats({ countries: newCountriesCount, outfits: newOutfitsCount, photos: newPhotosCount });
++        }, [])
++    );
+ 
+     return (
+         <SafeAreaView style={styles.safeArea}>
+@@ -45,17 +70,17 @@ export default function ProfileScreen({ navigation }) {
+                 {/* Stats Card */}
+                 <View style={styles.statsCard}>
+                     <View style={styles.statCol}>
+-                        <Text style={styles.statValue}>12</Text>
++                        <Text style={styles.statValue}>{stats.countries}</Text>
+                         <Text style={styles.statLabel}>COUNTRIES</Text>
+                     </View>
+                     <View style={styles.statDivider} />
+                     <View style={styles.statCol}>
+-                        <Text style={styles.statValue}>45</Text>
++                        <Text style={styles.statValue}>{stats.outfits}</Text>
+                         <Text style={styles.statLabel}>OUTFITS</Text>
+                     </View>
+                     <View style={styles.statDivider} />
+                     <View style={styles.statCol}>
+-                        <Text style={styles.statValue}>120</Text>
++                        <Text style={styles.statValue}>{stats.photos}</Text>
+                         <Text style={styles.statLabel}>PHOTOS</Text>
+                     </View>
+                 </View>
+@@ -86,18 +111,6 @@ export default function ProfileScreen({ navigation }) {
+                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                     </TouchableOpacity>
+ 
+-                    <TouchableOpacity
+-                        style={styles.menuItem}
+-                        activeOpacity={0.7}
+-                        onPress={() => navigation.navigate('SocialVibes')}
+-                    >
+-                        <View style={styles.menuIconContainer}>
+-                            <Ionicons name="people" size={20} color="#3B82F6" />
+-                        </View>
+-                        <Text style={styles.menuText}>My Social</Text>
+-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+-                    </TouchableOpacity>
+-
+                     <TouchableOpacity
+                         style={styles.menuItem}
+                         activeOpacity={0.7}
+@@ -109,18 +122,6 @@ export default function ProfileScreen({ navigation }) {
+                         <Text style={styles.menuText}>My Transactions</Text>
+                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                     </TouchableOpacity>
+-
+-                    <TouchableOpacity
+-                        style={styles.menuItem}
+-                        activeOpacity={0.7}
+-                        onPress={() => navigation.navigate('Admin')}
+-                    >
+-                        <View style={styles.menuIconContainer}>
+-                            <Ionicons name="construct-outline" size={20} color="#3B82F6" />
+-                        </View>
+-                        <Text style={styles.menuText}>Admin Panel</Text>
+-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+-                    </TouchableOpacity>
+                 </View>
+ 
+                 {/* Eco Card */}
+diff --git a/src/screens/RomeScreen.js b/src/screens/RomeScreen.js
+index 95e711b..da28100 100644
+--- a/src/screens/RomeScreen.js
++++ b/src/screens/RomeScreen.js
+@@ -71,7 +71,7 @@ export default function RomeScreen({ navigation }) {
+                     <Text style={styles.logoText}>Roamster</Text>
+                 </View>
+                 <View style={styles.headerIcons}>
+-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Rome' })}>
++                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Rome', location: 'Colosseum, Rome' })}>
+                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
+                     </TouchableOpacity>
+                 </View>
+diff --git a/src/screens/SocialVibesScreen.js b/src/screens/SocialVibesScreen.js
+index d1bd354..653ef96 100644
+--- a/src/screens/SocialVibesScreen.js
++++ b/src/screens/SocialVibesScreen.js
+@@ -11,15 +11,16 @@ const EIFFEL_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f
+ const PARIS_STREET_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
+ const GEM1_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=800';
+ const GEM2_IMG = 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&q=80&w=800';
+-const FALLBACK_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
++const CREMIEUX_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800';
++const PALAIS_ROYAL_IMG = 'https://images.unsplash.com/photo-1549144365-51fb80ee2c21?auto=format&fit=crop&q=80&w=800';
+ const AVATAR_IMG = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
+ 
+ const GEMS = [
+     { id: 'g1', title: 'Montmartre Backstreets', image: PARIS_STREET_IMG, rating: '4.7', vibe: 'QUIET VIBE' },
+     { id: 'g2', title: 'Hidden Gems 1', image: GEM1_IMG, rating: '4.8', vibe: 'ARTISTIC' },
+     { id: 'g3', title: 'Hidden Gems 2', image: GEM2_IMG, rating: '4.9', vibe: 'LOCAL' },
+-    { id: 'g4', title: 'Rue Crémieux', image: FALLBACK_IMG, rating: '4.8', vibe: 'COLORFUL' },
+-    { id: 'g5', title: 'Palais Royal Columns', image: PARIS_STREET_IMG, rating: '4.9', vibe: 'MINIMAL' }
++    { id: 'g4', title: 'Rue Crémieux', image: CREMIEUX_IMG, rating: '4.8', vibe: 'COLORFUL' },
++    { id: 'g5', title: 'Palais Royal Columns', image: PALAIS_ROYAL_IMG, rating: '4.9', vibe: 'MINIMAL' }
+ ];
+ 
+ export default function SocialVibesScreen({ navigation }) {
+@@ -155,19 +156,20 @@ export default function SocialVibesScreen({ navigation }) {
+                 </View>
+ 
+                 <View style={styles.videoCardCont}>
+-                    <ImageBackground
+-                        source={{ uri: GEM1_IMG }}
+-                        style={styles.videoImg}
+-                        imageStyle={{ borderRadius: 24 }}
+-                        transition={300}
+-                        contentFit="cover"
+-                    >
+-                        <View style={styles.videoOverlay}>
+-                            <TouchableOpacity style={styles.playButton} activeOpacity={0.8}>
+-                                <Ionicons name="play" size={24} color="white" style={{ marginLeft: 4 }} />
+-                            </TouchableOpacity>
+-                        </View>
+-                    </ImageBackground>
++                    <TouchableOpacity activeOpacity={0.9} style={styles.videoImg}>
++                        <ImageBackground
++                            source={{ uri: GEM1_IMG }}
++                            style={StyleSheet.absoluteFill}
++                            imageStyle={{ borderRadius: 24 }}
++                            contentFit="cover"
++                        >
++                            <View style={styles.videoOverlay}>
++                                <View style={styles.playButton}>
++                                    <Ionicons name="play" size={24} color="white" style={{ marginLeft: 4 }} />
++                                </View>
++                            </View>
++                        </ImageBackground>
++                    </TouchableOpacity>
+ 
+                     <View style={styles.videoInfoRow}>
+                         <Text style={styles.videoTitle}>Seine River Banks</Text>
+@@ -476,6 +478,8 @@ const styles = StyleSheet.create({
+         width: '100%',
+         height: 160,
+         marginBottom: 15,
++        borderRadius: 24,
++        overflow: 'hidden',
+     },
+     videoOverlay: {
+         flex: 1,
+diff --git a/src/screens/SwitzerlandScreen.js b/src/screens/SwitzerlandScreen.js
+index 42ea910..53f45b2 100644
+--- a/src/screens/SwitzerlandScreen.js
++++ b/src/screens/SwitzerlandScreen.js
+@@ -71,7 +71,7 @@ export default function SwitzerlandScreen({ navigation }) {
+                     <Text style={styles.logoText}>Roamster</Text>
+                 </View>
+                 <View style={styles.headerIcons}>
+-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Switzerland' })}>
++                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Switzerland', location: 'Jungfraujoch, Switzerland' })}>
+                         <Ionicons name="map-outline" size={18} color="#0EA5E9" />
+                     </TouchableOpacity>
+                 </View>
+diff --git a/urls.txt b/urls.txt
+new file mode 100644
+index 0000000..908a0a5
+--- /dev/null
++++ b/urls.txt
+@@ -0,0 +1 @@
++https

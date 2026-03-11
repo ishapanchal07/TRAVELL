@@ -87,8 +87,9 @@ export default function WardrobeStatusScreen({ navigation }) {
                 {/* Styling Guidance */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Styling Guidance</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.seeMore}>See More <Ionicons name="chevron-forward" size={12} color="#3B82F6" /></Text>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={styles.seeMore}>See More </Text>
+                        <Ionicons name="chevron-forward" size={12} color="#3B82F6" />
                     </TouchableOpacity>
                 </View>
 
