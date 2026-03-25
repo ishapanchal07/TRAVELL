@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollV
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
+import { useSaved } from '../context/SavedContext';
 
 const { width } = Dimensions.get('window');
 
@@ -25,6 +26,7 @@ const GEMS = [
 
 export default function SocialVibesScreen({ navigation }) {
     const { isLoggedIn } = useAuth();
+    const { toggleSaveGem, isGemSaved } = useSaved();
 
     const displayGems = isLoggedIn ? GEMS : GEMS.slice(0, 2);
 
@@ -138,9 +140,17 @@ export default function SocialVibesScreen({ navigation }) {
                                 placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                             >
                                 <View style={styles.smallCardOverlay}>
-                                    <View style={styles.heartButton}>
-                                        <Feather name="heart" size={16} color="white" />
-                                    </View>
+                                    <TouchableOpacity 
+                                        style={styles.heartButton}
+                                        onPress={() => toggleSaveGem(gem)}
+                                        activeOpacity={0.8}
+                                    >
+                                        {isGemSaved(gem.id) ? (
+                                            <Ionicons name="heart" size={16} color="#EF4444" />
+                                        ) : (
+                                            <Feather name="heart" size={16} color="white" />
+                                        )}
+                                    </TouchableOpacity>
                                     <View style={styles.smallCardBottom}>
                                         <View style={styles.smallPill}>
                                             <Text style={styles.smallPillText}>{gem.vibe}</Text>

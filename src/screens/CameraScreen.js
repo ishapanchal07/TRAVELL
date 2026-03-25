@@ -1,28 +1,80 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, StatusBar, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Image, ImageBackground } from 'expo-image';
-import { Ionicons, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 
 const { width, height } = Dimensions.get('window');
 
-const EIFFEL_BG = 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&q=80&w=800';
 const POSE_SILHOUETTE = 'https://cdn-icons-png.flaticon.com/512/32/32339.png'; // Mock silhouette icon
-const GALLERY_PREVIEW = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=100';
+const DEFAULT_GALLERY_PREVIEW = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=100';
 
 export default function CameraScreen({ navigation }) {
+    const [permission, requestPermission] = useCameraPermissions();
+    const [facing, setFacing] = useState('back');
+    const [flash, setFlash] = useState('off');
+    const [activeZoom, setActiveZoom] = useState('1x');
+    const [zoomLevel, setZoomLevel] = useState(0);
+    const [photoUri, setPhotoUri] = useState(null);
+    const cameraRef = useRef(null);
+
+    const handleZoom = (level) => {
+        setActiveZoom(level);
+        if (level === '0.5x') setZoomLevel(0);
+        else if (level === '1x') setZoomLevel(0);
+        else if (level === '2x') setZoomLevel(0.01);
+    };
+
+    const toggleCameraFacing = () => {
+        setFacing(current => (current === 'back' ? 'front' : 'back'));
+    };
+
+    const toggleFlash = () => {
+        setFlash(current => (current === 'off' ? 'on' : 'off'));
+    };
+
+    const takePicture = async () => {
+        if (cameraRef.current) {
+            try {
+                const photo = await cameraRef.current.takePictureAsync();
+                setPhotoUri(photo.uri);
+            } catch (e) {
+                Alert.alert("Error", "Failed to take picture");
+            }
+        }
+    };
+
+    if (!permission) {
+        return <View style={styles.container} />; // Loading
+    }
+
+    if (!permission.granted) {
+        return (
+            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center', padding: 20 }]}>
+                <Text style={{ color: 'white', marginBottom: 20, textAlign: 'center', fontSize: 16 }}>
+                    We need your permission to show the camera
+                </Text>
+                <TouchableOpacity onPress={requestPermission} style={{ backgroundColor: '#38BDF8', padding: 15, borderRadius: 10 }}>
+                    <Text style={{ color: 'black', fontWeight: 'bold' }}>Grant Permission</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" translucent />
 
-            {/* Camera View (Background) */}
-            <ImageBackground 
-                source={{ uri: EIFFEL_BG }} 
+            {/* Camera View */}
+            <CameraView 
+                ref={cameraRef}
                 style={styles.cameraView} 
-                contentFit="cover"
-                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                transition={300}
+                facing={facing}
+                flash={flash}
+                zoom={zoomLevel}
+                animateShutter={true}
             >
                 {/* Silhouette Overlay */}
                 <View style={styles.silhouetteContainer}>
@@ -44,8 +96,8 @@ export default function CameraScreen({ navigation }) {
                             </View>
                         </View>
 
-                        <TouchableOpacity style={styles.topIconBtn}>
-                            <MaterialCommunityIcons name="flash-off" size={20} color="white" />
+                        <TouchableOpacity onPress={toggleFlash} style={styles.topIconBtn}>
+                            <MaterialCommunityIcons name={flash === 'off' ? "flash-off" : "flash"} size={20} color="white" />
                         </TouchableOpacity>
                     </View>
                 </SafeAreaView>
@@ -57,8 +109,6 @@ export default function CameraScreen({ navigation }) {
                             <Image
                                 source={{ uri: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100' }}
                                 style={styles.poseThumbnail}
-                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                transition={300}
                                 contentFit="cover"
                             />
                             <View style={styles.activeIndicator} />
@@ -73,8 +123,8 @@ export default function CameraScreen({ navigation }) {
                             <MaterialCommunityIcons name="human-male-board" size={20} color="rgba(255,255,255,0.6)" />
                         </TouchableOpacity>
                         <View style={styles.sidebarDivider} />
-                        <TouchableOpacity style={styles.sidebarBtn}>
-                            <Ionicons name="add" size={24} color="white" />
+                        <TouchableOpacity onPress={toggleCameraFacing} style={styles.sidebarBtn}>
+                            <Ionicons name="camera-reverse" size={24} color="white" />
                         </TouchableOpacity>
                     </BlurView>
                 </View>
@@ -98,14 +148,14 @@ export default function CameraScreen({ navigation }) {
                         </View>
 
                         <View style={styles.zoomRow}>
-                            <TouchableOpacity style={styles.zoomBtn}>
-                                <Text style={styles.zoomText}>0.5×</Text>
+                            <TouchableOpacity onPress={() => handleZoom('0.5x')} style={[styles.zoomBtn, activeZoom === '0.5x' && styles.zoomBtnActive]}>
+                                <Text style={activeZoom === '0.5x' ? styles.zoomTextActive : styles.zoomText}>0.5×</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.zoomBtn, styles.zoomBtnActive]}>
-                                <Text style={styles.zoomTextActive}>1×</Text>
+                            <TouchableOpacity onPress={() => handleZoom('1x')} style={[styles.zoomBtn, activeZoom === '1x' && styles.zoomBtnActive]}>
+                                <Text style={activeZoom === '1x' ? styles.zoomTextActive : styles.zoomText}>1×</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.zoomBtn}>
-                                <Text style={styles.zoomText}>2×</Text>
+                            <TouchableOpacity onPress={() => handleZoom('2x')} style={[styles.zoomBtn, activeZoom === '2x' && styles.zoomBtnActive]}>
+                                <Text style={activeZoom === '2x' ? styles.zoomTextActive : styles.zoomText}>2×</Text>
                             </TouchableOpacity>
                         </View>
                     </BlurView>
@@ -114,16 +164,14 @@ export default function CameraScreen({ navigation }) {
                     <View style={styles.shutterBar}>
                         <TouchableOpacity style={styles.galleryPreview}>
                             <Image 
-                                source={{ uri: GALLERY_PREVIEW }} 
+                                source={{ uri: photoUri || DEFAULT_GALLERY_PREVIEW }} 
                                 style={styles.galleryImg} 
-                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                transition={300}
                                 contentFit="cover"
                             />
                         </TouchableOpacity>
 
                         <View style={styles.shutterOuter}>
-                            <TouchableOpacity style={styles.shutterInner}>
+                            <TouchableOpacity onPress={takePicture} style={styles.shutterInner}>
                                 <View style={styles.shutterDot} />
                             </TouchableOpacity>
                         </View>
@@ -135,7 +183,7 @@ export default function CameraScreen({ navigation }) {
                     </View>
                 </View>
 
-            </ImageBackground>
+            </CameraView>
         </View>
     );
 }

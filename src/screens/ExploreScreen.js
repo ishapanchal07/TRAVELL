@@ -17,7 +17,7 @@ const SWISS_IMG = 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?
 const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600&auto=format&fit=crop';
 
 export default function ExploreScreen({ navigation }) {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, hasSeenQuiz, markQuizSeen } = useAuth();
     const { activeTrip } = useTrip();
 
     return (
@@ -88,6 +88,15 @@ export default function ExploreScreen({ navigation }) {
                             <Ionicons name="document-text-outline" size={24} color="#2563EB" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>GUIDE</Text>
+                    </View>
+                    <View style={styles.categoryItem}>
+                        <TouchableOpacity
+                            style={styles.categoryIconCircle}
+                            onPress={() => navigation.navigate('Saved')}
+                        >
+                            <Ionicons name="heart-outline" size={24} color="#2563EB" />
+                        </TouchableOpacity>
+                        <Text style={styles.categoryLabel}>SAVED</Text>
                     </View>
                 </View>
 
@@ -188,38 +197,54 @@ export default function ExploreScreen({ navigation }) {
                 </ScrollView>
 
                 {/* Action Banner */}
-                {!isLoggedIn ? (
-                    <TouchableOpacity
-                        style={[styles.bannerContainer, { backgroundColor: '#0F172A' }]}
-                        activeOpacity={0.9}
-                        onPress={() => navigation.navigate('Login')}
-                    >
-                        <View style={styles.bannerTextContent}>
-                            <Text style={styles.bannerTitle}>Unlock full access</Text>
-                            <Text style={styles.bannerDesc}>Login to unlock all places, food, clothes, and exclusive travel guides.</Text>
-                            <View style={styles.bannerButton}>
-                                <Text style={[styles.bannerButtonText, { color: '#0F172A' }]}>Login to unlock</Text>
+                {!hasSeenQuiz && (
+                    !isLoggedIn ? (
+                        <TouchableOpacity
+                            style={[styles.bannerContainer, { backgroundColor: '#0F172A' }]}
+                            activeOpacity={0.9}
+                            onPress={() => navigation.navigate('Login')}
+                        >
+                            <View style={styles.bannerTextContent}>
+                                <Text style={styles.bannerTitle}>Unlock full access</Text>
+                                <Text style={styles.bannerDesc}>Login to unlock all places, food, clothes, and exclusive travel guides.</Text>
+                                <View style={styles.bannerButton}>
+                                    <Text style={[styles.bannerButtonText, { color: '#0F172A' }]}>Login to unlock</Text>
+                                </View>
+                            </View>
+                            <View style={styles.bannerIconBox}>
+                                <Ionicons name="lock-closed" size={80} color="rgba(255,255,255,0.15)" />
+                            </View>
+                        </TouchableOpacity>
+                    ) : (
+                        <View style={styles.bannerContainer}>
+                            <TouchableOpacity 
+                                style={{ position: 'absolute', top: 12, right: 15, zIndex: 10 }}
+                                onPress={markQuizSeen}
+                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            >
+                                <Ionicons name="close" size={20} color="rgba(255,255,255,0.5)" />
+                            </TouchableOpacity>
+                            <View style={styles.bannerTextContent}>
+                                <Text style={styles.bannerTitle}>Zero luggage,</Text>
+                                <Text style={styles.bannerTitle}>total style.</Text>
+                                <Text style={styles.bannerDesc}>Rent curated outfits based on your destination's vibe.</Text>
+
+                                <TouchableOpacity 
+                                    style={styles.bannerButton} 
+                                    activeOpacity={0.8}
+                                    onPress={() => {
+                                        markQuizSeen();
+                                        navigation.navigate('FiltersPreferences');
+                                    }}
+                                >
+                                    <Text style={styles.bannerButtonText}>Start Style Quiz</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.bannerIconBox}>
+                                <MaterialCommunityIcons name="hanger" size={80} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '15deg' }] }} />
                             </View>
                         </View>
-                        <View style={styles.bannerIconBox}>
-                            <Ionicons name="lock-closed" size={80} color="rgba(255,255,255,0.15)" />
-                        </View>
-                    </TouchableOpacity>
-                ) : (
-                    <View style={styles.bannerContainer}>
-                        <View style={styles.bannerTextContent}>
-                            <Text style={styles.bannerTitle}>Zero luggage,</Text>
-                            <Text style={styles.bannerTitle}>total style.</Text>
-                            <Text style={styles.bannerDesc}>Rent curated outfits based on your destination's vibe.</Text>
-
-                            <TouchableOpacity style={styles.bannerButton} activeOpacity={0.8}>
-                                <Text style={styles.bannerButtonText}>Start Style Quiz</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.bannerIconBox}>
-                            <MaterialCommunityIcons name="hanger" size={80} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '15deg' }] }} />
-                        </View>
-                    </View>
+                    )
                 )}
 
             </ScrollView>
