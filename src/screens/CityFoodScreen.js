@@ -18,7 +18,7 @@ const CITY_DATA = {
         hiddenGems: [
             {
                 id: 'p1',
-                image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&q=80&w=600',
+                image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=600',
                 badge: 'LOCALS ONLY',
                 rating: '4.9',
                 title: "L'As du Fallafel",
@@ -38,7 +38,7 @@ const CITY_DATA = {
             }
         ],
         popularNearby: [
-            { id: 'pn1', image: 'https://images.unsplash.com/photo-1549996647-190b679b33d7?auto=format&fit=crop&q=80&w=400', title: 'Fresh Croissants', subtitle: 'Du Pain et des Idées', price: '$3.50' },
+            { id: 'pn1', image: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&q=80&w=400', title: 'Fresh Croissants', subtitle: 'Du Pain et des Idées', price: '$3.50' },
             { id: 'pn2', image: 'https://images.unsplash.com/photo-1626804561081-377b2207936a?auto=format&fit=crop&q=80&w=400', title: 'Macarons Box', subtitle: 'Ladurée Paris', price: '$18.00' }
         ],
         specialties: [
@@ -62,7 +62,7 @@ const CITY_DATA = {
             },
             {
                 id: 'r2',
-                image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=600',
+                image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=600',
                 badge: 'TOP RATED',
                 rating: '4.8',
                 title: 'Pizza Margherita',
@@ -72,7 +72,7 @@ const CITY_DATA = {
             }
         ],
         popularNearby: [
-            { id: 'rn1', image: 'https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?auto=format&fit=crop&q=80&w=400', title: 'Artisan Gelato', subtitle: 'Giolitti', price: '€4.50' },
+            { id: 'rn1', image: 'https://images.unsplash.com/photo-1501443722253-339233634125?auto=format&fit=crop&q=80&w=400', title: 'Artisan Gelato', subtitle: 'Giolitti', price: '€4.50' },
             { id: 'rn2', image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=400', title: 'Tiramisu', subtitle: 'Pompi', price: '€5.00' }
         ],
         specialties: [
@@ -86,7 +86,7 @@ const CITY_DATA = {
         hiddenGems: [
             {
                 id: 'sw1',
-                image: 'https://images.unsplash.com/photo-1621307335607-f31f92eac438?auto=format&fit=crop&q=80&w=600',
+                image: 'https://images.unsplash.com/photo-1481931098730-318b6f979181?auto=format&fit=crop&q=80&w=600',
                 badge: 'WINTER CLASSIC',
                 rating: '4.9',
                 title: 'Cheese Fondue Set',
@@ -107,7 +107,7 @@ const CITY_DATA = {
         ],
         popularNearby: [
             { id: 'swpn1', image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&q=80&w=400', title: 'Swiss Chocolate Box', subtitle: 'Läderach', price: 'CHF 25.00' },
-            { id: 'swpn2', image: 'https://images.unsplash.com/photo-1555027552-39c438318b7a?auto=format&fit=crop&q=80&w=400', title: 'Raclette Slice', subtitle: 'Alpine Market', price: 'CHF 12.00' }
+            { id: 'swpn2', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=400', title: 'Raclette Slice', subtitle: 'Alpine Market', price: 'CHF 12.00' }
         ],
         specialties: [
             { id: 'sws1', iconUrl: 'https://cdn-icons-png.flaticon.com/512/3014/3014502.png', title: 'World Famous Chocolatiers', desc: 'Switzerland produces the finest chocolate in the world.' },
@@ -120,7 +120,7 @@ const CITY_DATA = {
         hiddenGems: [
             {
                 id: 'd1',
-                image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&q=80&w=600',
+                image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&q=80&w=600',
                 badge: 'LOCALS ONLY',
                 rating: '4.9',
                 title: 'Authentic Shawarma',
@@ -130,7 +130,7 @@ const CITY_DATA = {
             },
             {
                 id: 'd2',
-                image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&q=80&w=600',
+                image: 'https://images.unsplash.com/photo-1544124499-58ec52e46351?auto=format&fit=crop&q=80&w=600',
                 badge: 'MUST TRY',
                 rating: '4.8',
                 title: 'Hummus & Mezze',

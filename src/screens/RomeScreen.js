@@ -41,7 +41,7 @@ const ROME_DATA = {
     ],
     food: [
         { id: 1, title: 'Authentic Carbonara', sub: 'Roscioli • 30m wait', img: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Artisanal Gelato', sub: 'Giolitti • Iconic', img: 'https://images.unsplash.com/photo-1505394033343-43afad5d4a0b?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Artisanal Gelato', sub: 'Giolitti • Iconic', img: 'https://images.unsplash.com/photo-1501430460131-46c4a4713472?q=80&w=400&auto=format&fit=crop' },
         { id: 3, title: 'Crispy Suppli', sub: 'Pizzarium • Street food', img: 'https://images.unsplash.com/photo-1541529086526-db283c563270?q=80&w=400&auto=format&fit=crop' },
         { id: 4, title: 'Tonnarelli Cacio e Pepe', sub: 'Roma • Classic Pasta', img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=400&auto=format&fit=crop' },
         { id: 5, title: 'Roman Style Pizza', sub: 'Emma • Thin & Crispy', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' }
@@ -49,8 +49,8 @@ const ROME_DATA = {
     photoSpots: [
         { id: 1, title: 'Pantheon Square', img: 'https://images.unsplash.com/photo-1555992828-ca4dbe41d294?q=80&w=400&auto=format&fit=crop' },
         { id: 2, title: 'Piazza Navona', img: 'https://images.unsplash.com/photo-1529154036614-a60975f5c760?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Janiculum Hill View', img: 'https://images.unsplash.com/photo-1514890547357-a9ee2887ad81?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Castel Sant\'Angelo', img: 'https://images.unsplash.com/photo-1520175480921-4edfa0683071?q=80&w=400&auto=format&fit=crop' }
+        { id: 3, title: 'Janiculum Hill View', img: 'https://images.unsplash.com/photo-1525874684015-58379d421a52?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Castel Sant\'Angelo', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=400&auto=format&fit=crop' }
     ]
 };
 

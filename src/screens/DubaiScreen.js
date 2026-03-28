@@ -27,30 +27,30 @@ const DUBAI_DATA = {
     experiences: [
         { id: 1, title: 'Burj Khalifa Sky', sub: 'Luxury', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€45', bestTime: 'Sunset', crowd: 'High' },
         { id: 2, title: 'Desert Safari Adventure', sub: 'Nature', img: 'https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?q=80&w=400&auto=format&fit=crop', duration: '6h', fee: '€75', bestTime: 'Evening', crowd: 'Medium' },
-        { id: 3, title: 'Luxury Yacht Tour', sub: 'Luxury', img: 'https://images.unsplash.com/photo-1589156402096-339233634125?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€120', bestTime: 'Afternoon', crowd: 'Low' },
-        { id: 4, title: 'Palm Jumeirah Flight', sub: 'Luxury', img: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=400&auto=format&fit=crop', duration: '15m', fee: '€180', bestTime: 'Morning', crowd: 'Low' },
+        { id: 3, title: 'Luxury Yacht Tour', sub: 'Luxury', img: 'https://images.unsplash.com/photo-1577907572620-6395368aede5?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€120', bestTime: 'Afternoon', crowd: 'Low' },
+        { id: 4, title: 'Palm Jumeirah Flight', sub: 'Luxury', img: 'https://images.unsplash.com/photo-1489087358407-1fd4a696433a?q=80&w=400&auto=format&fit=crop', duration: '15m', fee: '€180', bestTime: 'Morning', crowd: 'Low' },
         { id: 5, title: 'Dubai Mall Fountain', sub: 'Art', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=400&auto=format&fit=crop', duration: '30m', fee: 'Free', bestTime: 'Evening', crowd: 'High' },
-        { id: 6, title: 'Miracle Garden Walk', sub: 'Nature', img: 'https://images.unsplash.com/photo-1582650833019-3c47fdc32ff8?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€15', bestTime: 'Morning', crowd: 'Medium' }
+        { id: 6, title: 'Miracle Garden Walk', sub: 'Nature', img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€15', bestTime: 'Morning', crowd: 'Medium' }
     ],
     clothes: [
-        { id: 1, title: 'Desert Silk Kaftan', price: '$40/day', type: 'Luxury', img: 'https://images.unsplash.com/photo-1520004434532-668416a08753?q=80&w=400&auto=format&fit=crop' },
+        { id: 1, title: 'Desert Silk Kaftan', price: '$40/day', type: 'Luxury', img: 'https://images.unsplash.com/photo-1585060544812-6b4590333333?q=80&w=400&auto=format&fit=crop' },
         { id: 2, title: 'Gold Rim Sunglasses', price: '$25/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?q=80&w=400&auto=format&fit=crop' },
         { id: 3, title: 'Linen Beach Suit', price: '$35/day', type: 'Summer', img: 'https://images.unsplash.com/photo-1594932224031-92f07a7e5893?q=80&w=400&auto=format&fit=crop' },
         { id: 4, title: 'Designer Sun Hat', price: '$15/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1521323329202-4c1032b947ac?q=80&w=400&auto=format&fit=crop' },
         { id: 5, title: 'Luxury Leather Slides', price: '$20/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
-        { id: 1, title: 'Gold Leaf Steak', sub: 'Nusr-Et • Luxury', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=400&auto=format&fit=crop' },
+        { id: 1, title: 'Gold Leaf Steak', sub: 'Nusr-Et • Luxury', img: 'https://images.unsplash.com/photo-1546241072-48010ad2862c?q=80&w=400&auto=format&fit=crop' },
         { id: 2, title: 'Traditional Mandi', sub: 'Al Fanar • Cultural', img: 'https://images.unsplash.com/photo-1544124499-58ec52e46351?q=80&w=400&auto=format&fit=crop' },
         { id: 3, title: 'Rooftop Mezze', sub: 'Mercury • Skyline', img: 'https://images.unsplash.com/photo-1563379091339-03b21bc4a6f8?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Camel Milk Latte', sub: 'Majlis • Unique', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Camel Milk Latte', sub: 'Majlis • Unique', img: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop' },
         { id: 5, title: 'Fresh Seafood', sub: 'Ossiano • Underwater', img: 'https://images.unsplash.com/photo-1534080564583-6be7a00f2e3c?q=80&w=400&auto=format&fit=crop' }
     ],
     photoSpots: [
         { id: 1, title: 'Wings of Mexico', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=400&auto=format&fit=crop' },
         { id: 2, title: 'Burj Al Arab Beach', img: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Dubai Frame', img: 'https://images.unsplash.com/photo-1582650833019-3c47fdc32ff8?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Museum of the Future', img: 'https://images.unsplash.com/photo-1528702748617-c64d49f918af?q=80&w=400&auto=format&fit=crop' }
+        { id: 3, title: 'Dubai Frame', img: 'https://images.unsplash.com/photo-1582650833201-93c47fdc32ff?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Museum of the Future', img: 'https://images.unsplash.com/photo-1638367576571-085e3a0937c0?q=80&w=400&auto=format&fit=crop' }
     ]
 };
 

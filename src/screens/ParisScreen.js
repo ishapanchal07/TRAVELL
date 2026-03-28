@@ -25,22 +25,22 @@ const PARIS_DATA = {
     transport: 'Metro, RER, and Velib (Bikes)',
     hiddenGems: ['Rue des Thermopyles', 'Le Marais Courtyards', 'Canal Saint-Martin Wall', 'Passage des Panoramas', 'Museum of Romantic Life', 'Buttes-Chaumont Park'],
     experiences: [
-        { id: 1, title: 'Eiffel Tower Picnic', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€45', bestTime: 'Evening', crowd: 'Medium' },
-        { id: 2, title: 'Louvre Art Tour', sub: 'Art', img: 'https://images.unsplash.com/photo-1597923896141-d4de3119853c?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€22', bestTime: 'Morning', crowd: 'High' },
+        { id: 1, title: 'Eiffel Tower Picnic', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1463171356658-05187707e06b?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€45', bestTime: 'Evening', crowd: 'Medium' },
+        { id: 2, title: 'Louvre Art Tour', sub: 'Art', img: 'https://images.unsplash.com/photo-1542382103-125039f75ec5?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€22', bestTime: 'Morning', crowd: 'High' },
         { id: 3, title: 'Seine River Cruise', sub: 'Nature', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: '€15', bestTime: 'Sunset', crowd: 'High' },
         { id: 4, title: 'Arc de Triomphe Climb', sub: 'History', img: 'https://images.unsplash.com/photo-1509439581779-629c9b276001?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: '€13', bestTime: 'Evening', crowd: 'Medium' },
         { id: 5, title: 'Sacre Coeur Basilica', sub: 'Art', img: 'https://images.unsplash.com/photo-1524338198850-8a2ff63aaceb?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: 'Free', bestTime: 'Morning', crowd: 'Medium' },
         { id: 6, title: 'Palace of Versailles', sub: 'History', img: 'https://images.unsplash.com/photo-1508248467873-9c1b9c7c645b?q=80&w=400&auto=format&fit=crop', duration: '5h', fee: '€20', bestTime: 'Morning', crowd: 'High' }
     ],
     clothes: [
-        { id: 1, title: 'Classic Trench Coat', price: '€25/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1580752323040-f4883d6a6b7e?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Silk Scarf Style', price: '€8/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Leather Ankle Boots', price: '€18/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1542288922-39324523d45c?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Breton Striped Top', price: '€15/day', type: 'Casual', img: 'https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=400&auto=format&fit=crop' },
+        { id: 1, title: 'Classic Trench Coat', price: '€35/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Silk Scarf Style', price: '€12/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&q=80&w=400' },
+        { id: 3, title: 'Leather Ankle Boots', price: '€28/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1605733160414-d571821b071d?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Breton Striped Top', price: '€22/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=400&auto=format&fit=crop' },
         { id: 5, title: 'Red Beret Hat', price: '€5/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1549439602-43ebca2327af?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
-        { id: 1, title: 'Pistachio Macron', sub: 'Ladurée • 15m wait', img: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=400&auto=format&fit=crop' },
+        { id: 1, title: 'Pistachio Macron', sub: 'Ladurée • 20m wait', img: 'https://images.unsplash.com/photo-1627916607164-7b20241db935?q=80&w=400&auto=format&fit=crop' },
         { id: 2, title: 'Cheese Soufflé', sub: 'Le Soufflé • Iconic', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=400&auto=format&fit=crop' },
         { id: 3, title: 'Warm Baguette', sub: 'Poilâne • Artisan', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop' },
         { id: 4, title: 'Duck Confit', sub: 'Brasserie • Classic', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=400&auto=format&fit=crop' },

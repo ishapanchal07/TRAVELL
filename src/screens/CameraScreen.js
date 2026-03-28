@@ -11,12 +11,13 @@ const { width, height } = Dimensions.get('window');
 const POSE_SILHOUETTE = 'https://cdn-icons-png.flaticon.com/512/32/32339.png'; // Mock silhouette icon
 const DEFAULT_GALLERY_PREVIEW = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=100';
 
-export default function CameraScreen({ navigation }) {
+export default function CameraScreen({ navigation, route }) {
+    const { initialFacing = 'back', initialFlash = 'off', initialZoom = 0 } = route.params || {};
     const [permission, requestPermission] = useCameraPermissions();
-    const [facing, setFacing] = useState('back');
-    const [flash, setFlash] = useState('off');
-    const [activeZoom, setActiveZoom] = useState('1x');
-    const [zoomLevel, setZoomLevel] = useState(0);
+    const [facing, setFacing] = useState(initialFacing.toLowerCase() === 'front' ? 'front' : 'back');
+    const [flash, setFlash] = useState(initialFlash.toLowerCase() === 'on' ? 'on' : (initialFlash.toLowerCase() === 'auto' ? 'auto' : 'off'));
+    const [activeZoom, setActiveZoom] = useState(initialZoom === 0.5 ? '0.5x' : (initialZoom === 2 ? '2x' : '1x'));
+    const [zoomLevel, setZoomLevel] = useState(initialZoom === 2 ? 0.01 : 0);
     const [photoUri, setPhotoUri] = useState(null);
     const cameraRef = useRef(null);
 
@@ -57,7 +58,7 @@ export default function CameraScreen({ navigation }) {
                     We need your permission to show the camera
                 </Text>
                 <TouchableOpacity onPress={requestPermission} style={{ backgroundColor: '#000000', padding: 15, borderRadius: 10 }}>
-                    <Text style={{ color: 'black', fontWeight: 'bold' }}>Grant Permission</Text>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Grant Permission</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -75,7 +76,10 @@ export default function CameraScreen({ navigation }) {
                 flash={flash}
                 zoom={zoomLevel}
                 animateShutter={true}
-            >
+            />
+
+            {/* Sub-layers for overlays */}
+            <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
                 {/* Silhouette Overlay */}
                 <View style={styles.silhouetteContainer}>
                     <View style={styles.headCircle} />
@@ -185,8 +189,7 @@ export default function CameraScreen({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-
-            </CameraView>
+            </View>
         </View>
     );
 }

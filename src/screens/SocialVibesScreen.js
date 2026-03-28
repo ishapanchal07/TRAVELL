@@ -13,7 +13,7 @@ const EIFFEL_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f
 const PARIS_STREET_IMG = 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800';
 const GEM1_IMG = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=800';
 const GEM2_IMG = 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&q=80&w=800';
-const CREMIEUX_IMG = 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800';
+const CREMIEUX_IMG = 'https://images.unsplash.com/photo-1554101869-77e237303f88?auto=format&fit=crop&q=80&w=800';
 const PALAIS_ROYAL_IMG = 'https://images.unsplash.com/photo-1549144365-51fb80ee2c21?auto=format&fit=crop&q=80&w=800';
 const AVATAR_IMG = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
 

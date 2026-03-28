@@ -25,32 +25,32 @@ const SWISS_DATA = {
     transport: 'Swiss Travel Pass (Trains, Boats, Buses)',
     hiddenGems: ['Lauterbrunnen Valley', 'Appenzell Village', 'Oeschinen Lake', 'Verzasca Valley', 'Brienz Lakehouse', 'Aletsch Glacier'],
     experiences: [
-        { id: 1, title: 'Jungfraujoch Train', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1548625361-ec8536eb3553?q=80&w=400&auto=format&fit=crop', duration: '4h', fee: '€120', bestTime: 'Morning', crowd: 'High' },
+        { id: 1, title: 'Jungfraujoch Train', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400&auto=format&fit=crop', duration: '4h', fee: '€120', bestTime: 'Morning', crowd: 'High' },
         { id: 2, title: 'Matterhorn Hike', sub: 'Nature', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop', duration: '5h', fee: 'Free', bestTime: 'Morning', crowd: 'Medium' },
         { id: 3, title: 'Interlaken Paragliding', sub: 'Adventure', img: 'https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€160', bestTime: 'Afternoon', crowd: 'Low' },
         { id: 4, title: 'Glacier Express', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?q=80&w=400&auto=format&fit=crop', duration: '8h', fee: '€150', bestTime: 'Morning', crowd: 'Medium' },
-        { id: 5, title: 'Mount Pilatus Cogwheel', sub: 'History', img: 'https://images.unsplash.com/photo-1541534741688-6078c65b5a33?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: '€72', bestTime: 'Morning', crowd: 'High' },
+        { id: 5, title: 'Mount Pilatus Cogwheel', sub: 'History', img: 'https://images.unsplash.com/photo-1550410712-464a9fb69785?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: '€72', bestTime: 'Morning', crowd: 'High' },
         { id: 6, title: 'Chillon Castle Tour', sub: 'History', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€15', bestTime: 'Morning', crowd: 'Medium' }
     ],
     clothes: [
-        { id: 1, title: 'Alpine Edge Jacket', price: 'CHF 60/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1572804013309-8c98e2ac0dc8?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Cozy Chalet Boots', price: 'CHF 45/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1520975954732-57dd22299614?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Thermal Base Layer', price: 'CHF 15/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Woolen Alpine Scarf', price: 'CHF 10/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=400&auto=format&fit=crop' },
+        { id: 1, title: 'Alpine Edge Jacket', price: 'CHF 60/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Cozy Chalet Boots', price: 'CHF 45/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=400' },
+        { id: 3, title: 'Thermal Base Layer', price: 'CHF 15/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=400' },
+        { id: 4, title: 'Woolen Alpine Scarf', price: 'CHF 10/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520639889416-0ef14f8bdb31?auto=format&fit=crop&q=80&w=400' },
         { id: 5, title: 'Pro Ski Goggles', price: 'CHF 20/day', type: 'Gear', img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
-        { id: 1, title: 'Cheese Fondue', sub: 'Le Dézaley • 20m wait', img: 'https://images.unsplash.com/photo-1621307335607-f31f92eac438?q=80&w=400&auto=format&fit=crop' },
+        { id: 1, title: 'Cheese Fondue', sub: 'Le Dézaley • 20m wait', img: 'https://images.unsplash.com/photo-1481931098730-318b6f979181?q=80&w=400&auto=format&fit=crop' },
         { id: 2, title: 'Rösti', sub: 'Zeughauskeller • Popular', img: 'https://images.unsplash.com/photo-1599331891583-04222f778c18?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Swiss Chocolate', sub: 'Sprüngli • World Famous', img: 'https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Swiss Chocolate', sub: 'Sprüngli • World Famous', img: 'https://images.unsplash.com/photo-1548907040-4ba421cf2a70?q=80&w=400&auto=format&fit=crop' },
         { id: 4, title: 'Zürcher Geschnetzeltes', sub: 'Kronenhalle • Classic', img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop' },
-        { id: 5, title: 'Raclette Experience', sub: 'Valais • Melted Cheese', img: 'https://images.unsplash.com/photo-1621307335607-f31f92eac438?q=80&w=400&auto=format&fit=crop' }
+        { id: 5, title: 'Raclette Experience', sub: 'Valais • Melted Cheese', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=400&auto=format&fit=crop' }
     ],
     photoSpots: [
-        { id: 1, title: 'Lake Geneva View', img: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Zermatt Village', img: 'https://images.unsplash.com/photo-1558981420-8ceaa10ac250?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Kapellbrücke Bridge', img: 'https://images.unsplash.com/photo-1493246507139-91e8bef99c02?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Grindelwald Valley', img: 'https://images.unsplash.com/photo-1492314736140-5272a27ffb9b?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'Lake Geneva View', img: 'https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&q=80&w=400' },
+        { id: 2, title: 'Zermatt Village', img: 'https://images.unsplash.com/photo-1552353617-3bfd679b3bdd?auto=format&fit=crop&q=80&w=400' },
+        { id: 3, title: 'Kapellbrücke Bridge', img: 'https://images.unsplash.com/photo-1588662998394-bb9e5d48a604?auto=format&fit=crop&q=80&w=400' },
+        { id: 4, title: 'Grindelwald Valley', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=400' }
     ]
 };
 

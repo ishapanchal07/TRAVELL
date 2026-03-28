@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions, Modal, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import ShareService from '../services/ShareService';
@@ -11,6 +11,13 @@ const { width } = Dimensions.get('window');
 export default function SnapSpotDetailsScreen({ navigation, route }) {
     const { spot, city } = route.params || {};
     const { toggleSaveGem, isGemSaved } = useSaved();
+    
+    // Camera Settings State
+    const [zoom, setZoom] = React.useState(0.5);
+    const [showSettings, setShowSettings] = React.useState(false);
+    const [flash, setFlash] = React.useState('Auto');
+    const [cameraMode, setCameraMode] = React.useState('Back');
+    const [gridEnabled, setGridEnabled] = React.useState(false);
 
     if (!spot) return null;
 
@@ -22,6 +29,19 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
             description: description,
             image: spot.img
         });
+    };
+
+    const toggleZoom = () => {
+        const levels = [0.5, 1, 2];
+        const currentIndex = levels.indexOf(zoom);
+        const nextIndex = (currentIndex + 1) % levels.length;
+        setZoom(levels[nextIndex]);
+    };
+
+    const getZoomLabel = () => {
+        if (zoom === 0.5) return "0.5x Ultra Wide";
+        if (zoom === 1) return "1x Standard";
+        return "2x Telephoto";
     };
 
     return (
@@ -83,9 +103,6 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
 
                     <View style={styles.divider} />
 
-                    <Text style={styles.sectionHeading}>About this Spot</Text>
-                    <Text style={styles.description}>{description}</Text>
-
                     <View style={styles.tipsContainer}>
                         <View style={styles.tipItem}>
                             <View style={styles.tipIconBox}>
@@ -97,14 +114,103 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
                             </View>
                         </View>
                         <View style={styles.tipItem}>
-                            <View style={styles.tipIconBox}>
+                            <TouchableOpacity 
+                                style={styles.tipIconBox}
+                                onPress={() => navigation.navigate('Camera', { 
+                                    initialFlash: flash, 
+                                    initialZoom: zoom,
+                                    initialFacing: cameraMode
+                                })}
+                            >
                                 <Ionicons name="camera" size={20} color="#000000" />
-                            </View>
+                            </TouchableOpacity>
                             <View style={styles.tipInfo}>
-                                <Text style={styles.tipTitle}>Settings</Text>
-                                <Text style={styles.tipValue}>0.5x Ultra Wide</Text>
+                                <TouchableOpacity onPress={() => setShowSettings(true)}>
+                                    <Text style={styles.tipTitle}>Settings</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={toggleZoom}>
+                                    <Text style={styles.tipValue}>{getZoomLabel()}</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
+
+                        {/* Camera Settings Modal */}
+                        <Modal
+                            visible={showSettings}
+                            transparent={true}
+                            animationType="slide"
+                            onRequestClose={() => setShowSettings(false)}
+                        >
+                            <Pressable 
+                                style={styles.modalOverlay} 
+                                onPress={() => setShowSettings(false)}
+                            >
+                                <View style={styles.modalContent}>
+                                    <View style={styles.modalHeader}>
+                                        <View style={styles.modalHandle} />
+                                        <Text style={styles.modalTitle}>Camera Settings</Text>
+                                    </View>
+
+                                    <View style={styles.settingsList}>
+                                        <View style={styles.settingItem}>
+                                            <View style={styles.settingLabelCont}>
+                                                <Ionicons name="flash" size={20} color="#0F172A" />
+                                                <Text style={styles.settingLabel}>Flash Mode</Text>
+                                            </View>
+                                            <View style={styles.optionRow}>
+                                                {['Off', 'Auto', 'On'].map(mode => (
+                                                    <TouchableOpacity 
+                                                        key={mode}
+                                                        style={[styles.optionPill, flash === mode && styles.optionPillActive]}
+                                                        onPress={() => setFlash(mode)}
+                                                    >
+                                                        <Text style={[styles.optionText, flash === mode && styles.optionTextActive]}>{mode}</Text>
+                                                    </TouchableOpacity>
+                                                ))}
+                                            </View>
+                                        </View>
+
+                                        <View style={styles.settingItem}>
+                                            <View style={styles.settingLabelCont}>
+                                                <Ionicons name="sync" size={20} color="#0F172A" />
+                                                <Text style={styles.settingLabel}>Camera Switch</Text>
+                                            </View>
+                                            <View style={styles.optionRow}>
+                                                {['Back', 'Front'].map(mode => (
+                                                    <TouchableOpacity 
+                                                        key={mode}
+                                                        style={[styles.optionPill, cameraMode === mode && styles.optionPillActive]}
+                                                        onPress={() => setCameraMode(mode)}
+                                                    >
+                                                        <Text style={[styles.optionText, cameraMode === mode && styles.optionTextActive]}>{mode}</Text>
+                                                    </TouchableOpacity>
+                                                ))}
+                                            </View>
+                                        </View>
+
+                                        <View style={styles.settingItem}>
+                                            <View style={styles.settingLabelCont}>
+                                                <Ionicons name="grid" size={20} color="#0F172A" />
+                                                <Text style={styles.settingLabel}>Grid Overlay</Text>
+                                            </View>
+                                            <TouchableOpacity 
+                                                style={[styles.toggleBtn, gridEnabled && styles.toggleBtnActive]}
+                                                onPress={() => setGridEnabled(!gridEnabled)}
+                                            >
+                                                <View style={[styles.toggleThumb, gridEnabled && styles.toggleThumbActive]} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+
+                                    <TouchableOpacity 
+                                        style={styles.closeBtn}
+                                        onPress={() => setShowSettings(false)}
+                                    >
+                                        <Text style={styles.closeBtnText}>Done</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </Pressable>
+                        </Modal>
                     </View>
 
                     <TouchableOpacity 
@@ -230,17 +336,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#F1F5F9',
         marginVertical: 25,
     },
-    sectionHeading: {
-        fontSize: 18,
-        fontWeight: '800',
-        color: '#0F172A',
-        marginBottom: 12,
-    },
-    description: {
-        fontSize: 15,
-        color: '#64748B',
-        lineHeight: 24,
-    },
     tipsContainer: {
         marginTop: 25,
         flexDirection: 'row',
@@ -298,6 +393,110 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     actionButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '800',
+    },
+    // Modal Styles
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'flex-end',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
+        paddingHorizontal: 25,
+        paddingBottom: 40,
+        paddingTop: 15,
+    },
+    modalHeader: {
+        alignItems: 'center',
+        marginBottom: 25,
+    },
+    modalHandle: {
+        width: 40,
+        height: 4,
+        backgroundColor: '#E2E8F0',
+        borderRadius: 2,
+        marginBottom: 15,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: '900',
+        color: '#0F172A',
+    },
+    settingsList: {
+        gap: 20,
+    },
+    settingItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    settingLabelCont: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+    },
+    settingLabel: {
+        fontSize: 15,
+        fontWeight: '700',
+        color: '#0F172A',
+    },
+    optionRow: {
+        flexDirection: 'row',
+        gap: 8,
+    },
+    optionPill: {
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 12,
+        backgroundColor: '#F8FAFC',
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
+    },
+    optionPillActive: {
+        backgroundColor: '#000000',
+        borderColor: '#000000',
+    },
+    optionText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#64748B',
+    },
+    optionTextActive: {
+        color: 'white',
+    },
+    toggleBtn: {
+        width: 52,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: '#E2E8F0',
+        padding: 4,
+    },
+    toggleBtnActive: {
+        backgroundColor: '#10B981',
+    },
+    toggleThumb: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: 'white',
+    },
+    toggleThumbActive: {
+        transform: [{ translateX: 24 }],
+    },
+    closeBtn: {
+        backgroundColor: '#0F172A',
+        height: 56,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 35,
+    },
+    closeBtnText: {
         color: 'white',
         fontSize: 16,
         fontWeight: '800',
