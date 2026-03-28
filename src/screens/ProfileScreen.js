@@ -94,7 +94,7 @@ export default function ProfileScreen({ navigation }) {
                 <View style={styles.menuContainer}>
                     <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Journeys')}>
                         <View style={styles.menuIconContainer}>
-                            <Ionicons name="map" size={20} color="#3B82F6" />
+                            <Ionicons name="map" size={20} color="#000000" />
                         </View>
                         <Text style={styles.menuText}>My Journeys</Text>
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
@@ -102,7 +102,7 @@ export default function ProfileScreen({ navigation }) {
 
                     <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Wardrobe')}>
                         <View style={styles.menuIconContainer}>
-                            <MaterialCommunityIcons name="hanger" size={22} color="#3B82F6" />
+                            <MaterialCommunityIcons name="hanger" size={22} color="#000000" />
                         </View>
                         <Text style={styles.menuText}>My Wardrobe</Text>
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
@@ -110,7 +110,7 @@ export default function ProfileScreen({ navigation }) {
 
                     <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Gallery')}>
                         <View style={styles.menuIconContainer}>
-                            <Ionicons name="images" size={20} color="#3B82F6" />
+                            <Ionicons name="images" size={20} color="#000000" />
                         </View>
                         <Text style={styles.menuText}>My Photos</Text>
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
@@ -122,7 +122,7 @@ export default function ProfileScreen({ navigation }) {
                         onPress={() => navigation.navigate('Transactions')}
                     >
                         <View style={styles.menuIconContainer}>
-                            <Ionicons name="receipt-outline" size={20} color="#3B82F6" />
+                            <Ionicons name="receipt-outline" size={20} color="#000000" />
                         </View>
                         <Text style={styles.menuText}>My Transactions</Text>
                         <Feather name="chevron-right" size={18} color="#CBD5E1" />
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         height: 110,
         borderRadius: 55,
         borderWidth: 3,
-        borderColor: '#3B82F6',
+        borderColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 4,
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     badgeContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 20,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     statValue: {
         fontSize: 22,
         fontWeight: '700',
-        color: '#3B82F6',
+        color: '#000000',
     },
     statLabel: {
         fontSize: 10,
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 12,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 15,
@@ -313,10 +313,10 @@ const styles = StyleSheet.create({
     },
     ecoCard: {
         width: '100%',
-        backgroundColor: '#4B8DF8',
+        backgroundColor: '#000000',
         borderRadius: 24,
         padding: 24,
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.3,
         shadowRadius: 15,

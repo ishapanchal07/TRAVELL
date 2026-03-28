@@ -16,7 +16,7 @@ export default function BottomNav({ activeRoute }) {
                     <Ionicons
                         name="compass"
                         size={24}
-                        color={activeRoute === 'Explore' ? '#3B82F6' : '#94A3B8'}
+                        color={activeRoute === 'Explore' ? '#000000' : '#94A3B8'}
                     />
                     <Text style={activeRoute === 'Explore' ? styles.navTextActive : styles.navText}>
                         EXPLORE
@@ -30,7 +30,7 @@ export default function BottomNav({ activeRoute }) {
                     <MaterialCommunityIcons
                         name="hanger"
                         size={26}
-                        color={activeRoute === 'Wardrobe' ? '#3B82F6' : '#94A3B8'}
+                        color={activeRoute === 'Wardrobe' ? '#000000' : '#94A3B8'}
                     />
                     <Text style={activeRoute === 'Wardrobe' ? styles.navTextActive : styles.navText}>
                         WARDROBE
@@ -54,7 +54,7 @@ export default function BottomNav({ activeRoute }) {
                     <Ionicons
                         name="people"
                         size={26}
-                        color={activeRoute === 'Social' ? '#3B82F6' : '#94A3B8'}
+                        color={activeRoute === 'Social' ? '#000000' : '#94A3B8'}
                     />
                     <Text style={activeRoute === 'Social' ? styles.navTextActive : styles.navText}>
                         SOCIAL
@@ -68,7 +68,7 @@ export default function BottomNav({ activeRoute }) {
                     <Ionicons
                         name="person"
                         size={24}
-                        color={activeRoute === 'Profile' ? '#3B82F6' : '#94A3B8'}
+                        color={activeRoute === 'Profile' ? '#000000' : '#94A3B8'}
                     />
                     <Text style={activeRoute === 'Profile' ? styles.navTextActive : styles.navText}>
                         PROFILE
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     navTextActive: {
         fontSize: 8,
-        color: '#3B82F6',
+        color: '#000000',
         fontWeight: '700',
         marginTop: 2,
     },
@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

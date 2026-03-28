@@ -42,6 +42,10 @@ import PurchaseFlowScreen from './src/screens/PurchaseFlowScreen';
 import FiltersPreferencesScreen from './src/screens/FiltersPreferencesScreen';
 import AdminScreen from './src/screens/AdminScreen';
 import SavedScreen from './src/screens/SavedScreen';
+import SnapSpotsScreen from './src/screens/SnapSpotsScreen';
+import SnapSpotDetailsScreen from './src/screens/SnapSpotDetailsScreen';
+import ProductDetailScreen from './src/screens/ProductDetailScreen';
+import ExperienceDetailScreen from './src/screens/ExperienceDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +98,10 @@ export default function App() {
               <Stack.Screen name="FiltersPreferences" component={FiltersPreferencesScreen} />
               <Stack.Screen name="Admin" component={AdminScreen} />
               <Stack.Screen name="Saved" component={SavedScreen} />
+              <Stack.Screen name="SnapSpots" component={SnapSpotsScreen} />
+              <Stack.Screen name="SnapSpotDetails" component={SnapSpotDetailsScreen} />
+              <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+              <Stack.Screen name="ExperienceDetail" component={ExperienceDetailScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </SavedProvider>

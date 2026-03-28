@@ -58,7 +58,7 @@ export default function AdminScreen({ navigation }) {
 function StatCard({ title, value, icon }) {
     return (
         <View style={styles.statCard}>
-            <MaterialCommunityIcons name={icon} size={24} color="#3B82F6" />
+            <MaterialCommunityIcons name={icon} size={24} color="#000000" />
             <Text style={styles.statValue}>{value}</Text>
             <Text style={styles.statTitle}>{title}</Text>
         </View>
@@ -69,7 +69,7 @@ function AdminAction({ title, icon }) {
     return (
         <TouchableOpacity style={styles.actionRow} activeOpacity={0.7}>
             <View style={styles.actionIconBox}>
-                <MaterialCommunityIcons name={icon} size={20} color="#3B82F6" />
+                <MaterialCommunityIcons name={icon} size={20} color="#000000" />
             </View>
             <Text style={styles.actionText}>{title}</Text>
             <Ionicons name="chevron-forward" size={18} color="#94A3B8" />
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 12,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 15,

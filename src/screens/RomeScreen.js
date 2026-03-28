@@ -6,6 +6,8 @@ import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/v
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
+import { useSaved } from '../context/SavedContext';
+import ExperienceCard from '../components/ExperienceCard';
 
 const { width } = Dimensions.get('window');
 
@@ -23,12 +25,12 @@ const ROME_DATA = {
     transport: 'Metro, Walking, and Vespa rentals',
     hiddenGems: ['Trastevere Backstreets', 'Aventine Keyhole', 'Gianicolo Hill', 'Galleria Sciarra', 'Appian Way Park', 'Villa Borghese Gardens'],
     experiences: [
-        { id: 1, title: 'The Colosseum Tour', sub: 'Iconic Amphitheater • History', img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Vatican Art Gallery', sub: 'Art & Sistine Chapel', img: 'https://images.unsplash.com/photo-1531572753321-ad063cecc140?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Trevi Fountain Walk', sub: 'Wishes & Baroque Art', img: 'https://images.unsplash.com/photo-1529260830199-42c24126f198?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Roman Forum Ruins', sub: 'Ancient Marketplace • Tour', img: 'https://images.unsplash.com/photo-1552432552-32946c1ed6ca?q=80&w=400&auto=format&fit=crop' },
-        { id: 5, title: 'Piazza Navona Sunset', sub: 'Fountains & Piazze', img: 'https://images.unsplash.com/photo-1525874684015-58379d421a52?q=80&w=400&auto=format&fit=crop' },
-        { id: 6, title: 'Pantheon Dome Visit', sub: 'Architectural Marvel • 1h', img: 'https://images.unsplash.com/photo-1515542641795-85ed38058252?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'The Colosseum Tour', sub: 'History', img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€45', bestTime: 'Morning', crowd: 'High' },
+        { id: 2, title: 'Vatican Art Gallery', sub: 'Art', img: 'https://images.unsplash.com/photo-1531572753321-ad063cecc140?q=80&w=400&auto=format&fit=crop', duration: '4h', fee: '€35', bestTime: 'Morning', crowd: 'High' },
+        { id: 3, title: 'Trevi Fountain Walk', sub: 'History', img: 'https://images.unsplash.com/photo-1529260830199-42c24126f198?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: 'Free', bestTime: 'Late Night', crowd: 'Medium' },
+        { id: 4, title: 'Roman Forum Ruins', sub: 'History', img: 'https://images.unsplash.com/photo-1552432552-32946c1ed6ca?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€16', bestTime: 'Morning', crowd: 'Medium' },
+        { id: 5, title: 'Piazza Navona Sunset', sub: 'Nightlife', img: 'https://images.unsplash.com/photo-1525874684015-58379d421a52?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: 'Free', bestTime: 'Evening', crowd: 'Medium' },
+        { id: 6, title: 'Pantheon Dome Visit', sub: 'History', img: 'https://images.unsplash.com/photo-1515542641795-85ed38058252?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: 'Free', bestTime: 'Morning', crowd: 'Medium' }
     ],
     clothes: [
         { id: 1, title: 'Linen Summer Shirt', price: '€35/day', type: 'Summer', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=400&auto=format&fit=crop' },
@@ -54,6 +56,7 @@ const ROME_DATA = {
 
 export default function RomeScreen({ navigation }) {
     const { isLoggedIn } = useAuth();
+    const { toggleSaveGem, isGemSaved } = useSaved();
     const data = ROME_DATA;
 
     return (
@@ -72,7 +75,7 @@ export default function RomeScreen({ navigation }) {
                 </View>
                 <View style={styles.headerIcons}>
                     <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Rome', location: 'Colosseum, Rome' })}>
-                        <Ionicons name="map-outline" size={18} color="#0EA5E9" />
+                        <Ionicons name="map-outline" size={18} color="#000000" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -125,18 +128,16 @@ export default function RomeScreen({ navigation }) {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.experiences : data.experiences.slice(0, 3)).map(exp => (
-                            <View key={exp.id} style={styles.expCard}>
-                                <Image 
-                                    source={{ uri: exp.img }} 
-                                    style={styles.expImage} 
-                                    contentFit="cover"
-                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                    transition={300}
+                            <View key={exp.id} style={{ width: 280, marginRight: 15 }}>
+                                <ExperienceCard 
+                                    item={exp}
+                                    isSaved={isGemSaved(exp.id)}
+                                    onPress={() => navigation.navigate('ExperienceDetail', { item: exp })}
+                                    onSave={() => toggleSaveGem(exp)}
+                                    onBookNow={() => navigation.navigate('ExperienceDetail', { item: exp })}
+                                    onViewMap={() => navigation.navigate('Map', { city: 'Rome', location: exp.title })}
+                                    onShare={() => {}}
                                 />
-                                <View style={styles.expTextCont}>
-                                    <Text style={styles.expTitle}>{exp.title}</Text>
-                                    <Text style={styles.expSub}>{exp.sub}</Text>
-                                </View>
                             </View>
                         ))}
                     </ScrollView>
@@ -166,7 +167,10 @@ export default function RomeScreen({ navigation }) {
                                         <Text style={styles.outfitTitle}>{item.title}</Text>
                                         <Text style={styles.outfitPrice}>{item.price}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.rentBtn}>
+                                    <TouchableOpacity 
+                                        style={styles.rentBtn}
+                                        onPress={() => navigation.navigate('ProductDetail', { item })}
+                                    >
                                         <Text style={styles.rentBtnText}>RENT</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -183,19 +187,17 @@ export default function RomeScreen({ navigation }) {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.food : data.food.slice(0, 2)).map(f => (
-                            <View key={f.id} style={styles.foodCard}>
-                                <Image 
-                                    source={{ uri: f.img }} 
-                                    style={styles.foodImage} 
-                                    contentFit="cover"
-                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                    transition={300}
-                                />
+                            <TouchableOpacity 
+                                key={f.id} 
+                                style={styles.foodCard}
+                                onPress={() => navigation.navigate('FoodDetail', { item: { name: f.title, image: f.img, subtitle: f.sub, price: f.price || '€14.00' } })}
+                            >
+                                <Image source={{ uri: f.img }} style={styles.foodImage} />
                                 <View style={styles.foodTextCont}>
                                     <Text style={styles.foodTitle}>{f.title}</Text>
                                     <Text style={styles.foodSub}>{f.sub}</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))}
                     </ScrollView>
 
@@ -206,14 +208,19 @@ export default function RomeScreen({ navigation }) {
                             <View style={styles.gemsList}>
                                 {data.hiddenGems.map((gem, index) => (
                                     <View key={index} style={styles.gemItem}>
-                                        <Ionicons name="sparkles" size={16} color="#0EA5E9" />
+                                        <Ionicons name="sparkles" size={16} color="#000000" />
                                         <Text style={styles.gemText}>{gem}</Text>
                                     </View>
                                 ))}
                             </View>
 
-                            {/* Photo Spots */}
-                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Insta-worthy Spots</Text>
+                             {/* Photo Spots */}
+                             <View style={styles.sectionHeader}>
+                                 <Text style={styles.sectionTitle}>Perfect Snap Spots</Text>
+                                 <TouchableOpacity onPress={() => navigation.navigate('SnapSpots', { items: data.photoSpots, city: 'Rome' })}>
+                                     <Text style={styles.viewAllText}>View all</Text>
+                                 </TouchableOpacity>
+                             </View>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                                 {data.photoSpots.map(spot => (
                                     <View key={spot.id} style={styles.photoSpotCard}>
@@ -239,7 +246,7 @@ export default function RomeScreen({ navigation }) {
                         >
                             <BlurView intensity={80} tint="light" style={styles.unlockBlur}>
                                 <View style={styles.lockCircle}>
-                                    <Ionicons name="lock-closed" size={24} color="#3B82F6" />
+                                    <Ionicons name="lock-closed" size={24} color="#000000" />
                                 </View>
                                 <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
                                 <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
@@ -263,7 +270,7 @@ function FactItem({ icon, label, value }) {
     return (
         <View style={styles.factItem}>
             <View style={styles.factIconBox}>
-                <Ionicons name={icon} size={20} color="#3B82F6" />
+                <Ionicons name={icon} size={20} color="#000000" />
             </View>
             <Text style={styles.factLabel}>{label}</Text>
             <Text style={styles.factValue}>{value}</Text>
@@ -309,12 +316,12 @@ const styles = StyleSheet.create({
         width: 26,
         height: 26,
         borderRadius: 13,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
     },
     logoText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 20,
         fontWeight: '800',
         marginLeft: 8,
@@ -326,7 +333,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -358,7 +365,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     trendingPill: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         alignSelf: 'flex-start',
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -377,7 +384,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
     },
     heroSubtitle: {
-        color: '#60A5FA',
+        color: '#333333',
         fontSize: 34,
         fontWeight: '900',
         marginTop: -5,
@@ -411,7 +418,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 10,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 8,
@@ -446,7 +453,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     viewAllText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 13,
         fontWeight: '600',
     },
@@ -484,13 +491,13 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     luggagePill: {
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 12,
     },
     luggageText: {
-        color: '#0EA5E9',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '800',
     },
@@ -526,12 +533,12 @@ const styles = StyleSheet.create({
     },
     outfitPrice: {
         fontSize: 11,
-        color: '#3B82F6',
+        color: '#000000',
         fontWeight: '600',
         marginTop: 2,
     },
     rentBtn: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 8,
@@ -572,7 +579,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     gemsList: {
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         borderRadius: 20,
         padding: 20,
         marginTop: 10,
@@ -619,7 +626,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 15,
@@ -639,7 +646,7 @@ const styles = StyleSheet.create({
     },
     unlockBtn: {
         marginTop: 20,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 30,
         paddingVertical: 12,
         borderRadius: 20,

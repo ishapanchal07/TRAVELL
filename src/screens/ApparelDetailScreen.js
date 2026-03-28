@@ -62,7 +62,7 @@ export default function ApparelDetailScreen({ route, navigation }) {
                     </Text>
 
                     <View style={styles.recommendationBox}>
-                        <Ionicons name="information-circle" size={20} color="#3B82F6" />
+                        <Ionicons name="information-circle" size={20} color="#000000" />
                         <View style={styles.recommendationContent}>
                             <Text style={styles.recommendationTitle}>Style Recommendation</Text>
                             <Text style={styles.recommendationText}>Matches your "Paris Chic" preference. Perfect for morning visits to the Louvre.</Text>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         left: 20,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 12,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     },
     recommendationBox: {
         flexDirection: 'row',
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         padding: 16,
         borderRadius: 16,
         alignItems: 'flex-start',
@@ -217,12 +217,12 @@ const styles = StyleSheet.create({
     recommendationTitle: {
         fontSize: 14,
         fontWeight: '800',
-        color: '#1E40AF',
+        color: '#222222',
         marginBottom: 4,
     },
     recommendationText: {
         fontSize: 13,
-        color: '#1E3A8A',
+        color: '#222222',
         lineHeight: 18,
     },
     footer: {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     },
     rentBtn: {
         flex: 1,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         height: 56,
         borderRadius: 16,
         justifyContent: 'center',

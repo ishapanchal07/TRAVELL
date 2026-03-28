@@ -107,11 +107,11 @@ const styles = StyleSheet.create({
     },
     exploreBtn: { 
         marginTop: 25, 
-        backgroundColor: '#3B82F6', 
+        backgroundColor: '#000000', 
         paddingHorizontal: 24, 
         paddingVertical: 14, 
         borderRadius: 20,
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 10,

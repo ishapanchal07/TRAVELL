@@ -58,7 +58,7 @@ export default function FiltersPreferencesScreen({ navigation }) {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Style Priorities</Text>
                     <View style={styles.infoBox}>
-                        <Ionicons name="bulb-outline" size={20} color="#3B82F6" />
+                        <Ionicons name="bulb-outline" size={20} color="#000000" />
                         <Text style={styles.infoText}>
                             Based on your selection, we'll prioritize high-fashion for solo/couples and comfort/safety for families.
                         </Text>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     applyBtn: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 16,
         fontWeight: '700',
     },
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     optionActive: {
-        backgroundColor: '#3B82F6',
-        borderColor: '#3B82F6',
+        backgroundColor: '#000000',
+        borderColor: '#000000',
     },
     optionText: {
         fontSize: 14,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     },
     infoBox: {
         flexDirection: 'row',
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         padding: 16,
         borderRadius: 16,
         alignItems: 'flex-start',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         marginLeft: 12,
         flex: 1,
         fontSize: 14,
-        color: '#0369A1',
+        color: '#000000',
         lineHeight: 20,
     },
 });

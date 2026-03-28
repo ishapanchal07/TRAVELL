@@ -33,7 +33,7 @@ export default function WardrobeStatusScreen({ navigation }) {
                     </View>
                 </View>
                 <TouchableOpacity style={styles.notifBtn}>
-                    <Ionicons name="notifications" size={20} color="#3B82F6" />
+                    <Ionicons name="notifications" size={20} color="#000000" />
                 </TouchableOpacity>
             </View>
 
@@ -54,7 +54,7 @@ export default function WardrobeStatusScreen({ navigation }) {
                 {/* Logistics Tracker */}
                 <View style={styles.trackerCard}>
                     <View style={styles.trackerHeader}>
-                        <MaterialCommunityIcons name="swap-horizontal" size={18} color="#3B82F6" />
+                        <MaterialCommunityIcons name="swap-horizontal" size={18} color="#000000" />
                         <Text style={styles.trackerTitle}>LOGISTICS TRACKER</Text>
                     </View>
 
@@ -94,7 +94,7 @@ export default function WardrobeStatusScreen({ navigation }) {
                     <Text style={styles.sectionTitle}>Styling Guidance</Text>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.seeMore}>See More </Text>
-                        <Ionicons name="chevron-forward" size={12} color="#3B82F6" />
+                        <Ionicons name="chevron-forward" size={12} color="#000000" />
                     </TouchableOpacity>
                 </View>
 
@@ -160,7 +160,7 @@ export default function WardrobeStatusScreen({ navigation }) {
                             <Text style={styles.returnSubtitle}>Just follow these 3 steps on Sunday</Text>
                         </View>
                         <View style={styles.historyCircle}>
-                            <Ionicons name="time-outline" size={24} color="#3B82F6" />
+                            <Ionicons name="time-outline" size={24} color="#000000" />
                         </View>
                     </View>
 
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     headerSubtitle: {
         fontSize: 10,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
         letterSpacing: 0.5,
     },
     notifBtn: {
@@ -313,12 +313,12 @@ const styles = StyleSheet.create({
         paddingBottom: 150,
     },
     statusBanner: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         borderRadius: 30,
         padding: 30,
         marginTop: 10,
         marginBottom: 24,
-        shadowColor: '#60A5FA',
+        shadowColor: '#333333',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.3,
         shadowRadius: 20,
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     trackerTitle: {
         fontSize: 11,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
         marginLeft: 10,
         letterSpacing: 1,
     },
@@ -395,12 +395,12 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     circleCompleted: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
     },
     circleActive: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         borderWidth: 3,
-        borderColor: '#EFF6FF',
+        borderColor: '#F8FAFC',
     },
     circlePending: {
         backgroundColor: '#F8F9FA',
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     lineCompleted: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
     },
     stepLabel: {
         fontSize: 10,
@@ -437,13 +437,13 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     outfitBadge: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 8,
     },
     outfitBadgeText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '900',
     },
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
     wardrobeDay: {
         fontSize: 10,
         fontWeight: '800',
-        color: '#60A5FA',
+        color: '#333333',
         marginBottom: 6,
     },
     wardrobeTitle: {
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
     },
     seeMore: {
         fontSize: 12,
-        color: '#3B82F6',
+        color: '#000000',
         fontWeight: '800',
     },
     stylingScroll: {
@@ -585,7 +585,7 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
     returnCard: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         borderRadius: 35,
         padding: 30,
         marginTop: 35,
@@ -614,7 +614,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
         shadowRadius: 10,
@@ -631,7 +631,7 @@ const styles = StyleSheet.create({
         width: 34,
         height: 34,
         borderRadius: 17,
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -654,7 +654,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     viewFullText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 15,
         fontWeight: '900',
     },
@@ -665,10 +665,10 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#60A5FA',
+        shadowColor: '#333333',
         shadowOffset: { width: 0, height: 6 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
         paddingBottom: 120,
     },
     statusCard: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         borderRadius: 30,
         padding: 24,
         flexDirection: 'row',
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         marginTop: 10,
         marginBottom: 24,
-        shadowColor: '#38BDF8',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.3,
         shadowRadius: 20,
@@ -293,10 +293,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     bikerPill: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         padding: 8,
         borderRadius: 20,
-        shadowColor: '#38BDF8',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.4,
         shadowRadius: 8,
@@ -323,10 +323,10 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 12,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 10,
@@ -387,13 +387,13 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     messageBtn: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 16,
         paddingVertical: 10,
         borderRadius: 16,
     },
     messageText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 14,
         fontWeight: '700',
     },
@@ -420,11 +420,11 @@ const styles = StyleSheet.create({
         borderColor: '#F8FAFC',
     },
     dotCompleted: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
     },
     dotActive: {
-        backgroundColor: '#38BDF8',
-        shadowColor: '#38BDF8',
+        backgroundColor: '#000000',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         marginVertical: -2,
     },
     lineCompleted: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
     },
     timelineContent: {
         flex: 1,
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
         color: '#94A3B8',
     },
     activeTitle: {
-        color: '#38BDF8',
+        color: '#000000',
         fontSize: 14,
         fontWeight: '900',
         letterSpacing: 0.5,
@@ -523,6 +523,6 @@ const styles = StyleSheet.create({
     totalValue: {
         fontSize: 20,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
     },
 });

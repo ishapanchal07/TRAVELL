@@ -37,7 +37,7 @@ export default function RentFlowScreen({ route, navigation }) {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Rental Period</Text>
                     <View style={styles.datePickerPlaceholder}>
-                        <Ionicons name="calendar-outline" size={20} color="#3B82F6" />
+                        <Ionicons name="calendar-outline" size={20} color="#000000" />
                         <Text style={styles.dateText}>Sept 12 - Sept 18, 2024 (6 Days)</Text>
                     </View>
                 </View>
@@ -45,7 +45,7 @@ export default function RentFlowScreen({ route, navigation }) {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Delivery Location</Text>
                     <View style={styles.locationBox}>
-                        <Ionicons name="location-outline" size={20} color="#3B82F6" />
+                        <Ionicons name="location-outline" size={20} color="#000000" />
                         <Text style={styles.locationText}>Hôtel Lutetia, Paris</Text>
                     </View>
                 </View>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     itemRent: {
         fontSize: 14,
         fontWeight: '700',
-        color: '#3B82F6',
+        color: '#000000',
     },
     section: {
         marginBottom: 24,
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     totalValue: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 24,
         fontWeight: '900',
     },
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
         paddingBottom: 35,
     },
     confirmBtn: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         height: 56,
         borderRadius: 16,
         justifyContent: 'center',

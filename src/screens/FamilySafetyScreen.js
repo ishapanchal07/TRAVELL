@@ -14,11 +14,11 @@ const SafetyCard = ({ iconName, iconLib, title, description }) => {
         <View style={styles.card}>
             <View style={styles.iconContainer}>
                 {iconLib === 'FontAwesome5' ? (
-                    <FontAwesome5 name={iconName} size={24} color="#1eb2f5" />
+                    <FontAwesome5 name={iconName} size={24} color="#000000" />
                 ) : iconLib === 'MaterialCommunityIcons' ? (
-                    <MaterialCommunityIcons name={iconName} size={28} color="#1eb2f5" />
+                    <MaterialCommunityIcons name={iconName} size={28} color="#000000" />
                 ) : (
-                    <Feather name={iconName} size={26} color="#1eb2f5" />
+                    <Feather name={iconName} size={26} color="#000000" />
                 )}
             </View>
             <View style={styles.textContainer}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     titleLine: {
-        color: '#1eb2f5', // Vivid Cyan / Light Blue
+        color: '#000000', // Vivid Cyan / Light Blue
         fontSize: 34,
         fontWeight: '900',
         letterSpacing: -0.5,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         width: 56,
         height: 56,
         borderRadius: 28, // Circular
-        backgroundColor: '#e6f6ff',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20,
@@ -187,13 +187,13 @@ const styles = StyleSheet.create({
     },
     button: {
         flexDirection: 'row',
-        backgroundColor: '#1eb2f5', // Cyan matched with text
+        backgroundColor: '#000000', // Cyan matched with text
         width: '100%',
         paddingVertical: 18,
         borderRadius: 30, // Pill 
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#1eb2f5',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 6 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

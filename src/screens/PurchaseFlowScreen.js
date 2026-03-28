@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     editBtn: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 14,
         fontWeight: '600',
     },

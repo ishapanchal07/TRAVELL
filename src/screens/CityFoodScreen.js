@@ -202,7 +202,7 @@ export default function CityFoodScreen({ route, navigation }) {
                 {/* Title and Location */}
                 <Text style={styles.mainTitle}>{cityData.title}</Text>
                 <View style={styles.locationPill}>
-                    <Ionicons name="location" size={12} color="#38BDF8" style={{ marginRight: 4 }} />
+                    <Ionicons name="location" size={12} color="#000000" style={{ marginRight: 4 }} />
                     <Text style={styles.locationText}>{cityData.location}</Text>
                 </View>
 
@@ -283,7 +283,11 @@ export default function CityFoodScreen({ route, navigation }) {
                 <Text style={[styles.sectionTitle, { marginTop: 10, marginBottom: 15 }]}>Popular Nearby</Text>
                 <View style={styles.popularGrid}>
                     {displayedNearby.map((item) => (
-                        <View key={item.id} style={styles.smallCard}>
+                        <TouchableOpacity 
+                            key={item.id} 
+                            style={styles.smallCard}
+                            onPress={() => navigation.navigate('FoodDetail', { item })}
+                        >
                             <Image 
                                 source={{ uri: item.image }} 
                                 style={styles.smallCardImage} 
@@ -301,7 +305,7 @@ export default function CityFoodScreen({ route, navigation }) {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </View>
 
@@ -331,7 +335,7 @@ export default function CityFoodScreen({ route, navigation }) {
                     >
                         <BlurView intensity={80} tint="light" style={styles.unlockBlur}>
                             <View style={styles.lockCircle}>
-                                <Ionicons name="lock-closed" size={24} color="#3B82F6" />
+                                <Ionicons name="lock-closed" size={24} color="#000000" />
                             </View>
                             <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
                             <Text style={styles.unlockDesc}>Access hidden artisan spots, full food history, and local food secrets.</Text>
@@ -423,7 +427,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     filterBtnActive: {
-        backgroundColor: '#4AA5FC',
+        backgroundColor: '#000000',
     },
     filterText: {
         fontSize: 13,
@@ -452,7 +456,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     dietBtnActive: {
-        backgroundColor: '#4AA5FC',
+        backgroundColor: '#000000',
     },
     dietBtnInactive: {
         backgroundColor: 'transparent',
@@ -481,7 +485,7 @@ const styles = StyleSheet.create({
     seeAllText: {
         fontSize: 13,
         fontWeight: '600',
-        color: '#38BDF8',
+        color: '#000000',
     },
     horizontalScroll: {
         paddingBottom: 10,
@@ -515,7 +519,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 10,
         left: 10,
-        backgroundColor: '#4AA5FC',
+        backgroundColor: '#000000',
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 12,
@@ -559,7 +563,7 @@ const styles = StyleSheet.create({
     largeCardPrice: {
         fontSize: 16,
         fontWeight: '700',
-        color: '#38BDF8',
+        color: '#000000',
     },
     largeCardDesc: {
         fontSize: 12,
@@ -567,7 +571,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     quickOrderBtn: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         borderRadius: 16,
         paddingVertical: 12,
         alignItems: 'center',
@@ -622,13 +626,13 @@ const styles = StyleSheet.create({
     smallCardPrice: {
         fontSize: 13,
         fontWeight: '700',
-        color: '#38BDF8',
+        color: '#000000',
     },
     addBtn: {
         width: 24,
         height: 24,
         borderRadius: 12,
-        backgroundColor: '#4AA5FC',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -652,7 +656,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 16,
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -690,7 +694,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 15,
@@ -710,7 +714,7 @@ const styles = StyleSheet.create({
     },
     unlockBtn: {
         marginTop: 20,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 30,
         paddingVertical: 12,
         borderRadius: 20,

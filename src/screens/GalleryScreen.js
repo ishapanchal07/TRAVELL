@@ -488,13 +488,13 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     autoGenPill: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 12,
     },
     autoGenText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 9,
         fontWeight: '800',
         letterSpacing: 0.5,
@@ -580,8 +580,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     filterPillActive: {
-        backgroundColor: '#3B82F6',
-        borderColor: '#3B82F6',
+        backgroundColor: '#000000',
+        borderColor: '#000000',
     },
     filterText: {
         color: '#475569',
@@ -630,7 +630,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rentedBluePill: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 10,
@@ -807,7 +807,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     undoText: {
-        color: '#60A5FA',
+        color: '#333333',
         fontSize: 13,
         fontWeight: '800',
     }

@@ -93,7 +93,7 @@ export default function GuideScreen({ route, navigation }) {
                                         contentFit="cover"
                                     />
                                     <View style={styles.verifiedBadge}>
-                                        <MaterialIcons name="verified" size={20} color="#3B82F6" style={{ backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' }} />
+                                        <MaterialIcons name="verified" size={20} color="#000000" style={{ backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' }} />
                                     </View>
                                     <View style={styles.priceOverlay}>
                                         <Text style={styles.priceText}>{guide.price}</Text>
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
         borderColor: '#E2E8F0',
     },
     filterBtnActive: {
-        backgroundColor: '#4AA5FC',
-        borderColor: '#4AA5FC',
+        backgroundColor: '#000000',
+        borderColor: '#000000',
     },
     filterText: {
         fontSize: 14,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
         lineHeight: 18,
     },
     categoryPill: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         alignSelf: 'flex-start',
         paddingHorizontal: 12,
         paddingVertical: 6,
@@ -242,6 +242,6 @@ const styles = StyleSheet.create({
     categoryText: {
         fontSize: 10,
         fontWeight: '800',
-        color: '#3B82F6',
+        color: '#000000',
     },
 });

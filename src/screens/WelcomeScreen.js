@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     logoDivider: {
         width: 32,
         height: 3,
-        backgroundColor: '#4b9ffc',
+        backgroundColor: '#000000',
         marginTop: 20,
     },
     middleSection: {
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     titleBlue: {
-        color: '#4b9ffc',
+        color: '#000000',
         fontSize: 38,
         fontWeight: '900',
         textAlign: 'center',
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     activeDot: {
         width: 24,
-        backgroundColor: '#4b9ffc',
+        backgroundColor: '#000000',
     },
     bottomSection: {
         width: '100%',
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     button: {
-        backgroundColor: '#4b9ffc',
+        backgroundColor: '#000000',
         width: '100%',
         paddingVertical: 18,
         borderRadius: 12,

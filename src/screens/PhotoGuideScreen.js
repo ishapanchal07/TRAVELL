@@ -29,7 +29,7 @@ export default function PhotoGuideScreen({ navigation }) {
                     </View>
 
                     <View style={styles.goldenHourBadge}>
-                        <Ionicons name="sunny" size={10} color="#38BDF8" />
+                        <Ionicons name="sunny" size={10} color="#000000" />
                         <Text style={styles.goldenHourText}>GOLDEN HOUR: 6:42 PM</Text>
                     </View>
                 </View>
@@ -153,7 +153,7 @@ export default function PhotoGuideScreen({ navigation }) {
                         <View style={styles.cardOverlayAlt}>
                             {/* Top Pose Tag */}
                             <View style={styles.poseTopTag}>
-                                <Ionicons name="person" size={10} color="#38BDF8" style={{ marginRight: 6 }} />
+                                <Ionicons name="person" size={10} color="#000000" style={{ marginRight: 6 }} />
                                 <Text style={styles.poseTopLabel}>POSE GUIDE: <Text style={styles.poseTopDesc}>Sit on the edge, look at the water reflections</Text></Text>
                                 <View style={styles.smallActionBtn}>
                                     <Ionicons name="camera" size={10} color="white" />
@@ -252,13 +252,13 @@ const styles = StyleSheet.create({
     goldenHourBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         paddingHorizontal: 10,
         paddingVertical: 6,
         borderRadius: 16,
     },
     goldenHourText: {
-        color: '#0EA5E9',
+        color: '#000000',
         fontSize: 8,
         fontWeight: '800',
         marginLeft: 4,
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     },
     blueTag: {
         alignSelf: 'flex-start',
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 12,
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     poseTopLabel: {
-        color: '#38BDF8',
+        color: '#000000',
         fontSize: 9,
         fontWeight: '800',
         flex: 1,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderRadius: 10,
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -416,16 +416,16 @@ const styles = StyleSheet.create({
         marginRight: 4,
     },
     barActive: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
     },
     actionBtn: {
         width: 48,
         height: 48,
         borderRadius: 20,
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
 
     // Ad Card
     adCard: {
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         borderRadius: 28,
         padding: 24,
         marginTop: 10,
@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
         lineHeight: 28,
     },
     adDesc: {
-        color: '#EFF6FF',
+        color: '#F8FAFC',
         fontSize: 13,
         lineHeight: 20,
         marginBottom: 20,
@@ -514,7 +514,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     adBtnText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 11,
         fontWeight: '800',
         letterSpacing: 0.5,

@@ -56,7 +56,7 @@ export default function CameraScreen({ navigation }) {
                 <Text style={{ color: 'white', marginBottom: 20, textAlign: 'center', fontSize: 16 }}>
                     We need your permission to show the camera
                 </Text>
-                <TouchableOpacity onPress={requestPermission} style={{ backgroundColor: '#38BDF8', padding: 15, borderRadius: 10 }}>
+                <TouchableOpacity onPress={requestPermission} style={{ backgroundColor: '#000000', padding: 15, borderRadius: 10 }}>
                     <Text style={{ color: 'black', fontWeight: 'bold' }}>Grant Permission</Text>
                 </TouchableOpacity>
             </View>
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
         minWidth: 180,
     },
     matchText: {
-        color: '#38BDF8',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '900',
         marginRight: 10,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         borderRadius: 2,
     },
 
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
         height: 32,
         borderRadius: 16,
         borderWidth: 1,
-        borderColor: '#38BDF8',
+        borderColor: '#000000',
     },
     activeIndicator: {
         position: 'absolute',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         borderWidth: 1.5,
         borderColor: 'rgba(15, 23, 42, 1)',
     },
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
     },
     settingValueBlue: {
-        color: '#38BDF8',
+        color: '#000000',
         fontSize: 16,
         fontWeight: '900',
     },
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
     },
     zoomBtnActive: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         width: 65,
         height: 40,
     },
@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
     },
     proModeBtn: {
         width: 50,

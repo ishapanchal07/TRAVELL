@@ -37,7 +37,7 @@ export default function CreateTripScreen({ navigation }) {
             // Start fresh
             setStartDate(day.dateString);
             setSelectedDates({
-                [day.dateString]: { startingDay: true, color: '#3B82F6', textColor: 'white' }
+                [day.dateString]: { startingDay: true, color: '#000000', textColor: 'white' }
             });
         } else {
             // Select end date and fill the gap
@@ -50,23 +50,23 @@ export default function CreateTripScreen({ navigation }) {
                 // If clicked before start, restart
                 setStartDate(day.dateString);
                 setSelectedDates({
-                    [day.dateString]: { startingDay: true, color: '#3B82F6', textColor: 'white' }
+                    [day.dateString]: { startingDay: true, color: '#000000', textColor: 'white' }
                 });
                 return;
             }
 
             let range = {};
-            range[start] = { startingDay: true, color: '#3B82F6', textColor: 'white' };
+            range[start] = { startingDay: true, color: '#000000', textColor: 'white' };
 
             // Fill between
             d.setDate(d.getDate() + 1);
             while (d < e) {
                 const dateStr = d.toISOString().split('T')[0];
-                range[dateStr] = { color: '#EFF6FF', textColor: '#3B82F6' };
+                range[dateStr] = { color: '#F8FAFC', textColor: '#000000' };
                 d.setDate(d.getDate() + 1);
             }
 
-            range[end] = { endingDay: true, color: '#3B82F6', textColor: 'white' };
+            range[end] = { endingDay: true, color: '#000000', textColor: 'white' };
             setSelectedDates(range);
         }
     };
@@ -138,9 +138,9 @@ export default function CreateTripScreen({ navigation }) {
                             backgroundColor: '#ffffff',
                             calendarBackground: '#ffffff',
                             textSectionTitleColor: '#94A3B8',
-                            selectedDayBackgroundColor: '#3B82F6',
+                            selectedDayBackgroundColor: '#000000',
                             selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#3B82F6',
+                            todayTextColor: '#000000',
                             dayTextColor: '#0F172A',
                             textDisabledColor: '#CBD5E1',
                             monthTextColor: '#0F172A',
@@ -155,7 +155,7 @@ export default function CreateTripScreen({ navigation }) {
                 <View style={[styles.cardContainer, { zIndex: 10 }]}>
                     <View style={styles.cardTitleRow}>
                         <View style={styles.iconBox}>
-                            <FontAwesome5 name="user-alt" size={14} color="#3B82F6" />
+                            <FontAwesome5 name="user-alt" size={14} color="#000000" />
                         </View>
                         <Text style={styles.cardTitle}>Personal Details</Text>
                     </View>
@@ -197,7 +197,7 @@ export default function CreateTripScreen({ navigation }) {
                 <View style={[styles.cardContainer, { marginBottom: 100 }]}>
                     <View style={styles.cardTitleRow}>
                         <View style={styles.iconBox}>
-                            <MaterialCommunityIcons name="silverware-fork-knife" size={16} color="#3B82F6" />
+                            <MaterialCommunityIcons name="silverware-fork-knife" size={16} color="#000000" />
                         </View>
                         <Text style={styles.cardTitle}>Dietary Preferences</Text>
                     </View>
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
         lineHeight: 38,
     },
     mainTitleBlue: {
-        color: '#3B82F6',
+        color: '#000000',
     },
     subtitleText: {
         fontSize: 15,
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     viewAllText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 13,
         fontWeight: '700',
     },
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     destImageRingActive: {
-        borderColor: '#3B82F6',
+        borderColor: '#000000',
     },
     destImage: {
         width: 56,
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
         color: '#64748B',
     },
     destNameActive: {
-        color: '#3B82F6',
+        color: '#000000',
     },
 
     // Card General
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 12,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     dietTagActive: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
     },
     dietTagText: {
         fontSize: 13,
@@ -469,13 +469,13 @@ const styles = StyleSheet.create({
     // Save Btn
     saveBtn: {
         flexDirection: 'row',
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 18,
         marginTop: 10,
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

@@ -138,7 +138,7 @@ export default function WardrobeScreen({ navigation }) {
 
             <View style={styles.headerRow}>
                 <View style={styles.locationPill}>
-                    <Ionicons name="location" size={12} color="#3B82F6" />
+                    <Ionicons name="location" size={12} color="#000000" />
                     <Text style={styles.locationText}>{destination}</Text>
                 </View>
                 <View style={styles.weatherPill}>
@@ -221,7 +221,7 @@ export default function WardrobeScreen({ navigation }) {
                                     </View>
                                     {isSelected && (
                                         <View style={styles.selectedOverlay}>
-                                            <Ionicons name="checkmark-circle" size={24} color="#3B82F6" />
+                                            <Ionicons name="checkmark-circle" size={24} color="#000000" />
                                         </View>
                                     )}
                                 </View>
@@ -229,8 +229,8 @@ export default function WardrobeScreen({ navigation }) {
                                 <View style={styles.itemInfo}>
                                     <View style={styles.titlePriceRow}>
                                         <Text style={styles.itemTitle}>{item.title}</Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate('ApparelDetail', { item: { ...item, match: modifiedMatch } })}>
-                                            <Ionicons name="information-circle-outline" size={18} color="#94A3B8" />
+                                        <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', { item: { ...item, img: item.image } })}>
+                                            <Ionicons name="information-circle-outline" size={22} color="#94A3B8" />
                                         </TouchableOpacity>
                                     </View>
 
@@ -239,9 +239,9 @@ export default function WardrobeScreen({ navigation }) {
                                             <Ionicons
                                                 name={w.type === 'alert' ? "alert-circle" : "information-circle"}
                                                 size={10}
-                                                color={w.type === 'alert' ? "#EF4444" : "#3B82F6"}
+                                                color={w.type === 'alert' ? "#EF4444" : "#000000"}
                                             />
-                                            <Text style={[styles.warningText, { color: w.type === 'alert' ? "#EF4444" : "#3B82F6" }]}>{w.text}</Text>
+                                            <Text style={[styles.warningText, { color: w.type === 'alert' ? "#EF4444" : "#000000" }]}>{w.text}</Text>
                                         </View>
                                     ))}
 
@@ -299,13 +299,13 @@ const styles = StyleSheet.create({
     locationPill: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 20,
     },
     locationText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '800',
         marginLeft: 6,
@@ -377,9 +377,9 @@ const styles = StyleSheet.create({
         borderColor: '#F1F5F9',
     },
     tagActive: {
-        backgroundColor: '#60A5FA',
-        borderColor: '#60A5FA',
-        shadowColor: '#60A5FA',
+        backgroundColor: '#333333',
+        borderColor: '#333333',
+        shadowColor: '#333333',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -417,8 +417,8 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
     },
     itemCardSelected: {
-        borderColor: '#3B82F6',
-        shadowColor: '#3B82F6',
+        borderColor: '#000000',
+        shadowColor: '#000000',
         shadowOpacity: 0.1,
     },
     imageContainer: {
@@ -466,7 +466,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 12,
         left: 12,
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 8,
@@ -524,7 +524,7 @@ const styles = StyleSheet.create({
     priceValueBlue: {
         fontSize: 14,
         fontWeight: '800',
-        color: '#38BDF8',
+        color: '#000000',
     },
     priceUnit: {
         fontSize: 10,
@@ -546,12 +546,12 @@ const styles = StyleSheet.create({
     },
     actionBtn: {
         flexDirection: 'row',
-        backgroundColor: '#4B8BF5',
+        backgroundColor: '#000000',
         borderRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 18,
-        shadowColor: '#4B8BF5',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 6 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

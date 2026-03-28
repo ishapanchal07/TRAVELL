@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         height: 36,
         borderRadius: 18,
         borderWidth: 2,
-        borderColor: '#3B82F6',
+        borderColor: '#000000',
         backgroundColor: '#FDE68A', // Yellowish base
         overflow: 'hidden',
     },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     },
     tabActive: {
         flex: 1,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         borderRadius: 12,
         paddingVertical: 12,
         alignItems: 'center',
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     happeningPill: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         alignSelf: 'flex-start',
         paddingHorizontal: 16,
         paddingVertical: 8,
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     },
     itineraryButton: {
         flexDirection: 'row',
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         borderRadius: 16,
         paddingVertical: 18,
         justifyContent: 'center',
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     seeAllText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 12,
         fontWeight: '700',
     },

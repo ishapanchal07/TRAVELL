@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions, Animated } from 'react-native';
 import { ImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -19,6 +19,27 @@ const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?
 export default function ExploreScreen({ navigation }) {
     const { isLoggedIn, hasSeenQuiz, markQuizSeen } = useAuth();
     const { activeTrip } = useTrip();
+
+    // Premium slide-up animation
+    const slideAnim = React.useRef(new Animated.Value(20)).current;
+    const fadeAnim = React.useRef(new Animated.Value(0)).current;
+
+    React.useEffect(() => {
+        if (!isLoggedIn) {
+            Animated.parallel([
+                Animated.timing(slideAnim, {
+                    toValue: 0,
+                    duration: 800,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(fadeAnim, {
+                    toValue: 1,
+                    duration: 800,
+                    useNativeDriver: true,
+                })
+            ]).start();
+        }
+    }, [isLoggedIn]);
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -39,13 +60,13 @@ export default function ExploreScreen({ navigation }) {
                             style={styles.iconCircle}
                             onPress={() => navigation.navigate('Camera')}
                         >
-                            <Ionicons name="camera-outline" size={22} color="#2563EB" />
+                            <Ionicons name="camera-outline" size={22} color="#222222" />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.iconCircle}
                             onPress={() => navigation.navigate('Notifications')}
                         >
-                            <Ionicons name="notifications-outline" size={22} color="#2563EB" />
+                            <Ionicons name="notifications-outline" size={22} color="#222222" />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -67,7 +88,7 @@ export default function ExploreScreen({ navigation }) {
                             style={styles.categoryIconCircle}
                             onPress={() => navigation.navigate('CityFood', { city: 'Paris' })}
                         >
-                            <MaterialCommunityIcons name="silverware-fork-knife" size={24} color="#2563EB" />
+                            <MaterialCommunityIcons name="silverware-fork-knife" size={24} color="#222222" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>FOOD</Text>
                     </View>
@@ -76,7 +97,7 @@ export default function ExploreScreen({ navigation }) {
                             style={styles.categoryIconCircle}
                             onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}
                         >
-                            <Ionicons name="map-outline" size={24} color="#2563EB" />
+                            <Ionicons name="map-outline" size={24} color="#222222" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>MAP</Text>
                     </View>
@@ -85,7 +106,7 @@ export default function ExploreScreen({ navigation }) {
                             style={styles.categoryIconCircle}
                             onPress={() => navigation.navigate('Guide', { city: 'Paris' })}
                         >
-                            <Ionicons name="document-text-outline" size={24} color="#2563EB" />
+                            <Ionicons name="document-text-outline" size={24} color="#222222" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>GUIDE</Text>
                     </View>
@@ -94,7 +115,7 @@ export default function ExploreScreen({ navigation }) {
                             style={styles.categoryIconCircle}
                             onPress={() => navigation.navigate('Saved')}
                         >
-                            <Ionicons name="heart-outline" size={24} color="#2563EB" />
+                            <Ionicons name="heart-outline" size={24} color="#222222" />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>SAVED</Text>
                     </View>
@@ -196,55 +217,63 @@ export default function ExploreScreen({ navigation }) {
                     </TouchableOpacity>
                 </ScrollView>
 
-                {/* Action Banner */}
-                {!hasSeenQuiz && (
-                    !isLoggedIn ? (
+                {/* Premium Unlock Banner */}
+                {!isLoggedIn && (
+                    <Animated.View style={{ 
+                        opacity: fadeAnim, 
+                        transform: [{ translateY: slideAnim }],
+                        paddingHorizontal: 20,
+                        marginTop: 25,
+                        marginBottom: 30
+                    }}>
                         <TouchableOpacity
-                            style={[styles.bannerContainer, { backgroundColor: '#0F172A' }]}
+                            style={styles.premiumBannerContainer}
                             activeOpacity={0.9}
                             onPress={() => navigation.navigate('Login')}
                         >
                             <View style={styles.bannerTextContent}>
-                                <Text style={styles.bannerTitle}>Unlock full access</Text>
-                                <Text style={styles.bannerDesc}>Login to unlock all places, food, clothes, and exclusive travel guides.</Text>
-                                <View style={styles.bannerButton}>
-                                    <Text style={[styles.bannerButtonText, { color: '#0F172A' }]}>Login to unlock</Text>
+                                <Text style={styles.premiumBannerTitle}>Unlock full access</Text>
+                                <Text style={styles.premiumBannerDesc}>Login to unlock all places, food, clothes, and exclusive travel guides.</Text>
+                                <View style={styles.premiumBannerButton}>
+                                    <Text style={styles.premiumBannerButtonText}>Login to unlock</Text>
                                 </View>
                             </View>
                             <View style={styles.bannerIconBox}>
-                                <Ionicons name="lock-closed" size={80} color="rgba(255,255,255,0.15)" />
+                                <Ionicons name="lock-closed" size={70} color="rgba(255,255,255,0.08)" />
                             </View>
                         </TouchableOpacity>
-                    ) : (
-                        <View style={styles.bannerContainer}>
-                            <TouchableOpacity 
-                                style={{ position: 'absolute', top: 12, right: 15, zIndex: 10 }}
-                                onPress={markQuizSeen}
-                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                            >
-                                <Ionicons name="close" size={20} color="rgba(255,255,255,0.5)" />
-                            </TouchableOpacity>
-                            <View style={styles.bannerTextContent}>
-                                <Text style={styles.bannerTitle}>Zero luggage,</Text>
-                                <Text style={styles.bannerTitle}>total style.</Text>
-                                <Text style={styles.bannerDesc}>Rent curated outfits based on your destination's vibe.</Text>
+                    </Animated.View>
+                )}
 
-                                <TouchableOpacity 
-                                    style={styles.bannerButton} 
-                                    activeOpacity={0.8}
-                                    onPress={() => {
-                                        markQuizSeen();
-                                        navigation.navigate('FiltersPreferences');
-                                    }}
-                                >
-                                    <Text style={styles.bannerButtonText}>Start Style Quiz</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.bannerIconBox}>
-                                <MaterialCommunityIcons name="hanger" size={80} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '15deg' }] }} />
-                            </View>
+                {/* Style Quiz Banner */}
+                {isLoggedIn && !hasSeenQuiz && (
+                    <View style={styles.bannerContainer}>
+                        <TouchableOpacity 
+                            style={{ position: 'absolute', top: 12, right: 15, zIndex: 10 }}
+                            onPress={markQuizSeen}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                        >
+                            <Ionicons name="close" size={20} color="rgba(255,255,255,0.5)" />
+                        </TouchableOpacity>
+                        <View style={styles.bannerTextContent}>
+                            <Text style={styles.bannerTitle}>Zero luggage,</Text>
+                            <Text style={styles.bannerTitle}>total style.</Text>
+                            <Text style={styles.bannerDesc}>Rent curated outfits based on your destination's vibe.</Text>
+                            <TouchableOpacity 
+                                style={styles.bannerButton} 
+                                activeOpacity={0.8}
+                                onPress={() => {
+                                    markQuizSeen();
+                                    navigation.navigate('FiltersPreferences');
+                                }}
+                            >
+                                <Text style={styles.bannerButtonText}>Start Style Quiz</Text>
+                            </TouchableOpacity>
                         </View>
-                    )
+                        <View style={styles.bannerIconBox}>
+                            <MaterialCommunityIcons name="hanger" size={80} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '15deg' }] }} />
+                        </View>
+                    </View>
                 )}
 
             </ScrollView>
@@ -292,7 +321,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 12,
@@ -375,7 +404,7 @@ const styles = StyleSheet.create({
     seeAllText: {
         fontSize: 13,
         fontWeight: '600',
-        color: '#3B82F6',
+        color: '#000000',
     },
     destinationCard: {
         width: width * 0.6,
@@ -427,17 +456,17 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
 
-    // Banner
+    // Banners
     bannerContainer: {
         marginTop: 30,
-        backgroundColor: '#3B82F6', // Vibrant Blue
+        backgroundColor: '#7C3AED', // Purple for Quiz
         borderRadius: 24,
         padding: 24,
         flexDirection: 'row',
         alignItems: 'center',
         overflow: 'hidden',
         position: 'relative',
-        shadowColor: '#3B82F6',
+        shadowColor: '#7C3AED',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.3,
         shadowRadius: 15,
@@ -469,7 +498,47 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     bannerButtonText: {
-        color: '#2563EB',
+        color: '#222222',
+        fontWeight: '800',
+        fontSize: 14,
+    },
+    premiumBannerContainer: {
+        backgroundColor: '#0F172A',
+        borderRadius: 24,
+        padding: 24,
+        flexDirection: 'row',
+        alignItems: 'center',
+        overflow: 'hidden',
+        position: 'relative',
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.3,
+        shadowRadius: 15,
+        elevation: 8,
+    },
+    premiumBannerTitle: {
+        color: '#FFFFFF',
+        fontSize: 22,
+        fontWeight: '800',
+        letterSpacing: -0.5,
+    },
+    premiumBannerDesc: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 14,
+        marginTop: 10,
+        marginBottom: 20,
+        lineHeight: 20,
+        paddingRight: 20,
+    },
+    premiumBannerButton: {
+        backgroundColor: '#FFFFFF',
+        alignSelf: 'flex-start',
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderRadius: 20,
+    },
+    premiumBannerButtonText: {
+        color: '#0F172A',
         fontWeight: '800',
         fontSize: 14,
     },
@@ -477,7 +546,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: -10,
         bottom: -15,
-        marginBottom: 4,
     },
     navText: {
         fontSize: 9,
@@ -486,7 +554,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     activeNavText: {
-        color: '#2563EB',
+        color: '#222222',
         marginTop: 0,
     },
 });

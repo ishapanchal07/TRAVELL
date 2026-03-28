@@ -14,17 +14,26 @@ export default function FoodDetailScreen({ route, navigation }) {
 
     // Default values if item is empty
     const {
-        name = 'Classic Beef Bourguignon',
-        image = FOOD_HERO_IMG,
-        price = '$28.00',
-        rating = '4.9',
-        description = 'Traditional Parisian beef stew slow-cooked in red wine with pearl onions and mushrooms.',
-        subtitle = 'Traditional Parisian Bistro • 45 min'
+        name = item.title || 'Classic Beef Bourguignon',
+        image = item.image || item.img || FOOD_HERO_IMG,
+        price = item.price || '$28.00',
+        rating = item.rating || '4.9',
+        description = item.desc || item.description || 'Traditional Parisian beef stew slow-cooked in red wine with pearl onions and mushrooms.',
+        subtitle = item.sub || item.subtitle || 'Traditional Parisian Bistro • 45 min'
     } = item;
 
+    const [quantity, setQuantity] = useState(1);
     const [dietary, setDietary] = useState('Non-Veg');
     const [addons, setAddons] = useState({ baguette: false, salad: true });
     const [deliveryLoc, setDeliveryLoc] = useState('Hotel');
+
+    // Parse base price
+    const basePriceNum = parseFloat(price.replace(/[^0-9.]/g, '') || '28');
+    const addonPrice = (addons.baguette ? 2.5 : 0) + (addons.salad ? 4.0 : 0);
+    const deliveryFee = 2.0;
+    const totalPrice = ((basePriceNum + addonPrice) * quantity) + deliveryFee;
+
+    const currencySymbol = price.includes('€') ? '€' : price.includes('CHF') ? 'CHF ' : price.includes('AED') ? 'AED ' : '$';
 
     return (
         <View style={styles.container}>
@@ -71,11 +80,36 @@ export default function FoodDetailScreen({ route, navigation }) {
                 {/* Local Guide Tip */}
                 <View style={styles.tipCard}>
                     <View style={styles.tipIconBox}>
-                        <Ionicons name="happy" size={24} color="#3B82F6" />
+                        <Ionicons name="happy" size={24} color="#000000" />
                     </View>
                     <View style={styles.tipContent}>
                         <Text style={styles.tipTitle}>LOCAL GUIDE TIP</Text>
                         <Text style={styles.tipText}>"{description || "In Paris, this is a quintessential dinner staple. Pairs perfectly with a Bordeaux wine."}"</Text>
+                    </View>
+                </View>
+
+                {/* Quantity Selector */}
+                <View style={[styles.section, { marginTop: 20 }]}>
+                    <View style={styles.quantityContainer}>
+                        <View>
+                            <Text style={styles.sectionTitle}>Select Quantity</Text>
+                            <Text style={styles.miniHeader}>HOW MANY SERVINGS?</Text>
+                        </View>
+                        <View style={styles.quantityControls}>
+                            <TouchableOpacity 
+                                style={styles.qtyBtn} 
+                                onPress={() => setQuantity(Math.max(1, quantity - 1))}
+                            >
+                                <Ionicons name="remove" size={20} color="#000000" />
+                            </TouchableOpacity>
+                            <Text style={styles.qtyText}>{quantity}</Text>
+                            <TouchableOpacity 
+                                style={styles.qtyBtn} 
+                                onPress={() => setQuantity(quantity + 1)}
+                            >
+                                <Ionicons name="add" size={20} color="#000000" />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 
@@ -89,14 +123,14 @@ export default function FoodDetailScreen({ route, navigation }) {
                             style={[styles.dietOption, dietary === 'Non-Veg' ? styles.dietOptionActive : null]}
                             onPress={() => setDietary('Non-Veg')}
                         >
-                            <MaterialCommunityIcons name="silverware-fork-knife" size={20} color={dietary === 'Non-Veg' ? '#3B82F6' : '#94A3B8'} />
+                            <MaterialCommunityIcons name="silverware-fork-knife" size={20} color={dietary === 'Non-Veg' ? '#000000' : '#94A3B8'} />
                             <Text style={[styles.dietText, dietary === 'Non-Veg' ? styles.dietTextActive : null]}>Non-Veg</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[styles.dietOption, dietary === 'Veg' ? styles.dietOptionActive : null]}
                             onPress={() => setDietary('Veg')}
                         >
-                            <MaterialCommunityIcons name="leaf" size={20} color={dietary === 'Veg' ? '#3B82F6' : '#94A3B8'} />
+                            <MaterialCommunityIcons name="leaf" size={20} color={dietary === 'Veg' ? '#000000' : '#94A3B8'} />
                             <Text style={[styles.dietText, dietary === 'Veg' ? styles.dietTextActive : null]}>Veg Option</Text>
                         </TouchableOpacity>
                     </View>
@@ -104,7 +138,7 @@ export default function FoodDetailScreen({ route, navigation }) {
                     {/* Addons */}
                     <View style={styles.addonItem}>
                         <View style={styles.addonIconBox}>
-                            <MaterialCommunityIcons name="baguette" size={22} color="#3B82F6" />
+                            <MaterialCommunityIcons name="baguette" size={22} color="#000000" />
                         </View>
                         <View style={styles.addonInfo}>
                             <Text style={styles.addonTitle}>Extra Baguette</Text>
@@ -112,13 +146,13 @@ export default function FoodDetailScreen({ route, navigation }) {
                         </View>
                         <Text style={styles.addonPrice}>+$2.50</Text>
                         <TouchableOpacity style={styles.addonToggle} onPress={() => setAddons({ ...addons, baguette: !addons.baguette })}>
-                            <Ionicons name={addons.baguette ? "checkmark-circle" : "add"} size={addons.baguette ? 30 : 24} color={addons.baguette ? "#3B82F6" : "#E2E8F0"} />
+                            <Ionicons name={addons.baguette ? "checkmark-circle" : "add"} size={addons.baguette ? 30 : 24} color={addons.baguette ? "#000000" : "#E2E8F0"} />
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.addonItem}>
                         <View style={styles.addonIconBox}>
-                            <Ionicons name="leaf" size={20} color="#3B82F6" />
+                            <Ionicons name="leaf" size={20} color="#000000" />
                         </View>
                         <View style={styles.addonInfo}>
                             <Text style={styles.addonTitle}>Side Salad</Text>
@@ -126,7 +160,7 @@ export default function FoodDetailScreen({ route, navigation }) {
                         </View>
                         <Text style={styles.addonPrice}>+$4.00</Text>
                         <TouchableOpacity style={styles.addonToggle} onPress={() => setAddons({ ...addons, salad: !addons.salad })}>
-                            <Ionicons name={addons.salad ? "checkmark-circle" : "add"} size={addons.salad ? 30 : 24} color={addons.salad ? "#3B82F6" : "#E2E8F0"} />
+                            <Ionicons name={addons.salad ? "checkmark-circle" : "add"} size={addons.salad ? 30 : 24} color={addons.salad ? "#000000" : "#E2E8F0"} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -139,19 +173,19 @@ export default function FoodDetailScreen({ route, navigation }) {
                             style={[styles.locationTab, deliveryLoc === 'Hotel' ? styles.locationTabActive : null]}
                             onPress={() => setDeliveryLoc('Hotel')}
                         >
-                            <Ionicons name="bed" size={20} color={deliveryLoc === 'Hotel' ? '#3B82F6' : '#94A3B8'} style={{ marginRight: 8 }} />
+                            <Ionicons name="bed" size={20} color={deliveryLoc === 'Hotel' ? '#000000' : '#94A3B8'} style={{ marginRight: 8 }} />
                             <Text style={[styles.locationTabText, deliveryLoc === 'Hotel' ? styles.locationTabTextActive : null]}>Hotel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[styles.locationTab, deliveryLoc === 'Picnic' ? styles.locationTabActive : null]}
                             onPress={() => setDeliveryLoc('Picnic')}
                         >
-                            <FontAwesome5 name="umbrella-beach" size={16} color={deliveryLoc === 'Picnic' ? '#3B82F6' : '#94A3B8'} style={{ marginRight: 8 }} />
+                            <FontAwesome5 name="umbrella-beach" size={16} color={deliveryLoc === 'Picnic' ? '#000000' : '#94A3B8'} style={{ marginRight: 8 }} />
                             <Text style={[styles.locationTabText, deliveryLoc === 'Picnic' ? styles.locationTabTextActive : null]}>Seine Picnic</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.locDisplay}>
-                        <Ionicons name="location" size={16} color="#3B82F6" style={{ marginRight: 8 }} />
+                        <Ionicons name="location" size={16} color="#000000" style={{ marginRight: 8 }} />
                         <Text style={styles.locDisplayText}>Hôtel Lutetia, 45 Bd Raspail, 75006 Paris</Text>
                     </View>
                 </View>
@@ -178,17 +212,41 @@ export default function FoodDetailScreen({ route, navigation }) {
 
                     <View style={styles.totalRow}>
                         <Text style={styles.totalLabel}>Total Amount</Text>
-                        <Text style={styles.totalPrice}>$34.00</Text>
+                        <Text style={styles.totalPrice}>{currencySymbol}{totalPrice.toFixed(2)}</Text>
                     </View>
                 </View>
 
-                <TouchableOpacity
-                    style={styles.placeOrderBtn}
-                    activeOpacity={0.8}
-                    onPress={() => navigation.navigate('OrderTracking', { orderItem: { name, image } })}
-                >
-                    <Text style={styles.placeOrderText}>PLACE ORDER • $34.00</Text>
-                </TouchableOpacity>
+                <View style={styles.footerBtnsContainer}>
+                    <TouchableOpacity
+                        style={styles.addToCartBtn}
+                        onPress={() => {
+                            import('react-native').then(({ Alert }) => {
+                                Alert.alert("Success", "Added to Cart!");
+                            });
+                        }}
+                    >
+                        <Feather name="shopping-cart" size={18} color="#000000" style={{ marginRight: 8 }} />
+                        <Text style={styles.addToCartText}>Add to Cart</Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                        style={styles.placeOrderBtnExpanded}
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            import('react-native').then(({ Alert }) => {
+                                Alert.alert(
+                                    "Order Confirmed",
+                                    "Order Placed Successfully!",
+                                    [
+                                        { text: "OK", onPress: () => navigation.navigate('OrderTracking', { orderItem: { name, image } }) }
+                                    ]
+                                );
+                            });
+                        }}
+                    >
+                        <Text style={styles.placeOrderText}>Buy Now</Text>
+                    </TouchableOpacity>
+                </View>
 
             </ScrollView>
 
@@ -240,7 +298,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     topRatedBadge: {
-        backgroundColor: '#0EA5E9',
+        backgroundColor: '#000000',
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 8,
@@ -294,7 +352,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     tipCard: {
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         marginHorizontal: 24,
         marginTop: -30,
         borderRadius: 24,
@@ -302,7 +360,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         zIndex: 10,
         borderWidth: 1,
-        borderColor: '#BAE6FD',
+        borderColor: '#E2E8F0',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.05,
@@ -313,7 +371,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 16,
@@ -324,7 +382,7 @@ const styles = StyleSheet.create({
     tipTitle: {
         fontSize: 10,
         fontWeight: '900',
-        color: '#0EA5E9',
+        color: '#000000',
         letterSpacing: 0.5,
         marginBottom: 4,
     },
@@ -369,9 +427,9 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     dietOptionActive: {
-        borderColor: '#3B82F6',
+        borderColor: '#000000',
         backgroundColor: 'white',
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.05,
         shadowRadius: 10,
@@ -382,7 +440,7 @@ const styles = StyleSheet.create({
         color: '#64748B',
     },
     dietTextActive: {
-        color: '#3B82F6',
+        color: '#000000',
     },
     addonItem: {
         flexDirection: 'row',
@@ -398,7 +456,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 16,
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
@@ -419,7 +477,7 @@ const styles = StyleSheet.create({
     addonPrice: {
         fontSize: 15,
         fontWeight: '700',
-        color: '#3B82F6',
+        color: '#000000',
         marginRight: 12,
     },
     locationTabs: {
@@ -446,7 +504,7 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 2,
         borderWidth: 1,
-        borderColor: '#3B82F6',
+        borderColor: '#000000',
     },
     locationTabText: {
         fontSize: 15,
@@ -489,7 +547,7 @@ const styles = StyleSheet.create({
     billValueAddon: {
         fontSize: 16,
         fontWeight: '800',
-        color: '#3B82F6',
+        color: '#000000',
     },
     ecoBadge: {
         backgroundColor: '#DCFCE7',
@@ -526,25 +584,86 @@ const styles = StyleSheet.create({
     totalPrice: {
         fontSize: 28,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
     },
-    placeOrderBtn: {
-        backgroundColor: '#38BDF8',
-        marginHorizontal: 24,
-        marginTop: 40,
-        paddingVertical: 20,
-        borderRadius: 24,
+    placeOrderBtnExpanded: {
+        backgroundColor: '#000000',
+        flex: 1.5,
+        height: 60,
+        borderRadius: 20,
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#38BDF8',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.3,
-        shadowRadius: 20,
-        elevation: 8,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.2,
+        shadowRadius: 12,
+        elevation: 6,
     },
     placeOrderText: {
         color: 'white',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '900',
         letterSpacing: 0.5,
+    },
+    quantityContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 24,
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
+    },
+    quantityControls: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#F8FAFC',
+        padding: 5,
+        borderRadius: 16,
+    },
+    qtyBtn: {
+        width: 40,
+        height: 40,
+        borderRadius: 12,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 5,
+    },
+    qtyText: {
+        fontSize: 18,
+        fontWeight: '900',
+        marginHorizontal: 15,
+        minWidth: 25,
+        textAlign: 'center',
+        color: '#0F172A',
+    },
+    footerBtnsContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: 24,
+        marginTop: 40,
+        gap: 12,
+        alignItems: 'center',
+    },
+    addToCartBtn: {
+        flex: 1,
+        height: 60,
+        borderRadius: 20,
+        borderWidth: 1.5,
+        borderColor: '#E2E8F0',
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    addToCartText: {
+        color: '#0F172A',
+        fontSize: 16,
+        fontWeight: '800',
     },
 });

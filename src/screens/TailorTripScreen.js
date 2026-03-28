@@ -88,9 +88,9 @@ export default function TailorTripScreen({ navigation }) {
                             maximumValue={1}
                             value={safetySens}
                             onValueChange={setSafetySens}
-                            minimumTrackTintColor="#38BDF8"
+                            minimumTrackTintColor="#000000"
                             maximumTrackTintColor="#F1F5F9"
-                            thumbTintColor="#38BDF8"
+                            thumbTintColor="#000000"
                         />
                         <View style={styles.sliderBottomRow}>
                             <Text style={styles.sliderEndpoint}>NORMAL</Text>
@@ -110,9 +110,9 @@ export default function TailorTripScreen({ navigation }) {
                             maximumValue={1}
                             value={activityInt}
                             onValueChange={setActivityInt}
-                            minimumTrackTintColor="#38BDF8"
+                            minimumTrackTintColor="#000000"
                             maximumTrackTintColor="#F1F5F9"
-                            thumbTintColor="#38BDF8"
+                            thumbTintColor="#000000"
                         />
                         <View style={styles.sliderBottomRow}>
                             <Text style={styles.sliderEndpoint}>CHILL</Text>
@@ -189,13 +189,13 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     tripPill: {
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 20,
     },
     tripPillText: {
-        color: '#0EA5E9',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '800',
         letterSpacing: 0.5,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     mainTitleBlue: {
         fontSize: 32,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
         lineHeight: 38,
         letterSpacing: -0.5,
     },
@@ -259,9 +259,9 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
     },
     radioItemActive: {
-        borderColor: '#38BDF8',
+        borderColor: '#000000',
         backgroundColor: 'white',
-        shadowColor: '#0EA5E9',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
         color: '#334155',
     },
     radioTextActive: {
-        color: '#0369A1',
+        color: '#000000',
     },
     radioCircle: {
         width: 20,
@@ -285,13 +285,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     radioCircleActive: {
-        borderColor: '#0EA5E9',
+        borderColor: '#000000',
     },
     radioInnerCircle: {
         width: 10,
         height: 10,
         borderRadius: 5,
-        backgroundColor: '#0EA5E9',
+        backgroundColor: '#000000',
     },
 
     // Sliders
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     sliderValueText: {
         fontSize: 10,
         fontWeight: '800',
-        color: '#0EA5E9',
+        color: '#000000',
     },
     sliderTrack: {
         width: '100%',
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     },
     sliderFill: {
         height: '100%',
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         borderRadius: 3,
     },
     sliderThumb: {
@@ -332,9 +332,9 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderRadius: 10,
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         marginLeft: -10, // Center thumb
-        shadowColor: '#0EA5E9',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 4,
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
         color: '#64748B',
     },
     segmentTextActive: {
-        color: '#0EA5E9',
+        color: '#000000',
     },
 
     // Bottom Btn
@@ -397,12 +397,12 @@ const styles = StyleSheet.create({
     },
     primaryBtn: {
         flexDirection: 'row',
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 18,
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

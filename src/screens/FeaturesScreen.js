@@ -14,11 +14,11 @@ const FeatureCard = ({ iconName, iconLib, title, description }) => {
         <View style={styles.card}>
             <View style={styles.iconContainer}>
                 {iconLib === 'Feather' ? (
-                    <Feather name={iconName} size={28} color="#4b9ffc" />
+                    <Feather name={iconName} size={28} color="#000000" />
                 ) : iconLib === 'MaterialCommunityIcons' ? (
-                    <MaterialCommunityIcons name={iconName} size={30} color="#4b9ffc" />
+                    <MaterialCommunityIcons name={iconName} size={30} color="#000000" />
                 ) : (
-                    <MaterialIcons name={iconName} size={30} color="#4b9ffc" />
+                    <MaterialIcons name={iconName} size={30} color="#000000" />
                 )}
             </View>
             <View style={styles.textContainer}>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         width: 32,
         height: 32,
         borderRadius: 16,
-        backgroundColor: '#61aaff',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         width: 56,
         height: 56,
         borderRadius: 18,
-        backgroundColor: '#eaf4ff',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cardTitle: {
-        color: '#4b9ffc',
+        color: '#000000',
         fontSize: 14,
         fontWeight: 'bold',
         marginBottom: 6,
@@ -188,13 +188,13 @@ const styles = StyleSheet.create({
     },
     button: {
         flexDirection: 'row',
-        backgroundColor: '#4b9ffc',
+        backgroundColor: '#000000',
         width: width * 0.8,
         paddingVertical: 18,
         borderRadius: 30, // Highly rounded pill button
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#4b9ffc',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 6 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

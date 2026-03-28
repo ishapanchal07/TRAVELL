@@ -58,7 +58,10 @@ export default function AllClothesScreen({ route, navigation }) {
                                 <View style={styles.infoCont}>
                                     <Text style={styles.itemTitle}>{item.title}</Text>
                                     <Text style={styles.itemType}>{item.type}</Text>
-                                    <TouchableOpacity style={styles.rentBtn}>
+                                    <TouchableOpacity 
+                                        style={styles.rentBtn}
+                                        onPress={() => navigation.navigate('ProductDetail', { item })}
+                                    >
                                         <Text style={styles.rentBtnText}>Rent Now</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     },
     itemType: {
         fontSize: 11,
-        color: '#3B82F6',
+        color: '#000000',
         fontWeight: '700',
         marginBottom: 12,
     },
@@ -219,7 +222,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     unlockBtn: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 25,
         paddingVertical: 12,
         borderRadius: 15,

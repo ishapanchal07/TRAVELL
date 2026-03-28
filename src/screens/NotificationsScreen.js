@@ -14,8 +14,8 @@ const NOTIFICATIONS = [
         time: '2m ago',
         isNew: true,
         icon: 'hanger',
-        iconColor: '#3B82F6',
-        bgColor: '#EFF6FF',
+        iconColor: '#000000',
+        bgColor: '#F8FAFC',
     },
     {
         id: '2',
@@ -47,8 +47,8 @@ const NOTIFICATIONS = [
         time: '3h ago',
         isNew: false,
         icon: 'weather-sunny',
-        iconColor: '#0EA5E9',
-        bgColor: '#F0F9FF',
+        iconColor: '#000000',
+        bgColor: '#F8FAFC',
     },
     {
         id: '5',
@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
         borderColor: '#F1F5F9',
     },
     chipActive: {
-        backgroundColor: '#3B82F6',
-        borderColor: '#3B82F6',
+        backgroundColor: '#000000',
+        borderColor: '#000000',
     },
     chipText: {
         fontSize: 14,
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         marginLeft: 10,
     }
 });

@@ -61,11 +61,11 @@ export default function TransactionsScreen({ navigation }) {
 
     const renderIcon = (item) => {
         if (item.iconType === 'Feather') {
-            return <Feather name={item.icon} size={22} color="#3B82F6" />;
+            return <Feather name={item.icon} size={22} color="#000000" />;
         } else if (item.iconType === 'MaterialCommunityIcons') {
-            return <MaterialCommunityIcons name={item.icon} size={24} color="#3B82F6" />;
+            return <MaterialCommunityIcons name={item.icon} size={24} color="#000000" />;
         }
-        return <Feather name="box" size={22} color="#3B82F6" />;
+        return <Feather name="box" size={22} color="#000000" />;
     };
 
     const groupedTransactions = TRANSACTIONS.reduce((acc, curr) => {
@@ -98,7 +98,7 @@ export default function TransactionsScreen({ navigation }) {
                             style={styles.searchInput}
                         />
                         <TouchableOpacity style={styles.filterIconBox}>
-                            <MaterialCommunityIcons name="filter-variant" size={20} color="#3B82F6" />
+                            <MaterialCommunityIcons name="filter-variant" size={20} color="#000000" />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -149,7 +149,7 @@ export default function TransactionsScreen({ navigation }) {
                     <View style={styles.summaryMainRow}>
                         <Text style={styles.summaryTotal}>$180.00</Text>
                         <View style={styles.growthBadge}>
-                            <Feather name="trending-up" size={14} color="#60A5FA" style={{ marginRight: 6 }} />
+                            <Feather name="trending-up" size={14} color="#333333" style={{ marginRight: 6 }} />
                             <Text style={styles.growthText}>12% vs last month</Text>
                         </View>
                     </View>
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 8,
@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
         borderRadius: 25,
     },
     tabActive: {
-        backgroundColor: '#4AA5FC',
-        shadowColor: '#4AA5FC',
+        backgroundColor: '#000000',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
         width: 54,
         height: 54,
         borderRadius: 27,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
         marginBottom: 6,
     },
     statusPill: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 12,
         paddingVertical: 4,
         borderRadius: 12,
@@ -330,17 +330,17 @@ const styles = StyleSheet.create({
     statusText: {
         fontSize: 9,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
     },
     statusTextPending: {
         color: '#64748B',
     },
     summaryCard: {
-        backgroundColor: '#4AA5FC',
+        backgroundColor: '#000000',
         borderRadius: 35,
         padding: 30,
         marginTop: 10,
-        shadowColor: '#4AA5FC',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 20 },
         shadowOpacity: 0.3,
         shadowRadius: 30,

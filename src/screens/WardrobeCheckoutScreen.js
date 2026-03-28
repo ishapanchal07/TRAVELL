@@ -51,7 +51,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
 
                 {/* CO2 Savings Badge */}
                 <View style={styles.co2Badge}>
-                    <Ionicons name="leaf" size={14} color="#3B82F6" />
+                    <Ionicons name="leaf" size={14} color="#000000" />
                     <Text style={styles.co2Text}>YOU SAVED {(itemCount * 4.1).toFixed(1)}KG OF CO2</Text>
                 </View>
 
@@ -84,7 +84,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                         <Text style={styles.tripDate}>{currentYear}</Text>
                     </View>
                     <View style={styles.planeIconBox}>
-                        <Ionicons name="airplane" size={20} color="#3B82F6" />
+                        <Ionicons name="airplane" size={20} color="#000000" />
                     </View>
                     <View style={styles.tripCol}>
                         <Text style={styles.tripLabelEnd}>END TRIP</Text>
@@ -97,7 +97,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                 <Text style={styles.sectionTitleInside}>Delivery Location</Text>
                 <View style={styles.locationCard}>
                     <View style={styles.hotelPill}>
-                        <Ionicons name="bed" size={20} color="#3B82F6" />
+                        <Ionicons name="bed" size={20} color="#000000" />
                         <Text style={styles.hotelName}>Hôtel Lutetia, Paris</Text>
                     </View>
 
@@ -111,7 +111,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                         />
                         <View style={styles.mapOverlay} />
                         <View style={styles.mapPin}>
-                            <Ionicons name="location" size={20} color="#3B82F6" />
+                            <Ionicons name="location" size={20} color="#000000" />
                         </View>
                     </View>
                 </View>
@@ -158,7 +158,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                             <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
                         </View>
                         <View style={styles.roamPointsBadge}>
-                            <MaterialCommunityIcons name="star-circle" size={16} color="#3B82F6" />
+                            <MaterialCommunityIcons name="star-circle" size={16} color="#000000" />
                             <Text style={styles.roamPointsText}>+{Math.floor(total)} ROAM POINTS</Text>
                         </View>
                     </View>
@@ -185,7 +185,7 @@ function ScheduleItem({ icon, title, subtitle, note, isFirst, isLast }) {
         <View style={styles.scheduleRow}>
             <View style={styles.scheduleLeft}>
                 <View style={styles.iconCircle}>
-                    <MaterialCommunityIcons name={icon} size={18} color="#3B82F6" />
+                    <MaterialCommunityIcons name={icon} size={18} color="#000000" />
                 </View>
                 {!isLast && <View style={styles.verticalLine} />}
             </View>
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         alignSelf: 'center',
         paddingHorizontal: 20,
         paddingVertical: 10,
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     co2Text: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 11,
         fontWeight: '900',
         marginLeft: 8,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     itemsCount: {
         fontSize: 12,
         fontWeight: '700',
-        color: '#3B82F6',
+        color: '#000000',
     },
     curatedScroll: {
         paddingLeft: 24,
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 15,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 2,
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     verticalLine: {
         width: 1,
         flex: 1,
-        backgroundColor: '#DBEAFE',
+        backgroundColor: '#F1F5F9',
         marginVertical: -5,
     },
     scheduleContent: {
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     },
     scheduleNote: {
         fontSize: 13,
-        color: '#3B82F6',
+        color: '#000000',
         fontWeight: '700',
     },
     priceCard: {
@@ -492,30 +492,30 @@ const styles = StyleSheet.create({
     totalPrice: {
         fontSize: 34,
         fontWeight: '900',
-        color: '#3B82F6',
+        color: '#000000',
     },
     roamPointsBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 15,
     },
     roamPointsText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 11,
         fontWeight: '900',
         marginLeft: 6,
     },
     bookBtn: {
         flexDirection: 'row',
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         paddingVertical: 22,
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#60A5FA',
+        shadowColor: '#333333',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.3,
         shadowRadius: 20,

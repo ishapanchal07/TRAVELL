@@ -53,7 +53,7 @@ export default function LocationDetailsScreen({ navigation }) {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.pillInactive}>
-                            <MaterialCommunityIcons name="silverware-fork-knife" size={16} color="#3B82F6" />
+                            <MaterialCommunityIcons name="silverware-fork-knife" size={16} color="#000000" />
                             <Text style={styles.pillInactiveText}>Trending Food</Text>
                         </TouchableOpacity>
                     </View>
@@ -71,7 +71,7 @@ export default function LocationDetailsScreen({ navigation }) {
                         </View>
 
                         <View style={styles.locationRow}>
-                            <Ionicons name="location" size={14} color="#3B82F6" />
+                            <Ionicons name="location" size={14} color="#000000" />
                             <Text style={styles.locationText}>4th Arrondissement • 150m{'\n'}away</Text>
                         </View>
 
@@ -87,7 +87,7 @@ export default function LocationDetailsScreen({ navigation }) {
 
                             <View style={styles.dataBox}>
                                 <Text style={styles.dataBoxLabel}>LIGHT MOOD</Text>
-                                <Ionicons name="sunny" size={20} color="#3B82F6" style={{ marginTop: 6, marginBottom: 4 }} />
+                                <Ionicons name="sunny" size={20} color="#000000" style={{ marginTop: 6, marginBottom: 4 }} />
                                 <Text style={styles.dataBoxValueDark} numberOfLines={1}>Classic ...</Text>
                             </View>
 
@@ -144,7 +144,7 @@ export default function LocationDetailsScreen({ navigation }) {
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.navItem}>
-                                <MaterialCommunityIcons name="hanger" size={26} color="#38BDF8" />
+                                <MaterialCommunityIcons name="hanger" size={26} color="#000000" />
                                 <Text style={styles.navLabelActive}>WARDROBE</Text>
                             </TouchableOpacity>
 
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 24,
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        tintColor: '#38BDF8', // Based on the mock which uses a blue generic user icon in a circle
+        tintColor: '#000000', // Based on the mock which uses a blue generic user icon in a circle
     },
     pillsRow: {
         flexDirection: 'row',
@@ -241,12 +241,12 @@ const styles = StyleSheet.create({
     pillActive: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         paddingHorizontal: 16,
         paddingVertical: 10,
         borderRadius: 20,
         marginRight: 10,
-        shadowColor: '#60A5FA',
+        shadowColor: '#333333',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -367,13 +367,13 @@ const styles = StyleSheet.create({
     progressBarFill: {
         width: '70%',
         height: 4,
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         borderRadius: 2,
     },
     dataBoxValueBlue: {
         fontSize: 14,
         fontWeight: '700',
-        color: '#38BDF8',
+        color: '#000000',
         marginTop: 2,
     },
     dataBoxValueDark: {
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     viewLookbookText: {
         fontSize: 10,
         fontWeight: '800',
-        color: '#38BDF8',
+        color: '#000000',
         letterSpacing: 0.5,
         textDecorationLine: 'underline',
     },
@@ -451,14 +451,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     rentTag: {
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 8,
         marginRight: 8,
     },
     rentTagText: {
-        color: '#38BDF8',
+        color: '#000000',
         fontSize: 8,
         fontWeight: '800',
     },
@@ -476,12 +476,12 @@ const styles = StyleSheet.create({
 
     primaryBtn: {
         flexDirection: 'row',
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 18,
-        shadowColor: '#60A5FA',
+        shadowColor: '#333333',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 10,
@@ -528,7 +528,7 @@ const styles = StyleSheet.create({
     },
     navLabelActive: {
         fontSize: 8,
-        color: '#38BDF8',
+        color: '#000000',
         fontWeight: '700',
         marginTop: 2,
     },
@@ -541,10 +541,10 @@ const styles = StyleSheet.create({
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: '#60A5FA',
+        backgroundColor: '#333333',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#3B82F6',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 10,

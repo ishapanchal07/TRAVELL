@@ -65,22 +65,36 @@ export default function SocialVibesScreen({ navigation }) {
 
                 {/* Search Bar */}
                 <View style={styles.searchContainer}>
-                    <Feather name="search" size={20} color="#38BDF8" style={styles.searchIcon} />
+                    <Feather name="search" size={20} color="#000000" style={styles.searchIcon} />
                     <TextInput
                         placeholder="Search your mood..."
                         placeholderTextColor="#94A3B8"
                         style={styles.searchInput}
                     />
-                    <Feather name="sliders" size={20} color="#38BDF8" style={styles.filterIcon} />
+                    <Feather name="sliders" size={20} color="#000000" style={styles.filterIcon} />
                 </View>
 
                 {/* Golden Hour Glow */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Golden Hour Glow</Text>
-                    <TouchableOpacity><Text style={styles.seeAllText}>See all</Text></TouchableOpacity>
                 </View>
 
-                <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('PhotoGuide')}>
+                <TouchableOpacity 
+                    activeOpacity={0.9} 
+                    onPress={() => navigation.navigate('ExperienceDetail', { 
+                        item: {
+                            id: 'golden-hour-eiffel',
+                            title: 'Eiffel Tower Trocadéro',
+                            sub: 'PEAK GOLDEN HOUR',
+                            img: EIFFEL_IMG,
+                            duration: '2-3 HRS',
+                            fee: '€25/pp',
+                            bestTime: 'EVENING',
+                            crowd: 'High',
+                            desc: 'Witness the iron lady illuminate as the Parisian sky turns into a canvas of pink and gold. This is the ultimate photo opportunity in Paris.'
+                        }
+                    })}
+                >
                     <ImageBackground
                         source={{ uri: EIFFEL_IMG }}
                         style={styles.mainCard}
@@ -90,12 +104,43 @@ export default function SocialVibesScreen({ navigation }) {
                         placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                     >
                         <View style={styles.mainCardOverlay}>
-                            <View style={styles.cardPill}>
-                                <View style={styles.pillDot} />
-                                <Text style={styles.cardPillText}>PEAK GOLDEN HOUR</Text>
+                            <View style={styles.cardHeaderActions}>
+                                <View style={styles.cardPill}>
+                                    <View style={styles.pillDot} />
+                                    <Text style={styles.cardPillText}>PEAK GOLDEN HOUR</Text>
+                                </View>
+                                <View style={styles.topRightActions}>
+                                    <TouchableOpacity style={styles.actionCircle}>
+                                        <Feather name="share-2" size={16} color="white" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity 
+                                        style={styles.actionCircle}
+                                        onPress={() => toggleSaveGem({ id: 'golden-hour-eiffel', title: 'Eiffel Tower Trocadéro', img: EIFFEL_IMG })}
+                                    >
+                                        <Ionicons 
+                                            name={isGemSaved('golden-hour-eiffel') ? "heart" : "heart-outline"} 
+                                            size={18} 
+                                            color={isGemSaved('golden-hour-eiffel') ? "#EF4444" : "white"} 
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
 
                             <View style={styles.mainCardBottom}>
+                                <View style={styles.smartInfoRow}>
+                                    <View style={styles.infoBadge}>
+                                        <Feather name="clock" size={10} color="white" />
+                                        <Text style={styles.infoBadgeText}>2-3 HRS</Text>
+                                    </View>
+                                    <View style={styles.infoBadge}>
+                                        <Feather name="layers" size={10} color="white" />
+                                        <Text style={styles.infoBadgeText}>€25/pp</Text>
+                                    </View>
+                                    <View style={styles.infoBadge}>
+                                        <Feather name="sun" size={10} color="white" />
+                                        <Text style={styles.infoBadgeText}>EVENING</Text>
+                                    </View>
+                                </View>
                                 <Text style={styles.cardTitle}>Eiffel Tower{'\n'}Trocadéro</Text>
                                 <Text style={styles.cardDesc} numberOfLines={2}>Witness the iron lady illuminate as the Parisian sky turns into a canvas of pink an..</Text>
 
@@ -157,7 +202,7 @@ export default function SocialVibesScreen({ navigation }) {
                                         </View>
                                         <Text style={styles.smallCardTitle}>{gem.title}</Text>
                                         <View style={styles.smallRatingRow}>
-                                            <Ionicons name="star" size={10} color="#38BDF8" />
+                                            <Ionicons name="star" size={10} color="#000000" />
                                             <Text style={styles.smallRatingText}>{gem.rating} Vibe Rating</Text>
                                         </View>
                                     </View>
@@ -200,14 +245,72 @@ export default function SocialVibesScreen({ navigation }) {
 
                     <View style={styles.videoTagsRow}>
                         <View style={styles.videoTag}>
-                            <Ionicons name="people" size={12} color="#0EA5E9" />
+                            <Ionicons name="people" size={12} color="#000000" />
                             <Text style={styles.videoTagText}>High Density</Text>
                         </View>
                         <View style={styles.videoTag}>
-                            <Ionicons name="flash" size={12} color="#0EA5E9" />
+                            <Ionicons name="flash" size={12} color="#000000" />
                             <Text style={styles.videoTagText}>9.8 Energy</Text>
                         </View>
                     </View>
+                </View>
+
+                {/* Recommended for You */}
+                <View style={[styles.sectionHeader, { marginTop: 25 }]}>
+                    <Text style={styles.sectionTitle}>Recommended for You</Text>
+                </View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
+                    <TouchableOpacity 
+                        style={styles.recommendedCard}
+                        onPress={() => navigation.navigate('ExperienceDetail', { 
+                            item: { id: 'rec1', title: 'Palais Royal', sub: 'History', img: PALAIS_ROYAL_IMG, duration: '1h', fee: 'Free', bestTime: 'Morning', crowd: 'Low' } 
+                        })}
+                    >
+                        <Image source={{ uri: PALAIS_ROYAL_IMG }} style={styles.recImage} />
+                        <View style={styles.recInfo}>
+                            <Text style={styles.recTitle}>Palais Royal</Text>
+                            <Text style={styles.recSub}>History • 1h</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={styles.recommendedCard}
+                        onPress={() => navigation.navigate('ExperienceDetail', { 
+                            item: { id: 'rec2', title: 'Le Marais Walk', sub: 'Culture', img: PARIS_STREET_IMG, duration: '2h', fee: 'Free', bestTime: 'Afternoon', crowd: 'Medium' } 
+                        })}
+                    >
+                        <Image source={{ uri: PARIS_STREET_IMG }} style={styles.recImage} />
+                        <View style={styles.recInfo}>
+                            <Text style={styles.recTitle}>Le Marais Walk</Text>
+                            <Text style={styles.recSub}>Culture • 2h</Text>
+                        </View>
+                    </TouchableOpacity>
+                </ScrollView>
+
+                {/* Nearby Experiences */}
+                <View style={[styles.sectionHeader, { marginTop: 25 }]}>
+                    <Text style={styles.sectionTitle}>Nearby Experiences</Text>
+                </View>
+                <View style={styles.nearbyGrid}>
+                    <TouchableOpacity 
+                        style={styles.nearbyItem}
+                        onPress={() => navigation.navigate('ExperienceDetail', { 
+                            item: { id: 'nearby1', title: 'Rue Crémieux', sub: 'Colorful', img: CREMIEUX_IMG, duration: '30m', fee: 'Free', bestTime: 'Morning', crowd: 'Low' } 
+                        })}
+                    >
+                        <Image source={{ uri: CREMIEUX_IMG }} style={styles.nearbyImg} />
+                        <Text style={styles.nearbyTitle}>Rue Crémieux</Text>
+                        <Text style={styles.nearbyDist}>0.5 km away</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={styles.nearbyItem}
+                        onPress={() => navigation.navigate('ExperienceDetail', { 
+                            item: { id: 'nearby2', title: 'Local Guide Meet', sub: 'Social', img: AVATAR_IMG, duration: '2h', fee: 'Free', bestTime: 'Evening', crowd: 'Low' } 
+                        })}
+                    >
+                        <Image source={{ uri: AVATAR_IMG }} style={styles.nearbyImg} />
+                        <Text style={styles.nearbyTitle}>Local Guide Meet</Text>
+                        <Text style={styles.nearbyDist}>1.2 km away</Text>
+                    </TouchableOpacity>
                 </View>
 
             </ScrollView>
@@ -235,20 +338,20 @@ const styles = StyleSheet.create({
     mainTitleBlue: {
         fontSize: 28,
         fontWeight: '900',
-        color: '#0EA5E9',
+        color: '#000000',
         letterSpacing: -0.5,
     },
     subTitleBlue: {
         fontSize: 10,
         fontWeight: '800',
-        color: '#38BDF8',
+        color: '#000000',
         letterSpacing: 1.5,
         marginTop: 2,
     },
     avatarContainer: {
         position: 'relative',
         padding: 4,
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         borderRadius: 24,
     },
     avatar: {
@@ -263,7 +366,7 @@ const styles = StyleSheet.create({
         width: 12,
         height: 12,
         borderRadius: 6,
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         borderWidth: 2,
         borderColor: '#F8FAFC',
     },
@@ -312,7 +415,7 @@ const styles = StyleSheet.create({
     seeAllText: {
         fontSize: 12,
         fontWeight: '700',
-        color: '#38BDF8',
+        color: '#000000',
     },
 
     // Main Card
@@ -410,7 +513,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
     },
     densityBarActive: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
     },
     ratingText: {
         color: 'white',
@@ -527,7 +630,7 @@ const styles = StyleSheet.create({
         color: '#0F172A',
     },
     romanticPill: {
-        backgroundColor: '#0EA5E9',
+        backgroundColor: '#000000',
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 12,
@@ -550,16 +653,133 @@ const styles = StyleSheet.create({
     videoTag: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 16,
         marginRight: 10,
     },
     videoTagText: {
-        color: '#0369A1',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '700',
         marginLeft: 6,
+    },
+    cardHeaderActions: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    topRightActions: {
+        flexDirection: 'row',
+        gap: 8,
+    },
+    actionCircle: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backdropFilter: 'blur(10px)',
+    },
+    smartInfoRow: {
+        flexDirection: 'row',
+        gap: 8,
+        marginBottom: 12,
+    },
+    infoBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 12,
+        gap: 5,
+    },
+    infoBadgeText: {
+        color: 'white',
+        fontSize: 10,
+        fontWeight: '800',
+    },
+    statusLabel: {
+        color: '#10B981',
+        fontSize: 9,
+        fontWeight: '900',
+        marginTop: 4,
+    },
+    bookNowBtn: {
+        backgroundColor: 'white',
+        paddingHorizontal: 24,
+        paddingVertical: 12,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 5,
+    },
+    bookNowText: {
+        color: '#000000',
+        fontWeight: '900',
+        fontSize: 14,
+    },
+    recommendedCard: {
+        width: 220,
+        backgroundColor: 'white',
+        borderRadius: 24,
+        marginRight: 15,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
+    },
+    recImage: {
+        width: '100%',
+        height: 120,
+    },
+    recInfo: {
+        padding: 15,
+    },
+    recTitle: {
+        fontSize: 15,
+        fontWeight: '800',
+        color: '#0F172A',
+    },
+    recSub: {
+        fontSize: 12,
+        color: '#64748B',
+        marginTop: 4,
+    },
+    nearbyGrid: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 15,
+    },
+    nearbyItem: {
+        flex: 1,
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 24,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
+    },
+    nearbyImg: {
+        width: '100%',
+        height: 100,
+        borderRadius: 18,
+        marginBottom: 10,
+    },
+    nearbyTitle: {
+        fontSize: 13,
+        fontWeight: '800',
+        color: '#0F172A',
+    },
+    nearbyDist: {
+        fontSize: 11,
+        color: '#64748B',
+        marginTop: 2,
     },
 });

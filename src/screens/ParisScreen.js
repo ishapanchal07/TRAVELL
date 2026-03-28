@@ -6,6 +6,8 @@ import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/v
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
+import { useSaved } from '../context/SavedContext';
+import ExperienceCard from '../components/ExperienceCard';
 
 const { width } = Dimensions.get('window');
 
@@ -23,12 +25,12 @@ const PARIS_DATA = {
     transport: 'Metro, RER, and Velib (Bikes)',
     hiddenGems: ['Rue des Thermopyles', 'Le Marais Courtyards', 'Canal Saint-Martin Wall', 'Passage des Panoramas', 'Museum of Romantic Life', 'Buttes-Chaumont Park'],
     experiences: [
-        { id: 1, title: 'Eiffel Tower Picnic', sub: 'Champs de Mars • Scenic', img: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Louvre Art Tour', sub: '2 hours • World Heritage', img: 'https://images.unsplash.com/photo-1597923896141-d4de3119853c?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Seine River Cruise', sub: 'Montmartre • Sunset', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Arc de Triomphe Climb', sub: 'Panoramic Views • History', img: 'https://images.unsplash.com/photo-1509439581779-629c9b276001?q=80&w=400&auto=format&fit=crop' },
-        { id: 5, title: 'Sacre Coeur Basilica', sub: 'Artist Quarter • City View', img: 'https://images.unsplash.com/photo-1524338198850-8a2ff63aaceb?q=80&w=400&auto=format&fit=crop' },
-        { id: 6, title: 'Palace of Versailles', sub: 'Day Trip • Royal Gardens', img: 'https://images.unsplash.com/photo-1508248467873-9c1b9c7c645b?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'Eiffel Tower Picnic', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€45', bestTime: 'Evening', crowd: 'Medium' },
+        { id: 2, title: 'Louvre Art Tour', sub: 'Art', img: 'https://images.unsplash.com/photo-1597923896141-d4de3119853c?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€22', bestTime: 'Morning', crowd: 'High' },
+        { id: 3, title: 'Seine River Cruise', sub: 'Nature', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: '€15', bestTime: 'Sunset', crowd: 'High' },
+        { id: 4, title: 'Arc de Triomphe Climb', sub: 'History', img: 'https://images.unsplash.com/photo-1509439581779-629c9b276001?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: '€13', bestTime: 'Evening', crowd: 'Medium' },
+        { id: 5, title: 'Sacre Coeur Basilica', sub: 'Art', img: 'https://images.unsplash.com/photo-1524338198850-8a2ff63aaceb?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: 'Free', bestTime: 'Morning', crowd: 'Medium' },
+        { id: 6, title: 'Palace of Versailles', sub: 'History', img: 'https://images.unsplash.com/photo-1508248467873-9c1b9c7c645b?q=80&w=400&auto=format&fit=crop', duration: '5h', fee: '€20', bestTime: 'Morning', crowd: 'High' }
     ],
     clothes: [
         { id: 1, title: 'Classic Trench Coat', price: '€25/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1580752323040-f4883d6a6b7e?q=80&w=400&auto=format&fit=crop' },
@@ -54,6 +56,7 @@ const PARIS_DATA = {
 
 export default function ParisScreen({ navigation }) {
     const { isLoggedIn } = useAuth();
+    const { toggleSaveGem, isGemSaved } = useSaved();
     const data = PARIS_DATA;
 
     return (
@@ -72,7 +75,7 @@ export default function ParisScreen({ navigation }) {
                 </View>
                 <View style={styles.headerIcons}>
                     <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}>
-                        <Ionicons name="map-outline" size={18} color="#0EA5E9" />
+                        <Ionicons name="map-outline" size={18} color="#000000" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -125,18 +128,16 @@ export default function ParisScreen({ navigation }) {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.experiences : data.experiences.slice(0, 3)).map(exp => (
-                            <View key={exp.id} style={styles.expCard}>
-                                <Image 
-                                    source={{ uri: exp.img }} 
-                                    style={styles.expImage} 
-                                    contentFit="cover"
-                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                    transition={300}
+                            <View key={exp.id} style={{ width: 280, marginRight: 15 }}>
+                                <ExperienceCard 
+                                    item={exp}
+                                    isSaved={isGemSaved(exp.id)}
+                                    onPress={() => navigation.navigate('ExperienceDetail', { item: exp })}
+                                    onSave={() => toggleSaveGem(exp)}
+                                    onBookNow={() => navigation.navigate('ExperienceDetail', { item: exp })}
+                                    onViewMap={() => navigation.navigate('Map', { city: 'Paris', location: exp.title })}
+                                    onShare={() => {}}
                                 />
-                                <View style={styles.expTextCont}>
-                                    <Text style={styles.expTitle}>{exp.title}</Text>
-                                    <Text style={styles.expSub}>{exp.sub}</Text>
-                                </View>
                             </View>
                         ))}
                     </ScrollView>
@@ -166,7 +167,10 @@ export default function ParisScreen({ navigation }) {
                                         <Text style={styles.outfitTitle}>{item.title}</Text>
                                         <Text style={styles.outfitPrice}>{item.price}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.rentBtn}>
+                                    <TouchableOpacity 
+                                        style={styles.rentBtn}
+                                        onPress={() => navigation.navigate('ProductDetail', { item })}
+                                    >
                                         <Text style={styles.rentBtnText}>RENT</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -183,19 +187,17 @@ export default function ParisScreen({ navigation }) {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                         {(isLoggedIn ? data.food : data.food.slice(0, 2)).map(f => (
-                            <View key={f.id} style={styles.foodCard}>
-                                <Image 
-                                    source={{ uri: f.img }} 
-                                    style={styles.foodImage} 
-                                    contentFit="cover"
-                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                    transition={300}
-                                />
+                            <TouchableOpacity 
+                                key={f.id} 
+                                style={styles.foodCard}
+                                onPress={() => navigation.navigate('FoodDetail', { item: { name: f.title, image: f.img, subtitle: f.sub, price: f.price || '$28.00' } })}
+                            >
+                                <Image source={{ uri: f.img }} style={styles.foodImage} />
                                 <View style={styles.foodTextCont}>
                                     <Text style={styles.foodTitle}>{f.title}</Text>
                                     <Text style={styles.foodSub}>{f.sub}</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))}
                     </ScrollView>
 
@@ -206,7 +208,7 @@ export default function ParisScreen({ navigation }) {
                             <View style={styles.gemsList}>
                                 {data.hiddenGems.map((gem, index) => (
                                     <View key={index} style={styles.gemItem}>
-                                        <Ionicons name="sparkles" size={16} color="#0EA5E9" />
+                                        <Ionicons name="sparkles" size={16} color="#000000" />
                                         <Text style={styles.gemText}>{gem}</Text>
                                     </View>
                                 ))}
@@ -239,7 +241,7 @@ export default function ParisScreen({ navigation }) {
                         >
                             <BlurView intensity={80} tint="light" style={styles.unlockBlur}>
                                 <View style={styles.lockCircle}>
-                                    <Ionicons name="lock-closed" size={24} color="#3B82F6" />
+                                    <Ionicons name="lock-closed" size={24} color="#000000" />
                                 </View>
                                 <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
                                 <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
@@ -263,7 +265,7 @@ function FactItem({ icon, label, value }) {
     return (
         <View style={styles.factItem}>
             <View style={styles.factIconBox}>
-                <Ionicons name={icon} size={20} color="#3B82F6" />
+                <Ionicons name={icon} size={20} color="#000000" />
             </View>
             <Text style={styles.factLabel}>{label}</Text>
             <Text style={styles.factValue}>{value}</Text>
@@ -309,12 +311,12 @@ const styles = StyleSheet.create({
         width: 26,
         height: 26,
         borderRadius: 13,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
     },
     logoText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 20,
         fontWeight: '800',
         marginLeft: 8,
@@ -326,7 +328,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -358,7 +360,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     trendingPill: {
-        backgroundColor: '#38BDF8',
+        backgroundColor: '#000000',
         alignSelf: 'flex-start',
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -377,7 +379,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
     },
     heroSubtitle: {
-        color: '#60A5FA',
+        color: '#333333',
         fontSize: 34,
         fontWeight: '900',
         marginTop: -5,
@@ -411,7 +413,7 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 10,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 8,
@@ -446,7 +448,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     viewAllText: {
-        color: '#3B82F6',
+        color: '#000000',
         fontSize: 13,
         fontWeight: '600',
     },
@@ -484,13 +486,13 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     luggagePill: {
-        backgroundColor: '#E0F2FE',
+        backgroundColor: '#F1F5F9',
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 12,
     },
     luggageText: {
-        color: '#0EA5E9',
+        color: '#000000',
         fontSize: 10,
         fontWeight: '800',
     },
@@ -526,12 +528,12 @@ const styles = StyleSheet.create({
     },
     outfitPrice: {
         fontSize: 11,
-        color: '#3B82F6',
+        color: '#000000',
         fontWeight: '600',
         marginTop: 2,
     },
     rentBtn: {
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 8,
@@ -572,7 +574,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     gemsList: {
-        backgroundColor: '#F0F9FF',
+        backgroundColor: '#F8FAFC',
         borderRadius: 20,
         padding: 20,
         marginTop: 10,
@@ -619,7 +621,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: '#EFF6FF',
+        backgroundColor: '#F8FAFC',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 15,
@@ -639,7 +641,7 @@ const styles = StyleSheet.create({
     },
     unlockBtn: {
         marginTop: 20,
-        backgroundColor: '#3B82F6',
+        backgroundColor: '#000000',
         paddingHorizontal: 30,
         paddingVertical: 12,
         borderRadius: 20,
