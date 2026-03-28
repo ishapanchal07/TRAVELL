@@ -4,11 +4,13 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimens
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import ShareService from '../services/ShareService';
+import { useSaved } from '../context/SavedContext';
 
 const { width } = Dimensions.get('window');
 
 export default function SnapSpotDetailsScreen({ navigation, route }) {
     const { spot, city } = route.params || {};
+    const { toggleSaveGem, isGemSaved } = useSaved();
 
     if (!spot) return null;
 
@@ -67,8 +69,15 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
                                 <Text style={styles.locationText}>{city}</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.saveBtn}>
-                            <Ionicons name="bookmark-outline" size={24} color="#0F172A" />
+                        <TouchableOpacity 
+                            style={styles.saveBtn}
+                            onPress={() => toggleSaveGem({ ...spot, id: spot.id || spot.title, type: 'SnapSpot', city })}
+                        >
+                            <Ionicons 
+                                name={isGemSaved(spot.id || spot.title) ? "bookmark" : "bookmark-outline"} 
+                                size={24} 
+                                color={isGemSaved(spot.id || spot.title) ? "#000000" : "#0F172A"} 
+                            />
                         </TouchableOpacity>
                     </View>
 

@@ -105,7 +105,10 @@ export default function CameraScreen({ navigation }) {
                 {/* Right Perspective Sidebar */}
                 <View style={styles.rightSidebar}>
                     <BlurView intensity={30} tint="dark" style={styles.sidebarBlur}>
-                        <TouchableOpacity style={[styles.sidebarBtn, styles.sidebarBtnActive]}>
+                        <TouchableOpacity 
+                            style={[styles.sidebarBtn, styles.sidebarBtnActive]}
+                            onPress={() => Alert.alert("Pose Guide", "Pose guide updated to 'Fashion Walk'")}
+                        >
                             <Image
                                 source={{ uri: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100' }}
                                 style={styles.poseThumbnail}
@@ -113,13 +116,13 @@ export default function CameraScreen({ navigation }) {
                             />
                             <View style={styles.activeIndicator} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.sidebarBtn}>
+                        <TouchableOpacity style={styles.sidebarBtn} onPress={() => Alert.alert("Guide Layer", "Body guide activated.")}>
                             <Ionicons name="body" size={20} color="rgba(255,255,255,0.6)" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.sidebarBtn}>
+                        <TouchableOpacity style={styles.sidebarBtn} onPress={() => Alert.alert("Guide Layer", "Perspective guide activated.")}>
                             <MaterialCommunityIcons name="human-handsup" size={20} color="rgba(255,255,255,0.6)" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.sidebarBtn}>
+                        <TouchableOpacity style={styles.sidebarBtn} onPress={() => Alert.alert("Guide Layer", "Full body frame activated.")}>
                             <MaterialCommunityIcons name="human-male-board" size={20} color="rgba(255,255,255,0.6)" />
                         </TouchableOpacity>
                         <View style={styles.sidebarDivider} />
@@ -162,7 +165,7 @@ export default function CameraScreen({ navigation }) {
 
                     {/* Shutter Bar */}
                     <View style={styles.shutterBar}>
-                        <TouchableOpacity style={styles.galleryPreview}>
+                        <TouchableOpacity style={styles.galleryPreview} onPress={() => navigation.navigate('Gallery')}>
                             <Image 
                                 source={{ uri: photoUri || DEFAULT_GALLERY_PREVIEW }} 
                                 style={styles.galleryImg} 
@@ -176,7 +179,7 @@ export default function CameraScreen({ navigation }) {
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={styles.proModeBtn}>
+                        <TouchableOpacity style={styles.proModeBtn} onPress={() => Alert.alert("Pro Mode", "Switching to Manual Focus & Exposure.")}>
                             <MaterialCommunityIcons name="tune-vertical" size={20} color="white" />
                             <Text style={styles.proText}>PRO</Text>
                         </TouchableOpacity>

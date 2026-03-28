@@ -91,13 +91,20 @@ export default function ParisScreen({ navigation }) {
                     contentFit="cover"
                 >
                     <View style={styles.heroOverlay}>
-                        <View style={styles.weatherPill}>
+                        <TouchableOpacity 
+                            style={styles.weatherPill}
+                            onPress={() => {
+                                import('react-native').then(({ Alert }) => {
+                                    Alert.alert("Weather", `Current temperature in ${data.city} is ${data.weather.temp}. A beautiful day for a walk in the city!`);
+                                });
+                            }}
+                        >
                             <Ionicons name={data.weather.icon} size={14} color="white" />
                             <View style={weatherStyles.weatherTextCont}>
                                 <Text style={weatherStyles.weatherCity}>{data.city} Today</Text>
                                 <Text style={weatherStyles.weatherTemp}>{data.weather.temp}, {data.weather.condition}</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.heroBottom}>
                             <View style={styles.trendingPill}>
@@ -207,10 +214,14 @@ export default function ParisScreen({ navigation }) {
                             <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
                             <View style={styles.gemsList}>
                                 {data.hiddenGems.map((gem, index) => (
-                                    <View key={index} style={styles.gemItem}>
+                                    <TouchableOpacity 
+                                        key={index} 
+                                        style={styles.gemItem}
+                                        onPress={() => navigation.navigate('CityFood', { city: 'Paris' })}
+                                    >
                                         <Ionicons name="sparkles" size={16} color="#000000" />
                                         <Text style={styles.gemText}>{gem}</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
 
@@ -218,7 +229,11 @@ export default function ParisScreen({ navigation }) {
                             <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Perfect Snap Spots</Text>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                                 {data.photoSpots.map(spot => (
-                                    <View key={spot.id} style={styles.photoSpotCard}>
+                                    <TouchableOpacity 
+                                        key={spot.id} 
+                                        style={styles.photoSpotCard}
+                                        onPress={() => navigation.navigate('SnapSpotDetails', { spot, city: 'Paris' })}
+                                    >
                                         <Image 
                                             source={{ uri: spot.img }} 
                                             style={styles.photoImage} 
@@ -227,7 +242,7 @@ export default function ParisScreen({ navigation }) {
                                             transition={300}
                                         />
                                         <Text style={styles.photoTitle}>{spot.title}</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </ScrollView>
                         </>

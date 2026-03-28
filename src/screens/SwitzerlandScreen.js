@@ -91,13 +91,20 @@ export default function SwitzerlandScreen({ navigation }) {
                     contentFit="cover"
                 >
                     <View style={styles.heroOverlay}>
-                        <View style={styles.weatherPill}>
+                        <TouchableOpacity 
+                            style={styles.weatherPill}
+                            onPress={() => {
+                                import('react-native').then(({ Alert }) => {
+                                    Alert.alert("Weather", `Current temperature in ${data.city} is ${data.weather.temp}. Don't forget your jacket for the Swiss Alps!`);
+                                });
+                            }}
+                        >
                             <Ionicons name={data.weather.icon} size={14} color="white" />
                             <View style={styles.weatherTextCont}>
                                 <Text style={styles.weatherCity}>{data.city} Today</Text>
                                 <Text style={styles.weatherTemp}>{data.weather.temp}, {data.weather.condition}</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={styles.heroBottom}>
                             <View style={styles.trendingPill}>
@@ -213,10 +220,14 @@ export default function SwitzerlandScreen({ navigation }) {
                             <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
                             <View style={styles.gemsList}>
                                 {data.hiddenGems.map((gem, index) => (
-                                    <View key={index} style={styles.gemItem}>
+                                    <TouchableOpacity 
+                                        key={index} 
+                                        style={styles.gemItem}
+                                        onPress={() => navigation.navigate('CityFood', { city: 'Switzerland' })}
+                                    >
                                         <Ionicons name="sparkles" size={16} color="#000000" />
                                         <Text style={styles.gemText}>{gem}</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
 
@@ -229,16 +240,20 @@ export default function SwitzerlandScreen({ navigation }) {
                              </View>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                                 {data.photoSpots.map(spot => (
-                                    <View key={spot.id} style={styles.photoSpotCard}>
+                                    <TouchableOpacity 
+                                        key={spot.id} 
+                                        style={styles.photoSpotCard}
+                                        onPress={() => navigation.navigate('SnapSpotDetails', { spot, city: 'Switzerland' })}
+                                    >
                                         <Image 
                                             source={{ uri: spot.img }} 
                                             style={styles.photoImage} 
                                             contentFit="cover"
                                             placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                                             transition={300}
-                                />
+                                        />
                                         <Text style={styles.photoTitle}>{spot.title}</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </ScrollView>
                         </>

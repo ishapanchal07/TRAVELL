@@ -61,7 +61,7 @@ export default function SocialVibesScreen({ navigation }) {
                         <Text style={styles.mainTitleBlue}>Discover Vibes</Text>
                         <Text style={styles.subTitleBlue}>PARIS, FRANCE</Text>
                     </View>
-                    <View style={styles.avatarContainer}>
+                    <TouchableOpacity style={styles.avatarContainer} onPress={() => navigation.navigate('Profile')}>
                         <Image 
                             source={{ uri: AVATAR_IMG }} 
                             style={styles.avatar} 
@@ -69,7 +69,7 @@ export default function SocialVibesScreen({ navigation }) {
                             transition={300}
                         />
                         <View style={styles.avatarBadge} />
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 {/* Search Bar */}
@@ -79,6 +79,11 @@ export default function SocialVibesScreen({ navigation }) {
                         placeholder="Search your mood..."
                         placeholderTextColor="#94A3B8"
                         style={styles.searchInput}
+                        onSubmitEditing={() => {
+                            import('react-native').then(({ Alert }) => {
+                                Alert.alert("Search", "Searching for vibes...");
+                            });
+                        }}
                     />
                     <Feather name="sliders" size={20} color="#000000" style={styles.filterIcon} />
                 </View>
@@ -191,7 +196,12 @@ export default function SocialVibesScreen({ navigation }) {
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                     {displayGems.map((gem) => (
-                        <TouchableOpacity key={gem.id} activeOpacity={0.9} style={styles.smallCard}>
+                        <TouchableOpacity 
+                            key={gem.id} 
+                            activeOpacity={0.9} 
+                            style={styles.smallCard}
+                            onPress={() => navigation.navigate('FoodDetail', { item: gem })}
+                        >
                             <ImageBackground
                                 source={{ uri: gem.image }}
                                 style={styles.smallCardImage}
@@ -234,7 +244,15 @@ export default function SocialVibesScreen({ navigation }) {
                 </View>
 
                 <View style={styles.videoCardCont}>
-                    <TouchableOpacity activeOpacity={0.9} style={styles.videoImg}>
+                    <TouchableOpacity 
+                        activeOpacity={0.9} 
+                        style={styles.videoImg}
+                        onPress={() => {
+                            import('react-native').then(({ Alert }) => {
+                                Alert.alert("Video", "Playing 360° vibe summary...");
+                            });
+                        }}
+                    >
                         <ImageBackground
                             source={{ uri: GEM1_IMG }}
                             style={StyleSheet.absoluteFill}

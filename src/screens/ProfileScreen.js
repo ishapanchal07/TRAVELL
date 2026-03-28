@@ -46,7 +46,14 @@ export default function ProfileScreen({ navigation }) {
                     <Feather name="chevron-left" size={20} color="#0F172A" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>PROFILE</Text>
-                <TouchableOpacity style={styles.headerIconBtn}>
+                <TouchableOpacity 
+                    style={styles.headerIconBtn} 
+                    onPress={() => {
+                        import('react-native').then(({ Alert }) => {
+                            Alert.alert("Settings", "Settings and privacy options coming soon!");
+                        });
+                    }}
+                >
                     <Ionicons name="settings-sharp" size={20} color="#0F172A" />
                 </TouchableOpacity>
             </View>

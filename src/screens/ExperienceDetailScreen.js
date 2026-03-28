@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions, Alert } from 'react-native';
 import ShareService from '../services/ShareService';
+import { useSaved } from '../context/SavedContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,7 +11,8 @@ const { width } = Dimensions.get('window');
 
 export default function ExperienceDetailScreen({ navigation, route }) {
     const { item = {} } = route.params || {};
-    const [saved, setSaved] = useState(false);
+    const { toggleSaveGem, isGemSaved } = useSaved();
+    const saved = isGemSaved(item.id);
 
     const handleShare = async () => {
         await ShareService.shareItem({
@@ -38,8 +40,8 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                             <Feather name="chevron-left" size={24} color="white" />
                         </TouchableOpacity>
                         <View style={styles.headerRight}>
-                            <TouchableOpacity style={styles.headerBtn} onPress={() => setSaved(!saved)}>
-                                <Ionicons name={saved ? "heart" : "heart-outline"} size={22} color={saved ? "#EF4444" : "white"} />
+                            <TouchableOpacity style={styles.headerBtn} onPress={() => toggleSaveGem(item)}>
+                                <Ionicons name={isGemSaved(item.id) ? "heart" : "heart-outline"} size={22} color={isGemSaved(item.id) ? "#EF4444" : "white"} />
                             </TouchableOpacity>
                              <TouchableOpacity style={styles.headerBtn} onPress={handleShare}>
                                  <Feather name="share-2" size={20} color="white" />
@@ -130,7 +132,19 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                     <Text style={styles.priceLabel}>Starting from</Text>
                     <Text style={styles.priceText}>{item.fee || '€25'}</Text>
                 </View>
-                <TouchableOpacity style={styles.bookNowBtn}>
+                <TouchableOpacity 
+                    style={styles.bookNowBtn}
+                    onPress={() => {
+                        Alert.alert(
+                            "Booking",
+                            `Would you like to book tickets for ${item.title}?`,
+                            [
+                                { text: "Cancel", style: "cancel" },
+                                { text: "Confirm", onPress: () => Alert.alert("Success", "Booking initiated! Our agent will contact you shortly.") }
+                            ]
+                        );
+                    }}
+                >
                     <Text style={styles.bookNowText}>Book Tickets</Text>
                 </TouchableOpacity>
             </BlurView>

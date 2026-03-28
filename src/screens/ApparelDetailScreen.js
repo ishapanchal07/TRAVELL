@@ -4,9 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import ShareService from '../services/ShareService';
+import { useSaved } from '../context/SavedContext';
 
 export default function ApparelDetailScreen({ route, navigation }) {
     const { item = {} } = route.params || {};
+    const { toggleSaveGem, isGemSaved } = useSaved();
 
     const handleShare = async () => {
         await ShareService.shareItem({
@@ -47,8 +49,12 @@ export default function ApparelDetailScreen({ route, navigation }) {
                 <View style={styles.infoSection}>
                     <View style={styles.titleRow}>
                         <Text style={styles.title}>{item.title || 'Apparel Item'}</Text>
-                        <TouchableOpacity>
-                            <Ionicons name="heart-outline" size={24} color="#0F172A" />
+                        <TouchableOpacity onPress={() => toggleSaveGem({ ...item, id: item.id || item.title })}>
+                            <Ionicons 
+                                name={isGemSaved(item.id || item.title) ? "heart" : "heart-outline"} 
+                                size={24} 
+                                color={isGemSaved(item.id || item.title) ? "#EF4444" : "#0F172A"} 
+                            />
                         </TouchableOpacity>
                     </View>
 

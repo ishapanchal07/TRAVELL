@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions, Animated, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useSaved } from '../context/SavedContext';
 import { Image } from 'expo-image';
 import { BlurView } from 'expo-blur';
 
@@ -23,7 +24,8 @@ export default function ProductDetailScreen({ route, navigation }) {
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('M');
     const [selectedDuration, setSelectedDuration] = useState(1);
-    const [isWishlisted, setIsWishlisted] = useState(false);
+    const { toggleSaveGem, isGemSaved } = useSaved();
+    const isWishlisted = isGemSaved(item.id || item.title);
 
     const totalPrice = pricePerDay * quantity * selectedDuration;
 
@@ -49,7 +51,7 @@ export default function ProductDetailScreen({ route, navigation }) {
                         <TouchableOpacity onPress={handleBack} style={styles.circleBtn}>
                             <Ionicons name="chevron-back" size={24} color="#000000" />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setIsWishlisted(!isWishlisted)} style={styles.circleBtn}>
+                        <TouchableOpacity onPress={() => toggleSaveGem({ ...item, id: item.id || item.title })} style={styles.circleBtn}>
                             <Ionicons name={isWishlisted ? "heart" : "heart-outline"} size={22} color={isWishlisted ? "#EF4444" : "#000000"} />
                         </TouchableOpacity>
                     </View>
@@ -153,10 +155,20 @@ export default function ProductDetailScreen({ route, navigation }) {
                     <Text style={styles.totalPrice}>€{totalPrice}</Text>
                 </View>
                 <View style={styles.footerBtns}>
-                    <TouchableOpacity style={styles.buyBtn}>
+                    <TouchableOpacity 
+                        style={styles.buyBtn}
+                        onPress={() => {
+                            Alert.alert("Purchase", `Initiating purchase for ${item.title || 'this item'}...`);
+                        }}
+                    >
                         <Text style={styles.buyBtnText}>Buy Now</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.rentBtn}>
+                    <TouchableOpacity 
+                        style={styles.rentBtn}
+                        onPress={() => {
+                            Alert.alert("Rental", `Adding ${item.title || 'this item'} to your rental trip...`);
+                        }}
+                    >
                         <Text style={styles.rentBtnText}>Rent Now</Text>
                     </TouchableOpacity>
                 </View>

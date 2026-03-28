@@ -36,7 +36,7 @@ export default function AllClothesScreen({ route, navigation }) {
                                 key={item.id}
                                 style={styles.itemCard}
                                 activeOpacity={0.9}
-                                onPress={() => isLocked ? navigation.navigate('Login') : null}
+                                onPress={() => isLocked ? navigation.navigate('Login') : navigation.navigate('ProductDetail', { item })}
                             >
                                 <View style={styles.imageContainer}>
                                     <Image 
