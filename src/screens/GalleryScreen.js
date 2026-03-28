@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Animated, Share, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Animated, TextInput } from 'react-native';
+import ShareService from '../services/ShareService';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -110,14 +111,11 @@ export default function GalleryScreen({ navigation }) {
     }, []);
 
     const handleShare = async (uri, message = 'Check out this awesome photo from my trip!') => {
-        try {
-            await Share.share({
-                message: message + '\n' + uri, 
-                url: uri, // works nicely on iOS
-            });
-        } catch (error) {
-            console.error('Error sharing:', error);
-        }
+        await ShareService.shareItem({
+            title: 'Trip Photo',
+            description: message,
+            image: uri
+        });
     };
 
     return (

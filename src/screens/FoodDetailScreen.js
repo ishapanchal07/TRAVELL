@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, Statu
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import ShareService from '../services/ShareService';
 import BottomNav from '../components/BottomNav';
 
 const { width } = Dimensions.get('window');
@@ -35,6 +36,14 @@ export default function FoodDetailScreen({ route, navigation }) {
 
     const currencySymbol = price.includes('€') ? '€' : price.includes('CHF') ? 'CHF ' : price.includes('AED') ? 'AED ' : '$';
 
+    const handleShare = async () => {
+        await ShareService.shareItem({
+            title: name,
+            description: description,
+            image: image
+        });
+    };
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" transparent />
@@ -51,6 +60,10 @@ export default function FoodDetailScreen({ route, navigation }) {
                     />
                     <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={24} color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+                        <Feather name="share-2" size={20} color="white" />
                     </TouchableOpacity>
 
                     <View style={styles.heroOverlay}>
@@ -282,6 +295,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.3)',
         justifyContent: 'center',
         alignItems: 'center',
+        zIndex: 20,
+    },
+    shareButton: {
+        position: 'absolute',
+        top: 60,
+        right: 20,
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 20,
     },
     heroOverlay: {
         position: 'absolute',

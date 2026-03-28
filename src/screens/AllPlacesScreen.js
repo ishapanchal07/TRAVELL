@@ -74,7 +74,6 @@ export default function AllPlacesScreen({ route, navigation }) {
                             onSave={() => toggleSaveGem(item)}
                             onBookNow={() => navigation.navigate('ExperienceDetail', { item })}
                             onViewMap={() => navigation.navigate('Map', { city: item.title, location: item.title })}
-                            onShare={() => {}}
                         />
                     );
                 })}

@@ -136,7 +136,6 @@ export default function DubaiScreen({ navigation }) {
                                     onSave={() => toggleSaveGem(exp)}
                                     onBookNow={() => navigation.navigate('ExperienceDetail', { item: exp })}
                                     onViewMap={() => navigation.navigate('Map', { city: 'Dubai', location: exp.title })}
-                                    onShare={() => {}}
                                 />
                             </View>
                         ))}

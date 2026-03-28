@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import ShareService from '../services/ShareService';
 
 const { width } = Dimensions.get('window');
 
@@ -12,6 +13,14 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
     if (!spot) return null;
 
     const description = spot.description || "This iconic location offers one of the best perspectives in the city. Perfectly timed for sunrise or golden hour, it provides a stunning backdrop for your travel memories and social media feed.";
+
+    const handleShare = async () => {
+        await ShareService.shareItem({
+            title: spot.title,
+            description: description,
+            image: spot.img
+        });
+    };
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -31,6 +40,13 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
                         onPress={() => navigation.goBack()}
                     >
                         <Feather name="chevron-left" size={24} color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={styles.shareButton} 
+                        onPress={handleShare}
+                    >
+                        <Feather name="share-2" size={20} color="white" />
                     </TouchableOpacity>
                     
                     <View style={styles.imageOverlay}>
@@ -117,6 +133,18 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 50,
         left: 20,
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+    },
+    shareButton: {
+        position: 'absolute',
+        top: 50,
+        right: 20,
         width: 44,
         height: 44,
         borderRadius: 22,

@@ -3,9 +3,18 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import ShareService from '../services/ShareService';
 
 export default function ApparelDetailScreen({ route, navigation }) {
     const { item = {} } = route.params || {};
+
+    const handleShare = async () => {
+        await ShareService.shareItem({
+            title: item.title || 'Apparel Item',
+            description: 'Check out this amazing find on Roamster!',
+            image: item.image
+        });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -16,7 +25,7 @@ export default function ApparelDetailScreen({ route, navigation }) {
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Apparel Details</Text>
-                <TouchableOpacity style={styles.shareBtn}>
+                <TouchableOpacity style={styles.shareBtn} onPress={handleShare}>
                     <Feather name="share-2" size={20} color="#0F172A" />
                 </TouchableOpacity>
             </View>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions, Share } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions } from 'react-native';
+import ShareService from '../services/ShareService';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,15 +13,11 @@ export default function ExperienceDetailScreen({ navigation, route }) {
     const [saved, setSaved] = useState(false);
 
     const handleShare = async () => {
-        try {
-            await Share.share({
-                message: `Check out this amazing experience: ${item.title} on Roamster!`,
-                url: item.img || item.image,
-                title: item.title
-            });
-        } catch (error) {
-            console.error(error.message);
-        }
+        await ShareService.shareItem({
+            title: item.title,
+            description: item.sub,
+            image: item.img || item.image
+        });
     };
 
     return (

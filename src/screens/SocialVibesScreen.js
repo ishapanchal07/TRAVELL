@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import ShareService from '../services/ShareService';
 import { useAuth } from '../context/AuthContext';
 import { useSaved } from '../context/SavedContext';
 
@@ -29,6 +30,14 @@ export default function SocialVibesScreen({ navigation }) {
     const { toggleSaveGem, isGemSaved } = useSaved();
 
     const displayGems = isLoggedIn ? GEMS : GEMS.slice(0, 2);
+
+    const handleShare = async (item) => {
+        await ShareService.shareItem({
+            title: item.title,
+            description: item.desc || item.vibe,
+            image: item.image || item.img
+        });
+    };
 
     const handleExploreMore = () => {
         if (!isLoggedIn) {
@@ -110,7 +119,14 @@ export default function SocialVibesScreen({ navigation }) {
                                     <Text style={styles.cardPillText}>PEAK GOLDEN HOUR</Text>
                                 </View>
                                 <View style={styles.topRightActions}>
-                                    <TouchableOpacity style={styles.actionCircle}>
+                                    <TouchableOpacity 
+                                        style={styles.actionCircle} 
+                                        onPress={() => handleShare({
+                                            title: 'Eiffel Tower Trocadéro',
+                                            desc: 'Witness the iron lady illuminate as the Parisian sky turns into a canvas of pink and gold.',
+                                            img: EIFFEL_IMG
+                                        })}
+                                    >
                                         <Feather name="share-2" size={16} color="white" />
                                     </TouchableOpacity>
                                     <TouchableOpacity 

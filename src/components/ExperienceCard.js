@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Share } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import ShareService from '../services/ShareService';
 import { Image } from 'expo-image';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -32,15 +33,11 @@ export default function ExperienceCard({ item, onPress, onBookNow, onViewMap, on
             onShare();
             return;
         }
-        try {
-            await Share.share({
-                message: `Check out this amazing experience: ${title} on Roamster!`,
-                url: img,
-                title: title
-            });
-        } catch (error) {
-            console.error(error.message);
-        }
+        await ShareService.shareItem({
+            title,
+            description: sub,
+            image: img
+        });
     };
 
     return (
