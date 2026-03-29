@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { usePayment } from '../context/PaymentContext';
+import { Image } from 'expo-image';
 
 const { width } = Dimensions.get('window');
 
@@ -9,6 +11,7 @@ const TIME_SLOTS = ['09:00 AM', '10:00 AM', '11:00 AM', '01:00 PM', '02:00 PM', 
 const DURATIONS = [2, 3, 4, 6, 8];
 
 export default function BookingScreen({ route, navigation }) {
+    const { handlePaidAction } = usePayment();
     const { expert } = route.params;
     const [selectedDate, setSelectedDate] = useState(new Date().getDate());
     const [selectedTime, setSelectedTime] = useState('10:00 AM');
@@ -107,7 +110,17 @@ export default function BookingScreen({ route, navigation }) {
             <View style={styles.footer}>
                 <TouchableOpacity 
                     style={styles.payButton}
-                    onPress={() => navigation.navigate('Payment', { expert, totalPrice, selectedDate, selectedTime, duration })}
+                    onPress={() => handlePaidAction(
+                        {
+                            id: `ExpertBooking_${expert.id}_${Date.now()}`,
+                            title: `Booking with ${expert.name}`,
+                            price: totalPrice,
+                            image: expert.image,
+                        },
+                        'BookingConfirmation',
+                        navigation,
+                        { expert, totalPrice, selectedDate, selectedTime, duration, successMessage: 'Booking confirmed!' }
+                    )}
                 >
                     <Text style={styles.payButtonText}>Proceed to Payment</Text>
                 </TouchableOpacity>
@@ -116,8 +129,7 @@ export default function BookingScreen({ route, navigation }) {
     );
 }
 
-// Missing Image import in previous thought, adding here in implementation
-import { Image } from 'expo-image';
+// Used expo-image
 
 const styles = StyleSheet.create({
     container: {

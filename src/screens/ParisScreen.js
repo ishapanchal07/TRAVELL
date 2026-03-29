@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
-import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
@@ -23,7 +23,7 @@ const PARIS_DATA = {
     bestTime: 'April - June or September - October',
     budget: 'High (€120 - 250 per day)',
     transport: 'Metro, RER, and Velib (Bikes)',
-    hiddenGems: ['Rue des Thermopyles', 'Le Marais Courtyards', 'Canal Saint-Martin Wall', 'Passage des Panoramas', 'Museum of Romantic Life', 'Buttes-Chaumont Park'],
+
     experiences: [
         { id: 1, title: 'Eiffel Tower Picnic', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1463171356658-05187707e06b?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€45', bestTime: 'Evening', crowd: 'Medium' },
         { id: 2, title: 'Louvre Art Tour', sub: 'Art', img: 'https://images.unsplash.com/photo-1542382103-125039f75ec5?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€22', bestTime: 'Morning', crowd: 'High' },
@@ -210,20 +210,7 @@ export default function ParisScreen({ navigation }) {
 
                     {isLoggedIn && (
                         <>
-                            {/* Hidden Gems Section */}
-                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
-                            <View style={styles.gemsList}>
-                                {data.hiddenGems.map((gem, index) => (
-                                    <TouchableOpacity 
-                                        key={index} 
-                                        style={styles.gemItem}
-                                        onPress={() => navigation.navigate('CityFood', { city: 'Paris' })}
-                                    >
-                                        <Ionicons name="sparkles" size={16} color="#000000" />
-                                        <Text style={styles.gemText}>{gem}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
+
 
                             {/* Photo Spots */}
                             <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Perfect Snap Spots</Text>
@@ -259,7 +246,7 @@ export default function ParisScreen({ navigation }) {
                                     <Ionicons name="lock-closed" size={24} color="#000000" />
                                 </View>
                                 <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
-                                <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
+                                <Text style={styles.unlockDesc}>Access full transport tips and all photo spots.</Text>
                                 <View style={styles.unlockBtn}>
                                     <Text style={styles.unlockBtnText}>Unlock Now</Text>
                                 </View>

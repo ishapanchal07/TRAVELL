@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions, Alert } from 'react-native';
 import ShareService from '../services/ShareService';
 import { useSaved } from '../context/SavedContext';
+import { usePayment } from '../context/PaymentContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,6 +11,7 @@ import { BlurView } from 'expo-blur';
 const { width } = Dimensions.get('window');
 
 export default function ExperienceDetailScreen({ navigation, route }) {
+    const { handlePaidAction } = usePayment();
     const { item = {} } = route.params || {};
     const { toggleSaveGem, isGemSaved } = useSaved();
     const saved = isGemSaved(item.id);
@@ -140,7 +142,23 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                             `Would you like to book tickets for ${item.title}?`,
                             [
                                 { text: "Cancel", style: "cancel" },
-                                { text: "Confirm", onPress: () => Alert.alert("Success", "Booking initiated! Our agent will contact you shortly.") }
+                                { text: "Confirm", onPress: () => {
+                                    const feeStr = item.fee || '25';
+                                    const feePrice = feeStr.toLowerCase().includes('free') ? 0 : parseFloat(feeStr.replace(/[^0-9.]/g, '')) || 25.00;
+                                    handlePaidAction(
+                                        {
+                                            id: item.id || item.title,
+                                            title: item.title,
+                                            price: feePrice,
+                                            image: item.img || item.image,
+                                            serviceFee: 5.00,
+                                            deliveryFee: 'FREE',
+                                        },
+                                        'Explore',
+                                        navigation,
+                                        { successMessage: 'Booking initiated!' }
+                                    );
+                                }}
                             ]
                         );
                     }}

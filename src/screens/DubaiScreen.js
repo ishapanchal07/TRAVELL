@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
-import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
@@ -23,7 +23,7 @@ const DUBAI_DATA = {
     bestTime: 'November - March (Pleasant weather)',
     budget: 'Luxury (AED 1,000 - 3,000 per day)',
     transport: 'Metro, Taxis, Careem, and Water Taxis',
-    hiddenGems: ['Al Barari Greens', 'Love Lakes Desert', 'Moon Island', 'The Farm Al Barari', 'Jumeirah Bay Island', 'Hatta Mountains'],
+
     experiences: [
         { id: 1, title: 'Burj Khalifa Sky', sub: 'Luxury', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€45', bestTime: 'Sunset', crowd: 'High' },
         { id: 2, title: 'Desert Safari Adventure', sub: 'Nature', img: 'https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?q=80&w=400&auto=format&fit=crop', duration: '6h', fee: '€75', bestTime: 'Evening', crowd: 'Medium' },
@@ -209,20 +209,7 @@ export default function DubaiScreen({ navigation }) {
 
                     {isLoggedIn && (
                         <>
-                            {/* Hidden Gems Section */}
-                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
-                            <View style={styles.gemsList}>
-                                {data.hiddenGems.map((gem, index) => (
-                                    <TouchableOpacity 
-                                        key={index} 
-                                        style={styles.gemItem}
-                                        onPress={() => navigation.navigate('CityFood', { city: 'Dubai' })}
-                                    >
-                                        <Ionicons name="sparkles" size={16} color="#000000" />
-                                        <Text style={styles.gemText}>{gem}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
+
 
                             {/* Photo Spots */}
                             <View style={styles.sectionHeader}>
@@ -263,7 +250,7 @@ export default function DubaiScreen({ navigation }) {
                                     <Ionicons name="lock-closed" size={24} color="#000000" />
                                 </View>
                                 <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
-                                <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
+                                <Text style={styles.unlockDesc}>Access full transport tips and all photo spots.</Text>
                                 <View style={styles.unlockBtn}>
                                     <Text style={styles.unlockBtnText}>Unlock Now</Text>
                                 </View>

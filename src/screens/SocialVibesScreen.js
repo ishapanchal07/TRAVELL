@@ -292,6 +292,14 @@ export default function SocialVibesScreen({ navigation }) {
                 {/* Recommended for You */}
                 <View style={[styles.sectionHeader, { marginTop: 25 }]}>
                     <Text style={styles.sectionTitle}>Recommended for You</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('RecommendedList', { 
+                        items: [
+                            { id: 'rec1', title: 'Palais Royal', sub: 'History • 1h', img: PALAIS_ROYAL_IMG, duration: '1h', fee: 'Free', bestTime: 'Morning', crowd: 'Low' },
+                            { id: 'rec2', title: 'Le Marais Walk', sub: 'Culture • 2h', img: PARIS_STREET_IMG, duration: '2h', fee: 'Free', bestTime: 'Afternoon', crowd: 'Medium' }
+                        ] 
+                    })}>
+                        <Text style={styles.seeAllText}>See All</Text>
+                    </TouchableOpacity>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                     <TouchableOpacity 
@@ -320,35 +328,8 @@ export default function SocialVibesScreen({ navigation }) {
                     </TouchableOpacity>
                 </ScrollView>
 
-                {/* Nearby Experiences */}
-                <View style={[styles.sectionHeader, { marginTop: 25 }]}>
-                    <Text style={styles.sectionTitle}>Nearby Experiences</Text>
-                </View>
-                <View style={styles.nearbyGrid}>
-                    <TouchableOpacity 
-                        style={styles.nearbyItem}
-                        onPress={() => navigation.navigate('ExperienceDetail', { 
-                            item: { id: 'nearby1', title: 'Rue Crémieux', sub: 'Colorful', img: CREMIEUX_IMG, duration: '30m', fee: 'Free', bestTime: 'Morning', crowd: 'Low' } 
-                        })}
-                    >
-                        <Image source={{ uri: CREMIEUX_IMG }} style={styles.nearbyImg} />
-                        <Text style={styles.nearbyTitle}>Rue Crémieux</Text>
-                        <Text style={styles.nearbyDist}>0.5 km away</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={styles.nearbyItem}
-                        onPress={() => navigation.navigate('ExperienceDetail', { 
-                            item: { id: 'nearby2', title: 'Local Guide Meet', sub: 'Social', img: AVATAR_IMG, duration: '2h', fee: 'Free', bestTime: 'Evening', crowd: 'Low' } 
-                        })}
-                    >
-                        <Image source={{ uri: AVATAR_IMG }} style={styles.nearbyImg} />
-                        <Text style={styles.nearbyTitle}>Local Guide Meet</Text>
-                        <Text style={styles.nearbyDist}>1.2 km away</Text>
-                    </TouchableOpacity>
-                </View>
 
-            </ScrollView>
-
+                </ScrollView>
         </SafeAreaView>
     );
 }

@@ -48,11 +48,7 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.headerTitle}>PROFILE</Text>
                 <TouchableOpacity 
                     style={styles.headerIconBtn} 
-                    onPress={() => {
-                        import('react-native').then(({ Alert }) => {
-                            Alert.alert("Settings", "Settings and privacy options coming soon!");
-                        });
-                    }}
+                    onPress={() => navigation.navigate('Settings')}
                 >
                     <Ionicons name="settings-sharp" size={20} color="#0F172A" />
                 </TouchableOpacity>
@@ -136,31 +132,7 @@ export default function ProfileScreen({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-                {/* Eco Card */}
-                <View style={styles.ecoCard}>
-                    <View style={styles.ecoHeaderRow}>
-                        <View>
-                            <Text style={styles.ecoSubtitle}>SUSTAINABILITY SCORE</Text>
-                            <Text style={styles.ecoScore}>92</Text>
-                        </View>
-                        <View style={styles.leafCircle}>
-                            <Ionicons name="leaf" size={20} color="white" />
-                        </View>
-                    </View>
 
-                    <View style={styles.ecoLevelsRow}>
-                        <Text style={styles.ecoStatusTitle}>Eco Warrior Status</Text>
-                        <Text style={styles.ecoNextLevel}>NEXT LEVEL: 100</Text>
-                    </View>
-
-                    <View style={styles.progressTrack}>
-                        <View style={styles.progressFill} />
-                    </View>
-
-                    <Text style={styles.ecoDescText}>
-                        You've saved 42kg of carbon by renting outfits instead of buying new this month. Keep it up!
-                    </Text>
-                </View>
 
             </ScrollView>
         </SafeAreaView>

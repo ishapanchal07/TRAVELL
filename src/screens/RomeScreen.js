@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
-import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
@@ -23,7 +23,7 @@ const ROME_DATA = {
     bestTime: 'April - June or September - October',
     budget: 'Moderate (€90 - 180 per day)',
     transport: 'Metro, Walking, and Vespa rentals',
-    hiddenGems: ['Trastevere Backstreets', 'Aventine Keyhole', 'Gianicolo Hill', 'Galleria Sciarra', 'Appian Way Park', 'Villa Borghese Gardens'],
+
     experiences: [
         { id: 1, title: 'The Colosseum Tour', sub: 'History', img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=400&auto=format&fit=crop', duration: '3h', fee: '€45', bestTime: 'Morning', crowd: 'High' },
         { id: 2, title: 'Vatican Art Gallery', sub: 'Art', img: 'https://images.unsplash.com/photo-1531572753321-ad063cecc140?q=80&w=400&auto=format&fit=crop', duration: '4h', fee: '€35', bestTime: 'Morning', crowd: 'High' },
@@ -210,20 +210,7 @@ export default function RomeScreen({ navigation }) {
 
                     {isLoggedIn && (
                         <>
-                            {/* Hidden Gems Section */}
-                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
-                            <View style={styles.gemsList}>
-                                {data.hiddenGems.map((gem, index) => (
-                                    <TouchableOpacity 
-                                        key={index} 
-                                        style={styles.gemItem}
-                                        onPress={() => navigation.navigate('CityFood', { city: 'Rome' })}
-                                    >
-                                        <Ionicons name="sparkles" size={16} color="#000000" />
-                                        <Text style={styles.gemText}>{gem}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
+
 
                              {/* Photo Spots */}
                              <View style={styles.sectionHeader}>
@@ -264,7 +251,7 @@ export default function RomeScreen({ navigation }) {
                                     <Ionicons name="lock-closed" size={24} color="#000000" />
                                 </View>
                                 <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
-                                <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
+                                <Text style={styles.unlockDesc}>Access full transport tips and all photo spots.</Text>
                                 <View style={styles.unlockBtn}>
                                     <Text style={styles.unlockBtnText}>Unlock Now</Text>
                                 </View>

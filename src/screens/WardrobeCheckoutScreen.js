@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, Statu
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { usePayment } from '../context/PaymentContext';
 
 const { width } = Dimensions.get('window');
 
@@ -11,6 +12,7 @@ const LOOK_IMG_2 = 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea
 const LOOK_IMG_3 = 'https://images.unsplash.com/photo-1549493527-73bd10565258?auto=format&fit=crop&q=80&w=300';
 
 export default function WardrobeCheckoutScreen({ route, navigation }) {
+    const { handlePaidAction } = usePayment();
     const { selectedItems = [] } = route.params || {};
 
     // Fallback static items if none passed (for direct navigation testing)
@@ -165,8 +167,19 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
 
                     <TouchableOpacity
                         style={styles.bookBtn}
-                        activeOpacity={0.8}
-                        onPress={() => navigation.navigate('WardrobeStatus')}
+                        onPress={() => handlePaidAction(
+                            {
+                                id: 'Wardrobe Rental',
+                                title: 'Wardrobe Rental',
+                                price: subtotal,
+                                image: itemsToShow[0]?.image || LOOK_IMG_1,
+                                serviceFee: serviceFee,
+                                deliveryFee: 'FREE',
+                            },
+                            'WardrobeStatus',
+                            navigation,
+                            { successMessage: 'Wardrobe Booking Confirmed!' }
+                        )}
                     >
                         <Text style={styles.bookBtnText}>Book My Wardrobe</Text>
                         <Ionicons name="arrow-forward" size={20} color="white" />

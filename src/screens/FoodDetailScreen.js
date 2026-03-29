@@ -5,12 +5,14 @@ import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import ShareService from '../services/ShareService';
 import BottomNav from '../components/BottomNav';
+import { usePayment } from '../context/PaymentContext';
 
 const { width } = Dimensions.get('window');
 
 const FOOD_HERO_IMG = 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&q=80&w=600';
 
 export default function FoodDetailScreen({ route, navigation }) {
+    const { handlePaidAction } = usePayment();
     const { item = {} } = route.params || {};
 
     // Default values if item is empty
@@ -246,15 +248,19 @@ export default function FoodDetailScreen({ route, navigation }) {
                         style={styles.placeOrderBtnExpanded}
                         activeOpacity={0.8}
                         onPress={() => {
-                            import('react-native').then(({ Alert }) => {
-                                Alert.alert(
-                                    "Order Confirmed",
-                                    "Order Placed Successfully!",
-                                    [
-                                        { text: "OK", onPress: () => navigation.navigate('OrderTracking', { orderItem: { name, image } }) }
-                                    ]
-                                );
-                            });
+                            handlePaidAction(
+                                {
+                                    id: name,
+                                    title: name,
+                                    price: totalPrice - deliveryFee,
+                                    image: image,
+                                    serviceFee: 2.50,
+                                    deliveryFee: `$${deliveryFee.toFixed(2)}`,
+                                },
+                                'OrderTracking',
+                                navigation,
+                                { orderItem: { name, image }, successMessage: 'Order Placed Successfully!' }
+                            );
                         }}
                     >
                         <Text style={styles.placeOrderText}>Buy Now</Text>

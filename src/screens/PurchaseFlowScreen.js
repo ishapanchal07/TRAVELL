@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import { usePayment } from '../context/PaymentContext';
 
 export default function PurchaseFlowScreen({ route, navigation }) {
+    const { handlePaidAction } = usePayment();
     const { item = {} } = route.params || {};
 
     return (
@@ -78,7 +80,22 @@ export default function PurchaseFlowScreen({ route, navigation }) {
             <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.payBtn}
-                    onPress={() => navigation.navigate('WardrobeStatus')}
+                    onPress={() => {
+                        const basePrice = item.buy ? parseFloat(item.buy.replace(/[^0-9.]/g, '')) : 185.00;
+                        handlePaidAction(
+                            {
+                                id: item.id || item.title || 'Apparel Purchase',
+                                title: item.title || 'Apparel Purchase',
+                                price: basePrice,
+                                image: item.image,
+                                serviceFee: 0,
+                                deliveryFee: 'FREE',
+                            },
+                            'WardrobeStatus',
+                            navigation,
+                            { successMessage: 'Purchase Confirmed!' }
+                        );
+                    }}
                 >
                     <Text style={styles.payBtnText}>PAY NOW</Text>
                 </TouchableOpacity>

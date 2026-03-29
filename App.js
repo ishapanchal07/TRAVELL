@@ -5,6 +5,7 @@ import { AuthProvider } from './src/context/AuthContext';
 import { TripProvider } from './src/context/TripContext';
 import { SavedProvider } from './src/context/SavedContext';
 import { BookingProvider } from './src/context/BookingContext';
+import { PaymentProvider } from './src/context/PaymentContext';
 
 // Screen Imports
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -20,6 +21,7 @@ import SocialVibesScreen from './src/screens/SocialVibesScreen';
 import PhotoGuideScreen from './src/screens/PhotoGuideScreen';
 import WardrobeScreen from './src/screens/WardrobeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import JourneysScreen from './src/screens/JourneysScreen';
 import GalleryScreen from './src/screens/GalleryScreen';
 import SwitzerlandScreen from './src/screens/SwitzerlandScreen';
@@ -52,6 +54,9 @@ import BookingScreen from './src/screens/BookingScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import BookingConfirmationScreen from './src/screens/BookingConfirmationScreen';
 import ExpertChatScreen from './src/screens/ExpertChatScreen';
+import RecommendedListScreen from './src/screens/RecommendedListScreen';
+import NearbyExperiencesScreen from './src/screens/NearbyExperiencesScreen';
+import PaymentSuccessScreen from './src/screens/PaymentSuccessScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,8 +66,9 @@ export default function App() {
       <TripProvider>
         <SavedProvider>
           <BookingProvider>
-            <NavigationContainer>
-              <Stack.Navigator
+            <PaymentProvider>
+              <NavigationContainer>
+                <Stack.Navigator
               initialRouteName="Welcome"
               screenOptions={{
                 headerShown: false,
@@ -82,6 +88,7 @@ export default function App() {
               <Stack.Screen name="PhotoGuide" component={PhotoGuideScreen} />
               <Stack.Screen name="Wardrobe" component={WardrobeScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
               <Stack.Screen name="Journeys" component={JourneysScreen} />
               <Stack.Screen name="Gallery" component={GalleryScreen} />
               <Stack.Screen name="Switzerland" component={SwitzerlandScreen} />
@@ -114,9 +121,13 @@ export default function App() {
               <Stack.Screen name="Payment" component={PaymentScreen} />
               <Stack.Screen name="BookingConfirmation" component={BookingConfirmationScreen} />
               <Stack.Screen name="ExpertChat" component={ExpertChatScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </BookingProvider>
+              <Stack.Screen name="RecommendedList" component={RecommendedListScreen} />
+              <Stack.Screen name="NearbyExperiences" component={NearbyExperiencesScreen} />
+              <Stack.Screen name="PaymentSuccess" component={PaymentSuccessScreen} />
+              </Stack.Navigator>
+            </NavigationContainer>
+            </PaymentProvider>
+          </BookingProvider>
       </SavedProvider>
     </TripProvider>
     </AuthProvider>

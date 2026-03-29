@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
-import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
@@ -23,7 +23,7 @@ const SWISS_DATA = {
     bestTime: 'Dec - Mar (Skiing) or Jun - Aug (Hiking)',
     budget: 'High (CHF 150 - 300 per day)',
     transport: 'Swiss Travel Pass (Trains, Boats, Buses)',
-    hiddenGems: ['Lauterbrunnen Valley', 'Appenzell Village', 'Oeschinen Lake', 'Verzasca Valley', 'Brienz Lakehouse', 'Aletsch Glacier'],
+
     experiences: [
         { id: 1, title: 'Jungfraujoch Train', sub: 'Scenic', img: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400&auto=format&fit=crop', duration: '4h', fee: '€120', bestTime: 'Morning', crowd: 'High' },
         { id: 2, title: 'Matterhorn Hike', sub: 'Nature', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop', duration: '5h', fee: 'Free', bestTime: 'Morning', crowd: 'Medium' },
@@ -216,20 +216,7 @@ export default function SwitzerlandScreen({ navigation }) {
 
                     {isLoggedIn && (
                         <>
-                            {/* Hidden Gems Section */}
-                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Hidden Gems</Text>
-                            <View style={styles.gemsList}>
-                                {data.hiddenGems.map((gem, index) => (
-                                    <TouchableOpacity 
-                                        key={index} 
-                                        style={styles.gemItem}
-                                        onPress={() => navigation.navigate('CityFood', { city: 'Switzerland' })}
-                                    >
-                                        <Ionicons name="sparkles" size={16} color="#000000" />
-                                        <Text style={styles.gemText}>{gem}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
+
 
                              {/* Photo Spots */}
                              <View style={styles.sectionHeader}>
@@ -270,7 +257,7 @@ export default function SwitzerlandScreen({ navigation }) {
                                     <Ionicons name="lock-closed" size={24} color="#000000" />
                                 </View>
                                 <Text style={styles.unlockTitle}>Login to unlock full guide</Text>
-                                <Text style={styles.unlockDesc}>Access full transport tips, hidden gems, and all photo spots.</Text>
+                                <Text style={styles.unlockDesc}>Access full transport tips and all photo spots.</Text>
                                 <View style={styles.unlockBtn}>
                                     <Text style={styles.unlockBtnText}>Unlock Now</Text>
                                 </View>
@@ -596,22 +583,68 @@ const styles = StyleSheet.create({
         color: '#64748B',
         marginTop: 4,
     },
-    gemsList: {
-        backgroundColor: '#F8FAFC',
-        borderRadius: 20,
-        padding: 20,
-        marginTop: 10,
+    smallCard: {
+        width: 180,
+        height: 160,
+        marginRight: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 4,
     },
-    gemItem: {
+    smallCardImage: {
+        width: '100%',
+        height: '100%',
+    },
+    smallCardOverlay: {
+        flex: 1,
+        padding: 15,
+        justifyContent: 'space-between',
+        backgroundColor: 'rgba(0,0,0,0.25)',
+        borderRadius: 24,
+    },
+    heartButton: {
+        alignSelf: 'flex-end',
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    smallCardBottom: {
+        justifyContent: 'flex-end',
+    },
+    smallPill: {
+        alignSelf: 'flex-start',
+        backgroundColor: 'rgba(15, 23, 42, 0.6)',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 8,
+        marginBottom: 6,
+    },
+    smallPillText: {
+        color: 'white',
+        fontSize: 8,
+        fontWeight: '800',
+        letterSpacing: 0.5,
+    },
+    smallCardTitle: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: '800',
+        marginBottom: 4,
+    },
+    smallRatingRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 12,
     },
-    gemText: {
-        marginLeft: 10,
-        fontSize: 14,
-        color: '#1E293B',
+    smallRatingText: {
+        color: 'white',
+        fontSize: 10,
         fontWeight: '600',
+        marginLeft: 4,
     },
     photoSpotCard: {
         width: 180,

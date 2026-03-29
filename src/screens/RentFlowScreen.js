@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import { usePayment } from '../context/PaymentContext';
 
 export default function RentFlowScreen({ route, navigation }) {
+    const { handlePaidAction } = usePayment();
     const { item = {} } = route.params || {};
 
     return (
@@ -69,8 +71,19 @@ export default function RentFlowScreen({ route, navigation }) {
 
             <View style={styles.footer}>
                 <TouchableOpacity
-                    style={styles.confirmBtn}
-                    onPress={() => navigation.navigate('WardrobeStatus')}
+                    onPress={() => handlePaidAction(
+                        {
+                            id: item.id || item.title || 'Apparel Rental',
+                            title: item.title || 'Apparel Rental',
+                            price: 144.00,
+                            image: item.image,
+                            serviceFee: 12.00,
+                            deliveryFee: 'FREE',
+                        },
+                        'WardrobeStatus',
+                        navigation,
+                        { successMessage: 'Rental Confirmed!' }
+                    )}
                 >
                     <Text style={styles.confirmBtnText}>CONFIRM RENTAL</Text>
                 </TouchableOpacity>
