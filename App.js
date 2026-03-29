@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthProvider } from './src/context/AuthContext';
 import { TripProvider } from './src/context/TripContext';
 import { SavedProvider } from './src/context/SavedContext';
+import { BookingProvider } from './src/context/BookingContext';
 
 // Screen Imports
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -46,6 +47,11 @@ import SnapSpotsScreen from './src/screens/SnapSpotsScreen';
 import SnapSpotDetailsScreen from './src/screens/SnapSpotDetailsScreen';
 import ProductDetailScreen from './src/screens/ProductDetailScreen';
 import ExperienceDetailScreen from './src/screens/ExperienceDetailScreen';
+import ExpertProfileScreen from './src/screens/ExpertProfileScreen';
+import BookingScreen from './src/screens/BookingScreen';
+import PaymentScreen from './src/screens/PaymentScreen';
+import BookingConfirmationScreen from './src/screens/BookingConfirmationScreen';
+import ExpertChatScreen from './src/screens/ExpertChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,8 +60,9 @@ export default function App() {
     <AuthProvider>
       <TripProvider>
         <SavedProvider>
-          <NavigationContainer>
-            <Stack.Navigator
+          <BookingProvider>
+            <NavigationContainer>
+              <Stack.Navigator
               initialRouteName="Welcome"
               screenOptions={{
                 headerShown: false,
@@ -102,10 +109,16 @@ export default function App() {
               <Stack.Screen name="SnapSpotDetails" component={SnapSpotDetailsScreen} />
               <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
               <Stack.Screen name="ExperienceDetail" component={ExperienceDetailScreen} />
+              <Stack.Screen name="ExpertProfile" component={ExpertProfileScreen} />
+              <Stack.Screen name="Booking" component={BookingScreen} />
+              <Stack.Screen name="Payment" component={PaymentScreen} />
+              <Stack.Screen name="BookingConfirmation" component={BookingConfirmationScreen} />
+              <Stack.Screen name="ExpertChat" component={ExpertChatScreen} />
             </Stack.Navigator>
           </NavigationContainer>
-        </SavedProvider>
-      </TripProvider>
+        </BookingProvider>
+      </SavedProvider>
+    </TripProvider>
     </AuthProvider>
   );
 }

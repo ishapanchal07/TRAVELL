@@ -58,12 +58,6 @@ export default function WelcomeScreen({ navigation }) {
                                 <Text style={styles.buttonText}>START JOURNEY</Text>
                             </TouchableOpacity>
 
-                            <View style={styles.loginContainer}>
-                                <Text style={styles.loginText}>Already have an account? </Text>
-                                <TouchableOpacity activeOpacity={0.6}>
-                                    <Text style={styles.loginLink}>Log in</Text>
-                                </TouchableOpacity>
-                            </View>
                         </View>
 
                     </SafeAreaView>
@@ -197,20 +191,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '700',
         letterSpacing: 1.5,
-    },
-    loginContainer: {
-        flexDirection: 'row',
-        marginTop: 25,
-        alignItems: 'center',
-    },
-    loginText: {
-        color: 'rgba(255,255,255,0.7)',
-        fontSize: 14,
-    },
-    loginLink: {
-        color: 'white',
-        fontSize: 14,
-        fontWeight: '600',
-        textDecorationLine: 'underline',
     },
 });

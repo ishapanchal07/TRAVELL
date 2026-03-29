@@ -2,49 +2,30 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
-import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, Feather, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
+import { useBooking } from '../context/BookingContext';
+import AvailabilityBadge from '../components/AvailabilityBadge';
+import RatingStars from '../components/RatingStars';
 
 const { width } = Dimensions.get('window');
 
-const GUIDES = [
-    {
-        id: '1',
-        name: 'Amélie L.',
-        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400',
-        price: '$180/day',
-        description: '"Capturing the golden hour at Louvre"',
-        category: 'PHOTOGRAPHY'
-    },
-    {
-        id: '2',
-        name: 'Julien B.',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
-        price: '$220/day',
-        description: '"Paris\' hidden jazz & wine spots"',
-        category: 'NIGHTLIFE'
-    },
-    {
-        id: '3',
-        name: 'Léa M.',
-        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
-        price: '$160/day',
-        description: '"Le Marais\' secret fashion alleys"',
-        category: 'CHIC STYLE'
-    },
-    {
-        id: '4',
-        name: 'Marc R.',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
-        price: '$190/day',
-        description: '"The untold stories of Montmartre"',
-        category: 'HISTORY'
-    }
-];
-
 export default function GuideScreen({ route, navigation }) {
     const { city = 'Paris' } = route.params || {};
+    const { experts } = useBooking();
     const [activeFilter, setActiveFilter] = useState('All Experts');
+    const [showFilters, setShowFilters] = useState(false);
+    
+    // Advanced Filter State
+    const [priceRange, setPriceRange] = useState(300);
+    const [minRating, setMinRating] = useState(0);
+
+    const filteredExperts = experts.filter(expert => {
+        const matchesCategory = activeFilter === 'All Experts' || expert.category.toLowerCase().includes(activeFilter.toLowerCase());
+        const matchesPrice = expert.price <= priceRange;
+        const matchesRating = expert.rating >= minRating;
+        return matchesCategory && matchesPrice && matchesRating;
+    });
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -52,14 +33,50 @@ export default function GuideScreen({ route, navigation }) {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconCircle}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconCircle}>
-                    <Feather name="search" size={20} color="#0F172A" />
+                <TouchableOpacity 
+                    style={[styles.iconCircle, showFilters && styles.iconCircleActive]}
+                    onPress={() => setShowFilters(!showFilters)}
+                >
+                    <Feather name="sliders" size={20} color={showFilters ? "white" : "#0F172A"} />
                 </TouchableOpacity>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                 <Text style={styles.mainTitle}>Hire an Expert</Text>
                 <Text style={styles.subtitle}>Local guides for your best aesthetic in {city}.</Text>
+
+                {showFilters && (
+                    <View style={styles.advancedFilters}>
+                        <View style={styles.filterRow}>
+                            <Text style={styles.filterLabel}>Max Price: ${priceRange}</Text>
+                            <View style={styles.priceOptions}>
+                                {[150, 200, 250, 300].map(p => (
+                                    <TouchableOpacity 
+                                        key={p} 
+                                        onPress={() => setPriceRange(p)}
+                                        style={[styles.priceTag, priceRange === p && styles.priceTagActive]}
+                                    >
+                                        <Text style={[styles.priceTagText, priceRange === p && styles.priceTagTextActive]}>${p}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+                        <View style={styles.filterRow}>
+                            <Text style={styles.filterLabel}>Min Rating: {minRating}+</Text>
+                            <View style={styles.ratingOptions}>
+                                {[0, 4, 4.5, 4.8].map(r => (
+                                    <TouchableOpacity 
+                                        key={r} 
+                                        onPress={() => setMinRating(r)}
+                                        style={[styles.ratingTag, minRating === r && styles.ratingTagActive]}
+                                    >
+                                        <Text style={[styles.ratingTagText, minRating === r && styles.ratingTagTextActive]}>{r === 0 ? 'All' : r + '★'}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+                    </View>
+                )}
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
                     {['All Experts', 'Photography', 'Nightlife', 'History'].map(filter => (
@@ -74,39 +91,52 @@ export default function GuideScreen({ route, navigation }) {
                 </ScrollView>
 
                 <View style={styles.gridContainer}>
-                    {GUIDES.map((guide) => {
-                        if (activeFilter !== 'All Experts' && guide.category.toUpperCase() !== activeFilter.toUpperCase() && !(activeFilter === 'History' && guide.category === 'CHIC STYLE')) {
-                            // Just a simple filter, in real app would match exact
-                            if (activeFilter === 'Photography' && guide.category !== 'PHOTOGRAPHY') return null;
-                            if (activeFilter === 'Nightlife' && guide.category !== 'NIGHTLIFE') return null;
-                            if (activeFilter === 'History' && guide.category !== 'HISTORY' && guide.category !== 'CHIC STYLE') return null;
-                        }
-
-                        return (
-                            <View key={guide.id} style={styles.card}>
-                                <View style={styles.imageContainer}>
-                                    <Image 
-                                        source={{ uri: guide.image }} 
-                                        style={styles.cardImage} 
-                                        placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                        transition={300}
-                                        contentFit="cover"
-                                    />
-                                    <View style={styles.verifiedBadge}>
-                                        <MaterialIcons name="verified" size={20} color="#000000" style={{ backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' }} />
-                                    </View>
-                                    <View style={styles.priceOverlay}>
-                                        <Text style={styles.priceText}>{guide.price}</Text>
-                                    </View>
+                    {filteredExperts.map((guide) => (
+                        <TouchableOpacity 
+                            key={guide.id} 
+                            style={styles.card}
+                            activeOpacity={0.9}
+                            onPress={() => navigation.navigate('ExpertProfile', { expert: guide })}
+                        >
+                            <View style={styles.imageContainer}>
+                                <Image 
+                                    source={{ uri: guide.image }} 
+                                    style={styles.cardImage} 
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                    contentFit="cover"
+                                />
+                                <View style={styles.verifiedBadge}>
+                                    <MaterialIcons name="verified" size={20} color="#000000" style={{ backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' }} />
                                 </View>
-                                <Text style={styles.guideName}>{guide.name}</Text>
-                                <Text style={styles.guideDesc}>{guide.description}</Text>
-                                <View style={styles.categoryPill}>
-                                    <Text style={styles.categoryText}>{guide.category}</Text>
+                                <View style={styles.statusOverlay}>
+                                    <AvailabilityBadge status={guide.status} />
+                                </View>
+                                <View style={styles.priceOverlay}>
+                                    <Text style={styles.priceText}>${guide.price}/day</Text>
                                 </View>
                             </View>
-                        );
-                    })}
+                            <View style={styles.cardContent}>
+                                <Text style={styles.guideName}>{guide.name}</Text>
+                                <View style={styles.ratingRow}>
+                                    <RatingStars rating={guide.rating} size={12} />
+                                    <Text style={styles.ratingCount}>({guide.reviewCount})</Text>
+                                </View>
+                                <Text style={styles.guideDesc} numberOfLines={2}>{guide.description}</Text>
+                                <View style={styles.footerRow}>
+                                    <View style={styles.categoryPill}>
+                                        <Text style={styles.categoryText}>{guide.category}</Text>
+                                    </View>
+                                    <TouchableOpacity 
+                                        style={styles.hireMinimal}
+                                        onPress={() => navigation.navigate('Booking', { expert: guide })}
+                                    >
+                                        <Text style={styles.hireMinimalText}>Hire</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
                 </View>
             </ScrollView>
 
@@ -139,6 +169,68 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 5,
         elevation: 2,
+    },
+    iconCircleActive: {
+        backgroundColor: '#000',
+    },
+    advancedFilters: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 24,
+        marginBottom: 24,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+    },
+    filterRow: {
+        marginBottom: 16,
+    },
+    filterLabel: {
+        fontSize: 14,
+        fontWeight: '800',
+        color: '#0F172A',
+        marginBottom: 12,
+    },
+    priceOptions: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    priceTag: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
+        backgroundColor: '#F1F5F9',
+    },
+    priceTagActive: {
+        backgroundColor: '#000',
+    },
+    priceTagText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#64748B',
+    },
+    priceTagTextActive: {
+        color: 'white',
+    },
+    ratingOptions: {
+        flexDirection: 'row',
+    },
+    ratingTag: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
+        backgroundColor: '#F1F5F9',
+        marginRight: 10,
+    },
+    ratingTagActive: {
+        backgroundColor: '#000',
+    },
+    ratingTagText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#64748B',
+    },
+    ratingTagTextActive: {
+        color: 'white',
     },
     scrollContainer: {
         paddingHorizontal: 20,
@@ -187,15 +279,17 @@ const styles = StyleSheet.create({
     },
     card: {
         width: (width - 55) / 2,
-        marginBottom: 25,
+        backgroundColor: 'white',
+        borderRadius: 24,
+        marginBottom: 20,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#F1F5F9',
     },
     imageContainer: {
         width: '100%',
-        height: 200,
-        borderRadius: 24,
-        overflow: 'hidden',
+        height: 160,
         position: 'relative',
-        marginBottom: 12,
     },
     cardImage: {
         width: '100%',
@@ -206,42 +300,77 @@ const styles = StyleSheet.create({
         top: 10,
         right: 10,
     },
+    statusOverlay: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+    },
     priceOverlay: {
         position: 'absolute',
-        bottom: 12,
-        left: 12,
+        bottom: 10,
+        left: 10,
     },
     priceText: {
         color: 'white',
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: '800',
-        textShadowColor: 'rgba(0,0,0,0.5)',
-        textShadowOffset: { width: 0, height: 1 },
-        textShadowRadius: 3,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+    cardContent: {
+        padding: 12,
     },
     guideName: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '800',
         color: '#0F172A',
         marginBottom: 4,
     },
-    guideDesc: {
-        fontSize: 13,
+    ratingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    ratingCount: {
+        fontSize: 10,
         color: '#94A3B8',
-        fontStyle: 'italic',
-        marginBottom: 10,
+        marginLeft: 4,
+        fontWeight: '600',
+    },
+    guideDesc: {
+        fontSize: 12,
+        color: '#64748B',
         lineHeight: 18,
+        marginBottom: 12,
+    },
+    footerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     categoryPill: {
         backgroundColor: '#F8FAFC',
-        alignSelf: 'flex-start',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 12,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 8,
     },
     categoryText: {
-        fontSize: 10,
+        fontSize: 9,
         fontWeight: '800',
-        color: '#000000',
+        color: '#475569',
+    },
+    hireMinimal: {
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        backgroundColor: '#000',
+        borderRadius: 8,
+    },
+    hireMinimalText: {
+        color: 'white',
+        fontSize: 11,
+        fontWeight: '800',
     },
 });
