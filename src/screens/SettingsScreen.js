@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Switch, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SettingsContext } from '../context/SettingsContext';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function SettingsScreen({ navigation }) {
-    const [isDarkMode, setIsDarkMode] = React.useState(false);
-    const [notificationsOn, setNotificationsOn] = React.useState(true);
-    const [isPrivate, setIsPrivate] = React.useState(false);
+    const { 
+        isDarkMode, toggleDarkMode, 
+        notificationsOn, toggleNotifications, 
+        isPrivate, togglePrivacy 
+    } = useContext(SettingsContext);
 
     const handleLogout = () => {
         Alert.alert(
@@ -20,11 +24,17 @@ export default function SettingsScreen({ navigation }) {
                 { 
                     text: "Logout", 
                     style: "destructive",
-                    onPress: () => {
-                        // Reset navigation stack to Welcome screen
+                    onPress: async () => {
+                        try {
+                            // Clear all data including tokens and settings
+                            await AsyncStorage.clear();
+                        } catch (e) {
+                            console.error('Failed to clear AsyncStorage', e);
+                        }
+                        // Reset navigation stack to Login screen (or Welcome)
                         navigation.reset({
                             index: 0,
-                            routes: [{ name: 'Welcome' }],
+                            routes: [{ name: 'Login' }],
                         });
                     }
                 }
@@ -48,7 +58,7 @@ export default function SettingsScreen({ navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 
                 {/* Profile Top Section */}
-                <TouchableOpacity style={styles.profileSection} onPress={() => {}}>
+                <TouchableOpacity style={styles.profileSection} onPress={() => navigation.navigate('EditProfile')}>
                     <Image source={{ uri: AVATAR_URL }} style={styles.profilePic} />
                     <View style={styles.profileInfo}>
                         <Text style={styles.profileName}>Chloe Roams</Text>
@@ -60,8 +70,8 @@ export default function SettingsScreen({ navigation }) {
                 {/* A. Account */}
                 <SectionHeader title="Account" />
                 <View style={styles.sectionCard}>
-                    <SettingsItem icon="user" label="Edit Profile" />
-                    <SettingsItem icon="lock" label="Change Password" hideDivider />
+                    <SettingsItem icon="user" label="Edit Profile" onPress={() => navigation.navigate('EditProfile')} />
+                    <SettingsItem icon="lock" label="Change Password" hideDivider onPress={() => navigation.navigate('ChangePassword')} />
                 </View>
 
                 {/* B. Preferences */}
@@ -71,14 +81,14 @@ export default function SettingsScreen({ navigation }) {
                         icon="moon" 
                         label="Dark / Light Mode" 
                         value={isDarkMode} 
-                        onValueChange={setIsDarkMode} 
+                        onValueChange={toggleDarkMode} 
                     />
-                    <SettingsItem icon="globe" label="Language" value="English" />
+                    <SettingsItem icon="globe" label="Language" value="English" onPress={() => navigation.navigate('LanguageSelection')} />
                     <SettingsToggleItem 
                         icon="bell" 
                         label="Notifications" 
                         value={notificationsOn} 
-                        onValueChange={setNotificationsOn} 
+                        onValueChange={toggleNotifications} 
                         hideDivider 
                     />
                 </View>
@@ -86,23 +96,23 @@ export default function SettingsScreen({ navigation }) {
                 {/* C. Travel Experience */}
                 <SectionHeader title="Travel Experience" />
                 <View style={styles.sectionCard}>
-                    <SettingsItem icon="music" label="Background Music" value="Lo-Fi Chill" />
-                    <SettingsItem icon="compass" label="Travel Vibe" value="Adventure" hideDivider />
+                    <SettingsItem icon="music" label="Background Music" value="Lo-Fi Chill" onPress={() => navigation.navigate('MusicPreference')} />
+                    <SettingsItem icon="compass" label="Travel Vibe" value="Adventure" hideDivider onPress={() => navigation.navigate('VibeSelection')} />
                 </View>
 
                 {/* D. Payments & Bookings */}
                 <SectionHeader title="Payments & Bookings" />
                 <View style={styles.sectionCard}>
-                    <SettingsItem icon="credit-card" label="Saved Payment Methods" />
-                    <SettingsItem icon="clock" label="Booking History" />
-                    <SettingsItem icon="award" label="Roam Points / Rewards" hideDivider />
+                    <SettingsItem icon="credit-card" label="Saved Payment Methods" onPress={() => navigation.navigate('PaymentMethods')} />
+                    <SettingsItem icon="clock" label="Booking History" onPress={() => navigation.navigate('BookingHistory')} />
+                    <SettingsItem icon="award" label="Roam Points / Rewards" hideDivider onPress={() => navigation.navigate('Rewards')} />
                 </View>
 
                 {/* E. Activity */}
                 <SectionHeader title="Activity" />
                 <View style={styles.sectionCard}>
-                    <SettingsItem icon="map-pin" label="Saved Places" />
-                    <SettingsItem icon="heart" label="Liked Items / Hidden Gems" hideDivider />
+                    <SettingsItem icon="map-pin" label="Saved Places" onPress={() => navigation.navigate('SavedPlaces')} />
+                    <SettingsItem icon="heart" label="Liked Items / Hidden Gems" hideDivider onPress={() => navigation.navigate('LikedItems')} />
                 </View>
 
                 {/* F. Privacy & Security */}
@@ -112,17 +122,17 @@ export default function SettingsScreen({ navigation }) {
                         icon="shield" 
                         label="Private Account" 
                         value={isPrivate} 
-                        onValueChange={setIsPrivate} 
+                        onValueChange={togglePrivacy} 
                     />
-                    <SettingsItem icon="key" label="Permissions & Data Control" hideDivider />
+                    <SettingsItem icon="key" label="Permissions & Data Control" hideDivider onPress={() => navigation.navigate('Permissions')} />
                 </View>
 
                 {/* G. Support & Info */}
                 <SectionHeader title="Support & Info" />
                 <View style={styles.sectionCard}>
-                    <SettingsItem icon="help-circle" label="Help & Support" />
-                    <SettingsItem icon="info" label="About Roamster" />
-                    <SettingsItem icon="file-text" label="Terms & Conditions" hideDivider />
+                    <SettingsItem icon="help-circle" label="Help & Support" onPress={() => navigation.navigate('Support')} />
+                    <SettingsItem icon="info" label="About Roamster" onPress={() => navigation.navigate('About')} />
+                    <SettingsItem icon="file-text" label="Terms & Conditions" hideDivider onPress={() => navigation.navigate('Terms')} />
                 </View>
 
                 {/* Logout Button */}

@@ -6,6 +6,7 @@ import { TripProvider } from './src/context/TripContext';
 import { SavedProvider } from './src/context/SavedContext';
 import { BookingProvider } from './src/context/BookingContext';
 import { PaymentProvider } from './src/context/PaymentContext';
+import { SettingsProvider } from './src/context/SettingsContext';
 
 // Screen Imports
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -57,6 +58,20 @@ import ExpertChatScreen from './src/screens/ExpertChatScreen';
 import RecommendedListScreen from './src/screens/RecommendedListScreen';
 import NearbyExperiencesScreen from './src/screens/NearbyExperiencesScreen';
 import PaymentSuccessScreen from './src/screens/PaymentSuccessScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen';
+import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
+import LanguageSelectionScreen from './src/screens/LanguageSelectionScreen';
+import MusicPreferenceScreen from './src/screens/MusicPreferenceScreen';
+import VibeSelectionScreen from './src/screens/VibeSelectionScreen';
+import PaymentMethodsScreen from './src/screens/PaymentMethodsScreen';
+import BookingHistoryScreen from './src/screens/BookingHistoryScreen';
+import RewardsScreen from './src/screens/RewardsScreen';
+import SavedPlacesScreen from './src/screens/SavedPlacesScreen';
+import LikedItemsScreen from './src/screens/LikedItemsScreen';
+import PermissionsScreen from './src/screens/PermissionsScreen';
+import SupportScreen from './src/screens/SupportScreen';
+import AboutScreen from './src/screens/AboutScreen';
+import TermsScreen from './src/screens/TermsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,7 +82,8 @@ export default function App() {
         <SavedProvider>
           <BookingProvider>
             <PaymentProvider>
-              <NavigationContainer>
+              <SettingsProvider>
+                <NavigationContainer>
                 <Stack.Navigator
               initialRouteName="Welcome"
               screenOptions={{
@@ -124,8 +140,23 @@ export default function App() {
               <Stack.Screen name="RecommendedList" component={RecommendedListScreen} />
               <Stack.Screen name="NearbyExperiences" component={NearbyExperiencesScreen} />
               <Stack.Screen name="PaymentSuccess" component={PaymentSuccessScreen} />
+              <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+              <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+              <Stack.Screen name="LanguageSelection" component={LanguageSelectionScreen} />
+              <Stack.Screen name="MusicPreference" component={MusicPreferenceScreen} />
+              <Stack.Screen name="VibeSelection" component={VibeSelectionScreen} />
+              <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+              <Stack.Screen name="BookingHistory" component={BookingHistoryScreen} />
+              <Stack.Screen name="Rewards" component={RewardsScreen} />
+              <Stack.Screen name="SavedPlaces" component={SavedPlacesScreen} />
+              <Stack.Screen name="LikedItems" component={LikedItemsScreen} />
+              <Stack.Screen name="Permissions" component={PermissionsScreen} />
+              <Stack.Screen name="Support" component={SupportScreen} />
+              <Stack.Screen name="About" component={AboutScreen} />
+              <Stack.Screen name="Terms" component={TermsScreen} />
               </Stack.Navigator>
             </NavigationContainer>
+              </SettingsProvider>
             </PaymentProvider>
           </BookingProvider>
       </SavedProvider>

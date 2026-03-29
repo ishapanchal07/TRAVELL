@@ -122,7 +122,7 @@ export default function ExploreScreen({ navigation }) {
                         >
                             <Ionicons name="heart-outline" size={24} color="#222222" />
                         </TouchableOpacity>
-                        <Text style={styles.categoryLabel}>SAVED</Text>
+                        <Text style={styles.categoryLabel}>FAVORITES</Text>
                     </View>
                 </View>
 

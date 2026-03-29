@@ -111,9 +111,6 @@ export default function JourneysScreen({ navigation }) {
                 <>
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Past Adventures</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.seeAllText}>See All</Text>
-                    </TouchableOpacity>
                 </View>
 
                 {/* Past Adventure List */}
