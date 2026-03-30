@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Linking, Platform, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -23,7 +23,25 @@ const LOCATION_DATA = {
     'Burj Khalifa': { lat: 25.1972, lng: 55.2744, rating: 4.8, reviews: '150,000+', localName: 'Burj Khalifa' },
 };
 
+const INJECTED_JS = `
+  (function() {
+    const style = document.createElement('style');
+    style.innerHTML = \`
+      .ml-promotion-container, .scene-footer-container, .searchbox-container, 
+      #searchbox-container, .cards-layout, .widget-reveal-card, .suggest-container,
+      .ml-promotion, .ml-app-promotion, .ml-promotion-banner {
+        display: none !important;
+      }
+      .gm-style-cc { display: none !important; }
+      .gmnoprint { display: none !important; }
+    \`;
+    document.head.appendChild(style);
+  })();
+  true;
+`;
+
 export default function MapScreen({ route, navigation }) {
+    const webViewRef = useRef(null);
     const { city = 'Paris', location } = route.params || {};
     
     // Get location detail if available
@@ -35,30 +53,44 @@ export default function MapScreen({ route, navigation }) {
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
 
     const handleOpenInApp = async () => {
-        const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-        const supported = await Linking.canOpenURL(url);
-        if (supported) {
-            await Linking.openURL(url);
-        } else {
-            await Linking.openURL(mapUrl);
+        try {
+            const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+            const supported = await Linking.canOpenURL(url);
+            if (supported) {
+                await Linking.openURL(url);
+            } else {
+                await Linking.openURL(mapUrl);
+            }
+        } catch (error) {
+            console.warn('[MapScreen] Error opening app:', error);
+            Linking.openURL(mapUrl);
         }
     };
 
     const handleDirections = async () => {
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-        await Linking.openURL(url);
+        try {
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+            await Linking.openURL(url);
+        } catch (error) {
+            console.warn('[MapScreen] Error opening directions:', error);
+        }
     };
 
     const handleStart = async () => {
-        const url = Platform.OS === 'android' 
-            ? `google.navigation:q=${lat},${lng}` 
-            : `http://maps.apple.com/?daddr=${lat},${lng}`;
-        
-        const canOpen = await Linking.canOpenURL(url);
-        if (canOpen) {
-            await Linking.openURL(url);
-        } else {
-            await Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`);
+        try {
+            const url = Platform.OS === 'android' 
+                ? `google.navigation:q=${lat},${lng}` 
+                : `http://maps.apple.com/?daddr=${lat},${lng}`;
+            
+            const canOpen = await Linking.canOpenURL(url);
+            if (canOpen) {
+                await Linking.openURL(url);
+            } else {
+                await Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`);
+            }
+        } catch (error) {
+            console.warn('[MapScreen] Error starting navigation:', error);
+            Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`);
         }
     };
 
@@ -68,6 +100,36 @@ export default function MapScreen({ route, navigation }) {
         }
     };
 
+    const onShouldStartLoadWithRequest = (request) => {
+        const { url } = request;
+        
+        // Handle Android intents
+        if (Platform.OS === 'android' && url.startsWith('intent://')) {
+            Linking.openURL(url).catch(err => {
+                console.warn('[MapScreen] Failed to open intent URL:', err);
+                // Extract fallback if available
+                const fallbackMatch = url.match(/S.browser_fallback_url=([^;]+)/);
+                if (fallbackMatch && fallbackMatch[1]) {
+                    const fallbackUrl = decodeURIComponent(fallbackMatch[1]);
+                    Linking.openURL(fallbackUrl);
+                }
+            });
+            return false;
+        }
+        
+        // Allow standard loads
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return true;
+        }
+        
+        // Handle other schemes
+        Linking.canOpenURL(url).then(supported => {
+            if (supported) Linking.openURL(url);
+        });
+        
+        return false;
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -75,26 +137,23 @@ export default function MapScreen({ route, navigation }) {
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>{city} Map</Text>
-                <View style={{ width: 44 }} />
+                <TouchableOpacity style={styles.headerOpenBtn} onPress={handleOpenInApp}>
+                    <Text style={styles.headerOpenText}>Open App</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.mapContainer}>
-                {/* Google Maps Header Overlay */}
-                <View style={styles.mapOverlayHeader}>
-                    <View style={styles.googleMapsRow}>
-                        <Text style={styles.googleMapsText}>Google Maps</Text>
-                        <TouchableOpacity style={styles.openAppBtn} onPress={handleOpenInApp}>
-                            <Text style={styles.openAppText}>Open app</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
 
                 <WebView
+                    ref={webViewRef}
                     source={{ uri: mapUrl }}
                     style={styles.map}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     startInLoadingState={true}
+                    injectedJavaScript={INJECTED_JS}
+                    onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+                    onMessage={(event) => {}} // dummy for compatibility
                 />
 
                 {/* Bottom Detail Card Overlay */}
@@ -167,6 +226,19 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '800',
         color: '#0F172A',
+        flex: 1,
+        textAlign: 'center',
+    },
+    headerOpenBtn: {
+        backgroundColor: '#2563EB',
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 12,
+    },
+    headerOpenText: {
+        color: 'white',
+        fontSize: 12,
+        fontWeight: '700',
     },
     mapContainer: {
         flex: 1,
@@ -218,20 +290,19 @@ const styles = StyleSheet.create({
     },
     bottomCard: {
         position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        bottom: 25,
+        left: 20,
+        right: 20,
         backgroundColor: 'white',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        padding: 24,
+        borderRadius: 24,
+        padding: 20,
         paddingTop: 12,
         zIndex: 100,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: -4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        elevation: 10,
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
+        elevation: 15,
     },
     dragHandle: {
         width: 40,

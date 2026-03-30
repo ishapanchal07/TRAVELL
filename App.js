@@ -27,6 +27,7 @@ import GalleryScreen from './src/screens/GalleryScreen';
 import SwitzerlandScreen from './src/screens/SwitzerlandScreen';
 import DubaiScreen from './src/screens/DubaiScreen';
 import MapScreen from './src/screens/MapScreen';
+import LocationDetailsScreen from './src/screens/LocationDetailsScreen';
 import CityFoodScreen from './src/screens/CityFoodScreen';
 import GuideScreen from './src/screens/GuideScreen';
 import TransactionsScreen from './src/screens/TransactionsScreen';
@@ -137,6 +138,7 @@ function RootNavigator() {
         <Stack.Screen name="Switzerland" component={SwitzerlandScreen} />
         <Stack.Screen name="Dubai" component={DubaiScreen} />
         <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} />
         <Stack.Screen name="CityFood" component={CityFoodScreen} />
         <Stack.Screen name="Guide" component={GuideScreen} />
         <Stack.Screen name="Transactions" component={TransactionsScreen} />

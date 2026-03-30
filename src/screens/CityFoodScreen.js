@@ -194,7 +194,7 @@ export default function CityFoodScreen({ route, navigation }) {
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 5 }}>
                         <Ionicons name="chevron-back" size={26} color="#0F172A" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconCircle}>
+                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city })}>
                         <Feather name="search" size={18} color="#0F172A" />
                     </TouchableOpacity>
                 </View>
@@ -238,7 +238,7 @@ export default function CityFoodScreen({ route, navigation }) {
                 {/* Locals' Hidden Gems Section */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Locals' Hidden Gems</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('FoodDetail', { item: cityData.hiddenGems[0] })}><Text style={styles.seeAllText}>See All</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('AllPlaces', { searchQuery: 'food' })}><Text style={styles.seeAllText}>See All</Text></TouchableOpacity>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
@@ -271,9 +271,9 @@ export default function CityFoodScreen({ route, navigation }) {
                                     <Text style={styles.largeCardPrice}>{gem.price}</Text>
                                 </View>
                                 <Text style={styles.largeCardDesc} numberOfLines={1}>{gem.desc}</Text>
-                                <View style={styles.quickOrderBtn}>
+                                <TouchableOpacity style={styles.quickOrderBtn} onPress={() => handleItemPress(gem)}>
                                     <Text style={styles.quickOrderBtnText}>Quick Order</Text>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
                     ))}
@@ -300,7 +300,7 @@ export default function CityFoodScreen({ route, navigation }) {
                                 <Text style={styles.smallCardSub}>{item.subtitle}</Text>
                                 <View style={styles.smallCardBottomRow}>
                                     <Text style={styles.smallCardPrice}>{item.price}</Text>
-                                    <TouchableOpacity style={styles.addBtn}>
+                                    <TouchableOpacity style={styles.addBtn} onPress={() => handleItemPress(item)}>
                                         <Feather name="plus" size={14} color="white" />
                                     </TouchableOpacity>
                                 </View>

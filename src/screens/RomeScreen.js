@@ -143,7 +143,6 @@ export default function RomeScreen({ navigation }) {
                                     onSave={() => toggleSaveGem(exp)}
                                     onBookNow={() => navigation.navigate('ExperienceDetail', { item: exp })}
                                     onViewMap={() => navigation.navigate('Map', { city: 'Rome', location: exp.title })}
-                                    onShare={() => {}}
                                 />
                             </View>
                         ))}
@@ -199,7 +198,13 @@ export default function RomeScreen({ navigation }) {
                                 style={styles.foodCard}
                                 onPress={() => navigation.navigate('FoodDetail', { item: { name: f.title, image: f.img, subtitle: f.sub, price: f.price || '€14.00' } })}
                             >
-                                <Image source={{ uri: f.img }} style={styles.foodImage} />
+                                <Image 
+                                    source={{ uri: f.img }} 
+                                    style={styles.foodImage} 
+                                    contentFit="cover"
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <View style={styles.foodTextCont}>
                                     <Text style={styles.foodTitle}>{f.title}</Text>
                                     <Text style={styles.foodSub}>{f.sub}</Text>

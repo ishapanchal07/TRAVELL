@@ -84,13 +84,6 @@ export default function SettingsScreen({ navigation }) {
                 <SectionHeader title={getT('preferences')} />
                 <View style={[styles.sectionCard, { backgroundColor: colors.card, borderBottomWidth: 0 }]}>
                     <SettingsToggleItem 
-                        icon="moon" 
-                        label={getT('darkMode')} 
-                        value={isDarkMode} 
-                        onValueChange={toggleTheme} 
-                        isDark={isDarkMode}
-                    />
-                    <SettingsToggleItem 
                         icon="bell" 
                         label={getT('notifications')} 
                         value={notificationsOn} 

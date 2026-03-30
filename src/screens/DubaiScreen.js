@@ -198,7 +198,13 @@ export default function DubaiScreen({ navigation }) {
                                 style={styles.foodCard}
                                 onPress={() => navigation.navigate('FoodDetail', { item: { name: f.title, image: f.img, subtitle: f.sub, price: f.price || 'AED 25.00' } })}
                             >
-                                <Image source={{ uri: f.img }} style={styles.foodImage} />
+                                <Image 
+                                    source={{ uri: f.img }} 
+                                    style={styles.foodImage} 
+                                    contentFit="cover"
+                                    placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                    transition={300}
+                                />
                                 <View style={styles.foodTextCont}>
                                     <Text style={styles.foodTitle}>{f.title}</Text>
                                     <Text style={styles.foodSub}>{f.sub}</Text>

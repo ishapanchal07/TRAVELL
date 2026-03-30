@@ -81,9 +81,7 @@ export default function ExploreScreen({ navigation }) {
                         placeholder="Where's your next photo op?"
                         placeholderTextColor={colors.subtext}
                         onSubmitEditing={(e) => {
-                            import('react-native').then(({ Alert }) => {
-                                Alert.alert("Search", `Searching for "${e.nativeEvent.text}"...`);
-                            });
+                            navigation.navigate('AllPlaces', { searchQuery: e.nativeEvent.text });
                         }}
                     />
                 </View>

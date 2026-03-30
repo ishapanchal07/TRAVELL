@@ -143,7 +143,6 @@ export default function SwitzerlandScreen({ navigation }) {
                                     onSave={() => toggleSaveGem(exp)}
                                     onBookNow={() => navigation.navigate('ExperienceDetail', { item: exp })}
                                     onViewMap={() => navigation.navigate('Map', { city: 'Switzerland', location: exp.title })}
-                                    onShare={() => {}}
                                 />
                             </View>
                         ))}
