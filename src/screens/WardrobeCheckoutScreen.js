@@ -17,9 +17,9 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
 
     // Fallback static items if none passed (for direct navigation testing)
     const itemsToShow = selectedItems.length > 0 ? selectedItems : [
-        { id: '1', title: 'Louvre Morning', rent: '$24', buy: '$185', image: LOOK_IMG_1 },
-        { id: '2', title: 'Marais Chic', rent: '$32', buy: '$240', image: LOOK_IMG_2 },
-        { id: '3', title: 'Autumn Beret', rent: '$12', buy: '$45', image: LOOK_IMG_3 }
+        { id: '1', title: 'Louvre Morning', rent: '$24', buy: '$185', image: LOOK_IMG_1, section: 'clothing' },
+        { id: '2', title: 'Marais Chic', rent: '$32', buy: '$240', image: LOOK_IMG_2, section: 'clothing' },
+        { id: '3', title: 'Autumn Beret', rent: '$12', buy: '$45', image: LOOK_IMG_3, section: 'clothing' }
     ];
 
     const itemCount = itemsToShow.length;
@@ -65,7 +65,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.curatedScroll}>
                     {itemsToShow.map((item, idx) => (
-                        <View key={item.id + idx} style={styles.lookCard}>
+                        <View key={(item.id || idx) + idx} style={styles.lookCard}>
                             <Image 
                                 source={{ uri: item.image }} 
                                 style={styles.lookImg} 
@@ -175,10 +175,11 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                                 image: itemsToShow[0]?.image || LOOK_IMG_1,
                                 serviceFee: serviceFee,
                                 deliveryFee: 'FREE',
+                                section: 'clothing'
                             },
                             'WardrobeStatus',
                             navigation,
-                            { successMessage: 'Wardrobe Booking Confirmed!' }
+                            { successMessage: 'Wardrobe Booking Confirmed!', section: 'clothing' }
                         )}
                     >
                         <Text style={styles.bookBtnText}>Book My Wardrobe</Text>

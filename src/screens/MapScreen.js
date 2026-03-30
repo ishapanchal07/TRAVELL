@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Linking, Platform, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
@@ -9,18 +9,64 @@ const { width, height } = Dimensions.get('window');
 const CITY_COORDS = {
     'Paris': { latitude: 48.8566, longitude: 2.3522, latitudeDelta: 0.1, longitudeDelta: 0.1 },
     'Rome': { latitude: 41.9028, longitude: 12.4964, latitudeDelta: 0.1, longitudeDelta: 0.1 },
-    'Switzerland': { latitude: 46.8182, longitude: 8.2275, latitudeDelta: 2.0, longitudeDelta: 2.0 }, // Broader view for country
+    'Switzerland': { latitude: 46.8182, longitude: 8.2275, latitudeDelta: 2.0, longitudeDelta: 2.0 },
     'Dubai': { latitude: 25.2048, longitude: 55.2708, latitudeDelta: 0.2, longitudeDelta: 0.2 },
     'Italy': { latitude: 41.8719, longitude: 12.5674, latitudeDelta: 5.0, longitudeDelta: 5.0 },
+};
+
+const LOCATION_DATA = {
+    'Chapel Bridge': { lat: 47.0516, lng: 8.3073, rating: 4.7, reviews: '35,464', localName: 'Kapellbrücke', phone: '+41 41 227 17 17' },
+    'Kapellbrücke Bridge': { lat: 47.0516, lng: 8.3073, rating: 4.7, reviews: '35,464', localName: 'Kapellbrücke' },
+    'Jungfraujoch Train': { lat: 46.5475, lng: 7.9854, rating: 4.8, reviews: '12,500', localName: 'Top of Europe' },
+    'Matterhorn Hike': { lat: 45.9766, lng: 7.6585, rating: 4.9, reviews: '8,200', localName: 'Matterhorn' },
+    'Eiffel Tower': { lat: 48.8584, lng: 2.2945, rating: 4.7, reviews: '300,000+', localName: 'Tour Eiffel' },
+    'Burj Khalifa': { lat: 25.1972, lng: 55.2744, rating: 4.8, reviews: '150,000+', localName: 'Burj Khalifa' },
 };
 
 export default function MapScreen({ route, navigation }) {
     const { city = 'Paris', location } = route.params || {};
     
-    // Use a specific location if provided, otherwise fallback to city name
+    // Get location detail if available
+    const specificLocation = LOCATION_DATA[location] || null;
+    const lat = specificLocation?.lat || CITY_COORDS[city]?.latitude || 0;
+    const lng = specificLocation?.lng || CITY_COORDS[city]?.longitude || 0;
+
     const searchQuery = location ? encodeURIComponent(location) : encodeURIComponent(city);
-    // Standard map URL works better in WebView without API key than the embed output
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+
+    const handleOpenInApp = async () => {
+        const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+            await Linking.openURL(url);
+        } else {
+            await Linking.openURL(mapUrl);
+        }
+    };
+
+    const handleDirections = async () => {
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+        await Linking.openURL(url);
+    };
+
+    const handleStart = async () => {
+        const url = Platform.OS === 'android' 
+            ? `google.navigation:q=${lat},${lng}` 
+            : `http://maps.apple.com/?daddr=${lat},${lng}`;
+        
+        const canOpen = await Linking.canOpenURL(url);
+        if (canOpen) {
+            await Linking.openURL(url);
+        } else {
+            await Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`);
+        }
+    };
+
+    const handleCall = () => {
+        if (specificLocation?.phone) {
+            Linking.openURL(`tel:${specificLocation.phone}`);
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -33,14 +79,58 @@ export default function MapScreen({ route, navigation }) {
             </View>
 
             <View style={styles.mapContainer}>
+                {/* Google Maps Header Overlay */}
+                <View style={styles.mapOverlayHeader}>
+                    <View style={styles.googleMapsRow}>
+                        <Text style={styles.googleMapsText}>Google Maps</Text>
+                        <TouchableOpacity style={styles.openAppBtn} onPress={handleOpenInApp}>
+                            <Text style={styles.openAppText}>Open app</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
                 <WebView
                     source={{ uri: mapUrl }}
                     style={styles.map}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     startInLoadingState={true}
-                    allowsFullscreenVideo={false}
                 />
+
+                {/* Bottom Detail Card Overlay */}
+                {location && (
+                    <View style={styles.bottomCard}>
+                        <View style={styles.dragHandle} />
+                        <Text style={styles.locationName}>{location}</Text>
+                        <Text style={styles.localName}>{specificLocation?.localName || city}</Text>
+                        <View style={styles.ratingRow}>
+                            <Text style={styles.ratingText}>{specificLocation?.rating || '4.7'}</Text>
+                            <View style={styles.starsRow}>
+                                {[1, 2, 3, 4, 5].map(i => (
+                                    <Ionicons key={i} name="star" size={14} color="#FBBF24" />
+                                ))}
+                            </View>
+                            <Text style={styles.reviewsText}>({specificLocation?.reviews || '1,200'})</Text>
+                        </View>
+                        
+                        <View style={styles.actionsRow}>
+                            <TouchableOpacity style={styles.directionsBtn} onPress={handleDirections}>
+                                <Ionicons name="arrow-redo" size={18} color="white" />
+                                <Text style={styles.directionsText}>Directions</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity style={styles.actionOutlineBtn} onPress={handleStart}>
+                                <MaterialCommunityIcons name="navigation-variant" size={18} color="#0F172A" />
+                                <Text style={styles.actionOutlineText}>Start</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity style={styles.actionOutlineBtn} onPress={handleCall}>
+                                <Ionicons name="call" size={18} color="#0F172A" />
+                                <Text style={styles.actionOutlineText}>Call</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
             </View>
         </SafeAreaView>
     );
@@ -84,14 +174,137 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginHorizontal: 15,
         marginBottom: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 20,
-        elevation: 5,
+        backgroundColor: 'white',
+        position: 'relative',
     },
     map: {
-        width: '100%',
-        height: '100%',
+        flex: 1,
+    },
+    mapOverlayHeader: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        right: 20,
+        zIndex: 100,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 5,
+    },
+    googleMapsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    googleMapsText: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: '#0F172A',
+    },
+    openAppBtn: {
+        backgroundColor: '#2563EB',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 20,
+    },
+    openAppText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: '700',
+    },
+    bottomCard: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'white',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        padding: 24,
+        paddingTop: 12,
+        zIndex: 100,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 10,
+    },
+    dragHandle: {
+        width: 40,
+        height: 4,
+        backgroundColor: '#E2E8F0',
+        borderRadius: 2,
+        alignSelf: 'center',
+        marginBottom: 16,
+    },
+    locationName: {
+        fontSize: 22,
+        fontWeight: '800',
+        color: '#0F172A',
+    },
+    localName: {
+        fontSize: 14,
+        color: '#64748B',
+        marginTop: 2,
+    },
+    ratingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 8,
+    },
+    ratingText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: '#0F172A',
+    },
+    starsRow: {
+        flexDirection: 'row',
+        marginHorizontal: 6,
+    },
+    reviewsText: {
+        fontSize: 14,
+        color: '#64748B',
+    },
+    actionsRow: {
+        flexDirection: 'row',
+        marginTop: 24,
+        justifyContent: 'space-between',
+    },
+    directionsBtn: {
+        flex: 1.5,
+        backgroundColor: '#1E6BF3',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 14,
+        borderRadius: 20,
+        marginRight: 10,
+    },
+    directionsText: {
+        color: 'white',
+        fontWeight: '800',
+        fontSize: 15,
+        marginLeft: 8,
+    },
+    actionOutlineBtn: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 14,
+        borderRadius: 20,
+        marginRight: 10,
+    },
+    actionOutlineText: {
+        color: '#0F172A',
+        fontWeight: '800',
+        fontSize: 15,
+        marginLeft: 8,
     },
 });

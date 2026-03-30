@@ -256,10 +256,11 @@ export default function FoodDetailScreen({ route, navigation }) {
                                     image: image,
                                     serviceFee: 2.50,
                                     deliveryFee: `$${deliveryFee.toFixed(2)}`,
+                                    section: 'food'
                                 },
                                 'OrderTracking',
                                 navigation,
-                                { orderItem: { name, image }, successMessage: 'Order Placed Successfully!' }
+                                { orderItem: { name, image }, successMessage: 'Order Placed Successfully!', section: 'food' }
                             );
                         }}
                     >

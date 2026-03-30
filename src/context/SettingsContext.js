@@ -9,7 +9,6 @@ import { translations, getTranslation } from '../i18n/translations';
 export const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
     const [notificationsOn, setNotificationsOn] = useState(false);
     const [language, setLanguage] = useState('en');
     const [isPrivate, setIsPrivate] = useState(false);
@@ -24,7 +23,6 @@ export const SettingsProvider = ({ children }) => {
             const dataStr = await AsyncStorage.getItem('user_settings');
             if (dataStr) {
                 const data = JSON.parse(dataStr);
-                if (data.isDarkMode !== undefined) setIsDarkMode(data.isDarkMode);
                 if (data.notificationsOn !== undefined) {
                     setNotificationsOn(data.notificationsOn);
                 }
@@ -40,16 +38,11 @@ export const SettingsProvider = ({ children }) => {
 
     const saveSettings = async (newSettings) => {
         try {
-            const currentSettings = { isDarkMode, notificationsOn, language, isPrivate, ...newSettings };
+            const currentSettings = { notificationsOn, language, isPrivate, ...newSettings };
             await AsyncStorage.setItem('user_settings', JSON.stringify(currentSettings));
         } catch (e) {
             console.error('Failed to save settings', e);
         }
-    };
-
-    const toggleDarkMode = (value) => {
-        setIsDarkMode(value);
-        saveSettings({ isDarkMode: value });
     };
 
     const updateLanguage = (langCode) => {
@@ -83,7 +76,6 @@ export const SettingsProvider = ({ children }) => {
 
     return (
         <SettingsContext.Provider value={{
-            isDarkMode, toggleDarkMode,
             notificationsOn, toggleNotifications,
             language, updateLanguage,
             isPrivate, togglePrivacy,

@@ -105,7 +105,7 @@ export default function WardrobeScreen({ navigation }) {
         setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
     };
 
-    const getSelectedItems = () => ITEMS.filter(item => selectedIds.includes(item.id));
+    const getSelectedItems = () => ITEMS.filter(item => selectedIds.includes(item.id)).map(i => ({ ...i, section: 'clothing' }));
 
     // Recommendation Logic Helpers
     const getRecommendationWarnings = (item) => {
@@ -229,7 +229,7 @@ export default function WardrobeScreen({ navigation }) {
                                 <View style={styles.itemInfo}>
                                     <View style={styles.titlePriceRow}>
                                         <Text style={styles.itemTitle}>{item.title}</Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', { item: { ...item, img: item.image } })}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', { item: { ...item, img: item.image, section: 'clothing' } })}>
                                             <Ionicons name="information-circle-outline" size={22} color="#94A3B8" />
                                         </TouchableOpacity>
                                     </View>
@@ -252,7 +252,7 @@ export default function WardrobeScreen({ navigation }) {
                                         </View>
                                         <TouchableOpacity 
                                             style={[styles.priceCell, { alignItems: 'flex-end' }]}
-                                            onPress={() => navigation.navigate('PurchaseFlow', { item })}
+                                            onPress={() => navigation.navigate('PurchaseFlow', { item: { ...item, section: 'clothing' } })}
                                         >
                                             <Text style={styles.priceLabel}>BUY</Text>
                                             <Text style={styles.priceValueDark}>{item.buy}</Text>

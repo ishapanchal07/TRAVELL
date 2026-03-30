@@ -95,10 +95,11 @@ export default function RentFlowScreen({ route, navigation }) {
                             image: item.image,
                             serviceFee: serviceFee,
                             deliveryFee: 'FREE',
+                            section: 'clothing'
                         },
                         'WardrobeStatus',
                         navigation,
-                        { successMessage: 'Rental Confirmed!' }
+                        { successMessage: 'Rental Confirmed!', section: 'clothing' }
                     )}
                 >
                     <Text style={styles.confirmBtnText}>Pay Now</Text>
@@ -232,6 +233,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 15,
         fontWeight: '700',
+        paddingVertical: 4,
     },
     divider: {
         height: 1,

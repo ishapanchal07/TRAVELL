@@ -32,9 +32,7 @@ export default function WardrobeStatusScreen({ navigation }) {
                         <Text style={styles.headerSubtitle}>PARIS FASHION WEEK</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.notifBtn}>
-                    <Ionicons name="notifications" size={20} color="#000000" />
-                </TouchableOpacity>
+                <View style={{ width: 44 }} />
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>

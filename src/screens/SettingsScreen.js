@@ -1,22 +1,25 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Switch, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Switch, Alert } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SettingsContext } from '../context/SettingsContext';
+import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function SettingsScreen({ navigation }) {
     const { 
-        isDarkMode, toggleDarkMode, 
         notificationsOn, toggleNotifications, 
         language, getT,
         isPrivate, togglePrivacy 
     } = useContext(SettingsContext);
-    const { userData } = useAuth();
+    const { isDarkMode, toggleTheme, colors } = useTheme();
+    const { userData } = useUser();
 
     const handleLogout = () => {
         Alert.alert(
@@ -46,15 +49,15 @@ export default function SettingsScreen({ navigation }) {
     };
 
     return (
-        <SafeAreaView style={[styles.safeArea, isDarkMode && { backgroundColor: '#0F172A' }]}>
-            <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} backgroundColor={isDarkMode ? "#0F172A" : "#F8FAFC"} />
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+            <StatusBar style={isDarkMode ? "light" : "dark"} />
 
             {/* Header */}
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconBtn}>
-                    <Feather name="chevron-left" size={20} color={isDarkMode ? "white" : "#0F172A"} />
+                <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.headerIconBtn, isDarkMode && { backgroundColor: colors.card }]}>
+                    <Feather name="chevron-left" size={20} color={colors.text} />
                 </TouchableOpacity>
-                <Text style={[styles.headerTitle, isDarkMode && { color: 'white' }]}>{getT('settings')}</Text>
+                <Text style={[styles.headerTitle, { color: colors.text }]}>{getT('settings')}</Text>
                 <View style={{ width: 44 }} />
             </View>
 
@@ -64,34 +67,27 @@ export default function SettingsScreen({ navigation }) {
                 <TouchableOpacity style={styles.profileSection} onPress={() => navigation.navigate('EditProfile')}>
                     <Image source={{ uri: userData.profileImage || AVATAR_URL }} style={styles.profilePic} />
                     <View style={styles.profileInfo}>
-                        <Text style={styles.profileName}>{userData.name || 'Chloe Roams'}</Text>
-                        <Text style={styles.profileEmail}>{userData.email || 'chloe.roams@example.com'}</Text>
+                        <Text style={[styles.profileName, { color: colors.text }]}>{userData.name || 'Chloe Roams'}</Text>
+                        <Text style={[styles.profileEmail, { color: colors.subtext }]}>{userData.email || 'chloe.roams@example.com'}</Text>
                     </View>
                     <Feather name="chevron-right" size={20} color="#94A3B8" />
                 </TouchableOpacity>
 
                 {/* A. Account */}
                 <SectionHeader title={getT('account') || 'ACCOUNT'} />
-                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
+                <View style={[styles.sectionCard, { backgroundColor: colors.card, borderBottomWidth: 0 }]}>
                     <SettingsItem icon="user" label="Edit Profile" onPress={() => navigation.navigate('EditProfile')} isDark={isDarkMode} />
                     <SettingsItem icon="lock" label="Change Password" hideDivider onPress={() => navigation.navigate('ChangePassword')} isDark={isDarkMode} />
                 </View>
 
                 {/* B. Preferences */}
                 <SectionHeader title={getT('preferences')} />
-                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
+                <View style={[styles.sectionCard, { backgroundColor: colors.card, borderBottomWidth: 0 }]}>
                     <SettingsToggleItem 
                         icon="moon" 
                         label={getT('darkMode')} 
                         value={isDarkMode} 
-                        onValueChange={toggleDarkMode} 
-                        isDark={isDarkMode}
-                    />
-                    <SettingsItem 
-                        icon="globe" 
-                        label={getT('language')} 
-                        value={language === 'en' ? 'English' : language === 'hi' ? 'हिन्दी' : language === 'fr' ? 'Français' : 'Spanish'} 
-                        onPress={() => navigation.navigate('LanguageSelection')} 
+                        onValueChange={toggleTheme} 
                         isDark={isDarkMode}
                     />
                     <SettingsToggleItem 
@@ -111,7 +107,7 @@ export default function SettingsScreen({ navigation }) {
 
                 {/* F. Privacy & Security */}
                 <SectionHeader title={getT('privacy')} />
-                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
+                <View style={[styles.sectionCard, { backgroundColor: colors.card, borderBottomWidth: 0 }]}>
                     <SettingsToggleItem 
                         icon="shield" 
                         label={getT('privateAccount')} 
@@ -124,14 +120,14 @@ export default function SettingsScreen({ navigation }) {
 
                 {/* G. Support & Info */}
                 <SectionHeader title={getT('support')} />
-                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
+                <View style={[styles.sectionCard, { backgroundColor: colors.card, borderBottomWidth: 0 }]}>
                     <SettingsItem icon="help-circle" label={getT('help')} onPress={() => navigation.navigate('Support')} isDark={isDarkMode} />
                     <SettingsItem icon="info" label={getT('about')} onPress={() => navigation.navigate('About')} isDark={isDarkMode} />
                     <SettingsItem icon="file-text" label={getT('terms')} hideDivider onPress={() => navigation.navigate('Terms')} isDark={isDarkMode} />
                 </View>
 
                 {/* Logout Button */}
-                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                <TouchableOpacity style={[styles.logoutButton, isDarkMode && { backgroundColor: '#1E293B' }]} onPress={handleLogout}>
                     <Feather name="log-out" size={18} color="#EF4444" />
                     <Text style={styles.logoutText}>{getT('logout')}</Text>
                 </TouchableOpacity>

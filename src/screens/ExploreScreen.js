@@ -8,6 +8,7 @@ import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
 import { useTrip } from '../context/TripContext';
 import AnalyticsService from '../services/AnalyticsService';
+import { useTheme } from '../context/ThemeContext';
 
 const { width } = Dimensions.get('window');
 
@@ -19,6 +20,7 @@ const DUBAI_IMG = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?
 export default function ExploreScreen({ navigation }) {
     const { isLoggedIn, hasSeenQuiz, markQuizSeen } = useAuth();
     const { activeTrip } = useTrip();
+    const { isDarkMode, colors } = useTheme();
 
     // Premium slide-up animation
     const slideAnim = React.useRef(new Animated.Value(20)).current;
@@ -42,8 +44,8 @@ export default function ExploreScreen({ navigation }) {
     }, [isLoggedIn]);
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <StatusBar barStyle="dark-content" backgroundColor="#f9fafc" />
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+            <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} backgroundColor={colors.background} />
             <ScrollView
                 contentContainerStyle={styles.scrollContainer}
                 showsVerticalScrollIndicator={false}
@@ -52,32 +54,32 @@ export default function ExploreScreen({ navigation }) {
                 {/* Top Header Row */}
                 <View style={styles.topHeaderFlex}>
                     <View>
-                        <Text style={styles.brandTitle}>Roamster</Text>
-                        <Text style={styles.brandSubtitle}>Pack light, live loud.</Text>
+                        <Text style={[styles.brandTitle, { color: colors.text }]}>Roamster</Text>
+                        <Text style={[styles.brandSubtitle, { color: colors.text }]}>Pack light, live loud.</Text>
                     </View>
                     <View style={styles.headerRightButtons}>
                         <TouchableOpacity
-                            style={styles.iconCircle}
+                            style={[styles.iconCircle, { backgroundColor: colors.card }]}
                             onPress={() => navigation.navigate('Camera')}
                         >
-                            <Ionicons name="camera-outline" size={22} color="#222222" />
+                            <Ionicons name="camera-outline" size={22} color={colors.text} />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={styles.iconCircle}
+                            style={[styles.iconCircle, { backgroundColor: colors.card }]}
                             onPress={() => navigation.navigate('Notifications')}
                         >
-                            <Ionicons name="notifications-outline" size={22} color="#222222" />
+                            <Ionicons name="notifications-outline" size={22} color={colors.text} />
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 {/* Search Bar */}
-                <View style={styles.searchBarContainer}>
-                    <Feather name="search" size={20} color="#94A3B8" style={styles.searchIcon} />
+                <View style={[styles.searchBarContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                    <Feather name="search" size={20} color={colors.subtext} style={styles.searchIcon} />
                     <TextInput
-                        style={styles.searchInput}
+                        style={[styles.searchInput, { color: colors.text }]}
                         placeholder="Where's your next photo op?"
-                        placeholderTextColor="#94A3B8"
+                        placeholderTextColor={colors.subtext}
                         onSubmitEditing={(e) => {
                             import('react-native').then(({ Alert }) => {
                                 Alert.alert("Search", `Searching for "${e.nativeEvent.text}"...`);
@@ -90,37 +92,37 @@ export default function ExploreScreen({ navigation }) {
                 <View style={styles.categoriesContainer}>
                     <View style={styles.categoryItem}>
                         <TouchableOpacity
-                            style={styles.categoryIconCircle}
+                            style={[styles.categoryIconCircle, { backgroundColor: colors.card, borderColor: colors.divider }]}
                             onPress={() => navigation.navigate('CityFood', { city: 'Paris' })}
                         >
-                            <MaterialCommunityIcons name="silverware-fork-knife" size={24} color="#222222" />
+                            <MaterialCommunityIcons name="silverware-fork-knife" size={24} color={colors.text} />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>FOOD</Text>
                     </View>
                     <View style={styles.categoryItem}>
                         <TouchableOpacity
-                            style={styles.categoryIconCircle}
+                            style={[styles.categoryIconCircle, { backgroundColor: colors.card, borderColor: colors.divider }]}
                             onPress={() => navigation.navigate('Map', { city: 'Paris', location: 'Eiffel Tower, Paris' })}
                         >
-                            <Ionicons name="map-outline" size={24} color="#222222" />
+                            <Ionicons name="map-outline" size={24} color={colors.text} />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>MAP</Text>
                     </View>
                     <View style={styles.categoryItem}>
                         <TouchableOpacity
-                            style={styles.categoryIconCircle}
+                            style={[styles.categoryIconCircle, { backgroundColor: colors.card, borderColor: colors.divider }]}
                             onPress={() => navigation.navigate('Guide', { city: 'Paris' })}
                         >
-                            <Ionicons name="document-text-outline" size={24} color="#222222" />
+                            <Ionicons name="document-text-outline" size={24} color={colors.text} />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>GUIDE</Text>
                     </View>
                     <View style={styles.categoryItem}>
                         <TouchableOpacity
-                            style={styles.categoryIconCircle}
+                            style={[styles.categoryIconCircle, { backgroundColor: colors.card, borderColor: colors.divider }]}
                             onPress={() => navigation.navigate('Saved')}
                         >
-                            <Ionicons name="heart-outline" size={24} color="#222222" />
+                            <Ionicons name="heart-outline" size={24} color={colors.text} />
                         </TouchableOpacity>
                         <Text style={styles.categoryLabel}>FAVORITES</Text>
                     </View>
@@ -128,9 +130,9 @@ export default function ExploreScreen({ navigation }) {
 
                 {/* Trending Section */}
                 <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Trending Hotspots</Text>
+                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Trending Hotspots</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('AllDestinations')}>
-                        <Text style={styles.seeAllText}>View All</Text>
+                        <Text style={[styles.seeAllText, { color: colors.text }]}>View All</Text>
                     </TouchableOpacity>
                 </View>
 

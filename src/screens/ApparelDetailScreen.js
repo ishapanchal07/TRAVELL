@@ -18,6 +18,8 @@ export default function ApparelDetailScreen({ route, navigation }) {
         });
     };
 
+    const itemWithSection = { ...item, section: 'clothing' };
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" />
@@ -86,7 +88,7 @@ export default function ApparelDetailScreen({ route, navigation }) {
 
                     <TouchableOpacity
                         style={styles.buyNowSectionBtn}
-                        onPress={() => navigation.navigate('PurchaseFlow', { item })}
+                        onPress={() => navigation.navigate('PurchaseFlow', { item: itemWithSection })}
                     >
                         <Text style={styles.buyNowSectionBtnText}>BUY NOW • {item.buy || '$185'}</Text>
                         <Ionicons name="arrow-forward" size={18} color="white" />
@@ -97,13 +99,13 @@ export default function ApparelDetailScreen({ route, navigation }) {
             <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.rentBtn}
-                    onPress={() => navigation.navigate('RentFlow', { item })}
+                    onPress={() => navigation.navigate('RentFlow', { item: itemWithSection })}
                 >
                     <Text style={styles.rentBtnText}>RENT • {item.rent || '$24'}/d</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buyBtn}
-                    onPress={() => navigation.navigate('PurchaseFlow', { item })}
+                    onPress={() => navigation.navigate('PurchaseFlow', { item: itemWithSection })}
                 >
                     <Text style={styles.buyBtnText}>BUY • {item.buy || '$185'}</Text>
                 </TouchableOpacity>

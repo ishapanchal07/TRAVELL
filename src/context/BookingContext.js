@@ -7,19 +7,77 @@ const BookingContext = createContext();
 export const BookingProvider = ({ children }) => {
     const [experts, setExperts] = useState(EXPERTS);
     const [bookings, setBookings] = useState([]);
+    const [selectedFood, setSelectedFood] = useState([]);
+    const [selectedClothes, setSelectedClothes] = useState([]);
 
     useEffect(() => {
-        loadBookings();
+        loadData();
     }, []);
 
-    const loadBookings = async () => {
+    const loadData = async () => {
         try {
-            const storedBookings = await AsyncStorage.getItem('@expert_bookings');
-            if (storedBookings) {
-                setBookings(JSON.parse(storedBookings));
+            const [storedBookings, storedFood, storedClothes] = await Promise.all([
+                AsyncStorage.getItem('@expert_bookings'),
+                AsyncStorage.getItem('@food_cart'),
+                AsyncStorage.getItem('@clothing_cart')
+            ]);
+            
+            if (storedBookings) setBookings(JSON.parse(storedBookings));
+            if (storedFood) setSelectedFood(JSON.parse(storedFood));
+            if (storedClothes) setSelectedClothes(JSON.parse(storedClothes));
+        } catch (error) {
+            console.error('Error loading context data', error);
+        }
+    };
+
+    const addToCart = async (item, section) => {
+        if (section !== 'food' && section !== 'clothing') {
+            console.warn(`[CartIsolation] Blocked attempt to add item outside Food/Clothing: ${section}`);
+            return;
+        }
+
+        try {
+            if (section === 'food') {
+                const newFood = [...selectedFood, { ...item, cartId: Date.now().toString() }];
+                setSelectedFood(newFood);
+                await AsyncStorage.setItem('@food_cart', JSON.stringify(newFood));
+            } else {
+                const newClothes = [...selectedClothes, { ...item, cartId: Date.now().toString() }];
+                setSelectedClothes(newClothes);
+                await AsyncStorage.setItem('@clothing_cart', JSON.stringify(newClothes));
             }
         } catch (error) {
-            console.error('Error loading bookings', error);
+            console.error(`Error adding to ${section} cart`, error);
+        }
+    };
+
+    const removeFromCart = async (itemId, section) => {
+        try {
+            if (section === 'food') {
+                const newFood = selectedFood.filter(item => (item.id || item.cartId || item.cartId) !== itemId);
+                setSelectedFood(newFood);
+                await AsyncStorage.setItem('@food_cart', JSON.stringify(newFood));
+            } else if (section === 'clothing') {
+                const newClothes = selectedClothes.filter(item => (item.id || item.cartId || item.cartId) !== itemId);
+                setSelectedClothes(newClothes);
+                await AsyncStorage.setItem('@clothing_cart', JSON.stringify(newClothes));
+            }
+        } catch (error) {
+            console.error(`Error removing from ${section} cart`, error);
+        }
+    };
+
+    const clearCart = async (section) => {
+        try {
+            if (section === 'food') {
+                setSelectedFood([]);
+                await AsyncStorage.removeItem('@food_cart');
+            } else if (section === 'clothing') {
+                setSelectedClothes([]);
+                await AsyncStorage.removeItem('@clothing_cart');
+            }
+        } catch (error) {
+            console.error(`Error clearing ${section} cart`, error);
         }
     };
 
@@ -60,6 +118,11 @@ export const BookingProvider = ({ children }) => {
         <BookingContext.Provider value={{ 
             experts, 
             bookings, 
+            selectedFood,
+            selectedClothes,
+            addToCart,
+            removeFromCart,
+            clearCart,
             addBooking, 
             addReview,
             updateExpertStatus

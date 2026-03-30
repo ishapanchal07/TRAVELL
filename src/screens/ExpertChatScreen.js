@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 
@@ -10,17 +10,42 @@ export default function ExpertChatScreen({ route, navigation }) {
     const [messages, setMessages] = useState([
         { id: '1', text: `Hi! I'm ${expert.name}. How can I help you plan your perfect day?`, type: 'expert', time: '10:00 AM' }
     ]);
+    const flatListRef = useRef(null);
+    const insets = useSafeAreaInsets();
+
+    const scrollToBottom = (animated = true) => {
+        if (flatListRef.current && messages.length > 0) {
+            flatListRef.current.scrollToEnd({ animated });
+        }
+    };
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => scrollToBottom(true)
+        );
+        return () => keyboardDidShowListener.remove();
+    }, [messages]);
+
+    useEffect(() => {
+        scrollToBottom(false);
+    }, []);
 
     const sendMessage = () => {
         if (message.trim()) {
             const newMsg = {
                 id: Date.now().toString(),
-                text: message,
+                text: message.trim(),
                 type: 'user',
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
-            setMessages([...messages, newMsg]);
+            
+            const updatedMessages = [...messages, newMsg];
+            setMessages(updatedMessages);
             setMessage('');
+            
+            // Immediate scroll after sending
+            setTimeout(() => scrollToBottom(true), 100);
 
             // Simulate auto-reply
             setTimeout(() => {
@@ -31,7 +56,8 @@ export default function ExpertChatScreen({ route, navigation }) {
                     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                 };
                 setMessages(prev => [...prev, reply]);
-            }, 2000);
+                setTimeout(() => scrollToBottom(true), 100);
+            }, 1500);
         }
     };
 
@@ -45,7 +71,7 @@ export default function ExpertChatScreen({ route, navigation }) {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: 'white' }]}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
@@ -62,19 +88,22 @@ export default function ExpertChatScreen({ route, navigation }) {
                 </TouchableOpacity>
             </View>
 
-            <FlatList
-                data={messages}
-                renderItem={renderMessage}
-                keyExtractor={item => item.id}
-                contentContainerStyle={styles.chatList}
-                showsVerticalScrollIndicator={false}
-            />
-
             <KeyboardAvoidingView 
+                style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 20}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
             >
-                <View style={styles.inputContainer}>
+                <FlatList
+                    ref={flatListRef}
+                    data={messages}
+                    renderItem={renderMessage}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={styles.chatList}
+                    showsVerticalScrollIndicator={false}
+                    onContentSizeChange={() => scrollToBottom(true)}
+                />
+
+                <View style={[styles.inputContainer, { paddingBottom: Math.max(insets.bottom, 16) }]}>
                     <TouchableOpacity style={styles.attachBtn}>
                         <Feather name="plus" size={24} color="#64748B" />
                     </TouchableOpacity>
@@ -84,6 +113,7 @@ export default function ExpertChatScreen({ route, navigation }) {
                         value={message}
                         onChangeText={setMessage}
                         multiline
+                        maxHeight={120}
                     />
                     <TouchableOpacity style={styles.sendBtn} onPress={sendMessage}>
                         <Ionicons name="send" size={20} color="white" />

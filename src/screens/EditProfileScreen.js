@@ -1,62 +1,37 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
+import { useTheme } from '../context/ThemeContext';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function EditProfileScreen({ navigation }) {
-    const { userData, updateUserData } = useAuth();
+    const { userData, updateProfile } = useUser();
+    const { isDarkMode, colors } = useTheme();
     const [name, setName] = useState(userData.name);
     const [email, setEmail] = useState(userData.email);
-    const [bio, setBio] = useState('Travel enthusiast. Finding hidden gems around the world. ✨'); // Bio remains local if not in global state
+    const [bio, setBio] = useState('Travel enthusiast. Finding hidden gems around the world. ✨');
     const [profileImage, setProfileImage] = useState(userData.profileImage);
     const [isSaving, setIsSaving] = useState(false);
 
-    const handleImagePress = () => {
-        Alert.alert(
-            "Change Profile Picture",
-            "Choose a source",
-            [
-                { text: "Take Photo", onPress: handleTakePhoto },
-                { text: "Choose from Gallery", onPress: handleChooseFromGallery },
-                { text: "Cancel", style: "cancel" }
-            ]
-        );
-    };
-
-    const handleTakePhoto = async () => {
-        const { status } = await ImagePicker.requestCameraPermissionsAsync();
-        if (status !== 'granted') {
-            Alert.alert('Permission Denied', 'Sorry, we need camera permissions to make this work!');
-            return;
-        }
-
-        const result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setProfileImage(result.assets[0].uri);
-        }
-    };
-
-    const handleChooseFromGallery = async () => {
+    const pickImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
-            Alert.alert('Permission Denied', 'Sorry, we need gallery permissions to make this work!');
+            Alert.alert('Permission Required', 'We need camera roll permissions to change your profile picture.');
             return;
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [1, 1],
-            quality: 1,
+            quality: 0.8,
         });
 
         if (!result.canceled) {
@@ -64,97 +39,106 @@ export default function EditProfileScreen({ navigation }) {
         }
     };
 
-    const validateForm = () => {
-        if (!name.trim()) {
-            Alert.alert("Validation Error", "Full Name is required.");
-            return false;
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email.trim() || !emailRegex.test(email)) {
-            Alert.alert("Validation Error", "Please enter a valid email address.");
-            return false;
-        }
-        return true;
-    };
-
     const handleSave = async () => {
-        if (!validateForm()) return;
+        if (!name.trim()) {
+            Alert.alert('Error', 'Name cannot be empty.');
+            return;
+        }
 
         setIsSaving(true);
-        
-        // Update global state and persist
-        const result = await updateUserData({
-            name,
-            email,
-            profileImage
-        });
+        try {
+            // Update global UserContext
+            await updateProfile({
+                ...userData,
+                name: name.trim(),
+                email: email.trim(),
+                profileImage: profileImage
+            });
 
-        setIsSaving(false);
-
-        if (result.success) {
-            Alert.alert(
-                "Success", 
-                "✓ Profile updated successfully!", 
-                [{ text: "OK", onPress: () => navigation.goBack() }],
-                { cancelable: true }
-            );
-        } else {
-            Alert.alert("Error", "Failed to update profile. Please try again.");
+            Alert.alert('Success', 'Profile updated successfully!');
+            navigation.goBack();
+        } catch (error) {
+            console.error('Error saving profile:', error);
+            Alert.alert('Error', 'Failed to save changes. Please try again.');
+        } finally {
+            setIsSaving(false);
         }
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconBtn}>
-                    <Feather name="chevron-left" size={20} color="#0F172A" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Edit Profile</Text>
-                <View style={{ width: 44 }} />
-            </View>
-
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
-                <ScrollView contentContainerStyle={styles.content}>
-                    <View style={styles.avatarSection}>
-                        <TouchableOpacity 
-                            onPress={handleImagePress} 
-                            activeOpacity={0.8}
-                            style={styles.avatarContainer}
-                            disabled={isSaving}
-                        >
-                            <Image source={{ uri: profileImage }} style={styles.avatar} />
-                            <View style={styles.cameraBtn}>
-                                <Feather name="camera" size={16} color="white" />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <Text style={styles.label}>Full Name</Text>
-                        <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Your Name" placeholderTextColor="#94A3B8" />
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <Text style={styles.label}>Email Address</Text>
-                        <TextInput style={styles.input} value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="you@example.com" placeholderTextColor="#94A3B8" />
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <Text style={styles.label}>Bio</Text>
-                        <TextInput style={[styles.input, styles.textArea]} value={bio} onChangeText={setBio} multiline numberOfLines={4} placeholder="Tell us about yourself..." placeholderTextColor="#94A3B8" />
-                    </View>
-
-                    <TouchableOpacity 
-                        style={[styles.saveBtn, isSaving && { opacity: 0.7 }]} 
-                        onPress={handleSave}
-                        disabled={isSaving}
-                    >
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+            <StatusBar style={isDarkMode ? "light" : "dark"} />
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}
+            >
+                <View style={[styles.header, { borderBottomColor: colors.border }]}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+                        <Feather name="x" size={24} color={colors.text} />
+                    </TouchableOpacity>
+                    <Text style={[styles.headerTitle, { color: colors.text }]}>Edit Profile</Text>
+                    <TouchableOpacity onPress={handleSave} disabled={isSaving}>
                         {isSaving ? (
-                            <ActivityIndicator color="white" />
+                            <ActivityIndicator size="small" color={colors.primary || "#000"} />
                         ) : (
-                            <Text style={styles.saveBtnText}>Save Changes</Text>
+                            <Text style={[styles.saveBtn, { color: colors.primary || "#000" }]}>Save</Text>
                         )}
                     </TouchableOpacity>
+                </View>
+
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.imageSection}>
+                        <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
+                            <Image 
+                                source={{ uri: profileImage || AVATAR_URL }} 
+                                style={styles.profileImage}
+                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
+                                transition={300}
+                            />
+                            <View style={[styles.editBadge, { backgroundColor: colors.primary || "#000" }]}>
+                                <Feather name="camera" size={16} color="#FFF" />
+                            </View>
+                        </TouchableOpacity>
+                        <Text style={[styles.changePhotoText, { color: colors.primary || "#000" }]}>Change Photo</Text>
+                    </View>
+
+                    <View style={styles.form}>
+                        <View style={styles.inputGroup}>
+                            <Text style={[styles.label, { color: colors.textSecondary || "#64748B" }]}>Full Name</Text>
+                            <TextInput 
+                                style={[styles.input, { color: colors.text, borderBottomColor: colors.border }]}
+                                value={name}
+                                onChangeText={setName}
+                                placeholder="Enter your name"
+                                placeholderTextColor={colors.textSecondary || "#94A3B8"}
+                            />
+                        </View>
+
+                        <View style={styles.inputGroup}>
+                            <Text style={[styles.label, { color: colors.textSecondary || "#64748B" }]}>Email</Text>
+                            <TextInput 
+                                style={[styles.input, { color: colors.text, borderBottomColor: colors.border }]}
+                                value={email}
+                                onChangeText={setEmail}
+                                placeholder="Enter your email"
+                                placeholderTextColor={colors.textSecondary || "#94A3B8"}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                            />
+                        </View>
+
+                        <View style={styles.inputGroup}>
+                            <Text style={[styles.label, { color: colors.textSecondary || "#64748B" }]}>Bio</Text>
+                            <TextInput 
+                                style={[styles.input, styles.bioInput, { color: colors.text, borderBottomColor: colors.border }]}
+                                value={bio}
+                                onChangeText={setBio}
+                                placeholder="Tell us about yourself"
+                                placeholderTextColor={colors.textSecondary || "#94A3B8"}
+                                multiline
+                            />
+                        </View>
+                    </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -162,19 +146,80 @@ export default function EditProfileScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: '#F8FAFC' },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10, paddingBottom: 20 },
-    headerIconBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 5, elevation: 2 },
-    headerTitle: { fontSize: 18, fontWeight: '800', color: '#0F172A' },
-    content: { padding: 20 },
-    avatarSection: { alignItems: 'center', marginBottom: 30 },
-    avatarContainer: { position: 'relative' },
-    avatar: { width: 100, height: 100, borderRadius: 50 },
-    cameraBtn: { position: 'absolute', bottom: 0, right: 0, backgroundColor: '#0F172A', width: 32, height: 32, borderRadius: 16, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: '#F8FAFC' },
-    formGroup: { marginBottom: 20 },
-    label: { fontSize: 14, fontWeight: '700', color: '#1E293B', marginBottom: 8, marginLeft: 4 },
-    input: { backgroundColor: 'white', borderRadius: 16, paddingHorizontal: 16, paddingVertical: 16, fontSize: 15, color: '#0F172A', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.02, shadowRadius: 5, elevation: 1 },
-    textArea: { height: 100, textAlignVertical: 'top' },
-    saveBtn: { backgroundColor: '#0F172A', paddingVertical: 18, borderRadius: 16, alignItems: 'center', marginTop: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 4 },
-    saveBtnText: { color: 'white', fontSize: 16, fontWeight: '800' }
+    container: {
+        flex: 1,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderBottomWidth: 1,
+    },
+    backBtn: {
+        padding: 5,
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+    },
+    saveBtn: {
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    imageSection: {
+        alignItems: 'center',
+        marginVertical: 30,
+    },
+    imageWrapper: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        position: 'relative',
+    },
+    profileImage: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+    },
+    editBadge: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: '#FFF',
+    },
+    changePhotoText: {
+        marginTop: 15,
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    form: {
+        paddingHorizontal: 25,
+    },
+    inputGroup: {
+        marginBottom: 25,
+    },
+    label: {
+        fontSize: 12,
+        fontWeight: '700',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+        marginBottom: 8,
+    },
+    input: {
+        fontSize: 16,
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+    },
+    bioInput: {
+        minHeight: 80,
+        textAlignVertical: 'top',
+    },
 });

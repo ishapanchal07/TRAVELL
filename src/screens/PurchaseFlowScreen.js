@@ -94,10 +94,11 @@ export default function PurchaseFlowScreen({ route, navigation }) {
                                 image: item.image,
                                 serviceFee: 0,
                                 deliveryFee: 'FREE',
+                                section: 'clothing'
                             },
                             'WardrobeStatus',
                             navigation,
-                            { successMessage: 'Purchase Confirmed!' }
+                            { successMessage: 'Purchase Confirmed!', section: 'clothing' }
                         );
                     }}
                 >
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
         color: '#0F172A',
         fontSize: 14,
         fontWeight: '600',
+        paddingVertical: 2,
     },
     divider: {
         height: 1,

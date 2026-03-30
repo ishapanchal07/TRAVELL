@@ -73,39 +73,44 @@ import AboutScreen from './src/screens/AboutScreen';
 import TermsScreen from './src/screens/TermsScreen';
 
 import { SettingsProvider, SettingsContext } from './src/context/SettingsContext';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
+import { UserProvider } from './src/context/UserContext';
 import { useContext } from 'react';
-import { StatusBar } from 'react-native';
-import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import { DefaultTheme as NavLightTheme, DarkTheme as NavDarkTheme } from '@react-navigation/native';
 
 // Screen Imports
 
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
-  const { isDarkMode } = useContext(SettingsContext);
+  const { isDarkMode, colors } = useTheme();
 
   const customDarkTheme = {
-    ...DarkTheme,
+    ...NavDarkTheme,
     colors: {
-      ...DarkTheme.colors,
-      background: '#0F172A',
-      card: '#1E293B',
-      text: '#F8FAFC',
-      border: '#334155',
+      ...NavDarkTheme.colors,
+      background: colors.background,
+      card: colors.card,
+      text: colors.text,
+      border: colors.border,
     },
   };
 
   const customLightTheme = {
-    ...DefaultTheme,
+    ...NavLightTheme,
     colors: {
-      ...DefaultTheme.colors,
-      background: '#F8FAFC',
+      ...NavLightTheme.colors,
+      background: colors.background,
+      card: colors.card,
+      text: colors.text,
+      border: colors.border,
     },
   };
 
   return (
     <NavigationContainer theme={isDarkMode ? customDarkTheme : customLightTheme}>
-      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
       <Stack.Navigator
         initialRouteName="Welcome"
         screenOptions={{
@@ -188,9 +193,13 @@ export default function App() {
         <SavedProvider>
           <BookingProvider>
             <PaymentProvider>
-              <SettingsProvider>
-                <RootNavigator />
-              </SettingsProvider>
+              <ThemeProvider>
+                <UserProvider>
+                  <SettingsProvider>
+                    <RootNavigator />
+                  </SettingsProvider>
+                </UserProvider>
+              </ThemeProvider>
             </PaymentProvider>
           </BookingProvider>
         </SavedProvider>

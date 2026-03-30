@@ -13,6 +13,16 @@ export function PaymentProvider({ children }) {
 
     const handlePaidAction = (itemData, nextScreen, navigation, customParams = {}) => {
         const itemId = itemData.id || itemData.name || itemData.title;
+        const section = customParams.section || itemData.section;
+
+        // Strict Isolation: Only allow Food and Clothing, or existing Expert flow
+        const isFoodOrClothing = section === 'food' || section === 'clothing';
+        const isExpert = !!customParams.expert;
+
+        if (!isFoodOrClothing && !isExpert) {
+            console.warn(`[PaymentIsolation] Blocked payment attempt outside allowed sections: ${section}`);
+            return;
+        }
         
         // Extract numeric price safely
         let numericPrice = 0;
@@ -39,13 +49,13 @@ export function PaymentProvider({ children }) {
             return;
         }
 
-        console.log(`[PaymentFlow] Initiating payment for ${itemId}`);
+        console.log(`[PaymentFlow] Initiating payment for ${itemId} in section ${section || 'Expert'}`);
         
         // Ensure price is safely passed
         const finalPrice = numericPrice || customParams.totalPrice || 0;
         
         // If it's a legacy expert booking, pass it via expert prop
-        if (customParams.expert) {
+        if (isExpert) {
             navigation.navigate('Payment', {
                 ...customParams,
                 price: finalPrice,
@@ -62,8 +72,9 @@ export function PaymentProvider({ children }) {
             serviceFee: itemData.serviceFee || 12,
             deliveryFee: itemData.deliveryFee || 'FREE',
             nextScreen: nextScreen,
-            nextParams: { ...customParams, item: itemData },
-            itemId: itemId
+            nextParams: { ...customParams, item: itemData, section },
+            itemId: itemId,
+            section: section
         });
     };
 

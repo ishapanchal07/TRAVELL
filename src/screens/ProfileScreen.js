@@ -1,16 +1,20 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useFocusEffect } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5, Octicons } from '@expo/vector-icons';
 import AnalyticsService from '../services/AnalyticsService';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { useUser } from '../context/UserContext';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function ProfileScreen({ navigation }) {
-    const { userData } = useAuth();
+    const { userData } = useUser();
+    const { isDarkMode, colors } = useTheme();
     const [stats, setStats] = React.useState({
         countries: 12, // Initially 12
         outfits: 45, // Initially 45
@@ -39,20 +43,20 @@ export default function ProfileScreen({ navigation }) {
     );
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+            <StatusBar style={isDarkMode ? "light" : "dark"} />
 
             {/* Header */}
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconBtn}>
-                    <Feather name="chevron-left" size={20} color="#0F172A" />
+                <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.headerIconBtn, isDarkMode && { backgroundColor: colors.card }]}>
+                    <Feather name="chevron-left" size={20} color={colors.text} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>PROFILE</Text>
+                <Text style={[styles.headerTitle, { color: colors.text }]}>PROFILE</Text>
                 <TouchableOpacity 
-                    style={styles.headerIconBtn} 
+                    style={[styles.headerIconBtn, isDarkMode && { backgroundColor: colors.card }]} 
                     onPress={() => navigation.navigate('Settings')}
                 >
-                    <Ionicons name="settings-sharp" size={20} color="#0F172A" />
+                    <Ionicons name="settings-sharp" size={20} color={colors.text} />
                 </TouchableOpacity>
             </View>
 
@@ -75,62 +79,62 @@ export default function ProfileScreen({ navigation }) {
                 </View>
 
                 {/* Name */}
-                <Text style={styles.userName}>{userData.name || 'Chloe Roams'}</Text>
+                <Text style={[styles.userName, { color: colors.text }]}>{userData.name || 'Chloe Roams'}</Text>
 
                 {/* Stats Card */}
-                <View style={styles.statsCard}>
+                <View style={[styles.statsCard, { backgroundColor: colors.card }]}>
                     <View style={styles.statCol}>
-                        <Text style={styles.statValue}>{stats.countries}</Text>
+                        <Text style={[styles.statValue, { color: colors.text }]}>{stats.countries}</Text>
                         <Text style={styles.statLabel}>COUNTRIES</Text>
                     </View>
-                    <View style={styles.statDivider} />
+                    <View style={[styles.statDivider, { backgroundColor: colors.divider }]} />
                     <View style={styles.statCol}>
-                        <Text style={styles.statValue}>{stats.outfits}</Text>
+                        <Text style={[styles.statValue, { color: colors.text }]}>{stats.outfits}</Text>
                         <Text style={styles.statLabel}>OUTFITS</Text>
                     </View>
-                    <View style={styles.statDivider} />
+                    <View style={[styles.statDivider, { backgroundColor: colors.divider }]} />
                     <View style={styles.statCol}>
-                        <Text style={styles.statValue}>{stats.photos}</Text>
+                        <Text style={[styles.statValue, { color: colors.text }]}>{stats.photos}</Text>
                         <Text style={styles.statLabel}>PHOTOS</Text>
                     </View>
                 </View>
 
                 {/* Menu List */}
                 <View style={styles.menuContainer}>
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Journeys')}>
-                        <View style={styles.menuIconContainer}>
-                            <Ionicons name="map" size={20} color="#000000" />
+                    <TouchableOpacity style={[styles.menuItem, { backgroundColor: colors.card }]} activeOpacity={0.7} onPress={() => navigation.navigate('Journeys')}>
+                        <View style={[styles.menuIconContainer, { backgroundColor: colors.background }]}>
+                            <Ionicons name="map" size={20} color={colors.text} />
                         </View>
-                        <Text style={styles.menuText}>My Journeys</Text>
-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                        <Text style={[styles.menuText, { color: colors.text }]}>My Journeys</Text>
+                        <Feather name="chevron-right" size={18} color={colors.border} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Wardrobe')}>
-                        <View style={styles.menuIconContainer}>
-                            <MaterialCommunityIcons name="hanger" size={22} color="#000000" />
+                    <TouchableOpacity style={[styles.menuItem, { backgroundColor: colors.card }]} activeOpacity={0.7} onPress={() => navigation.navigate('Wardrobe')}>
+                        <View style={[styles.menuIconContainer, { backgroundColor: colors.background }]}>
+                            <MaterialCommunityIcons name="hanger" size={22} color={colors.text} />
                         </View>
-                        <Text style={styles.menuText}>My Wardrobe</Text>
-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                        <Text style={[styles.menuText, { color: colors.text }]}>My Wardrobe</Text>
+                        <Feather name="chevron-right" size={18} color={colors.border} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Gallery')}>
-                        <View style={styles.menuIconContainer}>
-                            <Ionicons name="images" size={20} color="#000000" />
+                    <TouchableOpacity style={[styles.menuItem, { backgroundColor: colors.card }]} activeOpacity={0.7} onPress={() => navigation.navigate('Gallery')}>
+                        <View style={[styles.menuIconContainer, { backgroundColor: colors.background }]}>
+                            <Ionicons name="images" size={20} color={colors.text} />
                         </View>
-                        <Text style={styles.menuText}>My Photos</Text>
-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                        <Text style={[styles.menuText, { color: colors.text }]}>My Photos</Text>
+                        <Feather name="chevron-right" size={18} color={colors.border} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={styles.menuItem}
+                        style={[styles.menuItem, { backgroundColor: colors.card }]}
                         activeOpacity={0.7}
                         onPress={() => navigation.navigate('Transactions')}
                     >
-                        <View style={styles.menuIconContainer}>
-                            <Ionicons name="receipt-outline" size={20} color="#000000" />
+                        <View style={[styles.menuIconContainer, { backgroundColor: colors.background }]}>
+                            <Ionicons name="receipt-outline" size={20} color={colors.text} />
                         </View>
-                        <Text style={styles.menuText}>My Transactions</Text>
-                        <Feather name="chevron-right" size={18} color="#CBD5E1" />
+                        <Text style={[styles.menuText, { color: colors.text }]}>My Transactions</Text>
+                        <Feather name="chevron-right" size={18} color={colors.border} />
                     </TouchableOpacity>
                 </View>
 
