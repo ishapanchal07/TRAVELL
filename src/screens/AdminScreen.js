@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function AdminScreen({ navigation }) {

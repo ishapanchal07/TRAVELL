@@ -5,6 +5,7 @@ import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vecto
 import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SettingsContext } from '../context/SettingsContext';
+import { useAuth } from '../context/AuthContext';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
@@ -12,8 +13,10 @@ export default function SettingsScreen({ navigation }) {
     const { 
         isDarkMode, toggleDarkMode, 
         notificationsOn, toggleNotifications, 
+        language, getT,
         isPrivate, togglePrivacy 
     } = useContext(SettingsContext);
+    const { userData } = useAuth();
 
     const handleLogout = () => {
         Alert.alert(
@@ -43,15 +46,15 @@ export default function SettingsScreen({ navigation }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={[styles.safeArea, isDarkMode && { backgroundColor: '#0F172A' }]}>
             <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} backgroundColor={isDarkMode ? "#0F172A" : "#F8FAFC"} />
 
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconBtn}>
-                    <Feather name="chevron-left" size={20} color="#0F172A" />
+                    <Feather name="chevron-left" size={20} color={isDarkMode ? "white" : "#0F172A"} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Settings</Text>
+                <Text style={[styles.headerTitle, isDarkMode && { color: 'white' }]}>{getT('settings')}</Text>
                 <View style={{ width: 44 }} />
             </View>
 
@@ -59,89 +62,81 @@ export default function SettingsScreen({ navigation }) {
                 
                 {/* Profile Top Section */}
                 <TouchableOpacity style={styles.profileSection} onPress={() => navigation.navigate('EditProfile')}>
-                    <Image source={{ uri: AVATAR_URL }} style={styles.profilePic} />
+                    <Image source={{ uri: userData.profileImage || AVATAR_URL }} style={styles.profilePic} />
                     <View style={styles.profileInfo}>
-                        <Text style={styles.profileName}>Chloe Roams</Text>
-                        <Text style={styles.profileEmail}>chloe.roams@example.com</Text>
+                        <Text style={styles.profileName}>{userData.name || 'Chloe Roams'}</Text>
+                        <Text style={styles.profileEmail}>{userData.email || 'chloe.roams@example.com'}</Text>
                     </View>
                     <Feather name="chevron-right" size={20} color="#94A3B8" />
                 </TouchableOpacity>
 
                 {/* A. Account */}
-                <SectionHeader title="Account" />
-                <View style={styles.sectionCard}>
-                    <SettingsItem icon="user" label="Edit Profile" onPress={() => navigation.navigate('EditProfile')} />
-                    <SettingsItem icon="lock" label="Change Password" hideDivider onPress={() => navigation.navigate('ChangePassword')} />
+                <SectionHeader title={getT('account') || 'ACCOUNT'} />
+                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
+                    <SettingsItem icon="user" label="Edit Profile" onPress={() => navigation.navigate('EditProfile')} isDark={isDarkMode} />
+                    <SettingsItem icon="lock" label="Change Password" hideDivider onPress={() => navigation.navigate('ChangePassword')} isDark={isDarkMode} />
                 </View>
 
                 {/* B. Preferences */}
-                <SectionHeader title="Preferences" />
-                <View style={styles.sectionCard}>
+                <SectionHeader title={getT('preferences')} />
+                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
                     <SettingsToggleItem 
                         icon="moon" 
-                        label="Dark / Light Mode" 
+                        label={getT('darkMode')} 
                         value={isDarkMode} 
                         onValueChange={toggleDarkMode} 
+                        isDark={isDarkMode}
                     />
-                    <SettingsItem icon="globe" label="Language" value="English" onPress={() => navigation.navigate('LanguageSelection')} />
+                    <SettingsItem 
+                        icon="globe" 
+                        label={getT('language')} 
+                        value={language === 'en' ? 'English' : language === 'hi' ? 'हिन्दी' : language === 'fr' ? 'Français' : 'Spanish'} 
+                        onPress={() => navigation.navigate('LanguageSelection')} 
+                        isDark={isDarkMode}
+                    />
                     <SettingsToggleItem 
                         icon="bell" 
-                        label="Notifications" 
+                        label={getT('notifications')} 
                         value={notificationsOn} 
-                        onValueChange={toggleNotifications} 
+                        onValueChange={async (val) => {
+                            const result = await toggleNotifications(val);
+                            if (result && !result.success) {
+                                Alert.alert("Permission Error", "Notification permission was not granted. Please enable it in system settings.");
+                            }
+                        }} 
                         hideDivider 
+                        isDark={isDarkMode}
                     />
-                </View>
-
-                {/* C. Travel Experience */}
-                <SectionHeader title="Travel Experience" />
-                <View style={styles.sectionCard}>
-                    <SettingsItem icon="music" label="Background Music" value="Lo-Fi Chill" onPress={() => navigation.navigate('MusicPreference')} />
-                    <SettingsItem icon="compass" label="Travel Vibe" value="Adventure" hideDivider onPress={() => navigation.navigate('VibeSelection')} />
-                </View>
-
-                {/* D. Payments & Bookings */}
-                <SectionHeader title="Payments & Bookings" />
-                <View style={styles.sectionCard}>
-                    <SettingsItem icon="credit-card" label="Saved Payment Methods" onPress={() => navigation.navigate('PaymentMethods')} />
-                    <SettingsItem icon="clock" label="Booking History" onPress={() => navigation.navigate('BookingHistory')} />
-                    <SettingsItem icon="award" label="Roam Points / Rewards" hideDivider onPress={() => navigation.navigate('Rewards')} />
-                </View>
-
-                {/* E. Activity */}
-                <SectionHeader title="Activity" />
-                <View style={styles.sectionCard}>
-                    <SettingsItem icon="map-pin" label="Saved Places" onPress={() => navigation.navigate('SavedPlaces')} />
-                    <SettingsItem icon="heart" label="Liked Items / Hidden Gems" hideDivider onPress={() => navigation.navigate('LikedItems')} />
                 </View>
 
                 {/* F. Privacy & Security */}
-                <SectionHeader title="Privacy & Security" />
-                <View style={styles.sectionCard}>
+                <SectionHeader title={getT('privacy')} />
+                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
                     <SettingsToggleItem 
                         icon="shield" 
-                        label="Private Account" 
+                        label={getT('privateAccount')} 
                         value={isPrivate} 
                         onValueChange={togglePrivacy} 
+                        isDark={isDarkMode}
                     />
-                    <SettingsItem icon="key" label="Permissions & Data Control" hideDivider onPress={() => navigation.navigate('Permissions')} />
+                    <SettingsItem icon="key" label={getT('permissions')} hideDivider onPress={() => navigation.navigate('Permissions')} isDark={isDarkMode} />
                 </View>
 
                 {/* G. Support & Info */}
-                <SectionHeader title="Support & Info" />
-                <View style={styles.sectionCard}>
-                    <SettingsItem icon="help-circle" label="Help & Support" onPress={() => navigation.navigate('Support')} />
-                    <SettingsItem icon="info" label="About Roamster" onPress={() => navigation.navigate('About')} />
-                    <SettingsItem icon="file-text" label="Terms & Conditions" hideDivider onPress={() => navigation.navigate('Terms')} />
+                <SectionHeader title={getT('support')} />
+                <View style={[styles.sectionCard, isDarkMode && styles.cardDark]}>
+                    <SettingsItem icon="help-circle" label={getT('help')} onPress={() => navigation.navigate('Support')} isDark={isDarkMode} />
+                    <SettingsItem icon="info" label={getT('about')} onPress={() => navigation.navigate('About')} isDark={isDarkMode} />
+                    <SettingsItem icon="file-text" label={getT('terms')} hideDivider onPress={() => navigation.navigate('Terms')} isDark={isDarkMode} />
                 </View>
 
                 {/* Logout Button */}
                 <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
                     <Feather name="log-out" size={18} color="#EF4444" />
-                    <Text style={styles.logoutText}>Logout</Text>
+                    <Text style={styles.logoutText}>{getT('logout')}</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.versionText}>App Version 1.0.0 (Build 42)</Text>
+                <Text style={[styles.versionText, isDarkMode && { color: '#64748B' }]}>{getT('version')}</Text>
             </ScrollView>
         </SafeAreaView>
     );
@@ -153,14 +148,14 @@ function SectionHeader({ title }) {
     );
 }
 
-function SettingsItem({ icon, label, value, hideDivider, onPress }) {
+function SettingsItem({ icon, label, value, hideDivider, onPress, isDark }) {
     return (
         <TouchableOpacity style={styles.rowContainer} onPress={onPress}>
-            <View style={styles.rowIconBox}>
-                <Feather name={icon} size={18} color="#1E293B" />
+            <View style={[styles.rowIconBox, isDark && { backgroundColor: '#1E293B' }]}>
+                <Feather name={icon} size={18} color={isDark ? "#94A3B8" : "#1E293B"} />
             </View>
-            <View style={[styles.rowContent, !hideDivider && styles.rowDivider]}>
-                <Text style={styles.rowLabel}>{label}</Text>
+            <View style={[styles.rowContent, !hideDivider && (isDark ? styles.rowDividerDark : styles.rowDivider)]}>
+                <Text style={[styles.rowLabel, isDark && { color: '#E2E8F0' }]}>{label}</Text>
                 {value && <Text style={styles.rowValue}>{value}</Text>}
                 <Feather name="chevron-right" size={20} color="#CBD5E1" />
             </View>
@@ -168,18 +163,18 @@ function SettingsItem({ icon, label, value, hideDivider, onPress }) {
     );
 }
 
-function SettingsToggleItem({ icon, label, value, onValueChange, hideDivider }) {
+function SettingsToggleItem({ icon, label, value, onValueChange, hideDivider, isDark }) {
     return (
         <View style={styles.rowContainer}>
-            <View style={styles.rowIconBox}>
-                <Feather name={icon} size={18} color="#1E293B" />
+            <View style={[styles.rowIconBox, isDark && { backgroundColor: '#1E293B' }]}>
+                <Feather name={icon} size={18} color={isDark ? "#94A3B8" : "#1E293B"} />
             </View>
-            <View style={[styles.rowContent, !hideDivider && styles.rowDivider]}>
-                <Text style={styles.rowLabel}>{label}</Text>
+            <View style={[styles.rowContent, !hideDivider && (isDark ? styles.rowDividerDark : styles.rowDivider)]}>
+                <Text style={[styles.rowLabel, isDark && { color: '#E2E8F0' }]}>{label}</Text>
                 <Switch 
                     value={value} 
                     onValueChange={onValueChange} 
-                    trackColor={{ false: "#E2E8F0", true: "#0F172A" }}
+                    trackColor={{ false: "#E2E8F0", true: isDark ? "#38BDF8" : "#0F172A" }}
                     thumbColor="white"
                     ios_backgroundColor="#E2E8F0"
                 />
@@ -236,6 +231,8 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 2,
     },
+    cardDark: { backgroundColor: '#1E293B', borderColor: '#334155', borderWidth: 1 },
+    rowDividerDark: { borderBottomWidth: 1, borderBottomColor: '#334155' },
     profilePic: {
         width: 60,
         height: 60,

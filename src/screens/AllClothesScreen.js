@@ -57,7 +57,7 @@ export default function AllClothesScreen({ route, navigation }) {
                                 </View>
                                 <View style={styles.infoCont}>
                                     <Text style={styles.itemTitle}>{item.title}</Text>
-                                    <Text style={styles.itemType}>{item.type}</Text>
+                                    <Text style={styles.itemType}>{item.category || item.type}</Text>
                                     <TouchableOpacity 
                                         style={styles.rentBtn}
                                         onPress={() => navigation.navigate('ProductDetail', { item })}

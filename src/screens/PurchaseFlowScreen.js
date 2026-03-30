@@ -7,7 +7,11 @@ import { usePayment } from '../context/PaymentContext';
 
 export default function PurchaseFlowScreen({ route, navigation }) {
     const { handlePaidAction } = usePayment();
-    const { item = {} } = route.params || {};
+    const { item = {}, quantity = 1, selectedSize = null } = route.params || {};
+
+    const priceNum = item.buy ? parseFloat(item.buy.replace(/[^0-9.]/g, '')) : 185;
+    const subtotal = priceNum * quantity;
+    const total = subtotal; // FREE shipping as per UI
 
     return (
         <SafeAreaView style={styles.container}>
@@ -33,6 +37,7 @@ export default function PurchaseFlowScreen({ route, navigation }) {
                     <View style={styles.itemDetails}>
                         <Text style={styles.itemTitle}>{item.title || 'Apparel Item'}</Text>
                         <Text style={styles.itemPrice}>{item.buy || '$185'}</Text>
+                        {selectedSize && <Text style={styles.itemSubText}>Size: {selectedSize} • Qty: {quantity}</Text>}
                     </View>
                 </View>
 
@@ -62,8 +67,8 @@ export default function PurchaseFlowScreen({ route, navigation }) {
 
                 <View style={styles.orderSummary}>
                     <View style={styles.summaryRow}>
-                        <Text style={styles.summaryLabel}>Subtotal</Text>
-                        <Text style={styles.summaryValue}>{item.buy || '$185'}</Text>
+                        <Text style={styles.summaryLabel}>Subtotal ({quantity} x {item.buy || '$185'})</Text>
+                        <Text style={styles.summaryValue}>€{subtotal}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.summaryLabel}>Shipping</Text>
@@ -72,7 +77,7 @@ export default function PurchaseFlowScreen({ route, navigation }) {
                     <View style={styles.divider} />
                     <View style={styles.totalRow}>
                         <Text style={styles.totalLabel}>Total</Text>
-                        <Text style={styles.totalValue}>{item.buy || '$185'}</Text>
+                        <Text style={styles.totalValue}>€{total}</Text>
                     </View>
                 </View>
             </ScrollView>
@@ -81,12 +86,11 @@ export default function PurchaseFlowScreen({ route, navigation }) {
                 <TouchableOpacity
                     style={styles.payBtn}
                     onPress={() => {
-                        const basePrice = item.buy ? parseFloat(item.buy.replace(/[^0-9.]/g, '')) : 185.00;
                         handlePaidAction(
                             {
                                 id: item.id || item.title || 'Apparel Purchase',
                                 title: item.title || 'Apparel Purchase',
-                                price: basePrice,
+                                price: subtotal,
                                 image: item.image,
                                 serviceFee: 0,
                                 deliveryFee: 'FREE',
@@ -159,6 +163,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '700',
         color: '#0F172A',
+    },
+    itemSubText: {
+        fontSize: 12,
+        color: '#64748B',
+        marginTop: 4,
+        fontWeight: '600',
     },
     section: {
         marginBottom: 24,

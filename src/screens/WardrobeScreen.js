@@ -14,50 +14,50 @@ const SEINE_IMG = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?aut
 
 const ITEMS = [
     // Winter Collection
-    { id: 'w1', title: 'Alpine Puffer', rent: '$45', buy: '$320', match: '98%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400', category: 'Jackets', season: 'winter' },
-    { id: 'w2', title: 'Wool Trench Coat', rent: '$55', buy: '$450', match: '95%', image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=400', category: 'Jackets', season: 'winter' },
-    { id: 'w3', title: 'Thermal Leggings', rent: '$15', buy: '$85', match: '92%', image: 'https://images.unsplash.com/photo-1552308995-2ac3c5d97490?auto=format&fit=crop&q=80&w=400', category: 'Pants', season: 'winter' },
-    { id: 'w4', title: 'Cashmere Scarf', rent: '$12', buy: '$95', match: '99%', image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'winter' },
-    { id: 'w5', title: 'Snow Boots', rent: '$30', buy: '$210', match: '90%', image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&q=80&w=400', category: 'Shoes', season: 'winter' },
-    { id: 'w6', title: 'Fleece Beanie', rent: '$8', buy: '$35', match: '96%', image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'winter' },
+    { id: 'w1', title: 'Alpine Puffer', rent: '$45', buy: '$320', match: '98%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400', category: 'Jackets', type: 'clothes', season: 'winter' },
+    { id: 'w2', title: 'Wool Trench Coat', rent: '$55', buy: '$450', match: '95%', image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=400', category: 'Jackets', type: 'clothes', season: 'winter' },
+    { id: 'w3', title: 'Thermal Leggings', rent: '$15', buy: '$85', match: '92%', image: 'https://images.unsplash.com/photo-1552308995-2ac3c5d97490?auto=format&fit=crop&q=80&w=400', category: 'Pants', type: 'clothes', season: 'winter' },
+    { id: 'w4', title: 'Cashmere Scarf', rent: '$12', buy: '$95', match: '99%', image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'winter' },
+    { id: 'w5', title: 'Snow Boots', rent: '$30', buy: '$210', match: '90%', image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&q=80&w=400', category: 'Shoes', type: 'shoes', season: 'winter' },
+    { id: 'w6', title: 'Fleece Beanie', rent: '$8', buy: '$35', match: '96%', image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'winter' },
 
     // Summer Collection
-    { id: 's1', title: 'Linen Breeze Shirt', rent: '$20', buy: '$120', match: '98%', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=400', category: 'Shirts', season: 'summer' },
-    { id: 's2', title: 'Floral Maxi Dress', rent: '$35', buy: '$245', match: '94%', image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=400', category: 'Dresses', season: 'summer' },
-    { id: 's3', title: 'Denim Shorts', rent: '$15', buy: '$75', match: '91%', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&q=80&w=400', category: 'Pants', season: 'summer' },
-    { id: 's4', title: 'Aviator Sunglasses', rent: '$10', buy: '$160', match: '97%', image: 'https://images.unsplash.com/photo-1511499767010-a588b5b2f126?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'summer' },
-    { id: 's5', title: 'Leather Sandals', rent: '$18', buy: '$130', match: '89%', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=400', category: 'Shoes', season: 'summer' },
-    { id: 's6', title: 'Sun Straw Hat', rent: '$12', buy: '$65', match: '93%', image: 'https://images.unsplash.com/photo-1533444841536-41e9795bc25e?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'summer' },
+    { id: 's1', title: 'Linen Breeze Shirt', rent: '$20', buy: '$120', match: '98%', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=400', category: 'Shirts', type: 'clothes', season: 'summer' },
+    { id: 's2', title: 'Floral Maxi Dress', rent: '$35', buy: '$245', match: '94%', image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=400', category: 'Dresses', type: 'clothes', season: 'summer' },
+    { id: 's3', title: 'Denim Shorts', rent: '$15', buy: '$75', match: '91%', image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&q=80&w=400', category: 'Pants', type: 'clothes', season: 'summer' },
+    { id: 's4', title: 'Aviator Sunglasses', rent: '$10', buy: '$160', match: '97%', image: 'https://images.unsplash.com/photo-1511499767010-a588b5b2f126?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'summer' },
+    { id: 's5', title: 'Leather Sandals', rent: '$18', buy: '$130', match: '89%', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=400', category: 'Shoes', type: 'shoes', season: 'summer' },
+    { id: 's6', title: 'Sun Straw Hat', rent: '$12', buy: '$65', match: '93%', image: 'https://images.unsplash.com/photo-1533444841536-41e9795bc25e?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'summer' },
 
     // Monsoon Collection
-    { id: 'm1', title: 'Lite-Rain Mac', rent: '$28', buy: '$195', match: '97%', image: 'https://images.unsplash.com/photo-1544923246-77307dd654ca?auto=format&fit=crop&q=80&w=400', category: 'Jackets', season: 'monsoon' },
-    { id: 'm2', title: 'Quick-Dry Trousers', rent: '$22', buy: '$140', match: '93%', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80&w=400', category: 'Pants', season: 'monsoon' },
-    { id: 'm3', title: 'Waterproof Tote', rent: '$15', buy: '$95', match: '95%', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'monsoon' },
-    { id: 'm4', title: 'Gore-Tex Sneakers', rent: '$35', buy: '$260', match: '91%', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&q=80&w=400', category: 'Shoes', season: 'monsoon' },
-    { id: 'm5', title: 'Compact Umbrella', rent: '$5', buy: '$25', match: '99%', image: 'https://images.unsplash.com/photo-1542153200-84dc248d6db3?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'monsoon' },
+    { id: 'm1', title: 'Lite-Rain Mac', rent: '$28', buy: '$195', match: '97%', image: 'https://images.unsplash.com/photo-1544923246-77307dd654ca?auto=format&fit=crop&q=80&w=400', category: 'Jackets', type: 'clothes', season: 'monsoon' },
+    { id: 'm2', title: 'Quick-Dry Trousers', rent: '$22', buy: '$140', match: '93%', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80&w=400', category: 'Pants', type: 'clothes', season: 'monsoon' },
+    { id: 'm3', title: 'Waterproof Tote', rent: '$15', buy: '$95', match: '95%', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'monsoon' },
+    { id: 'm4', title: 'Gore-Tex Sneakers', rent: '$35', buy: '$260', match: '91%', image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&q=80&w=400', category: 'Shoes', type: 'shoes', season: 'monsoon' },
+    { id: 'm5', title: 'Compact Umbrella', rent: '$5', buy: '$25', match: '99%', image: 'https://images.unsplash.com/photo-1542153200-84dc248d6db3?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'monsoon' },
 
     // Autumn / Mixed (existing logic support)
-    { id: 'a1', title: 'Louvre Morning', rent: '$24', buy: '$185', match: '98%', image: LOUVRE_IMG, category: 'Jackets', season: 'autumn' },
-    { id: 'a2', title: 'Marais Chic', rent: '$32', buy: '$240', match: '85%', image: MARAIS_IMG, category: 'Dresses', season: 'autumn' },
-    { id: 'a3', title: 'Autumn Beret', rent: '$12', buy: '$45', match: '92%', image: AUTUMN_IMG, category: 'Accessories', season: 'autumn', isSmallImage: true },
-    { id: 'a4', title: 'Seine Stroll', rent: '$35', buy: '$210', match: '76%', image: SEINE_IMG, category: 'Dresses', season: 'autumn' },
+    { id: 'a1', title: 'Louvre Morning', rent: '$24', buy: '$185', match: '98%', image: LOUVRE_IMG, category: 'Jackets', type: 'clothes', season: 'autumn' },
+    { id: 'a2', title: 'Marais Chic', rent: '$32', buy: '$240', match: '85%', image: MARAIS_IMG, category: 'Dresses', type: 'clothes', season: 'autumn' },
+    { id: 'a3', title: 'Autumn Beret', rent: '$12', buy: '$45', match: '92%', image: AUTUMN_IMG, category: 'Accessories', type: 'accessory', season: 'autumn', isSmallImage: true },
+    { id: 'a4', title: 'Seine Stroll', rent: '$35', buy: '$210', match: '76%', image: SEINE_IMG, category: 'Dresses', type: 'clothes', season: 'autumn' },
 
     // Additional items to reach ~35
-    { id: 'x1', title: 'Cotton Polo', rent: '$14', buy: '$65', match: '88%', image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&q=80&w=400', category: 'Shirts', season: 'summer' },
-    { id: 'x2', title: 'Chino Pants', rent: '$18', buy: '$95', match: '85%', image: 'https://images.unsplash.com/photo-1473966968600-fa804b86900a?auto=format&fit=crop&q=80&w=400', category: 'Pants', season: 'summer' },
-    { id: 'x3', title: 'Silk Scarf', rent: '$10', buy: '$75', match: '93%', image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'autumn' },
-    { id: 'x4', title: 'Classic Blazer', rent: '$40', buy: '$280', match: '96%', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', category: 'Jackets', season: 'autumn' },
-    { id: 'x5', title: 'V-Neck Sweater', rent: '$22', buy: '$120', match: '94%', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a4bb4?auto=format&fit=crop&q=80&w=400', category: 'Shirts', season: 'autumn' },
-    { id: 'x6', title: 'Cargo Joggers', rent: '$16', buy: '$85', match: '87%', image: 'https://images.unsplash.com/photo-1517406322961-d70b7774d0a8?auto=format&fit=crop&q=80&w=400', category: 'Pants', season: 'monsoon' },
-    { id: 'x7', title: 'Oxford Shoes', rent: '$25', buy: '$190', match: '92%', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=400', category: 'Shoes', season: 'autumn' },
-    { id: 'x8', title: 'Canvas Tote', rent: '$8', buy: '$40', match: '90%', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'summer' },
-    { id: 'x9', title: 'Bucket Hat', rent: '$12', buy: '$55', match: '86%', image: 'https://images.unsplash.com/photo-1575424909138-46b05e5919ec?auto=format&fit=crop&q=80&w=400', category: 'Accessories', season: 'summer' },
-    { id: 'x10', title: 'Knit Cardigan', rent: '$20', buy: '$110', match: '95%', image: 'https://images.unsplash.com/photo-1583846783204-d4635955365e?auto=format&fit=crop&q=80&w=400', category: 'Shirts', season: 'winter' },
-    { id: 'x11', title: 'Velvet Evening Dress', rent: '$60', buy: '$520', match: '97%', image: 'https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?auto=format&fit=crop&q=80&w=400', category: 'Dresses', season: 'autumn' },
-    { id: 'x12', title: 'Active Windbreaker', rent: '$24', buy: '$165', match: '93%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400', category: 'Jackets', season: 'monsoon' },
-    { id: 'x13', title: 'Platform Loafers', rent: '$22', buy: '$175', match: '89%', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=400', category: 'Shoes', season: 'winter' },
-    { id: 'x14', title: 'Graphic Tee', rent: '$10', buy: '$45', match: '82%', image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=400', category: 'Shirts', season: 'summer' },
-    { id: 'x15', title: 'Stretch Skinny Jeans', rent: '$18', buy: '$95', match: '91%', image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=400', category: 'Pants', season: 'autumn' }
+    { id: 'x1', title: 'Cotton Polo', rent: '$14', buy: '$65', match: '88%', image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&q=80&w=400', category: 'Shirts', type: 'clothes', season: 'summer' },
+    { id: 'x2', title: 'Chino Pants', rent: '$18', buy: '$95', match: '85%', image: 'https://images.unsplash.com/photo-1473966968600-fa804b86900a?auto=format&fit=crop&q=80&w=400', category: 'Pants', type: 'clothes', season: 'summer' },
+    { id: 'x3', title: 'Silk Scarf', rent: '$10', buy: '$75', match: '93%', image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'autumn' },
+    { id: 'x4', title: 'Classic Blazer', rent: '$40', buy: '$280', match: '96%', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', category: 'Jackets', type: 'clothes', season: 'autumn' },
+    { id: 'x5', title: 'V-Neck Sweater', rent: '$22', buy: '$120', match: '94%', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a4bb4?auto=format&fit=crop&q=80&w=400', category: 'Shirts', type: 'clothes', season: 'autumn' },
+    { id: 'x6', title: 'Cargo Joggers', rent: '$16', buy: '$85', match: '87%', image: 'https://images.unsplash.com/photo-1517406322961-d70b7774d0a8?auto=format&fit=crop&q=80&w=400', category: 'Pants', type: 'clothes', season: 'monsoon' },
+    { id: 'x7', title: 'Oxford Shoes', rent: '$25', buy: '$190', match: '92%', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=400', category: 'Shoes', type: 'shoes', season: 'autumn' },
+    { id: 'x8', title: 'Canvas Tote', rent: '$8', buy: '$40', match: '90%', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'summer' },
+    { id: 'x9', title: 'Bucket Hat', rent: '$12', buy: '$55', match: '86%', image: 'https://images.unsplash.com/photo-1575424909138-46b05e5919ec?auto=format&fit=crop&q=80&w=400', category: 'Accessories', type: 'accessory', season: 'summer' },
+    { id: 'x10', title: 'Knit Cardigan', rent: '$20', buy: '$110', match: '95%', image: 'https://images.unsplash.com/photo-1583846783204-d4635955365e?auto=format&fit=crop&q=80&w=400', category: 'Shirts', type: 'clothes', season: 'winter' },
+    { id: 'x11', title: 'Velvet Evening Dress', rent: '$60', buy: '$520', match: '97%', image: 'https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?auto=format&fit=crop&q=80&w=400', category: 'Dresses', type: 'clothes', season: 'autumn' },
+    { id: 'x12', title: 'Active Windbreaker', rent: '$24', buy: '$165', match: '93%', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400', category: 'Jackets', type: 'clothes', season: 'monsoon' },
+    { id: 'x13', title: 'Platform Loafers', rent: '$22', buy: '$175', match: '89%', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=400', category: 'Shoes', type: 'shoes', season: 'winter' },
+    { id: 'x14', title: 'Graphic Tee', rent: '$10', buy: '$45', match: '82%', image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=400', category: 'Shirts', type: 'clothes', season: 'summer' },
+    { id: 'x15', title: 'Stretch Skinny Jeans', rent: '$18', buy: '$95', match: '91%', image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=400', category: 'Pants', type: 'clothes', season: 'autumn' }
 ];
 
 export default function WardrobeScreen({ navigation }) {

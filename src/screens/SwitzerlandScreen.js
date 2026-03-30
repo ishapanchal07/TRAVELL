@@ -33,11 +33,11 @@ const SWISS_DATA = {
         { id: 6, title: 'Chillon Castle Tour', sub: 'History', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€15', bestTime: 'Morning', crowd: 'Medium' }
     ],
     clothes: [
-        { id: 1, title: 'Alpine Edge Jacket', price: 'CHF 60/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Cozy Chalet Boots', price: 'CHF 45/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=400' },
-        { id: 3, title: 'Thermal Base Layer', price: 'CHF 15/day', type: 'Winter', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=400' },
-        { id: 4, title: 'Woolen Alpine Scarf', price: 'CHF 10/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520639889416-0ef14f8bdb31?auto=format&fit=crop&q=80&w=400' },
-        { id: 5, title: 'Pro Ski Goggles', price: 'CHF 20/day', type: 'Gear', img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'Alpine Edge Jacket', price: 'CHF 60/day', category: 'Winter', type: 'clothes', img: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Cozy Chalet Boots', price: 'CHF 45/day', category: 'Footwear', type: 'shoes', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=400' },
+        { id: 3, title: 'Thermal Base Layer', price: 'CHF 15/day', category: 'Winter', type: 'clothes', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=400' },
+        { id: 4, title: 'Woolen Alpine Scarf', price: 'CHF 10/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1520639889416-0ef14f8bdb31?auto=format&fit=crop&q=80&w=400' },
+        { id: 5, title: 'Pro Ski Goggles', price: 'CHF 20/day', category: 'Gear', type: 'accessory', img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
         { id: 1, title: 'Cheese Fondue', sub: 'Le Dézaley • 20m wait', img: 'https://images.unsplash.com/photo-1481931098730-318b6f979181?q=80&w=400&auto=format&fit=crop' },

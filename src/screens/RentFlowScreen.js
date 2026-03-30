@@ -7,7 +7,21 @@ import { usePayment } from '../context/PaymentContext';
 
 export default function RentFlowScreen({ route, navigation }) {
     const { handlePaidAction } = usePayment();
-    const { item = {} } = route.params || {};
+    const { item = {}, quantity = 1, selectedSize = null, selectedDuration = 1 } = route.params || {};
+
+    const pricePerDay = item.rent ? parseFloat(item.rent.replace(/[^0-9.]/g, '')) : 24;
+    const rentalSubtotal = pricePerDay * selectedDuration * quantity;
+    const serviceFee = 12.00;
+    const total = rentalSubtotal + serviceFee;
+
+    // Calculate dates based on current date
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(startDate.getDate() + selectedDuration);
+
+    const formatDate = (date) => {
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -33,6 +47,7 @@ export default function RentFlowScreen({ route, navigation }) {
                     <View style={styles.itemDetails}>
                         <Text style={styles.itemTitle}>{item.title || 'Apparel Item'}</Text>
                         <Text style={styles.itemRent}>{item.rent || '$24'}/day</Text>
+                        {selectedSize && <Text style={styles.itemSubText}>Size: {selectedSize} • Qty: {quantity}</Text>}
                     </View>
                 </View>
 
@@ -40,7 +55,7 @@ export default function RentFlowScreen({ route, navigation }) {
                     <Text style={styles.sectionTitle}>Rental Period</Text>
                     <View style={styles.datePickerPlaceholder}>
                         <Ionicons name="calendar-outline" size={20} color="#000000" />
-                        <Text style={styles.dateText}>Sept 12 - Sept 18, 2024 (6 Days)</Text>
+                        <Text style={styles.dateText}>{formatDate(startDate)} - {formatDate(endDate)}, 2024 ({selectedDuration} Days)</Text>
                     </View>
                 </View>
 
@@ -54,30 +69,31 @@ export default function RentFlowScreen({ route, navigation }) {
 
                 <View style={styles.summaryBox}>
                     <View style={styles.summaryRow}>
-                        <Text style={styles.summaryLabel}>Rental (6 days)</Text>
-                        <Text style={styles.summaryValue}>$144.00</Text>
+                        <Text style={styles.summaryLabel}>Rental ({selectedDuration} days x {quantity})</Text>
+                        <Text style={styles.summaryValue}>€{rentalSubtotal}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.summaryLabel}>Cleaning & Service</Text>
-                        <Text style={styles.summaryValue}>$12.00</Text>
+                        <Text style={styles.summaryValue}>€{serviceFee}</Text>
                     </View>
                     <View style={styles.divider} />
                     <View style={styles.totalRow}>
                         <Text style={styles.totalLabel}>Total</Text>
-                        <Text style={styles.totalValue}>$156.00</Text>
+                        <Text style={styles.totalValue}>€{total}</Text>
                     </View>
                 </View>
             </ScrollView>
 
             <View style={styles.footer}>
                 <TouchableOpacity
+                    style={styles.confirmBtn}
                     onPress={() => handlePaidAction(
                         {
                             id: item.id || item.title || 'Apparel Rental',
                             title: item.title || 'Apparel Rental',
-                            price: 144.00,
+                            price: rentalSubtotal,
                             image: item.image,
-                            serviceFee: 12.00,
+                            serviceFee: serviceFee,
                             deliveryFee: 'FREE',
                         },
                         'WardrobeStatus',
@@ -85,7 +101,7 @@ export default function RentFlowScreen({ route, navigation }) {
                         { successMessage: 'Rental Confirmed!' }
                     )}
                 >
-                    <Text style={styles.confirmBtnText}>CONFIRM RENTAL</Text>
+                    <Text style={styles.confirmBtnText}>Pay Now</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -148,6 +164,12 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: '#000000',
     },
+    itemSubText: {
+        fontSize: 12,
+        color: '#64748B',
+        marginTop: 4,
+        fontWeight: '600',
+    },
     section: {
         marginBottom: 24,
     },
@@ -190,24 +212,30 @@ const styles = StyleSheet.create({
         padding: 24,
         borderRadius: 24,
         marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 4,
     },
     summaryRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 12,
+        marginBottom: 16,
     },
     summaryLabel: {
         color: '#94A3B8',
-        fontSize: 14,
+        fontSize: 15,
+        fontWeight: '500',
     },
     summaryValue: {
         color: 'white',
-        fontSize: 14,
-        fontWeight: '600',
+        fontSize: 15,
+        fontWeight: '700',
     },
     divider: {
         height: 1,
-        backgroundColor: '#334155',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         marginVertical: 16,
     },
     totalRow: {
@@ -217,18 +245,20 @@ const styles = StyleSheet.create({
     },
     totalLabel: {
         color: 'white',
-        fontSize: 16,
-        fontWeight: '700',
+        fontSize: 18,
+        fontWeight: '800',
     },
     totalValue: {
-        color: '#000000',
-        fontSize: 24,
+        color: 'white',
+        fontSize: 26,
         fontWeight: '900',
     },
     footer: {
         padding: 20,
         backgroundColor: 'white',
-        paddingBottom: 35,
+        paddingBottom: 40,
+        borderTopWidth: 1,
+        borderTopColor: '#F1F5F9',
     },
     confirmBtn: {
         backgroundColor: '#000000',

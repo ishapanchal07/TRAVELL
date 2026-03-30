@@ -8,11 +8,17 @@ import { BlurView } from 'expo-blur';
 
 const { width } = Dimensions.get('window');
 
-const SIZES = ['S', 'M', 'L', 'XL'];
+const SIZES_CLOTHES = ['S', 'M', 'L', 'XL'];
+const SIZES_SHOES = ['6', '7', '8', '9', '10', '11'];
 const DURATIONS = [
     { label: '1 day', value: 1 },
     { label: '3 days', value: 3 },
     { label: '7 days', value: 7 },
+];
+const PAYMENT_METHODS = [
+    { id: 'apple', label: 'Apple Pay', icon: 'logo-apple' },
+    { id: 'card', label: 'Credit Card', icon: 'card-outline' },
+    { id: 'paypal', label: 'PayPal', icon: 'logo-paypal' },
 ];
 
 export default function ProductDetailScreen({ route, navigation }) {
@@ -22,8 +28,14 @@ export default function ProductDetailScreen({ route, navigation }) {
     const pricePerDay = parseInt(item.price?.replace(/[^0-9]/g, '') || '35');
     
     const [quantity, setQuantity] = useState(1);
-    const [selectedSize, setSelectedSize] = useState('M');
+    
+    // Determine available sizes based on item type
+    const itemType = item.type?.toLowerCase() || 'clothes';
+    const availableSizes = itemType === 'shoes' ? SIZES_SHOES : (itemType === 'clothes' ? SIZES_CLOTHES : []);
+    
+    const [selectedSize, setSelectedSize] = useState(availableSizes[1] || availableSizes[0] || null);
     const [selectedDuration, setSelectedDuration] = useState(1);
+    const [selectedPayment, setSelectedPayment] = useState('apple');
     const { toggleSaveGem, isGemSaved } = useSaved();
     const isWishlisted = isGemSaved(item.id || item.title);
 
@@ -98,19 +110,23 @@ export default function ProductDetailScreen({ route, navigation }) {
                         </View>
                     </View>
 
-                    {/* Size Selector */}
-                    <Text style={[styles.sectionLabel, { marginTop: 20 }]}>Select Size</Text>
-                    <View style={styles.optionsRow}>
-                        {SIZES.map(size => (
-                            <TouchableOpacity 
-                                key={size}
-                                style={[styles.optionPill, selectedSize === size && styles.optionPillActive]}
-                                onPress={() => setSelectedSize(size)}
-                            >
-                                <Text style={[styles.optionText, selectedSize === size && styles.optionTextActive]}>{size}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
+                    {/* Size Selector - Only for Clothes and Shoes */}
+                    {availableSizes.length > 0 && (
+                        <>
+                            <Text style={[styles.sectionLabel, { marginTop: 20 }]}>Select Size</Text>
+                            <View style={styles.optionsRow}>
+                                {availableSizes.map(size => (
+                                    <TouchableOpacity 
+                                        key={size}
+                                        style={[styles.optionPill, selectedSize === size && styles.optionPillActive]}
+                                        onPress={() => setSelectedSize(size)}
+                                    >
+                                        <Text style={[styles.optionText, selectedSize === size && styles.optionTextActive]}>{size}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </>
+                    )}
 
                     {/* Duration Selector */}
                     <Text style={[styles.sectionLabel, { marginTop: 20 }]}>Rental Duration</Text>
@@ -124,6 +140,29 @@ export default function ProductDetailScreen({ route, navigation }) {
                                 <Text style={[styles.optionText, selectedDuration === duration.value && styles.optionTextActive]}>
                                     {duration.label}
                                 </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+
+                    {/* Payment Method Selector */}
+                    <Text style={[styles.sectionLabel, { marginTop: 20 }]}>Payment Method</Text>
+                    <View style={styles.optionsRow}>
+                        {PAYMENT_METHODS.map(method => (
+                            <TouchableOpacity 
+                                key={method.id}
+                                style={[styles.optionPillLarge, selectedPayment === method.id && styles.optionPillActive]}
+                                onPress={() => setSelectedPayment(method.id)}
+                            >
+                                <View style={styles.paymentPillContent}>
+                                    <Ionicons 
+                                        name={method.icon} 
+                                        size={18} 
+                                        color={selectedPayment === method.id ? "white" : "#64748B"} 
+                                    />
+                                    <Text style={[styles.optionText, { marginLeft: 8 }, selectedPayment === method.id && styles.optionTextActive]}>
+                                        {method.label}
+                                    </Text>
+                                </View>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -158,7 +197,19 @@ export default function ProductDetailScreen({ route, navigation }) {
                     <TouchableOpacity 
                         style={styles.buyBtn}
                         onPress={() => {
-                            Alert.alert("Purchase", `Initiating purchase for ${item.title || 'this item'}...`);
+                            if (availableSizes.length > 0 && !selectedSize) {
+                                Alert.alert("Selection Required", "Please select a size before buying.");
+                                return;
+                            }
+                            navigation.navigate('PurchaseFlow', { 
+                                item: {
+                                    ...item,
+                                    image: item.img || item.image,
+                                    buy: `€${pricePerDay * 10}` // Mock buy price as 10x rent price if not present
+                                },
+                                quantity,
+                                selectedSize 
+                            });
                         }}
                     >
                         <Text style={styles.buyBtnText}>Buy Now</Text>
@@ -166,7 +217,20 @@ export default function ProductDetailScreen({ route, navigation }) {
                     <TouchableOpacity 
                         style={styles.rentBtn}
                         onPress={() => {
-                            Alert.alert("Rental", `Adding ${item.title || 'this item'} to your rental trip...`);
+                            if (availableSizes.length > 0 && !selectedSize) {
+                                Alert.alert("Selection Required", "Please select a size before renting.");
+                                return;
+                            }
+                            navigation.navigate('RentFlow', { 
+                                item: {
+                                    ...item,
+                                    image: item.img || item.image,
+                                    rent: `€${pricePerDay}`
+                                },
+                                quantity,
+                                selectedSize,
+                                selectedDuration
+                            });
                         }}
                     >
                         <Text style={styles.rentBtnText}>Rent Now</Text>
@@ -446,5 +510,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '900',
         color: 'white',
+    },
+    paymentPillContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 });

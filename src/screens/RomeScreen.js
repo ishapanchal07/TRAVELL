@@ -33,11 +33,11 @@ const ROME_DATA = {
         { id: 6, title: 'Pantheon Dome Visit', sub: 'History', img: 'https://images.unsplash.com/photo-1515542641795-85ed38058252?q=80&w=400&auto=format&fit=crop', duration: '1h', fee: 'Free', bestTime: 'Morning', crowd: 'Medium' }
     ],
     clothes: [
-        { id: 1, title: 'Linen Summer Shirt', price: '€35/day', type: 'Summer', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Designer Sunglasses', price: '€15/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1511499767010-a588b5b2f126?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Suede Loafers', price: '€28/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Silk Summer Dress', price: '€22/day', type: 'Summer', img: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=400&auto=format&fit=crop' },
-        { id: 5, title: 'Leather Crossbody Bag', price: '€12/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'Linen Summer Shirt', price: '€35/day', category: 'Summer', type: 'clothes', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Designer Sunglasses', price: '€15/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1511499767010-a588b5b2f126?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Suede Loafers', price: '€28/day', category: 'Footwear', type: 'shoes', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Silk Summer Dress', price: '€22/day', category: 'Summer', type: 'clothes', img: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=400&auto=format&fit=crop' },
+        { id: 5, title: 'Leather Crossbody Bag', price: '€12/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
         { id: 1, title: 'Authentic Carbonara', sub: 'Roscioli • 30m wait', img: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=400&auto=format&fit=crop' },

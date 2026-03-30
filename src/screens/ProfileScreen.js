@@ -5,10 +5,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5, Octicons } from '@expo/vector-icons';
 import AnalyticsService from '../services/AnalyticsService';
+import { useAuth } from '../context/AuthContext';
 
 const AVATAR_URL = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200';
 
 export default function ProfileScreen({ navigation }) {
+    const { userData } = useAuth();
     const [stats, setStats] = React.useState({
         countries: 12, // Initially 12
         outfits: 45, // Initially 45
@@ -60,7 +62,7 @@ export default function ProfileScreen({ navigation }) {
                 <View style={styles.avatarContainer}>
                     <View style={styles.avatarRing}>
                         <Image 
-                            source={{ uri: AVATAR_URL }} 
+                            source={{ uri: userData.profileImage || AVATAR_URL }} 
                             style={styles.avatarImage} 
                             placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                             transition={300}
@@ -73,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
                 </View>
 
                 {/* Name */}
-                <Text style={styles.userName}>Chloe Roams</Text>
+                <Text style={styles.userName}>{userData.name || 'Chloe Roams'}</Text>
 
                 {/* Stats Card */}
                 <View style={styles.statsCard}>

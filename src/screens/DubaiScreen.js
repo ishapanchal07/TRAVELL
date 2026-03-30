@@ -33,11 +33,11 @@ const DUBAI_DATA = {
         { id: 6, title: 'Miracle Garden Walk', sub: 'Nature', img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=400&auto=format&fit=crop', duration: '2h', fee: '€15', bestTime: 'Morning', crowd: 'Medium' }
     ],
     clothes: [
-        { id: 1, title: 'Desert Silk Kaftan', price: '$40/day', type: 'Luxury', img: 'https://images.unsplash.com/photo-1585060544812-6b4590333333?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Gold Rim Sunglasses', price: '$25/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?q=80&w=400&auto=format&fit=crop' },
-        { id: 3, title: 'Linen Beach Suit', price: '$35/day', type: 'Summer', img: 'https://images.unsplash.com/photo-1594932224031-92f07a7e5893?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Designer Sun Hat', price: '$15/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1521323329202-4c1032b947ac?q=80&w=400&auto=format&fit=crop' },
-        { id: 5, title: 'Luxury Leather Slides', price: '$20/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'Desert Silk Kaftan', price: '$40/day', category: 'Luxury', type: 'clothes', img: 'https://images.unsplash.com/photo-1585060544812-6b4590333333?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Gold Rim Sunglasses', price: '$25/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?q=80&w=400&auto=format&fit=crop' },
+        { id: 3, title: 'Linen Beach Suit', price: '$35/day', category: 'Summer', type: 'clothes', img: 'https://images.unsplash.com/photo-1594932224031-92f07a7e5893?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Designer Sun Hat', price: '$15/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1521323329202-4c1032b947ac?q=80&w=400&auto=format&fit=crop' },
+        { id: 5, title: 'Luxury Leather Slides', price: '$20/day', category: 'Footwear', type: 'shoes', img: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
         { id: 1, title: 'Gold Leaf Steak', sub: 'Nusr-Et • Luxury', img: 'https://images.unsplash.com/photo-1546241072-48010ad2862c?q=80&w=400&auto=format&fit=crop' },

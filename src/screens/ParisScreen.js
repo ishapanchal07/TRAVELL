@@ -33,11 +33,11 @@ const PARIS_DATA = {
         { id: 6, title: 'Palace of Versailles', sub: 'History', img: 'https://images.unsplash.com/photo-1508248467873-9c1b9c7c645b?q=80&w=400&auto=format&fit=crop', duration: '5h', fee: '€20', bestTime: 'Morning', crowd: 'High' }
     ],
     clothes: [
-        { id: 1, title: 'Classic Trench Coat', price: '€35/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Silk Scarf Style', price: '€12/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&q=80&w=400' },
-        { id: 3, title: 'Leather Ankle Boots', price: '€28/day', type: 'Footwear', img: 'https://images.unsplash.com/photo-1605733160414-d571821b071d?q=80&w=400&auto=format&fit=crop' },
-        { id: 4, title: 'Breton Striped Top', price: '€22/day', type: 'Spring', img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=400&auto=format&fit=crop' },
-        { id: 5, title: 'Red Beret Hat', price: '€5/day', type: 'Accessory', img: 'https://images.unsplash.com/photo-1549439602-43ebca2327af?q=80&w=400&auto=format&fit=crop' }
+        { id: 1, title: 'Classic Trench Coat', price: '€35/day', category: 'Spring', type: 'clothes', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=400&auto=format&fit=crop' },
+        { id: 2, title: 'Silk Scarf Style', price: '€12/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&q=80&w=400' },
+        { id: 3, title: 'Leather Ankle Boots', price: '€28/day', category: 'Footwear', type: 'shoes', img: 'https://images.unsplash.com/photo-1605733160414-d571821b071d?q=80&w=400&auto=format&fit=crop' },
+        { id: 4, title: 'Breton Striped Top', price: '€22/day', category: 'Spring', type: 'clothes', img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=400&auto=format&fit=crop' },
+        { id: 5, title: 'Red Beret Hat', price: '€5/day', category: 'Accessory', type: 'accessory', img: 'https://images.unsplash.com/photo-1549439602-43ebca2327af?q=80&w=400&auto=format&fit=crop' }
     ],
     food: [
         { id: 1, title: 'Pistachio Macron', sub: 'Ladurée • 20m wait', img: 'https://images.unsplash.com/photo-1627916607164-7b20241db935?q=80&w=400&auto=format&fit=crop' },
