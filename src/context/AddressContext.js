@@ -54,10 +54,8 @@ export function AddressProvider({ children }) {
         const newAddress = { ...address, id };
         setAddresses(prev => [...prev, newAddress]);
         
-        // Auto-select if it's the first address
-        if (!selectedAddressId || addresses.length === 0) {
-            setSelectedAddressId(id);
-        }
+        // Auto-select the newly added address unconditionally
+        setSelectedAddressId(id);
     };
 
     const editAddress = (id, updatedAddress) => {

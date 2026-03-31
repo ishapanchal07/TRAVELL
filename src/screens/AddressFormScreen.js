@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, TextInput, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
+import * as Location from 'expo-location';
 import { useAddress } from '../context/AddressContext';
 
 export default function AddressFormScreen({ navigation, route }) {
@@ -21,6 +22,8 @@ export default function AddressFormScreen({ navigation, route }) {
         landmark: '',
         label: 'Home'
     });
+
+    const [isFetchingLocation, setIsFetchingLocation] = useState(false);
 
     useEffect(() => {
         if (isEditing) {
@@ -47,17 +50,41 @@ export default function AddressFormScreen({ navigation, route }) {
         navigation.goBack();
     };
 
-    const handleAutoDetect = () => {
-        // Mocking GPS detect
-        setFormData(prev => ({
-            ...prev,
-            addressLine: '45 Bd Raspail, 75006',
-            city: 'Paris',
-            state: 'Île-de-France',
-            pincode: '75006',
-            country: 'France',
-            landmark: 'Near Hôtel Lutetia'
-        }));
+    const handleAutoDetect = async () => {
+        setIsFetchingLocation(true);
+        try {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert("Permission Denied", "Permission to access location was denied.");
+                setIsFetchingLocation(false);
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            let reverseGeocode = await Location.reverseGeocodeAsync({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+            });
+
+            if (reverseGeocode && reverseGeocode.length > 0) {
+                const loc = reverseGeocode[0];
+                setFormData(prev => ({
+                    ...prev,
+                    addressLine: `${loc.streetNumber ? loc.streetNumber + ' ' : ''}${loc.street || loc.name || ''}`.trim(),
+                    city: loc.city || loc.subregion || '',
+                    state: loc.region || '',
+                    pincode: loc.postalCode || '',
+                    country: loc.country || 'France',
+                }));
+            } else {
+                Alert.alert("Location Error", "Could not determine readable address. Please enter manually.");
+            }
+        } catch (error) {
+            console.error("Location Fetch Error", error);
+            Alert.alert("Error", "Failed to fetch current location. Please check your GPS settings and try again.");
+        } finally {
+            setIsFetchingLocation(false);
+        }
     };
 
     return (
@@ -74,9 +101,13 @@ export default function AddressFormScreen({ navigation, route }) {
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 
-                <TouchableOpacity style={styles.gpsBtn} activeOpacity={0.8} onPress={handleAutoDetect}>
-                    <Ionicons name="location" size={20} color="#0F172A" />
-                    <Text style={styles.gpsBtnText}>Use Current Location</Text>
+                <TouchableOpacity style={styles.gpsBtn} activeOpacity={0.8} onPress={handleAutoDetect} disabled={isFetchingLocation}>
+                    {isFetchingLocation ? (
+                        <ActivityIndicator size="small" color="#0F172A" style={{ marginRight: 10 }} />
+                    ) : (
+                        <Ionicons name="location" size={20} color="#0F172A" />
+                    )}
+                    <Text style={styles.gpsBtnText}>{isFetchingLocation ? 'Detecting Location...' : 'Use Current Location'}</Text>
                 </TouchableOpacity>
 
                 <View style={styles.formSection}>
