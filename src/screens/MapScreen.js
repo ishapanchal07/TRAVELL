@@ -26,7 +26,7 @@ const LOCATION_DATA = {
 const INJECTED_JS = `
   (function() {
     const style = document.createElement('style');
-    style.innerHTML = \`
+    style.innerHTML = 
       .ml-promotion-container, .scene-footer-container, .searchbox-container, 
       #searchbox-container, .cards-layout, .widget-reveal-card, .suggest-container,
       .ml-promotion, .ml-app-promotion, .ml-promotion-banner {
@@ -105,15 +105,19 @@ export default function MapScreen({ route, navigation }) {
         
         // Handle Android intents
         if (Platform.OS === 'android' && url.startsWith('intent://')) {
-            Linking.openURL(url).catch(err => {
-                console.warn('[MapScreen] Failed to open intent URL:', err);
-                // Extract fallback if available
-                const fallbackMatch = url.match(/S.browser_fallback_url=([^;]+)/);
-                if (fallbackMatch && fallbackMatch[1]) {
-                    const fallbackUrl = decodeURIComponent(fallbackMatch[1]);
-                    Linking.openURL(fallbackUrl);
-                }
-            });
+            // First try to extract fallback URL as Linking.openURL often fails with literal intent:// schemes
+            const fallbackMatch = url.match(/S.browser_fallback_url=([^;]+)/);
+            if (fallbackMatch && fallbackMatch[1]) {
+                const fallbackUrl = decodeURIComponent(fallbackMatch[1]);
+                Linking.openURL(fallbackUrl).catch(err => {
+                    console.warn('[MapScreen] Failed to open fallback URL:', err);
+                });
+            } else {
+                // Last resort: try opening as is (may trigger warning but better than doing nothing)
+                Linking.openURL(url).catch(err => {
+                    console.warn('[MapScreen] Failed to open intent URL:', err);
+                });
+            }
             return false;
         }
         

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions, Alert } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimensions, Alert, Animated, Modal, TouchableWithoutFeedback } from 'react-native';
 import ShareService from '../services/ShareService';
 import { useSaved } from '../context/SavedContext';
 import { usePayment } from '../context/PaymentContext';
@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { Calendar } from 'react-native-calendars';
 
 const { width } = Dimensions.get('window');
 
@@ -14,7 +15,12 @@ export default function ExperienceDetailScreen({ navigation, route }) {
     const { handlePaidAction } = usePayment();
     const { item = {} } = route.params || {};
     const { toggleSaveGem, isGemSaved } = useSaved();
-    const saved = isGemSaved(item.id);
+    
+    const [selectedDate, setSelectedDate] = useState('Wednesday, Oct 25');
+    const [selectedTime, setSelectedTime] = useState('10:00 AM');
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showTimePicker, setShowTimePicker] = useState(false);
+    const chevronAnim = useRef(new Animated.Value(0)).current;
 
     const handleShare = async () => {
         await ShareService.shareItem({
@@ -23,6 +29,45 @@ export default function ExperienceDetailScreen({ navigation, route }) {
             image: item.img || item.image
         });
     };
+
+    const togglePicker = () => {
+        const toValue = showDatePicker || showTimePicker ? 0 : 1;
+        Animated.spring(chevronAnim, {
+            toValue,
+            useNativeDriver: true,
+        }).start();
+        setShowDatePicker(true);
+    };
+
+    const onDateSelect = (day) => {
+        const date = new Date(day.dateString);
+        const options = { weekday: 'long', month: 'short', day: 'numeric' };
+        setSelectedDate(date.toLocaleDateString('en-US', options));
+        setShowDatePicker(false);
+        // Automatically open time picker after date
+        setTimeout(() => setShowTimePicker(true), 400);
+    };
+
+    const onTimeSelect = (time) => {
+        setSelectedTime(time);
+        setShowTimePicker(false);
+        // Reset chevron
+        Animated.spring(chevronAnim, {
+            toValue: 0,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const chevronRotation = chevronAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '180deg']
+    });
+
+    const TIME_SLOTS = [
+        "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+        "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", 
+        "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM"
+    ];
 
     return (
         <View style={styles.container}>
@@ -115,15 +160,73 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                         <Text style={styles.proofContent}>1,240 people have booked this in the last month.</Text>
                     </View>
 
-                    {/* Booking Section Placeholder */}
+                    {/* Booking Section */}
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Select Date & Time</Text>
-                        <View style={styles.datePickerPlaceholder}>
-                            <Feather name="calendar" size={20} color="#64748B" />
-                            <Text style={styles.datePlaceholderText}>Wednesday, Oct 25 • 10:00 AM</Text>
-                            <Feather name="chevron-down" size={18} color="#64748B" />
-                        </View>
+                        <TouchableOpacity style={styles.datePickerPlaceholder} activeOpacity={0.8} onPress={togglePicker}>
+                            <Feather name="calendar" size={20} color="#000000" />
+                            <Text style={styles.datePlaceholderText}>{selectedDate} • {selectedTime}</Text>
+                            <Animated.View style={{ transform: [{ rotate: chevronRotation }] }}>
+                                <Feather name="chevron-down" size={18} color="#64748B" />
+                            </Animated.View>
+                        </TouchableOpacity>
                     </View>
+
+                    {/* Date Picker Modal */}
+                    <Modal transparent visible={showDatePicker} animationType="fade">
+                        <TouchableWithoutFeedback onPress={() => {
+                            setShowDatePicker(false);
+                            Animated.spring(chevronAnim, { toValue: 0, useNativeDriver: true }).start();
+                        }}>
+                            <View style={styles.modalBackdrop}>
+                                <TouchableWithoutFeedback>
+                                    <View style={styles.modalContent}>
+                                        <View style={styles.modalHeader}>
+                                            <Text style={styles.modalTitle}>Select Date</Text>
+                                        </View>
+                                        <Calendar
+                                            onDayPress={onDateSelect}
+                                            theme={{
+                                                selectedDayBackgroundColor: '#000000',
+                                                todayTextColor: '#000000',
+                                                arrowColor: '#000000',
+                                                textMonthFontWeight: '800',
+                                            }}
+                                        />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </Modal>
+
+                    {/* Time Picker Modal */}
+                    <Modal transparent visible={showTimePicker} animationType="fade">
+                        <TouchableWithoutFeedback onPress={() => {
+                            setShowTimePicker(false);
+                            Animated.spring(chevronAnim, { toValue: 0, useNativeDriver: true }).start();
+                        }}>
+                            <View style={styles.modalBackdrop}>
+                                <TouchableWithoutFeedback>
+                                    <View style={styles.modalContent}>
+                                        <View style={styles.modalHeader}>
+                                            <Text style={styles.modalTitle}>Select Time</Text>
+                                        </View>
+                                        <View style={styles.timeGrid}>
+                                            {TIME_SLOTS.map(time => (
+                                                <TouchableOpacity 
+                                                    key={time} 
+                                                    style={[styles.timeSlot, selectedTime === time && styles.timeSlotActive]}
+                                                    onPress={() => onTimeSelect(time)}
+                                                >
+                                                    <Text style={[styles.timeSlotText, selectedTime === time && styles.timeSlotTextActive]}>{time}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </Modal>
                     
                     <View style={{ height: 100 }} />
                 </View>
@@ -413,8 +516,59 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 15,
         fontSize: 14,
-        fontWeight: '600',
+        fontWeight: '700',
+        color: '#000000',
+    },
+    modalBackdrop: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        padding: 20,
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        borderRadius: 30,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.2,
+        shadowRadius: 20,
+        elevation: 10,
+    },
+    modalHeader: {
+        marginBottom: 20,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: '900',
         color: '#0F172A',
+    },
+    timeGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 10,
+        justifyContent: 'center',
+    },
+    timeSlot: {
+        width: '30%',
+        paddingVertical: 12,
+        borderRadius: 12,
+        borderWidth: 1.5,
+        borderColor: '#F1F5F9',
+        alignItems: 'center',
+    },
+    timeSlotActive: {
+        backgroundColor: '#000000',
+        borderColor: '#000000',
+    },
+    timeSlotText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: '#64748B',
+    },
+    timeSlotTextActive: {
+        color: 'white',
     },
     bottomBar: {
         position: 'absolute',

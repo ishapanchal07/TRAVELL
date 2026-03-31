@@ -5,6 +5,7 @@ import { Image } from 'expo-image';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import Slider from '@react-native-community/slider';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,7 +20,21 @@ export default function CameraScreen({ navigation, route }) {
     const [activeZoom, setActiveZoom] = useState(initialZoom === 0.5 ? '0.5x' : (initialZoom === 2 ? '2x' : '1x'));
     const [zoomLevel, setZoomLevel] = useState(initialZoom === 2 ? 0.01 : 0);
     const [photoUri, setPhotoUri] = useState(null);
+    const [isoValue, setIsoValue] = useState(400);
+    const [exposureValue, setExposureValue] = useState(-0.3);
+    const [matchPercent, setMatchPercent] = useState(87);
     const cameraRef = useRef(null);
+
+    // Dynamic match pulsing logic
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setMatchPercent(prev => {
+                const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+                return Math.min(92, Math.max(84, prev + change));
+            });
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleZoom = (level) => {
         setActiveZoom(level);
@@ -94,9 +109,9 @@ export default function CameraScreen({ navigation, route }) {
                         </TouchableOpacity>
 
                         <View style={styles.matchPill}>
-                            <Text style={styles.matchText}>MATCH <Text style={styles.matchValue}>87%</Text></Text>
+                            <Text style={styles.matchText}>MATCH <Text style={styles.matchValue}>{matchPercent}%</Text></Text>
                             <View style={styles.progressTrack}>
-                                <View style={[styles.progressFill, { width: '87%' }]} />
+                                <View style={[styles.progressFill, { width: `${matchPercent}%` }]} />
                             </View>
                         </View>
 
@@ -143,15 +158,38 @@ export default function CameraScreen({ navigation, route }) {
                         <View style={styles.settingsRow}>
                             <View style={styles.settingItem}>
                                 <Text style={styles.settingLabel}>ISO</Text>
-                                <Text style={styles.settingValue}>400</Text>
+                                <Text style={styles.settingValue}>{Math.round(isoValue)}</Text>
                             </View>
-                            <View style={styles.sliderTrack}>
-                                <View style={styles.sliderThumb} />
+                            <View style={styles.sliderFlex}>
+                                <Slider
+                                    style={styles.actualSlider}
+                                    minimumValue={100}
+                                    maximumValue={3200}
+                                    value={isoValue}
+                                    onValueChange={setIsoValue}
+                                    minimumTrackTintColor="white"
+                                    maximumTrackTintColor="rgba(255,255,255,0.2)"
+                                    thumbTintColor="white"
+                                />
                             </View>
                             <View style={[styles.settingItem, { alignItems: 'flex-end' }]}>
                                 <Text style={styles.settingLabel}>EXPOSURE</Text>
-                                <Text style={styles.settingValueBlue}>-0.3</Text>
+                                <Text style={styles.settingValueBlue}>{exposureValue.toFixed(1)}</Text>
                             </View>
+                        </View>
+
+                        <View style={styles.exposureSliderRow}>
+                             <Slider
+                                style={styles.actualSlider}
+                                minimumValue={-2}
+                                maximumValue={2}
+                                step={0.1}
+                                value={exposureValue}
+                                onValueChange={setExposureValue}
+                                minimumTrackTintColor="#000000"
+                                maximumTrackTintColor="rgba(255,255,255,0.2)"
+                                thumbTintColor="#000000"
+                            />
                         </View>
 
                         <View style={styles.zoomRow}>
@@ -364,21 +402,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '900',
     },
-    sliderTrack: {
+    sliderFlex: {
         flex: 1,
-        height: 2,
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        marginHorizontal: 15,
-        justifyContent: 'center',
+        marginHorizontal: 10,
     },
-    sliderThumb: {
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-        backgroundColor: 'white',
-        position: 'absolute',
-        left: '60%',
-        marginLeft: -6,
+    actualSlider: {
+        width: '100%',
+        height: 40,
+    },
+    exposureSliderRow: {
+        marginBottom: 10,
     },
     zoomRow: {
         flexDirection: 'row',
