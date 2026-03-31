@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Dimensions, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useBooking } from '../context/BookingContext';
 import { usePayment } from '../context/PaymentContext';
+import { useTransaction } from '../context/TransactionContext';
+import { useAddress } from '../context/AddressContext';
 
 const { width } = Dimensions.get('window');
 
@@ -28,8 +29,11 @@ export default function PaymentScreen({ route, navigation }) {
 
     const { addBooking } = useBooking();
     const { addPaidItem } = usePayment();
+    const { addTransaction } = useTransaction();
+    const { selectedAddress } = useAddress();
+    
     const [loading, setLoading] = useState(false);
-    const [selectedMethod, setSelectedMethod] = useState('card');
+    const [selectedMethod, setSelectedMethod] = useState(nextParams?.paymentMethod || 'card');
 
     const basePrice = Number(price || totalPrice || 0);
     const itemTitle = title || (expert ? expert.name : 'Your Order');
@@ -57,6 +61,22 @@ export default function PaymentScreen({ route, navigation }) {
             if (itemId) {
                 addPaidItem(itemId);
             }
+
+            // Create global transaction history
+            if (!expert) {
+                const transactionItems = nextParams?.cartItems || [nextParams?.item || { title: itemTitle, price: basePrice, image: itemImage }];
+                const transactionDetails = {
+                    id: `ORD-${Math.floor(Math.random() * 1000000)}`,
+                    items: transactionItems,
+                    totalAmount: finalTotal.toFixed(2),
+                    paymentMethod: selectedMethod,
+                    deliveryAddress: selectedAddress,
+                    date: new Date().toISOString(),
+                    status: 'Placed'
+                };
+                await addTransaction(transactionDetails);
+            }
+
             setLoading(false);
             
             const destScreen = nextScreen || (expert ? 'BookingConfirmation' : 'Explore');
@@ -73,7 +93,7 @@ export default function PaymentScreen({ route, navigation }) {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
@@ -175,7 +195,7 @@ export default function PaymentScreen({ route, navigation }) {
                     </View>
                 </View>
             )}
-        </SafeAreaView>
+        </View>
     );
 }
 

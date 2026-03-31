@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions, Image as RNImage } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -186,7 +185,7 @@ export default function CityFoodScreen({ route, navigation }) {
     const displayedNearby = isLoggedIn ? cityData.popularNearby : cityData.popularNearby.slice(0, 2);
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
@@ -361,7 +360,7 @@ export default function CityFoodScreen({ route, navigation }) {
             </ScrollView>
 
             <BottomNav activeRoute="Explore" />
-        </SafeAreaView>
+        </View>
     );
 }
 

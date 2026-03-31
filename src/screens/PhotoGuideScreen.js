@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,7 +11,7 @@ const RIVER_REFLECT_IMG = 'https://images.unsplash.com/photo-1524338198850-8a2ff
 
 export default function PhotoGuideScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
@@ -199,7 +198,7 @@ export default function PhotoGuideScreen({ navigation }) {
 
             </ScrollView>
 
-        </SafeAreaView>
+        </View>
     );
 }
 

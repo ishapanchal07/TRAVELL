@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useAddress } from '../context/AddressContext';
 
@@ -16,7 +15,7 @@ export default function AddressListScreen({ navigation, route }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
             
             <View style={styles.header}>
@@ -107,7 +106,7 @@ export default function AddressListScreen({ navigation, route }) {
                     <Text style={styles.addBtnText}>Add New Address</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

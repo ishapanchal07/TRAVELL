@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, FlatList, Dimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -34,7 +33,7 @@ export default function SnapSpotsScreen({ navigation, route }) {
     );
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
             
             <View style={styles.header}>
@@ -58,7 +57,7 @@ export default function SnapSpotsScreen({ navigation, route }) {
                     </Text>
                 )}
             />
-        </SafeAreaView>
+        </View>
     );
 }
 

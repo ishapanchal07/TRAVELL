@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function PaymentSuccessScreen({ route, navigation }) {
@@ -26,7 +25,7 @@ export default function PaymentSuccessScreen({ route, navigation }) {
     }, [nextScreen, nextParams, navigation, scaleAnim]);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.content}>
                 <Animated.View style={[styles.iconContainer, { transform: [{ scale: scaleAnim }] }]}>
                     <Ionicons name="checkmark-circle" size={120} color="#10B981" />
@@ -34,7 +33,7 @@ export default function PaymentSuccessScreen({ route, navigation }) {
                 <Text style={styles.title}>{message || 'Booking Confirmed!'}</Text>
                 <Text style={styles.subtitle}>Your payment was successful and securely processed.</Text>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

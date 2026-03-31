@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, TextInput, Alert, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { useAddress } from '../context/AddressContext';
@@ -88,7 +87,7 @@ export default function AddressFormScreen({ navigation, route }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
             
             <View style={styles.header}>
@@ -230,7 +229,7 @@ export default function AddressFormScreen({ navigation, route }) {
                     <Text style={styles.saveBtnText}>Save Address</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

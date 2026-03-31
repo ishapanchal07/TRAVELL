@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
@@ -31,7 +30,7 @@ const SafetyCard = ({ iconName, iconLib, title, description }) => {
 
 export default function FamilySafetyScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#f2f5f8" />
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
@@ -83,7 +82,7 @@ export default function FamilySafetyScreen({ navigation }) {
                 </View>
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         paddingHorizontal: 25,
-        paddingTop: 40,
+        paddingTop: 15,
         paddingBottom: 40,
         alignItems: 'center',
     },

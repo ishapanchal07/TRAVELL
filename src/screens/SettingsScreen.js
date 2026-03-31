@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Switch, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,7 +48,7 @@ export default function SettingsScreen({ navigation }) {
     };
 
     return (
-        <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+        <View style={[styles.safeArea, { backgroundColor: colors.background }]}>
             <StatusBar style={isDarkMode ? "light" : "dark"} />
 
             {/* Header */}
@@ -127,7 +126,7 @@ export default function SettingsScreen({ navigation }) {
 
                 <Text style={[styles.versionText, isDarkMode && { color: '#64748B' }]}>{getT('version')}</Text>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions } from 'react-native';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
@@ -23,7 +22,7 @@ export default function TailorTripScreen({ navigation }) {
     const [comfortLevel, setComfortLevel] = useState('MODERATE');
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
 
             <View style={styles.headerRow}>
@@ -154,7 +153,7 @@ export default function TailorTripScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-        </SafeAreaView>
+        </View>
     );
 }
 

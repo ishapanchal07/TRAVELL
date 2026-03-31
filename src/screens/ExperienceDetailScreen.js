@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, StatusBar, Dimens
 import ShareService from '../services/ShareService';
 import { useSaved } from '../context/SavedContext';
 import { usePayment } from '../context/PaymentContext';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -82,7 +81,7 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                         contentFit="cover"
                         transition={300}
                     />
-                    <SafeAreaView style={styles.headerNav}>
+                    <View style={styles.headerNav}>
                         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                             <Feather name="chevron-left" size={24} color="white" />
                         </TouchableOpacity>
@@ -94,7 +93,7 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                                  <Feather name="share-2" size={20} color="white" />
                              </TouchableOpacity>
                         </View>
-                    </SafeAreaView>
+                    </View>
                     
                     <View style={styles.galleryIndicator}>
                         <View style={[styles.dot, styles.activeDot]} />
@@ -342,7 +341,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         marginTop: -40,
-        paddingTop: 30,
+        paddingTop: 15,
         paddingHorizontal: 24,
     },
     categoryRow: {

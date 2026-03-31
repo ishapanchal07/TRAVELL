@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,7 +20,7 @@ export default function WelcomeScreen({ navigation }) {
                 transition={1000}
             >
                 <View style={styles.overlay}>
-                    <SafeAreaView style={styles.safeArea}>
+                    <View style={styles.safeArea}>
 
                         <View style={styles.topSection}>
                             <View style={styles.logoCircle}>
@@ -60,7 +59,7 @@ export default function WelcomeScreen({ navigation }) {
 
                         </View>
 
-                    </SafeAreaView>
+                    </View>
                 </View>
             </ImageBackground>
         </View>
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         paddingHorizontal: 30,
-        paddingTop: 50,
+        paddingTop: 15,
         paddingBottom: 40,
     },
     topSection: {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 
@@ -11,7 +10,7 @@ const LIKED = [
 
 export default function LikedItemsScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconBtn}>
                     <Feather name="chevron-left" size={20} color="#0F172A" />
@@ -34,7 +33,7 @@ export default function LikedItemsScreen({ navigation }) {
                     </View>
                 ))}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

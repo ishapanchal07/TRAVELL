@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
 import RatingStars from '../components/RatingStars';
@@ -33,14 +32,14 @@ export default function ExpertProfileScreen({ route, navigation }) {
                         contentFit="cover"
                         transition={500}
                     />
-                    <SafeAreaView style={styles.headerOverlay}>
+                    <View style={styles.headerOverlay}>
                         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                             <Ionicons name="chevron-back" size={24} color="white" />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.backButton}>
                             <Ionicons name="share-outline" size={24} color="white" />
                         </TouchableOpacity>
-                    </SafeAreaView>
+                    </View>
                 </View>
 
                 {/* Content */}
@@ -111,7 +110,7 @@ export default function ExpertProfileScreen({ route, navigation }) {
             </ScrollView>
 
             {/* Bottom Sticky Buttons */}
-            <SafeAreaView edges={['bottom']} style={styles.bottomBar}>
+            <View edges={['bottom']} style={styles.bottomBar}>
                 <TouchableOpacity 
                     style={styles.chatButton}
                     onPress={() => navigation.navigate('ExpertChat', { expert })}
@@ -125,7 +124,7 @@ export default function ExpertProfileScreen({ route, navigation }) {
                     <Text style={styles.hireButtonText}>Hire Now</Text>
                     <Ionicons name="arrow-forward" size={20} color="white" />
                 </TouchableOpacity>
-            </SafeAreaView>
+            </View>
         </View>
     );
 }

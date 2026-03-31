@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions, Animated } from 'react-native';
 import { ImageBackground } from 'expo-image';
 import { Feather, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -44,7 +43,7 @@ export default function ExploreScreen({ navigation }) {
     }, [isLoggedIn]);
 
     return (
-        <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+        <View style={[styles.safeArea, { backgroundColor: colors.background }]}>
             <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} backgroundColor={colors.background} />
             <ScrollView
                 contentContainerStyle={styles.scrollContainer}
@@ -285,7 +284,7 @@ export default function ExploreScreen({ navigation }) {
 
             <BottomNav activeRoute="Explore" />
 
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -296,7 +295,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         paddingHorizontal: 20,
-        paddingTop: 30,
+        paddingTop: 15,
         paddingBottom: 120, // Extra space for floating nav
     },
     // Header

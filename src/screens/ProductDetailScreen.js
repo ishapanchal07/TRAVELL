@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     },
     contentSection: {
         paddingHorizontal: 24,
-        paddingTop: 30,
+        paddingTop: 15,
     },
     titleRow: {
         flexDirection: 'row',

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
@@ -78,7 +77,7 @@ export default function NotificationsScreen({ navigation }) {
     const earlierNotifs = filteredNotifs.filter(n => !n.isNew);
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
 
             {/* Header */}
@@ -122,7 +121,7 @@ export default function NotificationsScreen({ navigation }) {
                 )}
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

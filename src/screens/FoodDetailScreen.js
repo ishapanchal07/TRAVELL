@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         padding: 24,
-        paddingTop: 60,
+        paddingTop: 15,
         backgroundColor: 'rgba(0,0,0,0.4)',
     },
     badgeRow: {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { usePayment } from '../context/PaymentContext';
 import { Image } from 'expo-image';
@@ -30,7 +29,7 @@ export default function BookingScreen({ route, navigation }) {
     });
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
@@ -125,7 +124,7 @@ export default function BookingScreen({ route, navigation }) {
                     <Text style={styles.payButtonText}>Proceed to Payment</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

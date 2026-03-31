@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 
 export default function TermsScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconBtn}>
                     <Feather name="chevron-left" size={20} color="#0F172A" />
@@ -39,7 +38,7 @@ export default function TermsScreen({ navigation }) {
                 
                 <View style={styles.bottomSpace} />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import ShareService from '../services/ShareService';
@@ -21,7 +20,7 @@ export default function ApparelDetailScreen({ route, navigation }) {
     const itemWithSection = { ...item, section: 'clothing' };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
 
             <View style={styles.header}>
@@ -110,7 +109,7 @@ export default function ApparelDetailScreen({ route, navigation }) {
                     <Text style={styles.buyBtnText}>BUY • {item.buy || '$185'}</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

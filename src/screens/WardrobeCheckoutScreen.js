@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import { usePayment } from '../context/PaymentContext';
@@ -37,7 +36,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
     const currentYear = new Date().getFullYear();
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
 
             {/* Header */}
@@ -190,7 +189,7 @@ export default function WardrobeCheckoutScreen({ route, navigation }) {
                 </View>
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -460,7 +459,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         padding: 40,
-        paddingTop: 45,
+        paddingTop: 15,
     },
     priceRow: {
         flexDirection: 'row',

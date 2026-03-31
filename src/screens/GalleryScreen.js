@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Animated, TextInput } from 'react-native';
 import ShareService from '../services/ShareService';
 import { Image, ImageBackground } from 'expo-image';
@@ -119,7 +118,7 @@ export default function GalleryScreen({ navigation }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -397,7 +396,7 @@ export default function GalleryScreen({ navigation }) {
                 </Animated.View>
             )}
 
-        </SafeAreaView>
+        </View>
     );
 }
 

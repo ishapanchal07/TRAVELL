@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
@@ -60,7 +59,7 @@ export default function DubaiScreen({ navigation }) {
     const data = DUBAI_DATA;
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
             <View style={styles.topHeader}>
@@ -269,7 +268,7 @@ export default function DubaiScreen({ navigation }) {
 
             <BottomNav activeRoute="Explore" />
 
-        </SafeAreaView>
+        </View>
     );
 }
 

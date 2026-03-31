@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Image as RNImage, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useCart } from '../context/CartContext';
@@ -23,7 +22,7 @@ export default function CartScreen({ navigation }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
 
             {/* Header */}
@@ -131,7 +130,7 @@ export default function CartScreen({ navigation }) {
                     </BlurView>
                 </>
             )}
-        </SafeAreaView>
+        </View>
     );
 }
 

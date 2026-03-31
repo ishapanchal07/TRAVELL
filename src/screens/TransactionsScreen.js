@@ -1,62 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
+import { useTransaction } from '../context/TransactionContext';
 
 const { width } = Dimensions.get('window');
 
 const USER_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200';
 
-const TRANSACTIONS = [
-    {
-        id: '1',
-        title: 'Parisian Chic Set',
-        date: 'Oct 12',
-        category: 'Rental',
-        amount: '$45.00',
-        status: 'PAID',
-        icon: 'shopping-bag',
-        iconType: 'Feather',
-        month: 'THIS MONTH'
-    },
-    {
-        id: '2',
-        title: 'Louvre Night Tour',
-        date: 'Oct 10',
-        category: 'Guide',
-        amount: '$120.00',
-        status: 'PAID',
-        icon: 'compass',
-        iconType: 'Feather',
-        month: 'THIS MONTH'
-    },
-    {
-        id: '3',
-        title: 'Influencer Preset Kit',
-        date: 'Oct 05',
-        category: 'Digital',
-        amount: '$15.00',
-        status: 'PENDING',
-        icon: 'camera',
-        iconType: 'Feather',
-        month: 'THIS MONTH'
-    },
-    {
-        id: '4',
-        title: 'Streetwear Bundle',
-        date: 'Sep 28',
-        category: 'Rental',
-        amount: '$58.00',
-        status: 'PAID',
-        icon: 'hanger',
-        iconType: 'MaterialCommunityIcons',
-        month: 'SEPTEMBER'
-    }
-];
-
 export default function TransactionsScreen({ navigation }) {
+    const { transactions, loading } = useTransaction();
     const [activeTab, setActiveTab] = useState('All');
 
     const renderIcon = (item) => {
@@ -68,14 +22,16 @@ export default function TransactionsScreen({ navigation }) {
         return <Feather name="box" size={22} color="#000000" />;
     };
 
-    const groupedTransactions = TRANSACTIONS.reduce((acc, curr) => {
-        if (!acc[curr.month]) acc[curr.month] = [];
-        acc[curr.month].push(curr);
+    const groupedTransactions = transactions.reduce((acc, curr) => {
+        const d = new Date(curr.date);
+        const monthName = d.toLocaleString('default', { month: 'long', year: 'numeric' }).toUpperCase();
+        if (!acc[monthName]) acc[monthName] = [];
+        acc[monthName].push(curr);
         return acc;
     }, {});
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <View style={styles.header}>
@@ -117,48 +73,64 @@ export default function TransactionsScreen({ navigation }) {
                 </View>
 
                 {/* Transactions List */}
-                {Object.keys(groupedTransactions).map(month => (
-                    <View key={month} style={styles.section}>
-                        <View style={styles.sectionHeader}>
-                            <Text style={styles.sectionHeaderText}>{month}</Text>
-                            <View style={styles.sectionLine} />
-                        </View>
-                        {groupedTransactions[month].map(item => (
-                            <TouchableOpacity key={item.id} style={styles.transactionCard}>
-                                <View style={styles.iconCircle}>
-                                    {renderIcon(item)}
-                                </View>
-                                <View style={styles.itemInfo}>
-                                    <Text style={styles.itemTitle}>{item.title}</Text>
-                                    <Text style={styles.itemSubtitle}>{item.date} • {item.category}</Text>
-                                </View>
-                                <View style={styles.itemRight}>
-                                    <Text style={styles.itemAmount}>{item.amount}</Text>
-                                    <View style={[styles.statusPill, item.status === 'PENDING' ? styles.statusPillPending : null]}>
-                                        <Text style={[styles.statusText, item.status === 'PENDING' ? styles.statusTextPending : null]}>{item.status}</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        ))}
+                {transactions.length === 0 ? (
+                    <View style={styles.emptyContainer}>
+                        <Feather name="shopping-bag" size={48} color="#CBD5E1" />
+                        <Text style={styles.emptyTitle}>No Orders Yet</Text>
+                        <Text style={styles.emptySubtitle}>When you buy or rent items, your transactions will appear here.</Text>
                     </View>
-                ))}
+                ) : (
+                    Object.keys(groupedTransactions).map(month => (
+                        <View key={month} style={styles.section}>
+                            <View style={styles.sectionHeader}>
+                                <Text style={styles.sectionHeaderText}>{month}</Text>
+                                <View style={styles.sectionLine} />
+                            </View>
+                            {groupedTransactions[month].map(item => (
+                                <TouchableOpacity 
+                                    key={item.id} 
+                                    style={styles.transactionCard}
+                                    onPress={() => navigation.navigate('TransactionDetail', { transaction: item })}
+                                >
+                                    <View style={styles.iconCircle}>
+                                        <Feather name="package" size={22} color="#000000" />
+                                    </View>
+                                    <View style={styles.itemInfo}>
+                                        <Text style={styles.itemTitle}>{item.items?.[0]?.title || item.items?.[0]?.name || 'Order'}</Text>
+                                        <Text style={styles.itemSubtitle}>{new Date(item.date).toLocaleDateString()} • {item.items?.length || 1} Item(s)</Text>
+                                    </View>
+                                    <View style={styles.itemRight}>
+                                        <Text style={styles.itemAmount}>${Number(item.totalAmount).toFixed(2)}</Text>
+                                        <View style={[styles.statusPill, item.status === 'Pending' ? styles.statusPillPending : null]}>
+                                            <Text style={[styles.statusText, item.status === 'Pending' ? styles.statusTextPending : null]}>{item.status}</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    ))
+                )}
 
                 {/* Summary Card */}
-                <View style={styles.summaryCard}>
-                    <Text style={styles.summaryLabel}>Total Spent This Month</Text>
-                    <View style={styles.summaryMainRow}>
-                        <Text style={styles.summaryTotal}>$180.00</Text>
-                        <View style={styles.growthBadge}>
-                            <Feather name="trending-up" size={14} color="#333333" style={{ marginRight: 6 }} />
-                            <Text style={styles.growthText}>12% vs last month</Text>
+                {transactions.length > 0 && (
+                    <View style={styles.summaryCard}>
+                        <Text style={styles.summaryLabel}>Total Spent (All Time)</Text>
+                        <View style={styles.summaryMainRow}>
+                            <Text style={styles.summaryTotal}>
+                                ${transactions.reduce((acc, curr) => acc + Number(curr.totalAmount), 0).toFixed(2)}
+                            </Text>
+                            <View style={styles.growthBadge}>
+                                <Ionicons name="cart" size={14} color="#333333" style={{ marginRight: 6 }} />
+                                <Text style={styles.growthText}>{transactions.length} Orders</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
+                )}
 
             </ScrollView>
 
             <BottomNav activeRoute="Transactions" />
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -376,4 +348,29 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '800',
     },
+    emptyContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 40,
+        backgroundColor: 'white',
+        borderRadius: 24,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        borderColor: '#CBD5E1',
+        marginBottom: 30,
+    },
+    emptyTitle: {
+        fontSize: 18,
+        fontWeight: '800',
+        color: '#0F172A',
+        marginTop: 16,
+        marginBottom: 8,
+    },
+    emptySubtitle: {
+        fontSize: 14,
+        color: '#64748B',
+        textAlign: 'center',
+        paddingHorizontal: 30,
+        lineHeight: 20,
+    }
 });

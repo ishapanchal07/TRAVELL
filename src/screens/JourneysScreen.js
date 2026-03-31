@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
@@ -13,7 +12,7 @@ const SMALL_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69da
 export default function JourneysScreen({ navigation }) {
     const [activeTab, setActiveTab] = useState('current');
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -164,7 +163,7 @@ export default function JourneysScreen({ navigation }) {
                 )}
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

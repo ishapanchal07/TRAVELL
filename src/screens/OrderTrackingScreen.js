@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -15,7 +14,7 @@ export default function OrderTrackingScreen({ route, navigation }) {
     const { name = 'Macarons', image = LADUREE_ICON } = orderItem;
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
 
             {/* Header */}
@@ -153,7 +152,7 @@ export default function OrderTrackingScreen({ route, navigation }) {
             </ScrollView>
 
             <BottomNav activeRoute="Explore" />
-        </SafeAreaView >
+        </View>
     );
 }
 

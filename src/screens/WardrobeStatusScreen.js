@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -15,7 +14,7 @@ const LEO_IMG = 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?au
 
 export default function WardrobeStatusScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
 
             {/* Header */}
@@ -190,7 +189,7 @@ export default function WardrobeStatusScreen({ navigation }) {
             </TouchableOpacity>
 
             <BottomNav activeRoute="Wardrobe" />
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useCart } from '../context/CartContext';
@@ -43,6 +42,8 @@ export default function CheckoutScreen({ navigation }) {
                 orderItem: { name: mockOrder.title, image: mockOrder.image }, 
                 successMessage: 'Order Placed Successfully!', 
                 section: 'cart',
+                cartItems: cartItems,
+                paymentMethod: selectedPayment,
                 onSuccess: () => {
                     clearCart();
                 }
@@ -51,7 +52,7 @@ export default function CheckoutScreen({ navigation }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
             
             <View style={styles.header}>
@@ -143,7 +144,7 @@ export default function CheckoutScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-        </SafeAreaView>
+        </View>
     );
 }
 

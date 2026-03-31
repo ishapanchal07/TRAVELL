@@ -8,6 +8,7 @@ import { BookingProvider } from './src/context/BookingContext';
 import { PaymentProvider } from './src/context/PaymentContext';
 import { CartProvider } from './src/context/CartContext';
 import { AddressProvider } from './src/context/AddressContext';
+import { TransactionProvider } from './src/context/TransactionContext';
 
 // Screen Imports
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -78,12 +79,14 @@ import CartScreen from './src/screens/CartScreen';
 import AddressListScreen from './src/screens/AddressListScreen';
 import AddressFormScreen from './src/screens/AddressFormScreen';
 import CheckoutScreen from './src/screens/CheckoutScreen';
+import TransactionDetailScreen from './src/screens/TransactionDetailScreen';
 
 import { SettingsProvider, SettingsContext } from './src/context/SettingsContext';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { UserProvider } from './src/context/UserContext';
 import { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { DefaultTheme as NavLightTheme, DarkTheme as NavDarkTheme } from '@react-navigation/native';
 
 // Screen Imports
@@ -116,7 +119,8 @@ function RootNavigator() {
   };
 
   return (
-    <NavigationContainer theme={isDarkMode ? customDarkTheme : customLightTheme}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <NavigationContainer theme={isDarkMode ? customDarkTheme : customLightTheme}>
       <StatusBar style={isDarkMode ? "light" : "dark"} />
       <Stack.Navigator
         initialRouteName="Welcome"
@@ -148,6 +152,7 @@ function RootNavigator() {
         <Stack.Screen name="CityFood" component={CityFoodScreen} />
         <Stack.Screen name="Guide" component={GuideScreen} />
         <Stack.Screen name="Transactions" component={TransactionsScreen} />
+        <Stack.Screen name="TransactionDetail" component={TransactionDetailScreen} />
         <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
         <Stack.Screen name="OrderTracking" component={OrderTrackingScreen} />
         <Stack.Screen name="WardrobeCheckout" component={WardrobeCheckoutScreen} />
@@ -194,7 +199,8 @@ function RootNavigator() {
         <Stack.Screen name="AddressForm" component={AddressFormScreen} />
         <Stack.Screen name="Checkout" component={CheckoutScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
@@ -210,7 +216,9 @@ export default function App() {
                   <UserProvider>
                     <SettingsProvider>
                       <AddressProvider>
-                        <RootNavigator />
+                        <TransactionProvider>
+                          <RootNavigator />
+                        </TransactionProvider>
                       </AddressProvider>
                     </SettingsProvider>
                   </UserProvider>

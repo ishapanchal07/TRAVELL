@@ -15,8 +15,8 @@ export function PaymentProvider({ children }) {
         const itemId = itemData.id || itemData.name || itemData.title;
         const section = customParams.section || itemData.section;
         
-        // Strict Isolation: Only allow Food, Clothing, Experiences, or existing Expert flow
-        const isAllowedSection = section === 'food' || section === 'clothing' || section === 'experience';
+        // Strict Isolation: Only allow Food, Clothing, Experiences, Cart, or existing Expert flow
+        const isAllowedSection = section === 'food' || section === 'clothing' || section === 'experience' || section === 'cart';
         const isExpert = !!customParams.expert;
 
         if (!isAllowedSection && !isExpert) {

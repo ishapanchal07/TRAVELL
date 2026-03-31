@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ImageBackground } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { useSaved } from '../context/SavedContext';
@@ -12,7 +11,7 @@ export default function SavedScreen({ navigation }) {
     const { savedGems, toggleSaveGem } = useSaved();
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Saved Gems</Text>
@@ -64,7 +63,7 @@ export default function SavedScreen({ navigation }) {
             </ScrollView>
 
             <BottomNav activeRoute="Saved" />
-        </SafeAreaView>
+        </View>
     );
 }
 

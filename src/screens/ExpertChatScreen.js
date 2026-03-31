@@ -71,7 +71,7 @@ export default function ExpertChatScreen({ route, navigation }) {
     );
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: 'white' }]}>
+        <View style={[styles.container, { backgroundColor: 'white' }]}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
@@ -120,7 +120,7 @@ export default function ExpertChatScreen({ route, navigation }) {
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 

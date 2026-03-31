@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimensions, Modal, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -45,7 +44,7 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
             
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
@@ -223,7 +222,7 @@ export default function SnapSpotDetailsScreen({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -295,7 +294,7 @@ const styles = StyleSheet.create({
     },
     contentSection: {
         paddingHorizontal: 25,
-        paddingTop: 30,
+        paddingTop: 15,
         marginTop: -30,
         backgroundColor: 'white',
         borderTopLeftRadius: 35,

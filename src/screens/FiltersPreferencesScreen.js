@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function FiltersPreferencesScreen({ navigation }) {
@@ -11,7 +10,7 @@ export default function FiltersPreferencesScreen({ navigation }) {
     const genders = ['Female', 'Male', 'Unisex'];
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
 
             <View style={styles.header}>
@@ -65,7 +64,7 @@ export default function FiltersPreferencesScreen({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

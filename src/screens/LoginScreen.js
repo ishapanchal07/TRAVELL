@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, KeyboardAvoidingView, Platform, StatusBar, Animated } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image, ImageBackground } from 'expo-image';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -51,7 +50,7 @@ export default function LoginScreen({ navigation }) {
             >
                 <View style={styles.overlay} />
 
-                <SafeAreaView style={styles.safeArea}>
+                <View style={styles.safeArea}>
                     <KeyboardAvoidingView
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         style={styles.keyboardView}
@@ -117,7 +116,7 @@ export default function LoginScreen({ navigation }) {
                             <Text style={styles.skipBtnText}>Continue as Guest</Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
-                </SafeAreaView>
+                </View>
             </ImageBackground>
         </View>
     );

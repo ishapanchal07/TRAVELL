@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, StatusBar } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
@@ -40,7 +39,7 @@ const DESTINATIONS = [
 
 export default function AllDestinationsScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <StatusBar barStyle="dark-content" backgroundColor="#FAFAF9" />
 
             <View style={styles.header}>
@@ -86,7 +85,7 @@ export default function AllDestinationsScreen({ navigation }) {
                     </TouchableOpacity>
                 ))}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

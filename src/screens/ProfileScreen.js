@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFocusEffect } from '@react-navigation/native';
@@ -43,7 +42,7 @@ export default function ProfileScreen({ navigation }) {
     );
 
     return (
-        <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+        <View style={[styles.safeArea, { backgroundColor: colors.background }]}>
             <StatusBar style={isDarkMode ? "light" : "dark"} />
 
             {/* Header */}
@@ -141,7 +140,7 @@ export default function ProfileScreen({ navigation }) {
 
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

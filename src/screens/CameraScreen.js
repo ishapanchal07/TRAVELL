@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, StatusBar, Alert } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -102,7 +101,7 @@ export default function CameraScreen({ navigation, route }) {
                 </View>
 
                 {/* Top Controls */}
-                <SafeAreaView style={styles.topControls}>
+                <View style={styles.topControls}>
                     <View style={styles.headerRow}>
                         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.topIconBtn}>
                             <Ionicons name="close" size={24} color="white" />
@@ -119,7 +118,7 @@ export default function CameraScreen({ navigation, route }) {
                             <MaterialCommunityIcons name={flash === 'off' ? "flash-off" : "flash"} size={20} color="white" />
                         </TouchableOpacity>
                     </View>
-                </SafeAreaView>
+                </View>
 
                 {/* Right Perspective Sidebar */}
                 <View style={styles.rightSidebar}>

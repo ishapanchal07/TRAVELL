@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons, Feather, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -28,7 +27,7 @@ export default function GuideScreen({ route, navigation }) {
     });
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconCircle}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
@@ -141,7 +140,7 @@ export default function GuideScreen({ route, navigation }) {
             </ScrollView>
 
             <BottomNav activeRoute="Explore" />
-        </SafeAreaView>
+        </View>
     );
 }
 

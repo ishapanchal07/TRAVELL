@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { MaterialIcons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -43,7 +42,7 @@ export default function FeaturesScreen({ navigation }) {
                 blurRadius={3}
             >
                 <View style={styles.overlay}>
-                    <SafeAreaView style={styles.safeArea}>
+                    <View style={styles.safeArea}>
 
                         {/* Header */}
                         <View style={styles.header}>
@@ -87,7 +86,7 @@ export default function FeaturesScreen({ navigation }) {
                             </TouchableOpacity>
                         </View>
 
-                    </SafeAreaView>
+                    </View>
                 </View>
             </ImageBackground>
         </View>
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         paddingHorizontal: 25,
-        paddingTop: 60,
+        paddingTop: 15,
         paddingBottom: 40,
     },
     // Header

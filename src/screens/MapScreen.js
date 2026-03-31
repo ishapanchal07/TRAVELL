@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Linking, Platform, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,16 +25,38 @@ const LOCATION_DATA = {
 const INJECTED_JS = `
   (function() {
     const style = document.createElement('style');
-    style.innerHTML = 
+    style.innerHTML = \`
+      header, form, input, [role="search"],
       .ml-promotion-container, .scene-footer-container, .searchbox-container, 
       #searchbox-container, .cards-layout, .widget-reveal-card, .suggest-container,
-      .ml-promotion, .ml-app-promotion, .ml-promotion-banner {
+      .ml-promotion, .ml-app-promotion, .ml-promotion-banner, .xapp-promotion-banner,
+      .promo, .app-promo, .promo-banner, .id-app-promo-banner, .persistent-app-promo,
+      div[aria-label="Google Maps"], div[aria-label="Open App"],
+      .gm-style-cc, .gmnoprint {
         display: none !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
       }
-      .gm-style-cc { display: none !important; }
-      .gmnoprint { display: none !important; }
     \`;
     document.head.appendChild(style);
+
+    setInterval(function() {
+      var tags = document.querySelectorAll('header, form, input');
+      tags.forEach(t => t.style.display = 'none');
+
+      var elements = document.querySelectorAll('span, div, a, button');
+      elements.forEach(function(el) {
+         var text = (el.innerText || '').trim().toLowerCase();
+         if (text === 'open app' || text === 'google maps') {
+            var wrapper = el.closest('header, form, div');
+            // Safely hide wrapper if it is a top bar (height < 150)
+            if (wrapper && wrapper !== document.body && wrapper.clientHeight < 150) {
+                wrapper.style.display = 'none';
+            }
+            el.style.display = 'none';
+         }
+      });
+    }, 300);
   })();
   true;
 `;
@@ -103,19 +124,12 @@ export default function MapScreen({ route, navigation }) {
     const onShouldStartLoadWithRequest = (request) => {
         const { url } = request;
         
-        // Handle Android intents
         if (Platform.OS === 'android' && url.startsWith('intent://')) {
-            // First try to extract fallback URL as Linking.openURL often fails with literal intent:// schemes
             const fallbackMatch = url.match(/S.browser_fallback_url=([^;]+)/);
             if (fallbackMatch && fallbackMatch[1]) {
                 const fallbackUrl = decodeURIComponent(fallbackMatch[1]);
-                Linking.openURL(fallbackUrl).catch(err => {
-                    console.warn('[MapScreen] Failed to open fallback URL:', err);
-                });
-            } else {
-                // Last resort: try opening as is (may trigger warning but better than doing nothing)
-                Linking.openURL(url).catch(err => {
-                    console.warn('[MapScreen] Failed to open intent URL:', err);
+                Linking.canOpenURL(fallbackUrl).then(supported => {
+                    if (supported) Linking.openURL(fallbackUrl);
                 });
             }
             return false;
@@ -135,7 +149,7 @@ export default function MapScreen({ route, navigation }) {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
                     <Ionicons name="chevron-back" size={24} color="#0F172A" />
@@ -195,7 +209,7 @@ export default function MapScreen({ route, navigation }) {
                     </View>
                 )}
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -246,10 +260,6 @@ const styles = StyleSheet.create({
     },
     mapContainer: {
         flex: 1,
-        borderRadius: 30,
-        overflow: 'hidden',
-        marginHorizontal: 15,
-        marginBottom: 20,
         backgroundColor: 'white',
         position: 'relative',
     },

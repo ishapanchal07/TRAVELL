@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 
@@ -10,7 +9,7 @@ export default function BookingConfirmationScreen({ route, navigation }) {
     const { booking } = route.params;
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.content}>
                 <View style={styles.successIcon}>
                     <Ionicons name="checkmark-circle" size={100} color="#10B981" />
@@ -65,7 +64,7 @@ export default function BookingConfirmationScreen({ route, navigation }) {
                     <Text style={styles.doneButtonText}>Back to Explore</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

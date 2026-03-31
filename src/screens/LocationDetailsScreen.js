@@ -1,5 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, ScrollView, Dimensions } from 'react-native';
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -23,7 +22,7 @@ export default function LocationDetailsScreen({ navigation }) {
                 placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
                 transition={300}
             >
-                <SafeAreaView style={styles.safeArea}>
+                <View style={styles.safeArea}>
 
                     {/* Top Search & Profile */}
                     <View style={styles.topRow}>
@@ -166,7 +165,7 @@ export default function LocationDetailsScreen({ navigation }) {
                         </View>
                     </View>
 
-                </SafeAreaView>
+                </View>
             </ImageBackground>
         </View>
     );
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
     topRow: {
         flexDirection: 'row',
         paddingHorizontal: 20,
-        paddingTop: 50, // Account for translucent status bar
+        paddingTop: 15, // Account for translucent status bar
         alignItems: 'center',
         justifyContent: 'space-between',
     },
