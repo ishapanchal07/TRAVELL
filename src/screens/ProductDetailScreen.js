@@ -5,6 +5,8 @@ import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSaved } from '../context/SavedContext';
 import { Image } from 'expo-image';
 import { BlurView } from 'expo-blur';
+import { useCart } from '../context/CartContext';
+import { useAddress } from '../context/AddressContext';
 
 const { width } = Dimensions.get('window');
 
@@ -37,6 +39,8 @@ export default function ProductDetailScreen({ route, navigation }) {
     const [selectedDuration, setSelectedDuration] = useState(1);
     const [selectedPayment, setSelectedPayment] = useState('apple');
     const { toggleSaveGem, isGemSaved } = useSaved();
+    const { addToCart, itemCount } = useCart();
+    const { selectedAddress } = useAddress();
     const isWishlisted = isGemSaved(item.id || item.title);
 
     const totalPrice = pricePerDay * quantity * selectedDuration;
@@ -63,9 +67,19 @@ export default function ProductDetailScreen({ route, navigation }) {
                         <TouchableOpacity onPress={handleBack} style={styles.circleBtn}>
                             <Ionicons name="chevron-back" size={24} color="#000000" />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => toggleSaveGem({ ...item, id: item.id || item.title })} style={styles.circleBtn}>
-                            <Ionicons name={isWishlisted ? "heart" : "heart-outline"} size={22} color={isWishlisted ? "#EF4444" : "#000000"} />
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.circleBtn}>
+                                <Feather name="shopping-bag" size={20} color="#000000" />
+                                {itemCount > 0 && (
+                                    <View style={styles.cartBadge}>
+                                        <Text style={styles.cartBadgeText}>{itemCount}</Text>
+                                    </View>
+                                )}
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => toggleSaveGem({ ...item, id: item.id || item.title })} style={styles.circleBtn}>
+                                <Ionicons name={isWishlisted ? "heart" : "heart-outline"} size={22} color={isWishlisted ? "#EF4444" : "#000000"} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     <View style={styles.imageBadge}>
@@ -144,27 +158,30 @@ export default function ProductDetailScreen({ route, navigation }) {
                         ))}
                     </View>
 
-                    {/* Payment Method Selector */}
-                    <Text style={[styles.sectionLabel, { marginTop: 20 }]}>Payment Method</Text>
-                    <View style={styles.optionsRow}>
-                        {PAYMENT_METHODS.map(method => (
-                            <TouchableOpacity 
-                                key={method.id}
-                                style={[styles.optionPillLarge, selectedPayment === method.id && styles.optionPillActive]}
-                                onPress={() => setSelectedPayment(method.id)}
-                            >
-                                <View style={styles.paymentPillContent}>
-                                    <Ionicons 
-                                        name={method.icon} 
-                                        size={18} 
-                                        color={selectedPayment === method.id ? "white" : "#64748B"} 
-                                    />
-                                    <Text style={[styles.optionText, { marginLeft: 8 }, selectedPayment === method.id && styles.optionTextActive]}>
-                                        {method.label}
-                                    </Text>
-                                </View>
+
+                    {/* Delivery Location */}
+                    <View style={[styles.section, { marginTop: 25 }]}>
+                        <View style={styles.deliveryHeaderRow}>
+                            <Text style={[styles.sectionLabel, { marginBottom: 0 }]}>Deliver to</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('AddressList', { onSelectGoBack: true })}>
+                                <Text style={styles.changeAddressText}>Change</Text>
                             </TouchableOpacity>
-                        ))}
+                        </View>
+                        
+                        {selectedAddress ? (
+                            <View style={styles.selectedAddrBox}>
+                                <View style={styles.addrHeader}>
+                                    <Ionicons name={selectedAddress.label === 'Home' ? "home" : selectedAddress.label === 'Work' ? "briefcase" : "location"} size={16} color="#000000" />
+                                    <Text style={styles.addrLabel}>{selectedAddress.label}</Text>
+                                </View>
+                                <Text style={styles.addrText}>{selectedAddress.addressLine}, {selectedAddress.city}</Text>
+                            </View>
+                        ) : (
+                            <TouchableOpacity style={styles.addAddrBox} onPress={() => navigation.navigate('AddressForm', { onSelectGoBack: true })}>
+                                <Ionicons name="add-circle-outline" size={20} color="#64748B" />
+                                <Text style={styles.addAddrText}>Add a Delivery Address</Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
 
                     {/* Info Section */}
@@ -195,8 +212,32 @@ export default function ProductDetailScreen({ route, navigation }) {
                 </View>
                 <View style={styles.footerBtns}>
                     <TouchableOpacity 
+                        style={styles.cartBtn}
+                        onPress={() => {
+                            if (!selectedAddress) {
+                                Alert.alert("Address Required", "Please add a delivery address.");
+                                navigation.navigate('AddressList', { onSelectGoBack: true });
+                                return;
+                            }
+                            if (availableSizes.length > 0 && !selectedSize) {
+                                Alert.alert("Selection Required", "Please select a size first.");
+                                return;
+                            }
+                            addToCart(item, quantity, selectedSize, selectedDuration);
+                            navigation.navigate('Cart');
+                        }}
+                    >
+                        <Feather name="shopping-cart" size={20} color="#000000" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
                         style={styles.buyBtn}
                         onPress={() => {
+                            if (!selectedAddress) {
+                                Alert.alert("Address Required", "Please add a delivery address.");
+                                navigation.navigate('AddressList', { onSelectGoBack: true });
+                                return;
+                            }
                             if (availableSizes.length > 0 && !selectedSize) {
                                 Alert.alert("Selection Required", "Please select a size before buying.");
                                 return;
@@ -217,6 +258,11 @@ export default function ProductDetailScreen({ route, navigation }) {
                     <TouchableOpacity 
                         style={styles.rentBtn}
                         onPress={() => {
+                            if (!selectedAddress) {
+                                Alert.alert("Address Required", "Please add a delivery address.");
+                                navigation.navigate('AddressList', { onSelectGoBack: true });
+                                return;
+                            }
                             if (availableSizes.length > 0 && !selectedSize) {
                                 Alert.alert("Selection Required", "Please select a size before renting.");
                                 return;
@@ -279,6 +325,23 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 5,
+    },
+    cartBadge: {
+        position: 'absolute',
+        top: -2,
+        right: -2,
+        backgroundColor: '#EF4444',
+        borderRadius: 10,
+        minWidth: 18,
+        height: 18,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 4,
+    },
+    cartBadgeText: {
+        color: 'white',
+        fontSize: 9,
+        fontWeight: 'bold',
     },
     imageBadge: {
         position: 'absolute',
@@ -478,6 +541,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 12,
     },
+    cartBtn: {
+        width: 56,
+        height: 56,
+        borderRadius: 16,
+        backgroundColor: '#F1F5F9',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     buyBtn: {
         flex: 1,
         height: 56,
@@ -515,4 +586,58 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    deliveryHeaderRow: {
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'baseline', 
+        marginBottom: 12
+    },
+    changeAddressText: {
+        color: '#000000', 
+        fontSize: 13, 
+        fontWeight: '800',
+        textDecorationLine: 'underline',
+    },
+    selectedAddrBox: {
+        backgroundColor: '#F8FAFC',
+        padding: 15,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+        marginTop: 5,
+    },
+    addrHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+    addrLabel: {
+        fontSize: 13,
+        fontWeight: '800',
+        color: '#0F172A',
+        marginLeft: 6,
+    },
+    addrText: {
+        fontSize: 14,
+        color: '#475569',
+        lineHeight: 20,
+    },
+    addAddrBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F1F5F9',
+        padding: 15,
+        borderRadius: 16,
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: '#CBD5E1',
+        marginTop: 5,
+    },
+    addAddrText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: '#475569',
+        marginLeft: 8,
+    }
 });

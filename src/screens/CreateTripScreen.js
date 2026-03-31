@@ -100,9 +100,6 @@ export default function CreateTripScreen({ navigation }) {
                 {/* Destinations */}
                 <View style={styles.sectionHeaderRow}>
                     <Text style={styles.sectionTitle}>Upcoming Destination</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.viewAllText}>View All</Text>
-                    </TouchableOpacity>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.destScroll}>

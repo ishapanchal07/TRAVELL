@@ -119,7 +119,7 @@ export default function BookingScreen({ route, navigation }) {
                         },
                         'BookingConfirmation',
                         navigation,
-                        { expert, totalPrice, selectedDate, selectedTime, duration, successMessage: 'Booking confirmed!' }
+                        { expert, totalPrice, selectedDate, selectedTime, duration, successMessage: 'Booking confirmed!', section: 'expert' }
                     )}
                 >
                     <Text style={styles.payButtonText}>Proceed to Payment</Text>

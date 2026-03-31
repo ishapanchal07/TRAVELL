@@ -150,14 +150,6 @@ export default function GalleryScreen({ navigation }) {
                                 <Feather name="search" size={18} color="#0F172A" />
                             </TouchableOpacity>
                         )}
-                        <TouchableOpacity style={styles.avatarCircle} onPress={() => navigation.navigate('Profile')}>
-                            <Image 
-                                source={{ uri: USER_AVATAR }} 
-                                style={styles.avatarImage} 
-                                placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                                transition={300}
-                            />
-                        </TouchableOpacity>
                     </View>
                 </View>
 

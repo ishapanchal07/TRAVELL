@@ -6,6 +6,8 @@ import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/v
 import ShareService from '../services/ShareService';
 import BottomNav from '../components/BottomNav';
 import { usePayment } from '../context/PaymentContext';
+import { useCart } from '../context/CartContext';
+import { useAddress } from '../context/AddressContext';
 
 const { width } = Dimensions.get('window');
 
@@ -13,6 +15,8 @@ const FOOD_HERO_IMG = 'https://images.unsplash.com/photo-1534939561126-855b8675e
 
 export default function FoodDetailScreen({ route, navigation }) {
     const { handlePaidAction } = usePayment();
+    const { addToCart } = useCart();
+    const { selectedAddress } = useAddress();
     const { item = {} } = route.params || {};
 
     // Default values if item is empty
@@ -182,27 +186,27 @@ export default function FoodDetailScreen({ route, navigation }) {
 
                 {/* Delivery Location */}
                 <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Delivery Location</Text>
-                    <View style={styles.locationTabs}>
-                        <TouchableOpacity
-                            style={[styles.locationTab, deliveryLoc === 'Hotel' ? styles.locationTabActive : null]}
-                            onPress={() => setDeliveryLoc('Hotel')}
-                        >
-                            <Ionicons name="bed" size={20} color={deliveryLoc === 'Hotel' ? '#000000' : '#94A3B8'} style={{ marginRight: 8 }} />
-                            <Text style={[styles.locationTabText, deliveryLoc === 'Hotel' ? styles.locationTabTextActive : null]}>Hotel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.locationTab, deliveryLoc === 'Picnic' ? styles.locationTabActive : null]}
-                            onPress={() => setDeliveryLoc('Picnic')}
-                        >
-                            <FontAwesome5 name="umbrella-beach" size={16} color={deliveryLoc === 'Picnic' ? '#000000' : '#94A3B8'} style={{ marginRight: 8 }} />
-                            <Text style={[styles.locationTabText, deliveryLoc === 'Picnic' ? styles.locationTabTextActive : null]}>Seine Picnic</Text>
+                    <View style={styles.deliveryHeaderRow}>
+                        <Text style={styles.sectionTitle}>Delivery Location</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('AddressList', { onSelectGoBack: true })}>
+                            <Text style={styles.changeAddressText}>Change</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.locDisplay}>
-                        <Ionicons name="location" size={16} color="#000000" style={{ marginRight: 8 }} />
-                        <Text style={styles.locDisplayText}>Hôtel Lutetia, 45 Bd Raspail, 75006 Paris</Text>
-                    </View>
+                    
+                    {selectedAddress ? (
+                        <View style={styles.selectedAddrBox}>
+                            <View style={styles.addrHeader}>
+                                <Ionicons name={selectedAddress.label === 'Home' ? "home" : selectedAddress.label === 'Work' ? "briefcase" : "location"} size={16} color="#000000" />
+                                <Text style={styles.addrLabel}>{selectedAddress.label}</Text>
+                            </View>
+                            <Text style={styles.addrText}>{selectedAddress.addressLine}, {selectedAddress.city}</Text>
+                        </View>
+                    ) : (
+                        <TouchableOpacity style={styles.addAddrBox} onPress={() => navigation.navigate('AddressForm', { onSelectGoBack: true })}>
+                            <Ionicons name="add-circle-outline" size={20} color="#64748B" />
+                            <Text style={styles.addAddrText}>Add a Delivery Address</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
 
                 {/* Bill Details */}
@@ -235,9 +239,13 @@ export default function FoodDetailScreen({ route, navigation }) {
                     <TouchableOpacity
                         style={styles.addToCartBtn}
                         onPress={() => {
-                            import('react-native').then(({ Alert }) => {
-                                Alert.alert("Success", "Added to Cart!");
-                            });
+                            if (!selectedAddress) {
+                                import('react-native').then(({ Alert }) => Alert.alert("Address Required", "Please select a delivery address."));
+                                navigation.navigate('AddressList', { onSelectGoBack: true });
+                                return;
+                            }
+                            addToCart(item, quantity);
+                            navigation.navigate('Cart');
                         }}
                     >
                         <Feather name="shopping-cart" size={18} color="#000000" style={{ marginRight: 8 }} />
@@ -248,6 +256,11 @@ export default function FoodDetailScreen({ route, navigation }) {
                         style={styles.placeOrderBtnExpanded}
                         activeOpacity={0.8}
                         onPress={() => {
+                            if (!selectedAddress) {
+                                import('react-native').then(({ Alert }) => Alert.alert("Address Required", "Please select a delivery address."));
+                                navigation.navigate('AddressList', { onSelectGoBack: true });
+                                return;
+                            }
                             handlePaidAction(
                                 {
                                     id: name,
@@ -699,4 +712,56 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '800',
     },
+    deliveryHeaderRow: {
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'baseline', 
+        marginBottom: 12
+    },
+    changeAddressText: {
+        color: '#000000', 
+        fontSize: 13, 
+        fontWeight: '800',
+        textDecorationLine: 'underline',
+    },
+    selectedAddrBox: {
+        backgroundColor: '#F8FAFC',
+        padding: 15,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+    },
+    addrHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+    addrLabel: {
+        fontSize: 13,
+        fontWeight: '800',
+        color: '#0F172A',
+        marginLeft: 6,
+    },
+    addrText: {
+        fontSize: 14,
+        color: '#475569',
+        lineHeight: 20,
+    },
+    addAddrBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F1F5F9',
+        padding: 15,
+        borderRadius: 16,
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: '#CBD5E1',
+    },
+    addAddrText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: '#475569',
+        marginLeft: 8,
+    }
 });

@@ -14,12 +14,12 @@ export function PaymentProvider({ children }) {
     const handlePaidAction = (itemData, nextScreen, navigation, customParams = {}) => {
         const itemId = itemData.id || itemData.name || itemData.title;
         const section = customParams.section || itemData.section;
-
-        // Strict Isolation: Only allow Food and Clothing, or existing Expert flow
-        const isFoodOrClothing = section === 'food' || section === 'clothing';
+        
+        // Strict Isolation: Only allow Food, Clothing, Experiences, or existing Expert flow
+        const isAllowedSection = section === 'food' || section === 'clothing' || section === 'experience';
         const isExpert = !!customParams.expert;
 
-        if (!isFoodOrClothing && !isExpert) {
+        if (!isAllowedSection && !isExpert) {
             console.warn(`[PaymentIsolation] Blocked payment attempt outside allowed sections: ${section}`);
             return;
         }

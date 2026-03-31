@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, ScrollView, Dimens
 import { Image, ImageBackground } from 'expo-image';
 import { Feather, Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 const { width } = Dimensions.get('window');
 
@@ -62,6 +63,7 @@ const ITEMS = [
 
 export default function WardrobeScreen({ navigation }) {
     const { isLoggedIn } = useAuth();
+    const { addToCart, itemCount } = useCart();
     const [travelGroup, setTravelGroup] = useState('Solo'); // Options: Solo, Couple, Family, Elderly
     const [gender, setGender] = useState('Female');
     const [weather, setWeather] = useState({ temp: '12°C', season: 'Autumn', condition: 'Sunny' });
@@ -152,12 +154,22 @@ export default function WardrobeScreen({ navigation }) {
                     <Text style={styles.mainTitle}>Apparel Selection</Text>
                     <Text style={styles.durationText}>{duration} Day Trip • {currentYear}</Text>
                 </View>
-                <TouchableOpacity
-                    style={styles.filterBtn}
-                    onPress={() => navigation.navigate('FiltersPreferences')}
-                >
-                    <Feather name="sliders" size={18} color="#0F172A" />
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity style={[styles.filterBtn, { marginRight: 10 }]} onPress={() => navigation.navigate('Cart')}>
+                        <Feather name="shopping-bag" size={18} color="#0F172A" />
+                        {itemCount > 0 && (
+                            <View style={styles.cartBadge}>
+                                <Text style={styles.cartBadgeText}>{itemCount}</Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.filterBtn}
+                        onPress={() => navigation.navigate('FiltersPreferences')}
+                    >
+                        <Feather name="sliders" size={18} color="#0F172A" />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             {/* Tags Scroll */}
@@ -250,6 +262,12 @@ export default function WardrobeScreen({ navigation }) {
                                             <Text style={styles.priceLabel}>RENT</Text>
                                             <Text style={styles.priceValueBlue}>{item.rent}<Text style={styles.priceUnit}>/d</Text></Text>
                                         </View>
+                                        <TouchableOpacity 
+                                            style={styles.addToCartBtnSmall}
+                                            onPress={() => addToCart(item)}
+                                        >
+                                            <Feather name="shopping-cart" size={16} color="#000000" />
+                                        </TouchableOpacity>
                                         <TouchableOpacity 
                                             style={[styles.priceCell, { alignItems: 'flex-end' }]}
                                             onPress={() => navigation.navigate('PurchaseFlow', { item: { ...item, section: 'clothing' } })}
@@ -360,6 +378,23 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 5,
         elevation: 2,
+    },
+    cartBadge: {
+        position: 'absolute',
+        top: -4,
+        right: -4,
+        backgroundColor: '#EF4444',
+        borderRadius: 10,
+        minWidth: 18,
+        height: 18,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 4,
+    },
+    cartBadgeText: {
+        color: 'white',
+        fontSize: 9,
+        fontWeight: 'bold',
     },
     tagsWrapper: {
         marginBottom: 15,
@@ -535,6 +570,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '900',
         color: '#0F172A',
+    },
+    addToCartBtnSmall: {
+        padding: 6,
+        backgroundColor: '#F1F5F9',
+        borderRadius: 8,
+        marginHorizontal: 10,
     },
 
     // Action Button

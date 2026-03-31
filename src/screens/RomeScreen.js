@@ -218,7 +218,7 @@ export default function RomeScreen({ navigation }) {
 
 
                              {/* Photo Spots */}
-                             <View style={styles.sectionHeader}>
+                             <View style={[styles.sectionHeader, { marginTop: 25 }]}>
                                  <Text style={styles.sectionTitle}>Perfect Snap Spots</Text>
                                  <TouchableOpacity onPress={() => navigation.navigate('SnapSpots', { items: data.photoSpots, city: 'Rome' })}>
                                      <Text style={styles.viewAllText}>View all</Text>

@@ -218,7 +218,12 @@ export default function ParisScreen({ navigation }) {
 
 
                             {/* Photo Spots */}
-                            <Text style={[styles.sectionTitle, { marginTop: 25 }]}>Perfect Snap Spots</Text>
+                            <View style={[styles.sectionHeader, { marginTop: 25 }]}>
+                                <Text style={styles.sectionTitle}>Perfect Snap Spots</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('SnapSpots', { items: data.photoSpots, city: 'Paris' })}>
+                                    <Text style={styles.viewAllText}>View all</Text>
+                                </TouchableOpacity>
+                            </View>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
                                 {data.photoSpots.map(spot => (
                                     <TouchableOpacity 

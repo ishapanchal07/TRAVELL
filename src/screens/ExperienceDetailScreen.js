@@ -259,7 +259,7 @@ export default function ExperienceDetailScreen({ navigation, route }) {
                                         },
                                         'Explore',
                                         navigation,
-                                        { successMessage: 'Booking initiated!' }
+                                        { successMessage: 'Booking initiated!', section: 'experience' }
                                     );
                                 }}
                             ]

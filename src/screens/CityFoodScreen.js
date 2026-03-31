@@ -8,6 +8,7 @@ import BottomNav from '../components/BottomNav';
 import { useAuth } from '../context/AuthContext';
 import { useTrip } from '../context/TripContext';
 import AnalyticsService from '../services/AnalyticsService';
+import { useCart } from '../context/CartContext';
 
 const { width } = Dimensions.get('window');
 
@@ -155,6 +156,7 @@ export default function CityFoodScreen({ route, navigation }) {
     const { preferences } = useTrip();
     const { city = 'Paris' } = route.params || {};
     const cityData = CITY_DATA[city] || CITY_DATA['Paris'];
+    const { addToCart, itemCount } = useCart();
 
     const [activeFilter, setActiveFilter] = useState('All');
     const [vegFilter, setVegFilter] = useState('All'); // 'VEG', 'NON-VEG', 'All'
@@ -194,9 +196,19 @@ export default function CityFoodScreen({ route, navigation }) {
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 5 }}>
                         <Ionicons name="chevron-back" size={26} color="#0F172A" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Map', { city })}>
-                        <Feather name="search" size={18} color="#0F172A" />
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity style={[styles.iconCircle, { marginRight: 10 }]} onPress={() => navigation.navigate('Map', { city })}>
+                            <Feather name="search" size={18} color="#0F172A" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Cart')}>
+                            <Feather name="shopping-bag" size={18} color="#0F172A" />
+                            {itemCount > 0 && (
+                                <View style={styles.cartBadge}>
+                                    <Text style={styles.cartBadgeText}>{itemCount}</Text>
+                                </View>
+                            )}
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 {/* Title and Location */}
@@ -271,8 +283,8 @@ export default function CityFoodScreen({ route, navigation }) {
                                     <Text style={styles.largeCardPrice}>{gem.price}</Text>
                                 </View>
                                 <Text style={styles.largeCardDesc} numberOfLines={1}>{gem.desc}</Text>
-                                <TouchableOpacity style={styles.quickOrderBtn} onPress={() => handleItemPress(gem)}>
-                                    <Text style={styles.quickOrderBtnText}>Quick Order</Text>
+                                <TouchableOpacity style={styles.quickOrderBtn} onPress={() => addToCart(gem)}>
+                                    <Text style={styles.quickOrderBtnText}>Add to Cart</Text>
                                 </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
@@ -300,7 +312,7 @@ export default function CityFoodScreen({ route, navigation }) {
                                 <Text style={styles.smallCardSub}>{item.subtitle}</Text>
                                 <View style={styles.smallCardBottomRow}>
                                     <Text style={styles.smallCardPrice}>{item.price}</Text>
-                                    <TouchableOpacity style={styles.addBtn} onPress={() => handleItemPress(item)}>
+                                    <TouchableOpacity style={styles.addBtn} onPress={() => addToCart(item)}>
                                         <Feather name="plus" size={14} color="white" />
                                     </TouchableOpacity>
                                 </View>
@@ -381,6 +393,23 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 5,
         elevation: 2,
+    },
+    cartBadge: {
+        position: 'absolute',
+        top: -4,
+        right: -4,
+        backgroundColor: '#EF4444',
+        borderRadius: 10,
+        minWidth: 18,
+        height: 18,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 4,
+    },
+    cartBadgeText: {
+        color: 'white',
+        fontSize: 9,
+        fontWeight: 'bold',
     },
     mainTitle: {
         fontSize: 28,

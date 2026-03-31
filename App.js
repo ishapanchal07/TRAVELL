@@ -6,6 +6,8 @@ import { TripProvider } from './src/context/TripContext';
 import { SavedProvider } from './src/context/SavedContext';
 import { BookingProvider } from './src/context/BookingContext';
 import { PaymentProvider } from './src/context/PaymentContext';
+import { CartProvider } from './src/context/CartContext';
+import { AddressProvider } from './src/context/AddressContext';
 
 // Screen Imports
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -72,6 +74,10 @@ import PermissionsScreen from './src/screens/PermissionsScreen';
 import SupportScreen from './src/screens/SupportScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import TermsScreen from './src/screens/TermsScreen';
+import CartScreen from './src/screens/CartScreen';
+import AddressListScreen from './src/screens/AddressListScreen';
+import AddressFormScreen from './src/screens/AddressFormScreen';
+import CheckoutScreen from './src/screens/CheckoutScreen';
 
 import { SettingsProvider, SettingsContext } from './src/context/SettingsContext';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
@@ -183,6 +189,10 @@ function RootNavigator() {
         <Stack.Screen name="Support" component={SupportScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
+        <Stack.Screen name="Cart" component={CartScreen} />
+        <Stack.Screen name="AddressList" component={AddressListScreen} />
+        <Stack.Screen name="AddressForm" component={AddressFormScreen} />
+        <Stack.Screen name="Checkout" component={CheckoutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -193,17 +203,21 @@ export default function App() {
     <AuthProvider>
       <TripProvider>
         <SavedProvider>
-          <BookingProvider>
-            <PaymentProvider>
-              <ThemeProvider>
-                <UserProvider>
-                  <SettingsProvider>
-                    <RootNavigator />
-                  </SettingsProvider>
-                </UserProvider>
-              </ThemeProvider>
-            </PaymentProvider>
-          </BookingProvider>
+          <CartProvider>
+            <BookingProvider>
+              <PaymentProvider>
+                <ThemeProvider>
+                  <UserProvider>
+                    <SettingsProvider>
+                      <AddressProvider>
+                        <RootNavigator />
+                      </AddressProvider>
+                    </SettingsProvider>
+                  </UserProvider>
+                </ThemeProvider>
+              </PaymentProvider>
+            </BookingProvider>
+          </CartProvider>
         </SavedProvider>
       </TripProvider>
     </AuthProvider>

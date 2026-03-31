@@ -61,15 +61,6 @@ export default function SocialVibesScreen({ navigation }) {
                         <Text style={styles.mainTitleBlue}>Discover Vibes</Text>
                         <Text style={styles.subTitleBlue}>PARIS, FRANCE</Text>
                     </View>
-                    <TouchableOpacity style={styles.avatarContainer} onPress={() => navigation.navigate('Profile')}>
-                        <Image 
-                            source={{ uri: AVATAR_IMG }} 
-                            style={styles.avatar} 
-                            placeholder="L6G*e[4n00~q00%M%MD%00xV-;_k"
-                            transition={300}
-                        />
-                        <View style={styles.avatarBadge} />
-                    </TouchableOpacity>
                 </View>
 
                 {/* Search Bar */}
